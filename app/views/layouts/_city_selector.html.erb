@@ -1,0 +1,54 @@
+<div id="CityChanger" style="position:absolute; display:none">
+  <div style="text-align:center; color:#5591C3; font-size:18px; margin-bottom:20px; font-weight:bold">Choose your Edition</div>
+  <div style="width:400px;">  
+			   
+    <div  style="float:left; margin-top:5px; margin-bottom:15px;" class="WhiteActiveBorder" >
+      <div unselectable="on" class="LightGrayButton" style="width:150px; margin-left:20px;  margin-top:6px; ">
+        <div class="InnerLightGrayBorder" onclick="chooseCity(this,1,'<%= request.path %>')" >Boston</div>
+      </div>
+    </div>
+			
+    <div  style="float:left; margin-top:5px; margin-bottom:15px;" class="WhiteActiveBorder" >
+      <div unselectable="on" class="LightGrayButton" style="width:150px; margin-left:30px;  margin-top:6px; ">
+        <div class="InnerLightGrayBorder" onclick="chooseCity(this,3,'<%= request.path %>')">New York City</div>
+      </div>
+    </div>
+
+    <div  style="float:left; margin-top:5px; margin-bottom:15px;" class="WhiteActiveBorder" >
+      <div unselectable="on" class="LightGrayButton" style="width:150px; margin-left:20px;  margin-top:6px; ">
+        <div class="InnerLightGrayBorder" onclick="chooseCity(this,2,'<%= request.path %>')">San Francisco</div>
+      </div>
+    </div>
+
+    <div  style="float:left; margin-top:5px; margin-bottom:15px;" class="WhiteActiveBorder" >
+      <div unselectable="on" class="LightGrayButton" style="width:150px; margin-left:30px;  margin-top:6px; ">
+        <div class="InnerLightGrayBorder"  onclick="chooseCity(this,99,'<%= request.path %>')">World Travel</div>
+      </div>
+    </div>
+
+    <div style="clear:both"></div>
+  </div>
+
+<%if !current_user%>
+  <div style="text-align:center; color:#5591C3; font-size:18px; margin-top:30px; margin-bottom:7px; font-weight:bold">Don't see your city?</div>
+
+  <div id="request-city" style="text-align: center; color:#AEAEAE; font-size:12px; margin-bottom:7px;">
+
+	
+    <form action="/request" method="POST" >
+		  <div style="text-align:center; color:#AEAEAE; font-size:12px; margin-bottom:7px;">Sign up to be notified when we come to your area</div>
+		
+      <input type="text" name="request_city[city]" value="<%=session[:location_city]%>" class="ShadowedTextBox" style="float:left; width:120px; margin-left:7px; margin-bottom:15px;"/>
+      <input type="text" name="request_city[email]" value="email" class="request_city_email ShadowedTextBox" style="float:left; color:#999; margin-left:10px; width:120px" onfocus="if ($(this).val() == 'email') {$(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val() == '') {$(this).val('email'); $('.WhiteActiveBorder',$(this).parent()).css('opacity','.5'); $(this).css('color','#ccc')}" onKeyPress="$('.WhiteActiveBorder',$(this).parent()).css('opacity','1')" />
+		<div class="WhiteActiveBorder" onclick="if ($('.request_city_email',$(this).parent()).val() == 'email' || $('.request_city_email',$(this).parent()).val() == '') { $('.request_city_email',$(this).parent()).focus();} else { $(this).parent().ajaxForm({ target: '#request-city form' }); $(this).parent().submit();}" style="float:left; margin-left:10px; margin-top:0px; opacity:.5; ">
+			<div id="NewCitySubmit" unselectable="on" class="GreenButton" style="width:70px; font-size:12px; height:29px; line-height:27px;">
+				<div class="InnerGreenBorder" style="height:27px">
+					Submit
+				</div>
+			</div>
+		</div>
+    </form>
+  </div>
+<%end%>
+
+</div>

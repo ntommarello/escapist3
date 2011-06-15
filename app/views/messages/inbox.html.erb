@@ -1,0 +1,74 @@
+<% if current_user.unread_messages.length == 0%>
+	<script>
+		$("#InboxIcon").attr("src","/images/message-active.png")
+	</script>
+<%end%>
+
+<div style="float:left">
+	<div class="SubMenu SubActive" style="border-top:1px solid #ccc;" onclick="window.location.href='/inbox'">
+	Conversations
+	</div>
+
+	<div class="SubMenu SubInActive" onclick="window.location.href='/notifications'">
+	Notifications
+	</div>
+
+</div>
+
+
+<div style="float:left; margin-left:70px;  width:640px;">
+
+
+<% @message_list.each do |message| %>
+
+
+	
+	
+	
+
+	<div id="MessageRow<%= message.id %>"  class="messageRow <%if message.unread_receiver%>messageUnread<%else%>messageRead<%end%>" onmouseover="$('#MessageRow<%= message.id %> > .ActionFields').show()" onmouseout="$('#MessageRow<%= message.id %> > .ActionFields').hide()" onclick="window.location.href='/messages/<%= message.user_id %>'">
+	
+		<div style="float:left; width:50px;" >
+					 <%= link_to(user_path(message.user)) do
+			  			image_tag message.user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer"
+					end %>
+		</div>
+	
+		<div style="float:left; margin-left:10px; width:180px;">
+			<a href="/<%=message.username%>" class="BlueLink" onmouseover="event.stopPropagation(); $('#Action<%= message.id %>').hide();"><%=message.first_name%> <%=message.last_name%></a>
+			<div style="font-size:11px; color:#847784; font-weight:normal"><%=message.created_at.strftime("%B %d at %I:%M%p")%></div>
+		</div>
+		<div style="float:left; margin-left:10px; width:410px; height:30px;" class="truncate">
+			<%if message.message%>
+				<%=message.message.slice(0,150)%>
+			<%end%>
+		</div>
+    <div style="float:left; margin-left:20px;">
+      <% if message.replied? -%>
+        <img src="/images/replied.gif">
+      <% end -%>
+
+		<%if current_user.received_messages.unread.messages_from(message.user).length > 0 %>
+	  		<div class="UnreadBox">
+		 		<%= current_user.received_messages.unread.messages_from(message.user).length %>
+       		</div>
+		<%end%>
+    </div>
+
+	<div style="clear:both;"></div>
+	<div id="Action<%= message.id %>" class="ActionFields">
+		<span class="blueSpan" id="replylink" onclick="" onmouseover="$('#Action<%= message.id %> > span > #reply').css('opacity',1)" onmouseout="$('#Action<%= message.id %> > span> #reply').css('opacity',0.3)"><img border="0" id="reply", style="opacity:.3" src="/images/reply1.gif"> reply</span>
+		<span class="blueSpanTrash" onclick="event.stopPropagation(); deleteMessage(MessageRow<%= message.id %>,<%= message.user_id %>,<%if message.unread_receiver%>1<%else%>0<%end%>)" onmouseover="$('#Action<%= message.id %> > span>#trash').css('opacity',1)" onmouseout="$('#Action<%= message.id %> > span>#trash').css('opacity',0.3)"><img id="trash" style="opacity:.3" src="/images/trash.gif"> trash</span>
+	</div>
+</div>
+
+<%end%>
+
+	<%if  @message_list.length == 0%>
+		You have no messages.
+	<%end%>
+</div>
+
+<script type="text/javascript">
+  $(".truncate").autoEllipsis();
+</script>

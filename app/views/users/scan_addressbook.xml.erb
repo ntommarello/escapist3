@@ -1,0 +1,22 @@
+<packet>
+
+	<follows>
+		<%for user in @follow%>
+		<follow>
+			<user-id><%=user.id%></user-id>
+			<name><%=user.first_name%> <%=user.last_name%></name>
+			<avatar-file-name><%=user.avatar_file_name%></avatar-file-name>
+		</follow>
+		<%end%>
+	</follows>
+
+	<invites>
+		<%for user in @invite%>
+			<invite>
+				<name><%=user['first_name']%> <%=user['last_name']%></name>
+				<email><%=user['email']%></email>
+			</invite>
+		<%end%>
+	</invites>
+
+</packet>

@@ -1,0 +1,84 @@
+<script>
+	setTimeout("switchMenuBar($('#AdventuresLink'),1);",10);
+</script>
+
+<div id="RenderContent">
+	<div class="HighlightedTitle" style="margin-bottom:10px;"><%=session[:dropdown_city]%> Adventures</div>
+
+
+	<div id="OpacityContent">
+		<%i = 0%>
+		<%for plan in @plans%>
+			<%i = i+1 %>
+			<%= render :partial=>"plans/plan_card", :locals=>{:plan=>plan, :i=>i}%>
+			<%if i%3==0%><div style="height:25px; clear:both"></div><%end%>
+		<%end%>
+
+		<%if !@current_user%>
+			<div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
+				<div class="SignUpBorder" style="height:337px" onclick="openRegister('Sign up for <%=APP_NAME%>!')">
+					<div style="margin-top:60px; font-size:30px; padding:20px; text-align:center; line-height:35px" >Sign up</div>
+				
+					<div  style="text-align:center; line-height:25px; margin-left:10px;">We're always adding new <br>adventures in <%=session[:dropdown_city]%><p>Sign up to keep in the loop<br><span style="font-size:12px">(never more than one email per week)</span></p></div>
+				</div>
+			</div>
+		<%end%>
+
+		<%if @other_plans%>
+			<div style="clear:both"></div>
+			<div style="margin-top:50px" class="HighlightedTitle">Adventures in Other Cities</div>
+			<%i=0%>
+			<%for plan in @other_plans%>
+				<%i = i+1 %>
+				<%= render :partial=>"plans/plan_card", :locals=>{:plan=>plan, :i=>i}%>
+				<%if i%3==0%><div style="height:25px; clear:both"></div><%end%>
+			<%end%>
+			</div>
+		<%end%>
+	</div>
+	<div class="spinner2" style="position:absolute; display:none; margin-left:38%; top:150px;  background-color:white; color:#666; opacity:1; text-align:center; width:20%; height:50px; border:1px solid #ccc; padding-top:10px; padding-bottom:10px;">
+		<img align="center" src="/images/ajax-loader-bar.gif"><br>
+		<div  style="margin-top:10px; margin-left:70px; width:100px; text-align:center">loading</div>
+	</div>
+</div>
+
+<script>
+$('.tl').tooltip();
+
+$(document).ready(function() {
+	
+	$('.multiline').ellipsis();
+	
+
+//	grabs_scan2();
+	
+	
+
+
+			//$(window).bind( 'scroll', function() {
+		//
+		//			grabs_scan2();
+			
+		//	} );
+	
+		
+		
+});
+
+
+function grabs_scan2() { // lazy load f/x
+
+		$('.BrowseColumn').each( function(i,n) {
+			if( $(n).offset().top < $(window).scrollTop() + $(window).height() -10) {
+				
+				$(n).animate({opacity: 1}, 600 );  //fadeIn
+			}
+		} );
+	}
+	
+</script>
+
+
+</script>
+
+

@@ -1,0 +1,58 @@
+<script>
+	setTimeout("switchMenuBar($('#SpotlightLink'),1);",10);
+</script>
+
+
+<div class="SpotlightBigTitle" style="margin-top:20px;">100 Challenges in Boston</div>
+<div style="" class="SpotlightHighlighted">an adventure & travel game</div>
+
+
+<div class="ChallengeBoxBorder" style="margin-left:162px; margin-top:25px; width:550px; margin-bottom:0px;">
+	<div class="ChallengeInterior" style="width:540px; height:240px; ">
+		<div style="float:left">
+			<a href="/challenges/<%=@challenge.id%>-<%=@challenge.title.parameterize%>"> 
+				<img src="/images/tmp/spot4.jpg" style="width:314px; height:235px; border:1px solid #eee" class="Transparent" id="ChallengePic">
+			</a>
+		</div>
+		<div style="float:left; margin-left:10px; width:200px;">
+			<a href="/challenges/<%=@challenge.id%>-<%=@challenge.title.parameterize%>" class="BlueLink"><%=@challenge.title%></a>
+			
+			<div style="margin-top:20px"><a class="BlueLink" href="/joanne-malden">Joanne</a> unlocked the <%=@challenge.achievement.name%> achievement</div>
+			
+			<div style="margin-top:2px; font-size:10px; color:#999">3 hours ago</div>
+			
+			<div style="margin-top:25px; margin-left:10px; margin-right:15px; float:left;">
+        <%= link_to(achievement_path(@challenge.achievement)) do
+					image_tag(@challenge.achievement.photo(:thumb_90), :style=>"width:80px; height:80px; border:0px", :class=>"AchievementPhoto Transparent", :title=>@challenge.achievement.name, :required=>true, :id=>"tooltipBadge")
+        end %>
+			</div>
+			<div style="margin-top:25px;  float:left;">
+				<div id="pointsHolder" style="height:60px; width:60px; ; margin-top:5px; margin-left:15px" class="GreenBox" title="Earn <%=@challenge.points%> point<%if @challenge.points > 1%>s<%end%> by completing this challenge.<br>Redeem for awards." <%if !@editable%>onclick="window.location.href='/leaders'"<%end%>>
+					<div style="margin-top:7px">
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"points", :content=>@challenge.points, :id=>@challenge.id, :model=>"challenge", :allow_return=>false, :required=>true, :extra_visibility=>false, :numeric=>true}%>	
+					</div>
+					<div style="margin-top:5px; font-size:10px">achievement point<%if @challenge.points > 1%>s<%end%></div>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+	</div>
+</div>
+<div style="clear:both"></div>
+
+<div style="text-align:center; margin-top:25px;"><img  id="filmstrip" style="width:747px; height:50px" src="/images/tmp/film.png" title="filmstrip doesn't work yet"></div>
+
+<div id="CallToActionButton" onclick="window.location.href='/challenges'">Select Challenges <img style="width:9px; height:13px" src="/images/tmp/t.png"></div>
+
+<script>
+$('.ChallengeBoxBorder').mouseenter(function(){   
+	highlightChallengeBox(this)
+});
+$('.ChallengeBoxBorder').mouseleave(function(){    
+	unHighlightChallengeBox(this)
+});
+
+$('#filmstrip').tooltip();
+$('#tooltipBadge').tooltip();
+$('#pointsHolder').tooltip();
+</script>

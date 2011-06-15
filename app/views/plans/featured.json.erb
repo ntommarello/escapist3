@@ -1,0 +1,39 @@
+{
+  "id": <%= @feature.plan_id %>,
+  "title": "<%= @feature.plan_title %>",
+  "month": "<%= @month %>",
+  "day": "<%= @day %>",
+  <%- @time_string = calc_end_plan_time(@feature.start_time,@feature.end_time) -%>
+  "time": "<%=@time_string %>",
+  "note": "<%= strip_html(@feature.note).strip %>",
+  "signed_up": "<%= @signedup %>",
+  "seats_remaining": <%= @plan.seats_remaining %>,
+  "challenge": {
+    "id": <%= @feature.challenge_id %>,
+    "title": "<%= @feature.title %>",
+    "file_name":  "<%= @feature.photo_file_name %>",
+    "location": "<%= strip_html(@feature.location).strip %>",
+    "details": "<%= strip_html(@feature.details).strip %>",
+    "lat": <%= @feature.lat %>,
+    "lng": <%= @feature.lng %>,
+    "url": "<%= @feature.url_link %>"
+  },
+  "host": {
+    "user_id": <%= @host.id %>,
+    "first_name": "<%= @host.first_name %>",
+    "last_name": "<%= @host.last_name %>",
+    "location": "<%= @host.location_city %>",
+    "avatar_file_name": "<%= @host.avatar_file_name %>"
+  },
+  "attendees": [
+    <%- @attendees.each do |user| -%>
+    {
+      "user_id": <%= user.id %>,
+      "first_name": "<%= user.first_name %>",
+      "last_name": "<%= user.last_name %>",
+      "location": "<%= user.location_city %>",
+      "avatar_file_name": "<%= user.avatar_file_name %>"
+    },
+    <%end%>
+  ]
+}

@@ -1,0 +1,699 @@
+<% content_for :page_title do %>
+  <%=@challenge.title%>
+<% end %>
+
+<% content_for :head do %>
+	<meta  name="description" content="<%=@challenge.details%>" />
+	<meta name="image" content="<%=@challenge.photo.url(:thumb_214)%>" />
+<%end%>
+
+<%@proofpic = false%>
+<div style="float:left; width:225px;">
+
+	<div class="PhotoBorder">
+		<%if current_user and current_user.has_completed_challenge?(@challenge)%>
+		    <%@subscribed = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id,@challenge.id)%>
+	         <%if @subscribed.proof_file_name != @challenge.photo_file_name %>
+				<%if @subscribed.proof_file_name%>
+					<%@proofpic = true%>
+						<%if @editable%><%@style="position:absolute; width:90px; left:124px; margin-top:88px; height:68px;"%><%else%><%@style="position:absolute; width:214px; left:0px; margin-top:-5px; height:161px;"%><%end%>
+					
+					<%= image_tag @subscribed.proof.url(:thumb_214), :style=>@style, :class=>"PhotoBorder Transparent", :onclick=>"newUploadProof(#{@challenge.id},1,#{@subscribed.id})" %>
+				<%end%>
+			<%end%>
+		<%end%>
+
+		<%if @editable%>
+			<%= image_tag @challenge.photo.url(:thumb_214), :style=>"width:214px; height:161px;", :class=>" Transparent", :onclick=>"uploadChallengePhoto(#{@challenge.id},'show')" %>
+		<%else%>
+			<a class="lightbox" href="<%=@challenge.photo.url(:large)%>" >
+				<%= image_tag @challenge.photo.url(:thumb_214), :style=>"width:214px; height:161px;", :class=>" Transparent"%>
+			</a>
+		<%end%>
+		
+			<div class="ChallengeDoneBoxShow" style="z-index:100;<%unless @stomped%>display:none;<%end%>">
+
+				<div style="float:left; margin-left:4px; margin-top:4px; font-weight:bold">
+					You Stomped This!
+				</div>
+				<div style="float:left; margin-left:38px;" onclick="<%if current_user%>newUploadProof(<%=@challenge.id%><%if !@proofpic%>,0,0<%else%>,1,<%=@subscribed.id%><%end%>)<%else%>openRegister('Sign up for Stomp to Upload Photos')<%end%>">
+
+					<img src="/images/small_camera.png"  class="StompedIcon" style="width:21px; height:16px; padding-top:2px;" title="Upload Picture">
+
+				</div>
+				<div style="float:left; margin-left:12px;" onclick="UnStomp(this,<%=@challenge.id%>)">
+					<img src="/images/rate_delete.png" class="StompedIcon" style="width:17px; height:16px; padding-top:2px;" title="I didn't do this!">
+				</div>	
+				
+				<%if current_user and @subscribed%>
+				<div style="clear:both"></div>
+						<div style="margin-left:5px;font-size:10px; color:#999; margin-top:-7px">
+								<%= render :partial=>"users/edit_date", :locals=>{:id=>@subscribed.id, :date=>@subscribed.date_completed_on}%>
+						</div>
+						
+					<div style="margin-top:10px; margin-left:5px; font-size:11px">
+						<%if @subscribed.completed_note.nil? or @subscribed.completed_note.strip == "" %><%@subscribed.completed_note = "Add a note"%><%end%>
+								<%@oldeditable = @editable%>
+								<%@editable=true%>
+								<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"completed_note", :content=>@subscribed.completed_note, :id=>@subscribed.id, :model=>"subscribed_challenge", :allow_return=>false, :required=>true, :extra_visibility=>false}%>
+								<%@editable=@oldeditable%>	
+					</div>
+			
+				<%else%>
+					<div style="margin-top:30px; margin-left:5px; font-size:12px">Upload a photo to earn your adventure points.</div>
+				<%end%>
+					
+					
+			</div>
+			
+		<div class="ChallengeSideButton" style="padding-left:0px; padding-right:0px; <%if @stomped%>display:none;<%end%>">
+			<div class="<%if @addBucket%>Heart<%else%>Un<%end%>Selected" style="float:left; width:142px" onmouseover="if ($('.SaveLabel',this).html() == 'Save to Bucket List') { $('.RateGraphic',this).css('opacity',1) } else { $('.RateGraphic',this).css('opacity',1)   }" onmouseout="if ($('.SaveLabel',this).html() == 'Save to Bucket List') { $('.RateGraphic',this).css('opacity',.8) } else {  $('.RateGraphic',this).css('opacity',.8)   }" onclick="toggleSave($('#challenge<%=@challenge.id%>'),<%=@challenge.id%>,this)">
+				<img src="/images/show-bucket-list.png" style="float:left; width:16px; height:14px; opacity:.8; margin-top:9px; margin-left:5px;cursor:pointer;<%if @addBucket%>opacity:.8<%end%>" class="RateGraphic">
+				<div class="SaveLabel" style="float:left; margin-left:5px">Save<%if @addBucket%>d<%end%> to Bucket List</div>
+			</div>
+
+
+			<div class="<%if @disliked == "1"%>Heart<%else%>Un<%end%>Selected" style="float:left; border-left:1px solid #ddd; width:70px" onclick="toggleDislike(this,<%=@challenge.id%>)">
+				<img src="/images/show-dislike.png" style="float:left;padding-top:7px;cursor:pointer; margin-left:6px;  width:15px; height:18px;"  class="RateGraphic">
+				<div id="DislikeLabel" style="float:left;  margin-left:4px;">Dislike<%if @disliked == "1"%>d<%end%></div>
+			</div>
+			
+			
+		</div>
+		
+		<div class="ChallengeSideButton UnSelected" onclick="StompIt(this,<%=@challenge.id%>)" style="<%if @stomped%>display:none;<%end%>">
+			<img src="/images/show-i-did-this.png" style="float:left;padding-top:9px;cursor:pointer; margin-left:2px;  width:15px; height:13px;"  class="RateGraphic">
+			<div  style="float:left;  margin-left:5px;">I Did This!  Give me points!</div>
+			
+			
+		</div>
+		
+		
+	
+		
+		
+
+	
+		
+
+		
+	</div>
+	
+	
+	<script>$(".StompedIcon").tooltip();</script>
+	
+	
+	<div style="float:left; margin-left:25px; margin-top:5px; height:20px;">
+		<fb:like layout="button_count" width="70" font="segoe ui"></fb:like>
+	</div>
+
+
+	<div style="float:right; margin-right:25px; margin-top:5px; height:20px;">
+		<a style="margin-top:-2px;" href="http://twitter.com/share?text=I want to <%=@challenge.title%>! Join me! %23StompIO &url= http://<%=APP_URL%>/<%=request.request_uri%>" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	</div>
+	
+	<div style="clear:both"></div>
+	
+
+
+
+		
+		
+
+	<%if @challenge.lat && @challenge.lng%>
+		<div style="margin-top:30px;" >
+			<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
+				<img  id="GoogleMap" width="95" height="95" alt="map error" style="margin-left:3px; cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@challenge.lat.round(4)%>,<%=@challenge.lng.round(4)%>&zoom=14&size=100x100&maptype=roadmap&markers=<%=@challenge.lat.round(4)%>,<%=@challenge.lng.round(4)%>&sensor=false">
+			</a>
+		
+			<div style="float:left; margin-left:7px; width:115px;">
+			
+				<%if @challenge.url_name and @challenge.url_link %>
+					<a target="_blank" class="BlueLink" href="<%=@challenge.url_link%>"><%=@challenge.url_name%></a><br>
+				
+				<%else%>
+					<%if @editable%>
+						[<a class="BlueLink" onclick="$('#adminlink').hide(); $('#AdminOptions').show(); $('#challenge_url_name').focus()" href="#">add link</a>]<br>
+					<%end%>
+				<%end%>
+				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@challenge.location, :id=>@challenge.id, :model=>"challenge", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :onblur_hook=>" if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Type in the address. Google shall find.') {draftLocation= 0;$('#draftLocation').hide(); resetPublish();} GeoCode_Challenge(newValue,#{@challenge.id});"}%>	
+			</div>
+		</div>
+	<%end%>
+		
+
+
+	
+		
+			<div style="clear:both"></div>
+		
+
+ 
+
+		<%if @related_challenges.length > 0%>
+			<div class="DarkBlueLabel" style="margin-top:40px; margin-bottom:10px">Related <%=APP_CONTENT.downcase%></div>
+				<%@related_challenges.each do |result|%>
+				<div style="padding-top:5px; padding-bottom:5px">
+					<%if result.achievement%>
+						<div style="float:left;">
+
+							<%=link_to(result) do
+							 image_tag(result.photo(:thumb_50), :style => "border:1px solid #ddd; width:50px; height:50px;", :class => "AchievementIcon")
+						end%>
+						</div>
+					<%end%>
+					<div style="float:left; width:150px; margin-left:10px; min-height:40px;">
+						<%newtitle = raw result.title%>
+						<%=link_to newtitle, result, :class=>"BlueLink"  %>
+					
+					</div>
+					<div style="clear:both"></div>
+				</div>
+		
+				<%end%>
+			<%end%>
+ 
+	       <%if @editable%>
+				<div id="adminlink" style="margin-top:20px">	
+					[<span class="BlueLink" style="cursor:pointer" onclick="$('#adminlink').hide(); $('#AdminOptions').show()">Admin Options</span>]
+				</div>
+
+				<div id="AdminOptions" style="display:none; margin-top:10px; border:1px solid #ccc; background-color:#eee; padding:12px;" >
+					<form action="/challenges/<%=@challenge.id%>" method="post">
+						<input id="_method" name="_method" type="hidden" value="PUT">
+
+						<div style="float:left; width:70px">URL Name:</div>
+						<div style="float:left"><%= text_field_tag "challenge[url_name]", @challenge.url_name,:class=>"", :style=>"width:110px; height:20px; " %></div>
+						<div style="clear:both; height:5px;"></div>
+
+						<div style="float:left; width:70px">URL Link:</div>
+						<div style="float:left"><%= text_field_tag "challenge[url_link]", @challenge.url_link,:class=>"", :style=>"width:110px; height:20px; " %></div>
+						<div style="clear:both; height:5px;"></div>
+
+
+						<%if @admin%>
+
+							<div style="float:left; width:70px">Author ID:</div>
+							<div style="float:left"><%= text_field_tag "challenge[author_id]", @challenge.author_id,:class=>"", :style=>"width:110px; height:20px; " %></div>
+							<div style="clear:both; height:5px;"></div>
+						<%end%>
+
+
+									<div style="float:left; width:70px">Category:</div>
+									<div style="float:left">
+
+														<%=  
+					select("challenge", "category_id", Category.find(:all, :conditions=>["highlighted=?",true]).collect {|p| [ p.name, p.id ] }, {:include_blank => 'Choose'})
+														%>	
+
+									</div>
+									<div style="clear:both; height:5px;"></div>
+
+
+						<div style="float:left; width:70px">Budget:</div>
+						<div style="float:left"><%= select_tag "challenge[budget]", 
+						               options_for_select([["<$10", 1], 
+						                  ["$10-$34", 2], ["$35-$74", 3], ["$75-$149", 4],["$149-$299", 5],["$300+", 6]], 
+						                 @challenge.budget) %></div>
+						<div style="clear:both; height:5px;"></div>
+
+						<div style="float:left; width:70px">Weather:</div>
+						<div style="float:left"><%= select_tag "challenge[weather]", 
+						               options_for_select([["Warm", 1], 
+						                  ["Cold", 2], ["Both", 3]], 
+						                 @challenge.weather) %></div>
+						<div style="clear:both; height:5px;"></div>
+
+
+						<%if @admin%>
+						<div style="float:left; width:70px">Published:</div>
+						<div style="float:left"><%= select_tag "challenge[published]", 
+						               options_for_select([["No", false], 
+						                  ["Yes", true]], 
+						                 @challenge.published) %></div>
+						<div style="clear:both; height:5px;"></div>
+						
+						<div style="float:left; width:70px">Curated:</div>
+						<div style="float:left"><%= select_tag "challenge[vetted]", 
+						               options_for_select([["No", false], 
+						                  ["Yes", true]], 
+						                 @challenge.vetted) %></div>
+						<div style="clear:both; height:5px;"></div>
+						
+						
+							<div style="float:left; width:70px">Editor Pick:</div>
+							<div style="float:left"><%= select_tag "challenge[editor_pick]", 
+							               options_for_select([["No", false], 
+							                  ["Yes", true]], 
+							                 @challenge.editor_pick) %></div>
+							<div style="clear:both; height:5px;"></div>
+
+
+
+							
+
+						<%end%>
+
+						<input type="submit">
+					</form>
+				</div>
+
+
+			<%end%>
+       
+
+
+</div>
+
+
+
+<div style="float:left; margin-left:70px; width:640px; margin-top:5px">
+
+	<div style="float:right; width:180px; margin-top:5px; margin-bottom:15px;">
+		
+
+		   
+
+	
+			
+			
+					<div style="float:left; width:100px; margin-top:10px; margin-left:5px; text-align:center">
+						<%if @challenge.achievement%>
+						<%if @editable%>
+						 <%=image_tag(@challenge.achievement.photo(:thumb_90), :style=>"width:80px; height:80px; border:0px", :class=>"AchievementPhoto Transparent", :title=>@challenge.achievement.name, :required=>true, :onclick=>"openAchievements(#{@challenge.id})", :id=>"Achievement_#{@challenge.id}")%>
+						<%else%>
+		          <%= link_to(achievement_path(@challenge.achievement)) do
+		            image_tag(@challenge.achievement.photo(:thumb_90), :style=>"width:80px; height:80px; border:0px", :class=>"AchievementPhoto Transparent", :title=>@challenge.achievement.name, :required=>true, :id=>"tooltipBadge")
+		          end %>
+					<%end%>
+						<%else%>
+						<%if @editable%>
+							<img id="Achievement_<%=@challenge.id%>"  src="/images/no_achievement_big.png" style="height:72px; width:72px; margin-top:5px; margin-left:20px" class="Transparent" onclick="openAchievements(<%=@challenge.id%>) ">
+						<%end%>
+
+							
+
+						  <%end%>
+					</div>
+					<div style="float:left; width:60px; margin-top:5px; text-align:center">
+							<div id="pointsHolder" style="margin-left:15px" class="PointsBox" title="Earn <%=@challenge.points%> point<%if @challenge.points > 1%>s<%end%> by completing this challenge.<br>Redeem for awards." <%if !@editable%>onclick="window.location.href='/rewards'"<%end%>>
+								<div style="margin-top:13px">
+									<%if @admin%>
+									<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"points", :content=>@challenge.points, :id=>@challenge.id, :model=>"challenge", :allow_return=>false, :required=>true, :extra_visibility=>@extra_visibility, :numeric=>true}%>	
+									<%else%>
+										<%=@challenge.points%>
+									<%end%>
+								</div>
+								<div style="margin-top:10px; font-size:10px">adventure<br>point<%if @challenge.points > 1%>s<%end%></div>
+							</div>
+					</div>
+
+		
+	
+		
+	
+
+		
+	
+	</div>
+	
+	<div class="HighlightedTitle" style="padding-bottom:7px">
+		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@challenge.title, :id=>@challenge.id, :model=>"challenge", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>	
+		
+			
+				
+				
+	</div>
+	
+
+	<div id="hideFlash" style="display:none; min-height:75px;">
+		<div class="more-less"> <div class="more-block">
+			<div onclick="editDescClick()">
+				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"details", :content=>@challenge.details, :id=>@challenge.id, :model=>"challenge", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); resetPublish();}"}%>	
+			</div>
+			<%if @challenge.user%><div style="font-size:10px; color:#999; margin-top:7px; margin-bottom:7px">created by <a class="BlueLink" href="/<%=@challenge.user.username%>"><%=@challenge.user.first_name%> <%=@challenge.user.last_name%></div></a><%end%>
+		</div></div>
+		<div style="clear:both"></div>
+		<div id="Proof" style="margin-top:15px; display:none"><span class="highlightedColor"><b>Proof</b>:</span> 
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"proof", :content=>@challenge.proof, :id=>@challenge.id, :model=>"challenge" , :required=>true,:allow_return=>false, :extra_visibility=>@extra_visibility}%>	
+		</div>
+	</div>
+	
+	
+	
+	
+	
+		<div style="clear:both"></div>
+		
+		
+	
+			
+				<div id="PublishLayer" class="tipBox" style="float:left; margin-top:20px; width:630px;<%if @challenge.published%>display:none<%end%>" >
+						<span style="font-size:18px"><b>Publish</b></span>
+						<div id="PublishText" style=" font-size:12px; padding-top:5px">Please complete the following:</div>
+					
+					
+						<%@draft = false%>
+						<script>
+						  draftTitle = 0; 
+						  draftPhoto = 0;
+					      draftDetails = 0;
+					      draftLocation = 0;
+					      draftTag = 0;
+					      draftUser = 0;
+						</script>
+						
+						<div id="PublishIntruct" style="float:left; margin-right:50px; width:330px;">
+						<ul class="CustomBullet">
+							<%if @challenge.title.nil? or @challenge.title =="Required" %>
+								<div id="draftTitle">
+								<%@draft = true%>
+								<script>draftTitle = 1</script>
+								<li class="customLi" onclick="$('#title').focus();" ><b>Title.</b>  A short & catchy headline.</li>
+								</div>
+							<%end%>
+							<%if @challenge.photo_file_name.nil?%>
+							<div id="draftPhoto"  >
+						    	<script>draftPhoto = 1</script>
+								<%@draft = true%>
+								<li class="customLi" onclick="uploadChallengePhoto(<%=@challenge.id%>,'show')"><b>Photo</b> <br>Ideally, of someone doing it.</li>
+								</div>
+							<%end%>
+							<%if @challenge.details == "Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph." or @challenge.details == "Required"%>
+							<div id="draftDetails"  >
+								<script>draftDetails = 1</script>
+								<%@draft = true%>
+								<li class="customLi" onclick="$('#details').focus();"><b>Details</b><br>Why is this fun?  How do you do it?</li>
+								</div>
+								
+							<%end%>
+							<%if @challenge.lat == 0%>
+							<div id="draftLocation" >
+								<script>draftLocation = 1</script>
+								<%@draft = true%>
+								<li class="customLi" onclick="$('#location').focus();"><b>Location</b><br>Where?  If it can be done in multiple locations, pick one.</li>
+								</div>
+							<%end%>
+							<%if @challenge.achievement_id.nil?%>
+							<div id="draftTag">
+					
+								<script>draftTag = 1</script>
+								<%@draft = true%>
+								<li class="customLi" onclick="openAchievements(<%=@challenge.id%>)"><b>Tag it</b><br>Choose the most relevant one.</li>
+								</div>
+							<%end%>
+							<%if !current_user%>
+							<div id="draftUser" >
+								<script>draftUser = 1</script>
+								<%@draft = true%>
+								<li class="customLi" onclick="openRegister('Sign up for Stomp to Upload Photos')"><b>Login or Create Account</b><br>Only registered users may publish.</li>
+								</div>
+							<%end%>
+						</ul>
+						
+						<%if !@draft%>
+							<script>
+							setTimeout("$('#PublishText').html('You are ready to publish your adventure!')",1);
+							$("#PublishIntruct").hide();
+							</script>
+						<%end%>
+						</div>
+						<div style="float:left; width:200px; margin-top:20px;">
+							<div id="draftButton" class="WhiteActiveBorder" <%if @draft%>style="display:none"<%end%> onclick="publishChallenge(<%=@challenge.id%>)">
+								<div unselectable="on" class="GreenButton" style="width:200px;">
+									<div id="publishButtonText" class="InnerGreenBorder" style="width:198px;">
+										Publish your Adventure
+									</div>
+								</div>
+							</div>
+					
+						
+					
+							<div id="draftButtonInactive" class="WhiteActiveBorder" <%if !@draft%>style="display:none"<%end%> >
+								<div unselectable="on" class="GreenButtonInactive" style="width:200px; cursor:default">
+									<div class="InnerGreenBorderInactive" style="width:198px;">
+										Publish your Adventure
+									</div>
+								</div>
+							</div>
+				</div>
+						
+				</div>
+				
+				<div id="ShareMyPublished" class="tipBox" style="float:left; margin-top:20px;<%if !@challenge.published or @challenge.vetted%>display:none<%end%>">
+						<div style="font-size:18px"><b>Share with Friends</b></div>
+						<div id="PublishText" style=" font-size:12px; padding-top:10px; padding-bottom:15px;">Broadcast your adventure to your social networks!  <br>The more people who complete it, the more kudos you'll earn.</div>
+					
+					<%=render :partial=>"challenges/share", :locals=>{:challenge=>@challenge}%>
+				</div>
+				
+				
+				<div style="clear:both"></div>
+		
+				
+					
+		
+	
+	<div id="tabs" class="ui-tabs" style="width:660px; margin-top:30px; font-size:12px; border:0px solid #eee; opacity:0">
+		<ul class="ui-tabs-nav">
+			
+
+			<%if @completed.length > 0%>
+				<li><div style="float:left"><a href="#tabs-1">Who stomped this?</a></div></li>
+			<%end%>
+			<%if @bucket.length > 0%>
+				<li><div style="float:left"><a href="#tabs-2">Who added to their bucket list?</a></div></li>
+			<%end%>
+		</ul>
+	
+
+	
+
+	
+	
+		<%if @completed.length > 0%>
+		<div id="tabs-1" class="ui-tabs-hide ui-tabs-container" style="  padding:0px; padding-top:20px ">
+		
+			<div class="DarkBlueLabel" style="text-align:center; font-weight:bold; margin-bottom:3px;"><%=@completed.length%> <%if  @completed.length == 1%>person<%else%>people<%end%> did this!</div>
+			<div id="RenderLog">
+				<%@i=0%>
+				<%@completed.each_with_index do |log,index|%>
+
+				  <%if log.proof_file_name%>
+
+				   	<%@i = @i+1%>
+						<div style="float:left; width:200px; <%if (@i % 3) != 0%>padding-right:25px;<%end%> margin-top:10px; margin-bottom:10px; height:190px; margin-bottom:25px;">
+								<%= render :partial=>"challenges/preview_thumb", :locals=>{:width=>200, :height=>150, :completed=>log, :display_name=>true}%>
+						</div>
+					<%end%>
+				<%end%>
+				<%#render :partial=>"challenges/loop_log"%>
+			</div>
+	
+			<div style="clear:both"></div>
+			
+
+		</div>
+		<%end%>
+		<%if @bucket.length > 0%>
+			<div id="tabs-2" class="" style="  padding:0px; padding-top:20px ">
+				
+				<div class="DarkBlueLabel" style="text-align:center; font-weight:bold"><%=@bucket.length%> <%if  @bucket.length == 1%>person<%else%>people<%end%> want<%if  @bucket.length == 1%>s<%end%> to do this!</div>
+				<%for bucket in @bucket%>
+				<a class="BlueLink" href="/<%=bucket.user.username%>">
+				<div style="float:left; padding:20px; text-align:center">
+							<%= image_tag bucket.user.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer"
+							 %><br>
+							<%=bucket.user.first_name%>
+					</div>
+					</a>
+				<%end%>
+				<div style="clear:both"></div>
+			</div>
+		<%end%>
+		
+	
+
+	</div>
+	
+	<%if !current_user and !@editable%>
+		
+		
+		<div class="ChallengeSignUp">
+			
+			
+			<div style="padding:15px; padding-left:20px;">
+				
+				<div align="center" style="padding-bottom:20px; font-weight:bold; font-size:16px" class="DarkBlueLabel">How Stomp Works</div>
+				
+				
+				<div style="width:145px; margin-right:17px; float:left">
+					<div class="SpotlightLeftBoxText" style="font-size:12px"><img style="float:left; padding-right:5px;width:19px; height:19px" src="/images/one.png">Add adventures to your Bucket List</div>
+					<img style="margin-top:15px; margin-left:8px;  width:122px; height:82px" src="/images/call_1.png">
+					<div style="margin-top:5px; font-size:11px; margin-left:8px;">See people with similar interests.</div>
+				</div>
+				
+				<div style="width:144px; margin-right:17px; float:left">
+					<div class="SpotlightLeftBoxText" style="font-size:12px"><img style="float:left; padding-right:5px;width:19px; height:19px" src="/images/two.png">Share Plans with Friends</div>
+					<img style="margin-top:15px; margin-left:8px;  width:122px; height:82px" src="/images/call_2.png">
+					<div style="margin-top:5px; margin-left:8px; font-size:11px">Spread the love.<br>Invite friends to join you.</div>
+				</div>
+				
+				<div style="width:144px; margin-right:17px; float:left">
+					<div class="SpotlightLeftBoxText" style="font-size:12px"><img style="float:left; padding-right:5px;width:19px; height:19px" src="/images/three.png">Stomp It!<br>Upload photo</div>
+					<img style="margin-top:15px; margin-left:8px;  width:122px; height:82px" src="/images/call_3.png">
+					<div style="margin-top:5px; margin-left:8px; font-size:11px">Upload photo or video 
+					snapped during adventure.</div>
+				</div>
+				
+				<div style="width:144px; float:left">
+					<div class="SpotlightLeftBoxText" style="font-size:12px"><img style="float:left; padding-right:5px;width:19px; height:19px" src="/images/four.png">Earn badges and rewards</div>
+					<img style="margin-top:15px; margin-left:8px; width:122px; height:82px" src="/images/call_4.png">
+					<div style="margin-top:5px; margin-left:8px;font-size:11px">Score bragging rights.<br>Win some swag.</div>
+				</div>
+				
+				<div style="clear:both"></div>
+			
+				
+				<div align="center">
+					<div style="margin-left:10px; margin-top:45px; float:left;" onclick="alert('The iPhone app will be released on February 15th, 2011.')">
+						<img src="/images/iphone_appstore.png" class="AppIcon" style="width:122px; height:40px">
+					</div>
+					<div style="margin-left:20px; margin-top:45px; float:left" class="AppIcon" onclick="alert('The Android app will be released on February 15th, 2011.')">
+						<img src="/images/android_appstore.png" style="width:122px; height:40px">
+					</div>
+
+					<div style="float:left; margin-left:75px; margin-bottom:5px; margin-top:30px; width:260px; text-align:right">
+						<span style="font-weight:bold; color:#5691C4">Life is short.</span>  It’s easy to forget to live when wrapped up in the day-to-day tedium.  
+						<p>Stomp helps discover fun things you could be doing... and others who might want to join you.</p>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div style="clear:both"></div>
+			
+			
+		</div>
+
+		
+		
+								<div  class="WhiteActiveBorder" style="margin-top:15px; margin-left:250px; float:left" onclick="openRegister('Sign up for Stomp!')">
+									<div unselectable="on" class="outerB GreenButton" style="width:170px">
+										<div class="innerB InnerGreenBorder">Sign up for Stomp</div>
+									</div>
+								</div>
+								
+								
+								
+		
+		
+		
+	<%end%>
+	
+	
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+$(".AchievementPhoto").tooltip();
+
+$('a.lightbox').lightBox({imageLoading: '/images/loading.gif',
+	imageBtnClose: '/images/close.gif',
+	imageBtnPrev: '/images/prev.gif',
+	imageBtnNext: '/images/next.gif'}); // Select all links with lightbox class
+
+
+
+$("#tooltipBadge").tooltip();
+$("#pointsHolder").tooltip();
+var $tabs = $("#tabs").tabs();
+$(document).ready(function() {
+	<%if @showtabs%>
+	$('#tabs').css("opacity",1)
+	<%end%>
+ });
+</script>
+
+
+<%if @showtabs%>
+<script type="text/javascript"> 
+ 
+function editDescClick() {
+		$(".adjust").parents("div:first").find(".more-block").css('height', 'auto').css('overflow', 'visible');
+		// Hide the [...] when expanded
+		$(".adjust").parents("div:first").find("span.continued").css('display', 'none');
+		$(".adjust").text("Less");
+}
+
+
+
+$(function(){
+ $("#hideFlash").show();
+	if ($(".more-less").height() < 134) {
+		
+		$("#Proof").css("margin-top","0px")
+		return
+	}
+
+
+// The height of the content block when it's not expanded
+var adjustheight = 134;
+// The "more" link text
+var moreText = "More";
+// The "less" link text
+var lessText = "Less";
+ 
+
+
+
+// Sets the .more-block div to the specified height and hides any content that overflows
+$(".more-less .more-block").css('height', adjustheight).css('overflow', 'hidden');
+ 
+// The section added to the bottom of the "more-less" div
+$(".more-less").append('<span class="continued">[&hellip;]</span><a href="#" class="adjust"></a>');
+ 
+$("a.adjust").text(moreText);
+ 
+
+
+$(".adjust").toggle(function() {
+		$(this).parents("div:first").find(".more-block").css('height', 'auto').css('overflow', 'visible');
+		// Hide the [...] when expanded
+		$(this).parents("div:first").find("span.continued").css('display', 'none');
+		$(this).text(lessText);
+	}, function() {
+		$(this).parents("div:first").find(".more-block").css('height', adjustheight).css('overflow', 'hidden');
+		$(this).parents("div:first").find("span.continued").css('display', 'block');
+		$(this).text(moreText);
+});
+
+
+
+});
+
+
+
+</script> 
+
+<%else%>
+<script>$("#hideFlash").show();
+
+
+</script>
+  <%end%>
+
+
+
+
+
+

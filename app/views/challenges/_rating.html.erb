@@ -1,0 +1,28 @@
+<div class="ChallengeRateBox <%if source=="spotlight"%>roundTopLeft<%end%> <%if @saved%>Heart<%else%>Un<%end%>Selected" onmouseover="if ($('.SaveLabel',this).html() == 'Save') { $('.RateGraphic',this).css('opacity',.6) } else { $('.RateGraphic',this).css('opacity',1)   }" onmouseout="if ($('.SaveLabel',this).html() == 'Save') { $('.RateGraphic',this).css('opacity',.3) } else {  $('.RateGraphic',this).css('opacity',.8)   }" onclick="toggleSave($('#challenge<%=challenge.id%>'),<%=challenge.id%>,this);<%if source=="spotlight"%>advanceChallenge(1);<%end%>" style="
+-webkit-border-bottom-left-radius: 4px;
+-moz-border-radius-bottomleft:4px; 
+border-bottom-left-radius:4px;">
+	<img src="/images/heart<%if @saved%>Select<%end%>.png" style="width:16px; height:14px; padding-top:2px; margin-right:3px;<%if @saved%>opacity:.8<%end%>" class="smallThumpUp RateGraphic" ><span class="SaveLabel" >Save<%if @saved%>d<%end%></span>
+</div>
+<div class="ChallengeRateBox UnSelected" style="width:78px;  text-align:center; " onclick="StompIt(this,<%=challenge.id%>)">
+I Did This
+</div>
+<div class="ChallengeRateBox UnSelected <%if source=="spotlight"%>roundTopRight<%end%>" style=" text-align:right; border-right:0px " onmouseover="$('.RateGraphic',this).css('opacity',.6)" onmouseout="$('.RateGraphic',this).css('opacity',.3)" onclick="<%if source=="spotlight"%>advanceChallenge(1);<%end%> animateDeleteBucket($('#challenge<%=challenge.id%>'),<%=challenge.id%>)">
+	<div style="float:right; margin-right:8px; ">Hide</div><img src="/images/thumbdown_small.png" style="float:right;padding-top:1px; margin-left:0px" class="smallThumpUp RateGraphic" onclick="">
+</div>
+
+		
+		<div class="ChallengeDoneBox" <%if !@done%>style="display:none"<%end%>>
+	
+			<div style="float:left; margin-left:4px;">
+				You Stomped This!
+			</div>
+			<div style="float:left; margin-left:38px;" onclick="<%if current_user%>newUploadProof(<%=challenge.id%><%if !@proofpic%>,0,0<%else%>,1,<%=@subscribed.id%><%end%>)<%else%>openRegister('Sign up for Stomp to Upload Photos')<%end%>">
+				
+				<img src="/images/small_camera.png"  class="StompedIcon" style="width:21px; height:16px; padding-top:2px;" title="Upload Picture">
+			
+			</div>
+			<div style="float:left; margin-left:12px;" onclick=" UnStomp(this,<%=challenge.id%>)">
+				<img src="/images/rate_delete.png" class="StompedIcon" style="width:17px; height:16px; padding-top:2px;" title="I didn't do this!">
+			</div>	
+		</div>

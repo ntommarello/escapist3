@@ -1,0 +1,8 @@
+<%
+  @read_cmd = 'crontab -l'
+  @write_cmd = 'crontab -'
+  @additive = ['# start-reputation-crontab', '# end-reputation-crontab']
+%>
+
+# update user reputation
+0 1 */1 * * <%= RUBBER_ROOT %>/script/cron-rake users:reputation

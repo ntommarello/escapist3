@@ -1,0 +1,14 @@
+[
+<%- @bucket_list_visual.each do |challenge| -%>
+  {
+    "id": <%= challenge.id %>,
+    "title": "<%= strip_html(challenge.title).strip %>",
+    "file_name": "<%= challenge.photo_file_name %>",
+    "location": "<%= strip_html(challenge.location).strip %>",
+    "distance": <%= decimal_distance(challenge.distance.to_f) %>,
+    "details": "<%= strip_html(challenge.details).strip %>",
+    "lat": <%= challenge.lat %>,
+    "lng": <%= challenge.lng %>
+  },
+<%- end -%>
+]

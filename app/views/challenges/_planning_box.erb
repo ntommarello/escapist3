@@ -1,0 +1,13 @@
+<div style="color:black; font-weight:bold; margin-bottom:10px;">In Bucket List</div>
+
+<%if @users_in_bucket.length == 0%>
+<p>No one has this challenge in their bucket.</p>
+<%end%>
+
+<div style="text-align:left">
+	<%for user in @users_in_bucket%>
+	<a href="/<%=user.username%>">
+		<%= image_tag user.avatar.url(:thumb_40), :class=>"Transparent UserLinkAvatar" %>
+	</a>
+	<%end%>
+</div>

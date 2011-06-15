@@ -1,0 +1,106 @@
+<script>
+	setTimeout("switchMenuBar($('#CreateLink'),1);",10);
+</script>
+
+
+
+
+
+<div class="HighlightedTitle" style="font-size:20px">Create an Adventure</div>
+
+<div style="float:left">
+<div id="CharacterCount" style="position:absolute; display:none; text-align:right; font-size:16px; color:#999; width:650px;">60</div>
+<div id="SearchBox" >
+	<div class="WhiteBorderSearch" >
+		
+		<div class="CreateDropBox" unselectable="on">
+			<div class="InnerLoginBorder" style="height:32px;">
+				<div style="margin-right:20px" onclick="if( $(this).html() == 'I want to') { $(this).html('I have done') } else { $(this).html('I want to') } $('#challenge_title').focus();">I want to</div>
+			
+			</div>
+				<div id="LoginCircle" style="margin-left:20px;"></div>
+		</div>
+		
+		
+		<div class="whiteTextBorder" style="width:442px; margin-top:6px; margin-left:6px;float:left">
+			
+			
+			<input id="challenge_title" name="challenge[title]" type="textfield" class="ShadowedTextBox" style="width:426px; height:20px;" maxlength="60" 
+				onkeyup="CharacterCount(this)" 
+				onkeypress="return submitChallengeOnEnter(this,event,1)" 	
+					onblur="setTimeout('closeCreateSearch()',100);">
+		</div>
+		
+		<div  class="WhiteActiveBorder" style="float:left; margin-left:6px; margin-top:6px">
+			<div unselectable="on" class="GreenButton" style="width:62px; height:34px; line-height:33px" onclick="createChallenge();">
+				<div id="CreateContent" class="InnerGreenBorder" style="height:32px;">
+					Create
+				</div>
+			</div>
+		</div>
+		
+	</div>			
+</div>
+
+<%if  @my_challenges.length == 0%>
+<div id="Arrow" style="margin-top:20px; margin-left:150px;">
+	<div style="position:absolute"><img src="/images/uparrow.png"></div>
+	<div style="position:absolute; margin-left:45px; margin-top:35px;color:#A9BAC9; font-size:18px; line-height:22px">Jot down some adventure ideas.<br>Share them with friends.</div>
+</div>
+<%end%>
+<div id="CreateSearchResults">
+	
+	
+
+	<div id="RenderCreateSearchResults">
+		
+	</div>
+	
+</div>
+<div style="display:none"><img src="/images/no_pic_b_hover.png"><img src="/images/no_achievement_hover.png"></div>
+
+<div id="RenderContent" style="margin-top:20px; width:690px; height:420px">
+	<%@i = 0%>
+	<%for challenge in  @my_challenges%>
+
+	<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"New", :challenge=>challenge, :i=>@i}%>
+	<%@i = @i+1%>
+	<%end%>
+</div>
+</div>
+
+<div style="float:right; margin-top:20px; margin-left:0px">
+
+	<div class="SidePaper">
+		<div style="text-align:center; padding-top:15px; font-size:15px; line-height:19px; font-weight:bold; color:#5591C3; ; 	text-shadow:#FFFFFF 0 1px 0;">Help people live more adventurously</div>
+				<div style=" padding-top:10px; padding-left:20px; padding-right:20px; color:#8F8F8F; 	text-shadow:#FFFFFF 0 1px 0;">Show off your best ideas... and all the crazy shit you've done.  <p>Then see others in your city do it!</p>
+
+					<div class="CreateScoreBox" style="margin-top:6px;"><%=@sum_bucket%></div>
+					<div style="float:left; margin-left:10px; width:110px; padding-top:15px; color:#558CBF">saved to their bucket list</div>
+					<div style="clear:both"></div>
+					<div class="CreateScoreBox"><%=@sum_stomped%></div>
+					 <div style="float:left; margin-left:10px; width:110px; padding-top:25px; color:#558CBF">stomped your challenges</div>
+						<div style="clear:both"></div>
+					<div class="CreateScoreBox"><%=@curation_points%></div>
+					 <div style="float:left; margin-left:10px; width:110px; padding-top:32px; color:#558CBF">curation points</div>
+						<div style="clear:both"></div>
+					</div>
+	</div>
+	
+</div>
+
+<div style="clear:both"></div>
+
+
+<Script>
+$(document).ready(function() {
+
+$(".AchievementIcon").tooltip();
+$(".tip").tooltip();
+setTimeout("$('#challenge_title').focus();",1500);
+
+
+
+
+ });
+</script>

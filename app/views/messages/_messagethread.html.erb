@@ -1,0 +1,24 @@
+<% @messages.each do |message| %>
+	<div id="MessageRow<%= message.id %>"  class="messageRow" style="cursor:default; padding-bottom:20px; padding-top:20px;">
+		<div style="float:left; width:50px;" >
+
+
+		 <%= link_to(user_path(message.user)) do
+			image_tag message.user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer"
+		end %>
+
+
+		</div>
+
+		<div style="float:left; margin-left:10px; width:520px">
+      <%= link_to(message.user.full_name, user_path(message.user), :class => 'BlueLink') %>
+      <span style="font-size:11px; color:#847784; font-weight:normal"><%=message.created_at.strftime("%B %d at %I:%M%p")%></span>
+		
+      <br/>
+      <br/>
+
+      <%= raw auto_link_urls(render_string_with_breaks(message.message), :target => '_blank', :class=>"BlueLink") %>
+	  </div>
+	  <div style="clear:both;"></div>
+  </div>
+<% end %>

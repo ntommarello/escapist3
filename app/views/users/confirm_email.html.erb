@@ -1,0 +1,8 @@
+<% if @user %>
+  <span class="HighlightedTitle">Your <%=APP_NAME%> account is confirmed</span>
+  <p>Thanks.  Have fun!</p>
+<% else %>
+  <span class="HighlightedTitle">Unable to access your account</span>
+  <br/>
+  Please check your authorization code and try again, or contact us at <a href="mailto:support@stomp.io">support@stomp.io</a>
+<% end %>

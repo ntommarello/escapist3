@@ -1,0 +1,137 @@
+<script>
+	setTimeout("switchMenuBar($('#CreateLink'),1);",10);
+</script>
+
+<div class="HighlightedTitle" style="font-size:20px">Create a Challenge!</div>
+<div style="margin-top:10px;" class="SubTitle">And share it with your friends</div>
+
+<div style="float:left">
+	<form id="ChallengeUpload" name="ChallengeUpload" action="/challenges" method="post" enctype="multipart/form-data">
+		
+	<div class="FormFieldContainer" style="float:left">
+		<div class="FormLabel" style="padding-top:0px">Title</div>
+	
+				<input id="challenge_title"  name="challenge[title]"  type="textfield" class="NewTextBox" onfocus="instruct('title')">
+	
+	
+	
+		<div class="FormLabel">Details</div>
+	
+			<textarea id="challenge_details" name="challenge[details]" class="NewTextBox" style="height:71px; font-size:12px; line-height:12px" onfocus="instruct('detail')"></textarea>
+	
+	
+	
+		<div class="FormLabel">Location</div>
+			<div id="MapDisplay" style="position:absolute; display:none; left:373px; background-color:#fff; width:50px; height:50px; border:1px solid #ccc; text-align:center"><img id="ajax" src="/images/ajax-loader_f.gif" style="margin-top:20px; height:11px; width:16px;"><img id="GoogleMap" src="" style="width:50px; height:50px; display:none"></div>
+				<input id="challenge_location" name="challenge[location]" type="textfield" class="NewTextBox" onfocus="instruct('location')" onblur="ChallengeLocationBlur(this);">
+
+
+		<div class="FormLabel" >Upload a photo of this challenge being done</div>
+	
+		<input id="challenge_photo" name="challenge[photo]" type="file" onchange="$('#Photo').show()">
+	
+		<div id="Photo" style="display:none">
+			<div class="FormLabel">Does this photo show you?</div>
+			<div><input name="ididthis" type="radio" value="0" checked>No <input name="ididthis" type="radio" value="1">Yes!</div>
+		</div>
+		<input type="hidden" name="challenge[lat]" id="challenge_lat" value="0">
+		<input type="hidden" name="challenge[lng]" id="challenge_lng" value="0">
+		<input type="hidden" name="challenge[city]" id="challenge_city" value="99">
+		<div align="center">
+		<div class="SubmitButton" onclick="submitChallenge(this);">Create</div>
+		</div>
+	
+	</div>
+	<div style="clear:both"></div>
+	</form>
+</div>
+
+
+
+
+
+<div class="InstructionBox">
+	
+	<div id="DefaultInstructions">
+	
+		
+	</div>
+	
+	
+	
+	<div id="TitleInstructions" style="display:none">
+		A short & catchy title
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal">Explains exactly what to do.  Should contain a verb.</div>
+	
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; font-weight:normal; margin-left:30px"><b>Example</b>: "Hug an Alpaca"</div>
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:100px; font-weight:normal;">"Climb to the Summit of Mt. Washington"</div>
+				<div style="font-size:14px; color:#666; margin-top:10px; margin-left:100px; font-weight:normal;">"Go Squirrel Fishing on Boston Common!"</div>
+	</div>
+	
+
+    <div id="DetailInstructions" style="display:none">
+		Why should anyone care?  
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal">Why is this fun? How can someone do it?</div>
+	
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; font-weight:normal; margin-left:30px"><b>Example</b>:</div>
+		<div style="font-size:11px; color:#666; font-weight:normal; line-height:14px; margin-left:30px">Squirrel Fishing is touted as "The Global Sport that Grabs Squirrels by the Nuts"!  This catch and release sport uses bait (typically a peanut or piece of fruit) tied to a string.  NO HOOKS are used and NO ANIMALS are hurt.  This is simply the delicate art of gently being able to lift the squirrel off the ground as he grapples for his tasty prize. The elusive "lift-off" moment only lasts a split second so have your camera ready. 
+			
+			<p> This prestigious sport can be done in any place where our little furry friends congregate but we suggest Boston Common for this one.  And don't forget to reward the little guy with his nut or fruit.  Nobody wants an angry rodent on their hands.</p></div>
+	
+	
+	</div>
+	
+	
+
+    <div id="ProofInstructions" style="display:none">
+		How can someone prove they did this? 
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal; line-height:18px;">Describe the photo or video that "proves" the challenge.</div>
+	
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal;"><b>Example</b>: Demonstrate squirrel 'lift-off'</div>
+	
+	
+	</div>
+	
+	<div id="LocationInstructions" style="display:none">
+		Challenges are tied to locations
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal; line-height:18px;">Type anything that Google Maps can figure out. </div>
+	
+	
+		<div style="font-size:14px; color:#666; margin-top:10px; margin-left:30px; font-weight:normal;"><b>Example</b>: "Boston MA", "One Broadway Cambridge MA"</div>
+
+	</div>
+    
+
+
+	
+		
+</div>
+
+
+
+
+<script>
+  $("#challenge_title").focus();
+		$('#challenge_details').autoResize({
+		    // On resize:
+		    onResize : function() {
+		        $(this).css({opacity:0.8});
+		    },
+		    // After resize:
+		    animateCallback : function() {
+		        $(this).css({opacity:1});
+		    },
+		    // Quite slow animation:
+		    animateDuration : 300,
+		    // More extra space:
+		    extraSpace : 10
+		});
+</script>

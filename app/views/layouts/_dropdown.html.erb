@@ -1,0 +1,22 @@
+<div id="<%=fieldname%>Drop" class="DropButton blueDrop" style="<%=style%>" unselectable="on"  >		
+	<div class="inner">
+		<div class="value" style="padding:5px; padding-bottom:6px;padding-left:10px;"  unselectable="on"><%=selectedValue%></div>
+		<div id="<%=fieldname%>Inner" class = "dropHiddenLayer"  style="border-top:1px solid #BECFE3;">
+			
+			<%i=0%>
+			<%for o in options%>
+				<div class="dropOption" onclick="FilterChallenges($('#<%=fieldname%>Drop'), this, '<%=model%>[<%=fieldname%>]',<%=values[i]%>,event)"><%=options[i]%></div>
+				<%i=i+1%>
+			<%end%>
+		</div>
+	</div>
+	<div id="dropTriangle" class="dropt blueTriangle"></div>
+</div>
+
+<script>
+
+$('.value', '#<%=fieldname%>Drop').bind('click', function() {
+toggleDrop($('#<%=fieldname%>Drop'),event,$('#<%=fieldname%>Inner'));
+});
+
+</script>

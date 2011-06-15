@@ -1,0 +1,24 @@
+	<Script>
+		var share = {
+	   method: 'stream.share',
+	   u: 'http://<%=APP_URL%>/challenges/<%=challenge.id%>-<%=challenge.title.parameterize%>'
+	   };
+	</script>
+	
+
+   
+	<div style="cursor:pointer" class="BlueLink" 	onclick="FB.ui(share, function(response) { console.log(response); });">
+		<img style="margin-top:3px; float:left; border:0px; margin-right:5px; margin-left:6px;" height="16" width="16" src="/images/facebook.png">
+		<div style="margin-top:3px; float:left">facebook</div>
+	</div>
+
+	<div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=I created a %23StompIO challenge: <%=challenge.title%>!  &url= http://<%=APP_URL%>/challenges/<%=challenge.id%>-<%=challenge.title.parameterize%>', '_blank', 'toolbar=0, status=0, width=626, height=436');">
+		<img style="margin-top:3px;margin-left:5px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+		<div style="margin-top:3px; margin-left:5px;  float:left">twitter</div> 
+	</div>
+
+	<a href="mailto:?subject=My Stomp.io Challenge&amp;body=Check out my Stomp.io Challenge: http://<%=APP_URL%>/challenges/<%=challenge.id%>-<%=challenge.title.parameterize%>" class="BlueLink" >
+		<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
+		<div style="margin-top:3px;  float:left">email</div>
+	</a>
+

@@ -1,0 +1,18 @@
+<records>
+  
+  <%for challenge in @challenges%>
+	  <record> 
+	    <id><%=challenge.id%></id>
+	    <title><%=strip_html(challenge.title)%></title>
+	    <file_name><%=challenge.photo_file_name%></file_name>
+
+	
+	    <location><%=strip_html(challenge.location)%></location>
+	    <distance><%=decimal_distance(challenge.distance.to_f)%></distance>
+	    <saved>0</saved>
+		<disliked>0</disliked>
+		<completed>0</completed>
+	  </record>
+  <%end%>
+
+</records>

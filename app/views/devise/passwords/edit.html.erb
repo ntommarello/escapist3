@@ -1,0 +1,14 @@
+<div class="HighlightedTitle">Reset Your Password</div>
+
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <p>New Password:<br />
+  <%= f.password_field :password, :class=>"TextBox" %></p>
+
+  <p>Confirm New Password:<br />
+  <%= f.password_field :password_confirmation, :class=>"TextBox" %></p>
+
+<div id="SaveButton" class="yellowButton"  style="margin-top:1px; width:210px" onclick="$('#user_new').submit()">Reset My Password</div>
+<% end %>

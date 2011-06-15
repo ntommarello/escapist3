@@ -1,0 +1,61 @@
+<div style="width:660px; float:left">
+
+<%if @challenges.length > 0%>
+<div style="border-bottom:1px solid #999; padding-bottom:5px; margin-top:25px; color:#66">
+	<div style="float:left; width:110px; margin-left:300px; text-align:center"><span class="BlueLink" href="">Created</span></div>
+	<div style="float:left; width:110px; text-align:center"><span class="BlueLink" ># Bucketed</span></div>
+	<div style="float:left; width:110px; text-align:center"><span class="BlueLink" ># Stomped</span></div>
+	<div style="float:left;"></div>
+	<div style="clear:both"></div>
+</div>
+<%end%>
+
+<%@challenges.each do |challenge|%>
+	
+	<div>
+
+ 	<div id = "mychallenge<%=challenge.id%>" class="PublishedRow" style="padding-top:10px; padding-bottom:5px">
+	 	<div style="float:left; margin-right:10px;">
+			<%= link_to(challenge_path(challenge.id), :class=>"BlueLink") do 
+			 image_tag challenge.photo.url(:thumb_50), :class=>"ChallengePic", :style=>"width:50px; height:50px;"
+		end %>
+		</div>
+	
+		<div style="float:left; width:200px;">
+	       <%= link_to(challenge_path(challenge.id), :class=>"BlueLink") do challenge.title end %>
+			
+			<div style="font-size:10px; margin-top:5px" <%if @admin%> class="editPublished" onclick="togglePublished(this,<%=challenge.id%>)" <%end%>><%if challenge.published == true%>published<%else%>unpublished<%end%></div>
+		</div>
+		
+		<div style="float:left; width:110px; margin-left:40px; margin-top:8px; text-align:center">
+	     <%=challenge.created_at.strftime("%b %e")%>
+		</div>
+		
+		<div style="float:left; width:110px; margin-top:8px; text-align:center">
+	     <%=challenge.bucketed%>
+		</div>
+		
+		<div style="float:left; width:110px; margin-top:8px; text-align:center">
+	     <%=challenge.stomped%>
+		</div>
+		
+		<%if @editable%>
+		
+			<div style="float:right; margin-right:10px; margin-top:8px; text-align:center">
+				<img id="deleteChallenge" src="/images/trash.gif" onclick="deleteMyChallenge($('#mychallenge<%=challenge.id%>'),<%=challenge.id%>)">
+			</div>
+		<%end%>
+		
+	
+		<div style="clear:both"></div>
+	</div>
+	</div>
+	
+<%end%>
+
+</div>
+
+
+
+
+<div style="clear:both"></div>

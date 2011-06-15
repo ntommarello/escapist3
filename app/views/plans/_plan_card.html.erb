@@ -1,0 +1,58 @@
+<div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
+	<div class="BrowseBorder" >
+		<A href="/plans/<%=plan.id%>">
+			<div class="BrowseExpandImage"
+			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
+			<%else%>
+	style="background:url(/images/no_pic_b.png)"
+			<%end%>
+			>
+		
+				<div class="BrowseInfoContainer">
+					<div class="BrowseDate"><div style="margin-top:3px"><%=plan.start_time.to_date.strftime('%b').upcase()%><br><%= plan.start_time.to_date.strftime('%e').strip()%></div></div>
+					<div class="BrowseTitle"><div style="margin-top:3px; margin-left:10px"><%=raw plan.title%><div style="color:#ccc"><%=raw plan.url_name%></div></div></div>
+				</div>
+		
+			</div>
+		</a>
+		<div style="height:95px; margin:5px;">
+			
+			<div style="height:45px; overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
+				<%=raw plan.note%>
+			</div>
+			
+			<div style="float:left">
+				<a href="/<%=plan.user.username%>">
+				<%= image_tag(plan.user.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>plan.user.first_name, :style=>"width:40px; height:40px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
+				</a>
+				
+				<%if plan.users.length == 0%>
+					<div style="float:left; margin-left:5px; margin-top:5px; coloe:#ccc; font-size:11px">Hosted by:<br> <a href="/<%=plan.user.username%>" class="BlueLink"><%=plan.user.first_name%> <%=plan.user.last_name%></a></div>
+				<%end%>
+				
+				<%ii=0%>
+	
+				<%for person in plan.users.sort_photos_first%>
+					<%ii=ii+1%>
+					<%if ii < 5%>
+						<a href="/<%=person.username%>">
+						<%= image_tag(person.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:39px; height:39px; cursor:pointer; border:1px solid #ddd; float:left; margin-right:1px;") %>
+					<%end%>
+					</a>
+				<%end%>
+			</div>
+			
+			
+			<div class="home_buy_button" style="float:right; margin-top:8px; margin-left:0px;width:83px; height:30px; margin-right:-10px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/plans/<%=plan.id%>?pop=yes'">
+				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
+				<div id="plan_price" style="position:absolute; margin-left:30px; width:50px; text-align:center; font-size:12px;" >
+					<%if plan.price and plan.price > 0%>
+						$<%=plan.price.to_s.sub( ".0", "") %>
+					<%else%>
+						FREE
+					<%end%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

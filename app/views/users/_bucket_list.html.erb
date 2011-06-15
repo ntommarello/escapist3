@@ -1,0 +1,60 @@
+<%if !current_user%>
+<div style="float:left; width:500px; margin-top:4px; color:#ccc">
+Click <img src="/images/thumbup_small.png" style="opacity:.5; width:15px; height:18px"> if you'd like to join <%=@user.first_name%>
+</div>
+<%end%>
+	
+	
+	<div style="clear:both"></div>
+
+<div id="BucketCard" style="margin-top:25px;" >
+ 	
+    <%@saveChallenges = @challenges%>
+	<%@challenges = @bucket_list_visual%>
+	
+
+
+
+	<%= render :partial=>"challenges/refresh_challenges", :locals=>{:source=>"bucket_list"}%>
+	<%@challenges = @saveChallenges%>
+</div>
+
+
+
+<%if current_user and @editable%>
+	<div style="float:left; width:500px; margin-top:4px"><div style="float:left; margin-top:4px;"><b>Do any of your friends want to join you?</b></div>
+		
+			<Script>
+			var share = {
+		   method: 'stream.share',
+		   u: 'http://<%=APP_URL%>/<%=current_user.username%>#bucket'
+		   };
+		</script>
+
+
+
+		<div style="margin-right:5px; cursor:pointer" class="BlueLink" onclick="FB.ui(share, function(response) { console.log(response); });">
+			<img style="margin-top:3px; margin-left:9px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+			<div style="margin-top:3px; float:left">facebook</div>
+		</div>
+
+		<div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=Check out my bucket list!  Join me to do something! %23StompIO &url= http://<%=APP_URL%>/<%=current_user.username%>#bucket', '_blank', 'toolbar=0, status=0, width=626, height=436');">
+			<img style="margin-top:3px;margin-left:5px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+			<div style="margin-top:3px; margin-left:5px;  float:left">twitter</div> 
+		</div>
+
+		<a href="mailto:?subject=My Stomp.io Bucket List&amp;body=Check out my Stomp.io Bucket List: http://<%=APP_URL%>/<%=current_user.username%>#bucket" class="BlueLink" >
+			<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
+			<div style="margin-top:3px;  float:left">email</div>
+		</a>
+		
+		</div>
+
+<%end%>
+
+
+<Script>
+<%if !@editable%>
+$('.smallThumpUp').tooltip();
+<%end%>
+</script>

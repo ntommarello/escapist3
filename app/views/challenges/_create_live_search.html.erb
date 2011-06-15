@@ -1,0 +1,28 @@
+<%if @searchResults.length > 0%>
+<div style="padding:10px">
+	<div class="DarkBlueLabel" style="font-size:16px;  text-align:center">Avoid Duplicates</div>
+	<div class="SubTitle" style="margin-top:5px; text-align:center">Displaying most related Stomps</div>
+<%end%>
+
+<%@searchResults.each_with_index do |result,index|%>
+<div style="padding-top:15px; padding-bottom:5px;" >
+	<%if result.photo_file_name%>
+		<div style="float:left;">
+			
+			<%=link_to(result) do
+			 image_tag(result.photo(:thumb_50), :style => "border:0px; width:50px; height:50px;", :class => "AchievementIcon")
+		end%>
+		</div>
+	<%end%>
+	<div id="SearchRow<%=index%>"  class="searchRows" style="float:left; padding:2px; width:330px; margin-left:10px; min-height:40px; padding-top:5px;">
+		<%newtitle = raw result.title%>
+		<%=link_to newtitle, result, :class=>"BlueLink"  %>
+	</div>
+	<div style="clear:both"></div>
+</div>
+	
+<%end%>
+
+<%if @searchResults.length > 0%>
+</div>
+<%end%>

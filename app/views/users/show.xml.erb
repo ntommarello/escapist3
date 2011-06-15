@@ -1,0 +1,72 @@
+<record>
+
+
+	<user-id><%=@user.id%></user-id>
+	<first-name><%=@user.first_name%></first-name>
+	<last-name><%=@user.last_name%></last-name>
+	<username><%=@user.username%></username>
+	<% if @user.about_me.nil?%>
+		<about-me></about-me>
+	<%else%>
+	    <%@about =  @user.about_me.to_xs%>
+	<%@about = @about.gsub(/nbsp;/,' ')%>
+	<%@about = @about.gsub(/&amp;/,'')%>
+		<about-me><%= @about%></about-me>
+	<%end%>
+	
+	<hometown><%=@user.hometown%></hometown>
+	<location><%=@user.location_city%></location>
+	<privacy-block-adventure-log><%=@user.privacy_block_adventure_log%></privacy-block-adventure-log>
+
+	<last-login></last-login>
+	
+	<distance></distance>
+	<score><%=@user.score%></score>
+	<avatar-file-name><%=@user.avatar_file_name%><%if @user.avatar_file_name%><%unless @user.avatar_file_name.include? '.'%>.<%end%><%end%></avatar-file-name>
+	
+    
+     <achievements>
+		<%for tag in @user.achievements%>
+		<achievement>
+		    <name><%=tag.name%></name>
+		    <id><%=tag.id%></id>
+			<file_name><%=tag.photo_file_name%></file_name>
+		</achievement>
+		<%end%>
+
+	</achievements>
+	
+	<%if @adventure_log.length > 0%>
+		<logs>
+			<%for adventure in @adventure_log%>
+			<log>
+				<id><%=adventure.challenge.id%></id>
+		    	<title><%=adventure.challenge.title%></title>
+		    	<photo_id><%=adventure.id%></photo_id>
+				<file_name><%=adventure.proof_file_name%></file_name>
+			</log>
+			<%end%>
+		</logs>
+	<%end%>
+	
+	
+	<%if @challenges.length > 0%>
+		<challenges>
+		<%for challenge in @challenges%>
+		<challenge>
+			<id><%=challenge.id%></id>
+			<photo_id><%=challenge.id%></photo_id>
+	    	<title><%=challenge.title%></title>
+			<file_name><%=challenge.photo_file_name%></file_name>
+		</challenge>
+		<%end%>
+		
+		</challenges>
+	
+	<%end%>
+	
+	
+	
+	
+	
+</record>

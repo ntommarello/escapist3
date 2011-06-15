@@ -1,0 +1,19 @@
+[
+<%- @done_ids ||= [] -%>
+<%- @challenges.select { |c| !@done_ids.include?(c.id) }.each do |challenge| -%>
+  {
+    "id": <%= challenge.id %>,
+    "title": "<%= strip_html(challenge.title).strip %>",
+    "file_name": "<%= challenge.photo_file_name %>",
+    "location": "<%= strip_html(challenge.location).strip %>",
+    "distance": <%= decimal_distance(challenge.distance.to_f) %>,
+    "details": "<%= strip_html(challenge.details).strip %>",
+    "lat": <%= challenge.lat %>,
+    "lng": <%= challenge.lng %>,
+    <%- if current_user -%>
+    "in_bucket": <%= @bucket_ids.include?(challenge.id) ? 1 : 0 %>,
+    <%- end -%>
+    "url": "<%= challenge.url_link %>"
+  },
+<%- end -%>
+]

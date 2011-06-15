@@ -1,0 +1,55 @@
+{
+  <%- if current_user == @user -%>
+  "auto_login_token": "<%= @user.authentication_token %>",
+  <%- end -%>
+  "user_id": <%= @user.id %>,
+  "first_name": "<%= @user.first_name %>",
+  "last_name": "<%= @user.last_name %>",
+  "username": "<%= @user.username %>",
+  "about_me": "<%= @user.about_me %>",
+  "hometown": "<%= @user.hometown %>",
+  "location": "<%= json_safe(@user.location_city) %>",
+  "privacy_block_adventure_log": <%= !!@user.privacy_block_adventure_log %>,
+  "score": <%= @user.score %>,
+  "avatar_file_name": "<%= @user.avatar_file_name %>",
+  "achievements": [
+  <%- @user.achievements.each do |atag| -%>
+    {
+      "name": "<%= atag.name %>",
+      "id": <%= atag.id %>,
+      "file_name": "<%= atag.photo_file_name %>"
+    }<%- if atag != @user.achievements.last -%>,<%- end -%>
+  <%- end -%>
+  ],
+  "logs": [
+  <%- @adventure_log.each do |adventure| -%>
+    {
+      "id": <%= adventure.challenge.id %>,
+      "title": "<%= json_safe(adventure.challenge.title) %>",
+      "proof_id": <%= adventure.id %>,
+      "proof_file_name": "<%= adventure.proof_file_name %>",
+      "file_name": "<%= adventure.challenge.photo_file_name %>",
+      "location": "<%= json_safe(adventure.challenge.location) %>",
+      "details": "<%= json_safe(adventure.challenge.details) %>",
+      "lat": <%= adventure.challenge.lat %>,
+      "lng": <%= adventure.challenge.lng %>,
+      "url": "<%= adventure.challenge.url_link %>"
+    }<%- if adventure != @adventure_log.last -%>,<%- end -%>
+  <%- end -%>
+  ],
+  "challenges": [
+  <%- @challenges.each do |challenge| -%>
+    {
+      "id": <%= challenge.id %>,
+      "photo_id": <%= challenge.id %>,
+      "title": "<%= challenge.title %>",
+      "file_name": "<%= challenge.photo_file_name %>",
+      "location": "<%= json_safe(challenge.location) %>",
+      "details": "<%= json_safe(challenge.details) %>",
+      "lat": <%= challenge.lat %>,
+      "lng": <%= challenge.lng %>,
+      "url": "<%= challenge.url_link %>"
+    }<%- if challenge != @challenges.last -%>,<%- end -%>
+  <%- end -%>
+  ]
+}

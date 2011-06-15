@@ -1,0 +1,82 @@
+<script>
+	setTimeout("switchMenuBar($('#LeadersLink'),1);",10);
+</script>
+
+
+
+<div style="width:250px; float:right; margin-top:20px">
+	<div class="HighlightedTitle">Leaderboard</div>
+	<div style="margin-top:7px">Earn some bragging rights</div>
+	<div style=" margin-top:20px;">
+		<div style="float:right; margin-right:25px; text-align:right; color:#777"></div>
+		<div style="clear:both"></div>
+	</div>
+	<div style="border-bottom:1px solid #eee; margin-bottom:3px"></div>
+
+	<%@leaders.each_with_index do |user,index|%>
+	<div style="padding-top:10px; padding-bottom:10px; border-bottom:1px solid #eee;">
+		<div style="float:left; width:20px; color:#777;text-align:center"><%=index+1%></div>
+		<div style="float:left; width:50px">
+				 <%= link_to(user_path(user)) do
+		  			image_tag user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer"
+				end %>
+		</div>
+		<div style="float:left; margin-left:10px; width:120px">
+			
+		<a class="BlueLink" href="/<%=user.username%>"><%=user.first_name%> <%=user.last_name%></a>
+						
+						<div style="margin-top:3px; font-size:11px"><%=user.location_city%></div>
+		</div>
+		<div style="float:left; margin-left:10px; text-align:right; margin-top:17px; width:30px; font-size:20px; font-weight:bold;" class="HighlightedTitle">
+				<%=user.score%><span style="font-size:11px; font-weight:normal">pts</span>
+		</div>
+	
+		<div style="clear:both; "></div>
+		</div>
+	<%end%>
+</div>
+
+<div style="float:left; width:400px; margin-top:20px;">
+	<div class="HighlightedTitle">Prizes & Rewards</div>
+	<div style="margin-top:7px">Win stuffs!  Score some swag!</div>
+	
+	
+	<p>We feel the biggest reward comes from actually doing more adventures!  But hey, we like offering small gifts at milestones.  And maybe we'll eventually get some sponsors to offer special discounts and promotions!</p>
+	
+		<div style="float:left;"><img src="/images/cookies.jpg" style="width:110px; height:110px;"></div>
+		<div style="float:left; margin-left:10px; width:280px">
+			<div style="margin-top:20px; font-size:12px" class="HighlightedTitle">10 points</div>
+			<div style="margin-top:5px;"  class="SpotlightLeftBoxText">Cookies!  Nom-nom-nom!</div>
+			<div style="margin-top:5px">We will bake and mail you some cookies.  Seriously!  Unless we need FDA approval or something.</div>
+		</div>
+		<div style="clear:both; height:30px"></div>
+			
+		<div style="float:left; width:110px; text-align:center"><img src="/images/beer.jpg" style="width:90px; height:110px;"></div>
+		<div style="float:left; margin-left:10px; width:280px">
+			<div style="margin-top:20px; font-size:12px" class="HighlightedTitle">25 points</div>
+			<div style="margin-top:5px;" class="SpotlightLeftBoxText">Launch Paaaarty!!!</div>
+			<div style="margin-top:5px">Come hang out at the <%=APP_NAME%> office with other cool <%=APP_PEOPLE%>.  Sort of like the parties in The Social Network, without the Coke<sup>&trade;</sup>.</div>
+		</div>
+		
+		<div style="clear:both; height:30px "></div>
+		
+		<div style="float:left; width:110px; text-align:center"><img src="/images/question.jpg" style="width:110px; height:97px;"></div>
+		<div style="float:left; margin-left:10px; width:280px">
+			<div style="margin-top:20px; font-size:12px" class="HighlightedTitle">50 points</div>
+			<div style="margin-top:5px;" class="SpotlightLeftBoxText">It's a secret.</div>
+			<div style=" margin-top:5px">Ok, actually, we haven't figured out what to give away yet.  But you'll like it.  Promise!</div>
+		</div>
+				
+
+</div>
+
+
+
+<div>
+	
+</div>
+
+
+<Script>
+$(".AchievementIconSpot").tooltip();
+</script>

@@ -1,0 +1,304 @@
+<% content_for :page_title do %>
+  <%=@user.first_name%> <%=@user.last_name%> - Adventure Log
+<% end %>
+
+
+<%if @editable%><script>setTimeout("switchMenuBar($('#ProfileLink'),1);",10);</script><%end%>
+
+	
+<div style="float:left; width:170px;">
+	
+	<%if !@editable && @user.avatar_file_name %>
+		<a class="lightbox" href="<%=@user.avatar.url(:thumb_350)%>" >
+	<%end%>		
+	
+	<div class="PhotoBorder" style="width:152px; height:175px; " <%if @editable%>onmouseover="$('#UploadLink').css('color', 'blue');" onmouseout="$('#UploadLink').css('color', 'white'); " onclick="uploadPhoto();"<%end%>> 
+		<%= image_tag(@user.avatar.url(:thumb_150), :class=>"Transparent", :style=>"width:150px; height:150px; border:1px solid #E1E1E1; cursor:pointer") %>
+		<div class="ChallengeBottom" style="width:160px; text-align:center; margin-top:1px; padding-top:4px; height:18px;">
+			last signed in <%=@user.current_sign_in_at.strftime('%B %e')%>
+		</div>
+		<%if @editable%><div style="text-align:center; width:152px; margin-top:3px;"><a id="UploadLink"  class="AppLink" href="#"> <%if @user.avatar_file_name.nil?%> Upload Photo <%else%> Replace Photo <%end%> </a></div><%end%>
+	</div>
+	
+	<%if !@editable%></a><%end%> 
+	
+	<%if !@editable%>
+		<div id="MessageButton" style="margin-top:20px; margin-left:4px; <%if current_user and !@user.allow_messages_from?(current_user)%>opacity:.3<%end%>" title="<%=@user.first_name%> has messages disabled" class="ProfileButton" onclick="<%if !current_user%>openRegister('Sign up for Stomp to Message <%=@user.first_name%>')<%else%><%if @user.allow_messages_from?(current_user)%>SendMessage('<%=@user.first_name%>',<%=@user.id%>)<%end%><%end%>">Message</div>
+	
+	<%if current_user%>
+		<% unless @user.allow_messages_from?(current_user) %>
+			<script>$("#MessageButton").tooltip();</script>
+		<% end %>
+	<%end%>
+ 	<%=render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
+	
+			
+	<%end%>
+
+	<div style="margin-top:50px; margin-bottom:5px; color:#999">Home City</div>
+	
+	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"hometown", :content=>@user.hometown, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
+	
+	
+	<div style="margin-top:20px;  margin-bottom:5px; color:#999">Current City</div>
+	
+	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location_city", :content=>@user.location_city, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
+	
+	
+	
+	<%if @editable or @user.facebook_link or @user.twitter_link%>
+		<div style="margin-top:25px;  margin-bottom:5px; color:#999">My Links</div>
+	<%end%>
+	
+	
+	
+	
+	
+	
+	
+	
+	<%if @user.facebook_link != nil%>
+	<div>
+		
+		<a target="_blank" class="BlueLink" href="<%=@user.facebook_link%>">
+			<img style="border:0px; margin-top:3px; float:left; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+			<div style="margin-top:3px; float:left">Facebook</div>
+		</a>
+	
+	</div>
+	<%elsif @editable%>
+		<div>[<a class="BlueLink" href="#" onclick="fblogin()">Add Facebook</a>]</div>
+	<%end%>
+	
+	<%if @user.twitter_link != nil%>
+	<div style="clear:both"></div>
+	<div style="padding-top:3px">
+		<a target="_blank" class="BlueLink" href="http://twitter.com/<%=@user.twitter_link%>">
+			<img style="margin-top:3px; border:0px; float:left; margin-right:5px;" height="16" width="16" src="/images/twitter.png">
+			<div style="margin-top:3px; float:left">@<%=@user.twitter_link%></div>
+		</a>
+	</div>
+	<%elsif @editable%>
+		<div style="clear:both"></div>
+		<div>[<a class="BlueLink" href="/auth/twitter">Add Twitter</a>]</div>
+	<%end%>
+	
+	
+	
+</div>
+
+
+<div style="float:left;  margin-left:55px; width:540px;">
+
+	<div id="points" style=" position:absolute; margin-top:4px; left:850px; width:70px; height:70px;" class="PointsBox" title="Earn points by completing adventures.<br>Redeem for awards." onclick="window.location.href='/rewards'">
+		<div style="margin-top:10px"><%=@user.score%></div>
+		<div style="margin-top:8px; font-size:10px">adventure<br>point<%if @user.score > 1%>s<%end%></div>
+	</div>
+
+	
+	<div style="margin-top:3px; margin-bottom:7px;" class="HighlightedTitle"><%=@user.first_name%>  <%=@user.last_name%></div>
+	
+		<div style="width:475px; ">
+			
+		<%if @user.about_me.length > 90%><%@border=false%><%else%><%@border=true%><%end%>
+			
+		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"about_me", :content=>@user.about_me, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+		</div>
+
+	
+	<%if @editable %>
+	<div style="position:absolute; z-index:500; width:120px; margin-left:575px; display:none; margin-top:57px; padding:4px;" class="SuggestChallengeButton" onclick="window.location.href='/<%=APP_CONTENT.downcase%>/new'">Create <%=APP_CONTENT%></div>
+	<%end%>
+	
+	<div id="tabs" class="ui-tabs" style="width:710px; padding:0px; padding-right:0px; margin-top:50px; font-size:12px; border:0px solid #eee; display:none">
+		<ul class="ui-tabs-nav">
+			
+				<li id="AdventureLogTab"><div style="float:left"><a href="#tabs-2">Adventure Log</a></div></li>
+
+			
+			
+				<%if @bucket_list.length > 0%>
+					<%if @user.privacy_bucket != 1 or @editable == true%>
+				  		<li id="BucketListTab"><div style="float:left"><a href="#tabs-1">Bucket List</a></div></li>
+					<%end%>
+				<%end%>
+				
+		
+			
+			<%if @user.achievements.length > 1%>
+				<%if @user.privacy_achievement != 1 or @editable == true%>
+			   		<li id="AchievementsTab"><div style="float:left"><a href="#tabs-3">Achievements</a></div></li>
+				<%end%>
+			<%end%>
+
+			<%if @challenges and @challenges.length > 0%><li id="MyChallengesTab"><div style="float:left"><a href="#tabs-4">My Creations</a></div></li><%end%>
+		</ul>
+		
+		
+	
+		
+			<div id="tabs-2" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding:0px;  padding-top:8px; ">
+
+				<%@showlog = 1%>
+				<%if @user.privacy_block_adventure_log%>
+					<%if !current_user%>
+						<%@showlog = 0%>
+					<%end%>
+					<%if current_user && current_user.id != @user.id%>
+						<%@showlog = 0%>
+					<%end%>
+				<%end%>
+
+				<%if @showlog == 1%>
+					<%= render :partial=>"users/adventure_log"%>
+				<%else%>
+					<div style="text-align:center; padding-top:20px;"><%=@user.first_name%>'s adventure log is private.</div>
+				<%end%>
+
+
+			</div>
+		
+		
+		
+		
+		<div id="tabs-1" class="ui-tabs-hide ui-tabs-container" style=" min-height:300px; padding:0px; padding-top:8px; padding-left:18px; padding-right:0px;">
+				<%= render :partial=>"users/bucket_list"%>	
+		</div>
+		
+	
+		<div id="tabs-3" class="ui-tabs-hide ui-tabs-container" style=" min-height:270px; padding-top:30px; padding-left:0px; padding-right:0px ">
+		
+
+		  <% @user.achievements.each_with_index do |achievement, index| %>
+			<%i = index + 1%>
+			  <div class="floatThumbnail" <%if i % 6==0%>style="margin-right:0px"<%end%>>
+          <%= link_to(achievement_path(achievement)) do
+                image_tag achievement.photo(:thumb_90), :style=>"width:90px; border:0px; height:90px; cursor:pointer", :class=>"AchievementPhoto Transparent"
+          end %>
+          <br/>
+          <%=achievement.name%>
+</div>
+      <% end %>
+	
+			<div style="clear:both"></div>
+		</div>
+
+		
+		<% if @challenges && @challenges.length > 0 %>
+			<div id="tabs-4" class="" style="min-height:300px; padding:0px; padding-top:8px; padding-left:18px; padding-right:0px;">
+				
+			
+			
+				<div id="MyCard" style="padding-top:25px;" >
+					<%if current_user and current_user.id == @user.id%>
+						<%=render :partial=>"challenges/refresh_challenges", :locals=>{:source=>"New"}%>
+					<%else%>
+						<%=render :partial=>"challenges/refresh_challenges", :locals=>{:source=>"user_profile"}%>
+					<%end%>
+				</div>
+			</div>
+		<%end%>
+		
+		
+	</div>
+	
+
+
+</div>
+
+
+
+<script>
+//var $tabs = $("#tabs").tabs({ cookie: { expires: 30 }});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+	$('#tabs').show();
+ });
+
+$("#comparison").tooltip();
+$("#points").tooltip();
+
+
+$(window).bind('hashchange', function () {
+	   selectedTab = window.location.hash;
+
+	
+	
+	 	
+	
+	
+	selectedTab = selectedTab.replace(/#bucket/i, $('li').index($("#BucketListTab")));
+
+	selectedTab = selectedTab.replace(/#log/i, $('li').index($("#AdventureLogTab")));
+
+	selectedTab = selectedTab.replace(/#achievements/i, $('li').index($("#AchievementsTab")));
+
+	selectedTab = selectedTab.replace(/#challenges/i, $('li').index($("#MyChallengesTab")));
+	
+	selectedTab = selectedTab.replace(/#/i, "0");
+
+	if (selectedTab == '') {
+		selectedTab = 0;
+	}
+
+
+var $tabs = $('#tabs').tabs();
+	$tabs.tabs('select', parseInt(selectedTab)); // switch to third tab
+	 
+	
+	
+});
+
+ tabs = $("#tabs").tabs(); // render the tabs
+
+        tabs.bind('tabsshow', function(event, ui) { // when tab is shown update the URL
+
+			id="log"
+			if (ui.panel.id == "tabs-1") {
+				id="bucket"
+			}
+			if (ui.panel.id == "tabs-2") {
+				id="log"
+			}
+			if (ui.panel.id == "tabs-3") {
+				id="achievements"
+			}
+			if (ui.panel.id == "tabs-4") {
+				id="challenges"
+			}
+
+			window.location.hash = id;
+		
+		
+        });
+
+
+$(window).trigger("hashchange");
+
+$('a.lightbox').lightBox({imageLoading: '/images/loading.gif',
+	imageBtnClose: '/images/close.gif',
+	imageBtnPrev: '/images/prev.gif',
+	imageBtnNext: '/images/next.gif'}); // Select all links with lightbox class
+
+
+</script>
+
+
+
+
+
+

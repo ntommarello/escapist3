@@ -1,0 +1,23 @@
+{
+  "id": <%= @challenge.id %>,
+  "title": "<%= @challenge.title %>",
+  "file_name": "<%= @challenge.photo_file_name %>",
+  "location": "<%= strip_html(@challenge.location).strip %>",
+  "details": "<%= strip_html(@challenge.details).strip %>",
+  "lat": <%= @challenge.lat %>,
+  "lng": <%= @challenge.lng %>,
+  "url": "<%= @challenge.url_link %>",
+<%- if current_user && current_user.has_saved_challenge?(@challenge) -%>
+  "in_bucket": 1,
+<%- else -%>
+  "in_bucket": 0,
+<%- end -%>
+<%- if current_user && current_user.has_completed_challenge?(@challenge) -%>
+<%- @subscribed = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id, @challenge.id) -%>
+  "completed": 1,
+  "completed_note": "<%= strip_html(@subscribed.completed_note) %>",
+  "completed_date": "<%= time_ago_in_words(@subscribed.date_completed_on) %> ago"
+<%- else -%>
+  "completed": 0
+<%- end -%>
+}

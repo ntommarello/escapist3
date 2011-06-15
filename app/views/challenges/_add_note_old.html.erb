@@ -1,0 +1,68 @@
+<b>Invite Your Friends</b>
+<%if @note.nil? or @note == ""%>
+	<div style="margin-top:3px">
+		<textarea id="Plan" class="TextBox" style="width:300px; height:35px;"></textarea>
+	</div>
+	<%if @addBucket%><%@add=1%><%else%><%@add=0%><%end%>
+	<div style="margin-top:1px; margin-left:240px; width:55px;" class="greyButton" onclick="<%if current_user%>postPlan(this,$('#Plan'),<%=@add%>,<%=@challenge.id%>)<%else%>openLoginDrop($('#LoginButton')); ignoreHide=1;<%end%>">Next</div>
+<%else%>
+<div style="clear:both; padding-top:10px;"></div>
+	<div style="float:left; width:60px;">
+		<a href="/<%=current_user.username%>">
+<%= image_tag current_user.avatar(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer" %>
+		</a>
+	</div>
+	<div style="float:left; width:300px">
+		<%@oldeditable = @editable%>
+		<%@editable = true%>
+	  	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@note, :id=>@subscribed_id, :model=>"subscribed_challenge", :required=>false, :allow_return=>true, :extra_visibility=>true}%>	
+		<%@editable = @oldeditable%>
+	</div>
+	<div style="clear:both; border-bottom:2px solid #999; padding-top:10px"></div>
+<%end%>
+
+
+
+<%@userstring = ""%>
+<%if current_user%>
+	<%@userstring = "and user_id != 1"%>
+<%end%>
+<%@notes = SubscribedChallenge.find(:all, :conditions=>["challenge_id = ? and completed = ? #{@userstring}",@challenge.id,false], :joins=>:user)%>
+
+
+<%for note in @notes%>
+	<%if note.note%>
+		<div style=" padding-top:5px; padding-bottom:8px; margin-bottom:8px; margin-top:8px;  border-bottom:1px dotted #ccc">
+			<div style="float:left; width:60px;">
+				<a href="/<%=note.user.username%>">
+				<%= image_tag note.user.avatar(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer" %>
+				</a>
+			</div>
+			<div style="float:left; width:300px;">
+				 <a class="BlueLink" href="/<%=note.user.username%>"><%= note.user.first_name%></a> says, "<%=note.note%>"
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	<%end%>
+<%end%>
+
+
+<script>
+$('#Plan').autoResize({
+    // On resize:
+    onResize : function() {
+        $(this).css({opacity:0.8});
+    },
+    // After resize:
+    animateCallback : function() {
+        $(this).css({opacity:1});
+    },
+    // Quite slow animation:
+    animateDuration : 300,
+    // More extra space:
+    extraSpace : 20
+});
+
+</script>
+
+	

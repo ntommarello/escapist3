@@ -1,0 +1,298 @@
+
+
+<script>
+	setTimeout("switchMenuBar($('#AdventuresLink'),1);",10);
+</script>
+
+<div style="position:absolute; left:660px; margin-top:0px " onmouseover="returnHightlightBar()">
+		<div style="position:absolute; color:#ccc; left:10px; margin-top:-17px"></div>
+		<%= render :partial=>"/layouts/dropdown", :locals=>{:model=>"challenge", :fieldname=>"city", :selectedValue=>session[:dropdown_city], :style=>"position:absolute; width:115px; z-index:500", :options=>["Boston","San Francisco","New York City", "Earth"], :values=>[1,2,3,99]}%>
+		<div style="position:absolute; color:#ccc; left:135px; margin-top:-17px"></div>
+			<%= render :partial=>"/layouts/dropdown", :locals=>{:model=>"challenge", :fieldname=>"sort", :selectedValue=>session[:challenge_sort], :style=>"position:absolute; width:130px; left:125px;", :options=>["Awesome Sauce", "Popularity","Distance","Difficulty", "New"], :values=>[0,1,2,3,4]}%>
+
+	</div>
+<div class="HighlightedTitle">Life is short. Do more stuff!</div>
+<div style="margin-top:7px" class="SubTitle">Before you're old and go, "Damn, that went fast."</div>
+
+
+	
+
+
+
+<div  class="ChallengeRightFilters" style="height:700px" >
+	
+	<div  id="FilterContainer" style=" ">
+		<div class="MenuHeader"  onclick="toggleMenu(this,$('#MenuCategories'))">Categories<div class="MinusPlusCircle">-</div></div>
+		
+		<div id="HighlightedBar" style="position:absolute; display:none; margin-top:10px; margin-left:-7px; height:30px; background-color:#E7EEF5; width:200px; opacity:.6" onmouseout="returnHightlightBar()"></div>
+				
+	    <div id="SelectedBar" style="position:absolute; display:none; margin-top:10px; margin-left:-7px; height:30px; background-color:#E7EEF5; border:1px solid #BECFE3;  color:#264409; width:200px"></div>
+	
+			
+		<div id= "MenuCategories" style="display:none" class="ChallengeMenuContainer" ></div>
+		 <div class="MenuHeader" onclick="toggleMenu(this,$('#MenuBudget'))" onmouseover="returnHightlightBar()">Budget<div class="MinusPlusCircle"><%if @displayBudget == "none"%>+<%else%>-<%end%></div></div>
+	
+		 <div id= "MenuBudget" class="ChallengeMenuContainer" style="display:<%=@displayBudget%>; padding-left:20px; padding-right:20px;"> 
+			<div id="LowBudgetLabel" style="float:left" class="SliderCircle"><%= raw session[:filter_budget_low]%></div><div id="HighBudgetLabel" style="float:right" class="SliderCircle"><%= raw session[:filter_budget_high]%></div>
+			<div style="clear:both; height:12px;"></div>
+			<div id="BudgetSlider"></div>
+		</div>
+		 <div class="MenuHeader" onclick="toggleMenu(this,$('#MenuFilter'))">Advanced<div class="MinusPlusCircle"><%if @displayAdvanced == "none"%>+<%else%>-<%end%></div></div>
+	  	<div id= "MenuFilter" class="ChallengeMenuContainer" style="display:<%=@displayAdvanced%>"> 
+			<b>Weather</b><br>
+			<input  name="challenge[weather]" id="challenge_weather"  type="radio" value="1" <%if session[:filter_weather_value].to_i == 1%>checked<%end%> onclick="FilterChallenges2(this,'Warm')">Warm 
+			<input id="challenge_weather" onclick="FilterChallenges2(this,'Cold')" name="challenge[weather]"  type="radio" value="2" <%if session[:filter_weather_value].to_i == 2%>checked<%end%>>Cold 
+			<input id="challenge_weather" onclick="FilterChallenges2(this,'Either')" name="challenge[weather]" type="radio" value="99" <%if session[:filter_weather_value].to_i == 99%>checked<%end%>>Either
+			<br><br><b>Quality</b><br>
+			<input  name="filter_vetted" id="filter_vetted"  type="radio" value="1" onclick="FilterChallenges2(this,'Vetted')"  <%if session[:filter_vetted].to_i == 1%>checked<%end%>>Curated
+			<input id="filter_vetted" name="filter_vetted"  type="radio" value="2" onclick="FilterChallenges2(this,'Stomp')"  <%if session[:filter_vetted].to_i == 2%>checked<%end%>>All
+				<br><br><b>Difficulty Level</b><br>
+				<div style="padding-left:10px; padding-right:10px; margin-top:5px;">
+						<div id = "LowDiffLabel" style="float:left" class="SliderCircle"><%= session[:filter_diff_low]%></div><div id = "HighDiffLabel" style="float:right" class="SliderCircle"><%= session[:filter_diff_high]%></div>
+						<div style="clear:both; height:12px;"></div>
+						<div id="DiffSlider"></div>
+				</div>
+		</div>
+	</div>
+	
+	
+
+	
+	
+	
+</div>
+
+
+
+
+	<div style="float:right; width:690px; margin-top:15px; ">
+	
+		<div id="FilterWeatherBox" class="filterBox" <%if session[:filter_weather_value].to_i == 99%>style="display:none"<%end%>>
+			<span> <%=session[:filter_weather]%></span> <img class="filtertrash" src="/images/trash.gif" onclick=" $('input[name=challenge[weather]]').filter('[value=99]').attr('checked', true); FilterChallenges2($('input[name=challenge[weather]]:checked'),'Either');">
+		</div>
+		
+		<div id="FilterBudgetBox" class="filterBox" style="display:<%=@displayBudget%>">
+			<span> <%=session[:filter_budget_low]%> - <%=session[:filter_budget_high]%></span> <img class="filtertrash" src="/images/trash.gif" onclick="$('#BudgetSlider').slider( 'values' , 0 , 1); $('#BudgetSlider').slider( 'values' , 1 , 6)">
+		</div>
+		
+		<div id="FilterDiffBox" class="filterBox" <%if session[:filter_diff_low_value].to_i == 1 and session[:filter_diff_high_value].to_i == 5%>style="display:none"<%end%>>
+			<span> <%=session[:filter_diff_low]%> - <%=session[:filter_diff_high]%></span> <img class="filtertrash" src="/images/trash.gif" onclick="$('#DiffSlider').slider( 'values' , 0 , 1); $('#DiffSlider').slider( 'values' , 1 , 5)">
+		</div>
+		
+
+		
+	</div>
+	
+	<div id="RenderedContent" style="float:right; margin-top:5px; width:690px; opacity:0" onmouseover="returnHightlightBar()">
+
+	</div>
+
+
+
+	
+
+
+
+	
+	<script>
+	
+	
+	function findBudgetLabel(value) {
+		label = ''
+		if (value == 1) {
+			label = "Free"
+		}
+		if (value == 2) {
+			label = "$10"
+		}
+		if (value == 3) {
+			label = "$35"
+		}
+		if (value == 4) {
+			label = "$75"
+		}	
+		if (value == 5) {
+			label = "$150"
+		}
+		if (value == 6) {
+			label = "$300"
+		}
+		if (value == 7) {
+			label = "$300+"
+		}
+		return label;
+	}
+	
+	function findDiffLabel(value) {
+		label = ''
+		if (value == 1) {
+			label = "Easy"
+		}
+		if (value == 2) {
+			label = "Slight"
+		}
+		if (value == 3) {
+			label = "Mild"
+		}
+		if (value == 4) {
+			label = "Hard"
+		}	
+		if (value == 5) {
+			label = "Insane"
+		}
+		return label;
+	}
+	
+	
+  $(document).ready(function() {
+    $("#BudgetSlider").slider({
+		max: 6,
+		min: 1,
+		values: [<%= session[:filter_budget_low_value]%>,<%= session[:filter_budget_high_value]%>],
+		range:true,
+		 change: function(event, ui) {
+			
+			
+			
+			
+			lowBudgetValue = $(this).slider('values', 0)
+			highBudgetValue = $(this).slider('values', 1)
+			
+			lowBudgetLabel = findBudgetLabel(lowBudgetValue)
+			highBudgetLabel = findBudgetLabel(highBudgetValue+1)
+			
+			if (lowBudgetValue == 1 && highBudgetValue == 6) {
+				$("#FilterBudgetBox").hide();
+			} else {
+				$("#FilterBudgetBox").show();
+				$("#FilterBudgetBox > span").html(lowBudgetLabel + " - "+highBudgetLabel);
+			}
+			
+			$("#LowBudgetLabel").html(""+lowBudgetLabel)
+			$("#HighBudgetLabel").html(""+highBudgetLabel)
+			
+			FilterBudget(lowBudgetValue,lowBudgetLabel,highBudgetValue,highBudgetLabel)
+
+		 }
+		});
+		
+		
+		
+		$("#DiffSlider").slider({
+			max: 5,
+			min: 1,
+			values: [<%= session[:filter_diff_low_value]%>,<%= session[:filter_diff_high_value]%>],
+			range:true, 
+			change: function(event, ui) {
+				lowDiffValue = $(this).slider('values', 0)
+				highDiffValue = $(this).slider('values', 1)
+
+				lowDiffLabel = findDiffLabel(lowDiffValue)
+				highDiffLabel = findDiffLabel(highDiffValue)
+				
+						if (lowDiffValue == 1 && highDiffValue == 5) {
+							$("#FilterDiffBox").hide();
+						} else {
+							$("#FilterDiffBox").show();
+							$("#FilterDiffBox > span").html(lowDiffLabel + " - "+highDiffLabel);
+						}
+						
+
+				$("#LowDiffLabel").html(""+lowDiffLabel)
+				$("#HighDiffLabel").html(""+highDiffLabel)
+
+				FilterDiff(lowDiffValue,lowDiffLabel,highDiffValue,highDiffLabel)
+				
+				
+			}
+			});
+  });
+
+  </script>
+	
+	
+	
+	
+<div style="clear:both"></div>
+
+
+<div id="AppLoadSpinner" style="display:none; left:450px; top:150px;  background-color:white; color:#666; opacity:1; text-align:center; width:240px; height:50px; border:1px solid #ccc">
+	<img style="" src="/images/ajax-loader-bar.gif"><br>
+	<div  style="margin-top:10px; margin-left:70px; width:100px; text-align:center">loading challenges</div>
+</div>
+
+
+
+<script>
+page = 1;
+
+$("#filterIcon").tooltip();
+
+
+
+
+function callback(hash)
+{
+	
+
+	
+	hash = parseInt(hash)
+	if (!hash) {
+		hash = 1
+	}
+ 	//alert(hash)
+
+
+    
+
+
+	
+	
+
+}
+$(document).ready(function() {
+	
+	
+	$("#AppLoadSpinner").show();
+	
+	page = self.document.location.hash.replace(/^.*#/, '');
+	if (!page) {
+		page = 1;
+	}
+	
+    $.ajax({
+       type: "POST",
+       url: "/refresh_challenges",
+       data: 'init=1&page='+page,
+       success: function(msg){
+	
+		  $("#AppLoadSpinner").hide();
+		  $("#SpinnerLabel").html("refreshing");
+      	  $("#RenderedContent").html(msg)
+		  $("#RenderedContent").animate({opacity: 1,}, 300 );
+		  
+		  infiniteChallenges();
+		
+		 $("#RenderedContent > .ChallengeBoxBorder").each(function() {
+			$(this).css("opacity",.1);
+		});
+		 
+       }
+    });
+	
+    $.history.init(callback);
+  
+
+
+			$(window).bind( 'scroll', function() {
+		
+					grabs_scan();
+			
+			} );
+	
+		
+		
+});
+
+
+</script>

@@ -1,0 +1,89 @@
+<%@user = User.new%>
+<div id="RegisterModal"> 
+		<div class="closeRegister" onclick="closeRegister()"></div>
+		<div id="RegisterTitle" class="HighlightedTitle" style="text-align:center">Sign up for <%=APP_NAME%>!</div>
+					<div style="padding-top:5px; padding-bottom:10px; text-align:center">Already have an account?  <a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
+		
+		<div style="float:right; width:250px; margin-right:20px; margin-top:20px;">
+			<b>Why <%=APP_NAME%>?</b>  Go on awesome adventures!
+			<img alt="Thumb_214_carolyndanger1031" class="PhotoBorder" src="http://<%=ASSETS_URL%>/photos/77/thumb_214_CarolynDanger1031.jpg" style="width: 214px; height: 161px; margin-top:5px;cursor:default"/>
+			
+
+			
+		</div>
+
+
+		<div style="float:left; width:310px; margin-left:10px; margin-top:23px;">
+
+		     	<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
+					<div class="RegisterLabel2">full name</div>
+					<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="TextBox RegisterBox" size="30"></div>
+					<div style="clear:both; position:relative; height:10px; "></div>
+
+					<div class="RegisterLabel2">email</div>
+					<div style="float:left; width:150px;"><%= form.text_field :email, :class => "TextBox RegisterBox" %></div>
+
+					<div style="clear:both; position:relative; height:10px; "></div>
+
+						<div class="RegisterLabel2">password</div>
+					<div style="float:left; width:220px;"><%= form.password_field :password, :class => "TextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
+						
+							<div id="Error" style=" color:red; font-weight:bold">	
+								<%= flash[:notice] || flash[:error] %>
+							</div>
+							
+						</div>
+						<div style="clear:both; position:relative; height:5px; "></div>
+
+
+				
+						<div class="RegisterBox">
+
+						
+
+
+									<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:80px; width:120px">
+										<div unselectable="on" class="GreenButton" >
+											<div id="registerbutton" class="InnerGreenBorder">
+												Join <%=APP_NAME%>
+											</div>
+										</div>
+									</div>
+									
+
+							<div style="float:left; margin-top:10px; clear:both">
+							</div>
+						</div>
+
+						<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
+
+				<% end %>
+
+				<div style="clear:both; position:relative; height:25px; "></div>
+
+				<div style="font-weight:bold; color:black" class="RegisterLabel2">- OR - </div>
+			
+
+				<div style="cursor:pointer; float:left; width:230px; font-size:10px;" onclick="fblogin()">
+					<div class="Transparent fblogin"></div>
+					<br><b>Privacy:</b>
+					We don’t share your <%=APP_NAME%> data with Facebook, or post anything to your profile.
+					
+					<div id="fb-root" style="padding-top:20px"></div><fb:facepile max-rows="1" width="230"></fb:facepile>
+				</div>
+
+	
+
+
+
+
+					
+
+
+
+		</div>
+
+		<script>
+			$('#name').alpha({allow:"., "});
+		</script>
+</div>

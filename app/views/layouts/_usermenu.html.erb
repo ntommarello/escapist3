@@ -1,0 +1,204 @@
+<% if user_signed_in? %>
+
+	<%@name = "#{current_user.first_name} #{current_user.last_name}"%>
+	
+	<%if @name.length > 17%>
+		<%@name = truncate("#{current_user.first_name}", :length => 18)%>
+	<%else%>
+		<%@name = truncate("#{current_user.first_name} #{current_user.last_name}", :length => 18)%>
+	<%end%>
+	
+	
+	<div id="UserLinkMenu"  onclick="toggleUserMenu(this)" onmouseover="userMenuMouseOver()" onmouseout="userMenuMouseOut()">
+		<span id="Profileink" style="float:left" class="UserLink"  >  <%=@name%></span>
+		<img src="/images/red_triangle.png" style="float:left; margin-top:5px; width:7px; height:4px; cursor:pointer">
+	</div>
+		
+	<div class="AvatarShadow">
+		<a href="<%if current_user.avatar_file_name%>/<%=current_user.username%><%else%>#<%end%>" <%unless current_user.avatar_file_name%>onclick="uploadPhoto()"<%end%>>
+		<%= image_tag current_user.avatar.url(:thumb_40), :class=>"Transparent UserLinkAvatar" %>
+		</a>
+	</div>
+		
+
+	<div class="TopIcon" onclick="window.location.href='/inbox'" title="Inbox">
+		<img class="TopImage" id="InboxIcon" src="/images/message<% if current_user.unread_messages.length > 0%>_a<%end%>.png" >
+		<div style="margin-top:-4px">
+			<span id="InboxCount">
+				<span id="top_unread_count1" <% if current_user.unread_messages.length > 0%> class="highlightedBold" <%end%>><%=current_user.unread_messages.length%></span>
+			</span> 
+		</div>
+	</div>
+	<div  class="TopIcon" onclick="window.location.href='/bucket_list'" title="Bucket List">
+		<img id="TopBucketIcon" class="TopImage" style="width:17px; height:15px; margin-top:3px;" src="/images/bucket.png" >
+		<div style="margin-top:-4px">
+			<span id="BucketCount">
+				<span id="top_bucket_count1"><%=current_user.bucket_count%></span>				
+			</span>
+		</div>
+	</div>
+	<div  class="TopIcon" style="margin-top:14px" onclick="window.location.href='/settings'" title="Settings">
+		<img id="TopCreateIcon" class="TopImage" src="/images/cog.png">
+		
+	</div>
+	
+	<div class="TopDivider"> </div>
+	
+	<script>
+	$(".TopIcon").tooltip({ position: "top center", tipClass:'smallTip'});
+	</script>	
+
+	<div id="LogoutMenu">
+		<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/<%=current_user.username%>'" >
+			<a class="MainMenuLink" style="font-size:12px" href="/<%=current_user.username%>">Profile</a>
+		</div>
+		<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/settings'">
+			<a class="MainMenuLink" style="font-size:12px" href="/settings">Settings</a>
+		</div>
+		<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/logout'">
+			<a class="MainMenuLink" style="font-size:12px" href="/logout">Logout</a>
+		</div>
+	</div>
+	
+<%else%>
+
+<%#cookies.delete :challenges%>
+
+    <%@bucketcount = 0%>
+	<%if cookies[:challenges]%>
+	    <%@var =  cookies[:challenges].split(",")%>
+  		<%for var in @var%>
+			<%if var != "0"%>
+  			  <%@bucketcount = @bucketcount + 1%>
+             <%end%>
+  		 <%end%>
+	 <%end%>
+	
+
+	
+	<div id="FBIcon" onclick="fblogin()" ></div>
+	
+
+
+	   	<%if cookies[:challenges_created]%>
+	<a id="ChallengeListLink" class="UserLink" href="/my_challenges" style="float:right;  margin-top:22px; <%if @bucketcount == 0%>margin-right:300px;<%else%>margin-right:300px;<%end%>">My <%=APP_CONTENT%></a>
+		<%end%>
+
+
+		<div id="NotLoggedInBucket" style="float:right;  margin-top:22px; <%if cookies[:challenges_created]%>margin-right:10px;<%else%>margin-right:300px;<%end%> font-size:12px; color:#999; <%if @bucketcount == 0%>display:none;<%end%>">
+<a id="BucketListLink" class="UserLink" href="/bucket_list">Bucket List</a><span id="insertBucket"><%if @bucketcount > 0%><span id="BucketCount">(<span id="top_bucket_count"><%=@bucketcount%></span>) </span><%end%></span>
+		</div>
+
+
+	<div id="SignUp"  class="WhiteActiveBorder">
+		<div unselectable="on" class="GreenButton">
+			<div class="InnerGreenBorder">
+				Sign up
+			</div>
+		</div>
+	</div>
+	
+	<div id="LoginButton" unselectable="on">
+		<div class="InnerLoginBorder">
+			Log in
+			<div id="LoginCircle"></div>
+			<div id="LoginCircleReverse"></div>
+		</div>
+	</div>
+	
+	<Script>
+
+	$('#LoginButton').bind('mousedown', function() {
+	openLoginDrop(this); ignoreHide=1
+	});
+
+
+
+	
+	
+	</script>
+
+
+	<div id="LoginLayer" onclick="ignoreHide=1;">
+		<div class="LoginBorder">
+			<div style="margin-top:-18px; position:absolute; width:99px; height:5px; left:90px; background:#ECECEC; border-right:1px solid #fff"></div>
+		
+			<% form_for :user, :url => new_user_session_path, :html => {:id=>"LoginForm"} do |f| %>
+			  <%= f.error_messages %>
+			<div style="margin-left:3px; margin-top:-5px; font-size:11px;">email</div>
+			<div class="whiteTextBorder">
+			  <%= f.text_field :email, :class=>"ShadowedTextBox", :style=>"width:140px; ", :onKeyPress=>"return submitOnEnter(this,event,1)" %> 
+			</div>
+			
+			<div style="margin-left:3px; margin-top:4px; font-size:11px;">password</div>
+		  <div class="whiteTextBorder">
+			  <%= f.password_field :password, :class=>"ShadowedTextBox", :style=>"width:140px;", :onKeyPress=>"return submitOnEnter(this,event,1)" %>
+				</div>
+			 	<div style=" color:BLACK; font-weight:bold">	
+					<%if alert == "Invalid email or password." %>
+						Invalid email/password.
+						<%margin=8%>
+				
+					
+					<%else%>
+					<%margin=12%>
+					<%end%>
+					
+					<%#flash[:LoginFailed]%>
+				</div>
+			
+					
+					
+					<div id="SignIn"  class="WhiteActiveBorder" onclick="VerifyLoginForm()" style="margin-top:<%=margin%>px">
+						<div unselectable="on" class="GreenButton" style="width:62px">
+							<div id="signinbutton" class="InnerGreenBorder">
+								Sign in
+							</div>
+						</div>
+					</div>
+					
+					
+				
+						<div style="float:left; margin-top:20px; margin-left:10px;">
+					  		<%= f.check_box :remember_me, :checked=>true %><%= f.label :remember %>
+					 	</div>
+					
+					<div style="clear:both"></div>
+					<div style="margin-top:<%=margin%>px; ">
+					<a style="color:#537EA3; font-size:12px;" href="<%=new_password_path(:user)%>">Forget password?</a>
+					</div>
+					
+			
+			</div>
+		<% end %>		
+	</div>
+<%end%>
+
+<script>
+
+
+
+
+
+
+
+
+
+$('#SignUp').bind('mouseup', function() {
+openRegister('Sign up for Stomp!')
+});
+
+
+
+</script>
+
+
+
+<%if alert == "Invalid email or password." %>
+	<script>
+		openLoginDrop($('#LoginButton'))
+	
+	</script>
+<%end%>
+
+<div style="clear:both"></div>

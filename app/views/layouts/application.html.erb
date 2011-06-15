@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure & Travel Network')%></title>
+  <%= yield_for(:head, '')%>
+  <%= raw stylesheet_link_merged :base %>
+  <%= raw javascript_include_merged :preload %>
+</head>
+
+<body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
+	
+	<%if current_user%>
+		<div id="LogoutMenu">
+			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/<%=current_user.username%>'" >
+				<a class="MainMenuLink" style="font-size:12px" href="/<%=current_user.username%>">Profile</a>
+			</div>
+			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/settings'">
+				<a class="MainMenuLink" style="font-size:12px" href="/settings">Settings</a>
+			</div>
+			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/logout'">
+				<a class="MainMenuLink" style="font-size:12px" href="/logout">Logout</a>
+			</div>
+		</div>
+	<%end%>
+	
+	<%= render 'layouts/city_selector' %>
+	
+	<div id="BlackModal" onclick="closeRegister()"></div>
+
+<div style="min-height:100%; ">
+	
+	<div class="template_topnav">
+		<div id="TheCenter">
+					<div id="TheTab" class="TheActiveTab">	
+						<div class="lc"></div>
+						<div class="stretch"></div>
+						<div class="rc"></div>
+					</div>
+					<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
+						<div class="lc"></div>
+						<div class="stretch"></div>
+						<div class="rc"></div>
+					</div>
+		
+				
+		<a href="/">
+			<div class="template_logo"></div>
+		</a>
+	
+			
+		<div style="float:left;">
+			<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
+			<div class="LocIcon"></div>
+					<div id="CityLabel" style="top:20px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
+					
+			
+			</button>
+		</div>
+		
+		<div style="position:absolute; left:280px; z-index:10; width:200px;">
+			<div style="float:left; margin-left:20px; margin-top:17px;">
+				<a id="AdventuresLink"  <%unless @browser.ie? %>onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"<%end%>  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/schedule" >Browse</a>
+			</div>
+			<div style="float:left; margin-left:5px; margin-top:17px;">
+				<a id="CreateLink"  <%unless @browser.ie? %>onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"<%end%>  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/create" >Create</a>
+			</div>
+		</div>
+		</div>						
+		<div style="float:right">
+			<%=render :partial => "layouts/usermenu2" %>
+		</div>
+	</div>
+	
+	<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
+			
+	<%if params[:action] != "new_home"%>
+	
+	<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
+		<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+		<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
+		<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
+		
+		<div style="position:relative; min-width:1000px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
+		<%= yield%>
+		</div>
+	</div>
+	
+	<%else%>
+	<div ONCLICK="closeUserMenu()">
+		<%= yield%>
+	</div>
+	<%end%>
+
+			
+		</div>
+			
+
+	<%if params[:action] != "new_home"%>
+	<div id="Foot">	
+		<div id="FootBorder"></div>
+		<div id="FooterCenter">
+				<a class="BottomLink" href="/about">About</a> /
+				<a class="BottomLink" href="/jobs">Jobs</a> /
+				<a class="BottomLink" href="/tos">Terms of Use</a> /
+				<a class="BottomLink" href="/privacy_policy">Privacy</a>
+				<div class="quote1">Inside every old person is a younger person wondering WTF happened - Confucius</div>
+		</div>	
+	</div>
+	<%end%>
+	
+	<div id="flipthis"></div>
+	<noscript><p><img alt="Clicky" width="1" height="1" src="http://in.getclicky.com/66358181ns.gif" /></p></noscript>
+	
+	<%if !current_user and params[:action] != "register"%>
+		<%= render :partial => "layouts/register" %>
+	<%end%>
+	
+
+</body>
+<%= raw javascript_include_merged :postload %>
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+
+
+<script>
+
+
+$(document).ready(function() {
+	left = $("#LoginButton2").offset().left-90;
+	$("#LoginLayer").css("left",left+"px");
+	$(window).resize(function() {
+	   setTimeout("adjustLoginLayer()",10);
+	});
+});
+
+  FB.init({appId: '<%=FACEBOOK_APP_ID%>', status: true, cookie: true, xfbml: true});
+
+  FB.Event.subscribe('auth.sessionChange', function(response) {
+    if (response.session) {
+      // A user has logged in, and a new cookie has been saved
+    } else {
+      // The user has logged out, and the cookie has been cleared
+    }
+  });
+
+  function fblogin() {
+    FB.login(function(response) {
+		if(response.session)
+		          {
+		              window.location = '/auth/facebook';
+		          }
+     }, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
+   }
+
+	function fblogin2() {
+    FB.login(function(response) {
+		if(response.session)
+		          {
+		              window.location = '/auth/facebook';
+		          }
+     }, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website,publish_stream,offline_access'});
+   }
+
+
+
+
+</script>
+
+
+
+
+	
+</html>

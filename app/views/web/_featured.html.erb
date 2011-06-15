@@ -1,0 +1,21 @@
+<span id="ChallengeCount" style="display:none"><%=@challenge_count%></span>
+
+<div style="float:left; width:200px; margin-left:25px; ">
+		<div class=" SpotCategory2" onclick="chooseCategorySpot('sports');">&nbsp;&nbsp;Sports & Action <span class="BlueLink">&#187;</span>&nbsp;</div>
+		
+<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlightx", :challenge=>@challenges[0], :i=>1}%>
+</div>
+<div style="float:left; margin-left:32px; width:200px; ">
+			<div class="SpotCategory2" onclick="chooseCategorySpot('fun');">&nbsp;&nbsp;Fun & Wacky <span class="BlueLink">&#187;</span>&nbsp;</div>
+			
+<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlightx", :challenge=>@challenges[1], :i=>2}%>
+</div>
+<div style="float:left; margin-left:32px; width:200px; ">
+			<div class="SpotCategory2" onclick="chooseCategorySpot('outdoor');">&nbsp;&nbsp;Nature & Fluffy Animals <span class="BlueLink">&#187;</span>&nbsp;</div>
+			
+<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlightx", :challenge=>@challenges[2], :i=>3}%>
+</div>
+<div style="float:left; margin-left:32px; width:200px; ">
+			<div  class="SpotCategory2" onclick="chooseCategorySpot('food');">&nbsp;&nbsp;Food & Culture <span class="BlueLink">&#187;</span>&nbsp;</div>
+<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlightx", :challenge=>@challenges[3], :i=>4}%>
+</div>

@@ -1,0 +1,270 @@
+<script>
+	$("#TopCreateIcon").attr("src","/images/cog-active.png")
+</script>
+
+
+<%if flash[:message]%>
+	<div style="font-weight:bold; color:red; position:absolute; margin-left:600px"><%=flash[:message]%></div>
+<%end%>
+<div style="margin-bottom:25px;" class="HighlightedTitle">Settings</div>
+
+
+
+
+
+
+
+
+
+
+	<div id="tabs" class="ui-tabs" style="width:750px; padding-right:0px; margin-top:10px; font-size:12px; border:1px solid #eee; display:none; border:0px;">
+		<ul class="ui-tabs-nav" >
+			<li><div style="float:left"><a href="#tabs-2">Social Networks</a></div></li>
+			
+			<li ><div style="float:left"><a href="#tabs-1">Account Info</a></div></li>
+			
+			 
+	
+			 <li><div style="float:left"><a href="#tabs-3">Notifications</a></div></li>
+			
+			 <li><div style="float:left"><a href="#tabs-4">Privacy</a></div></li>
+			
+			 <li><div style="float:left"><a href="#tabs-5">Delete Account</a></div></li>
+		</ul>
+		
+		
+		<form id="ProfileEdit" name="ProfileEdit" action="/users/1" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="_method" value="PUT"/>
+							<input type="hidden" name="privacy" value="1"/>
+
+
+
+							<div id="tabs-2" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:0px; margin-top:-3px">
+
+
+								<div class="SettingsTitle">Facebook</div>
+
+								<%if @user.facebook_link != nil%>
+									<div>You are connected to Facebook as <a target="_blank" class="BlueLink" href="<%=@user.facebook_link%>"><%=@user.facebook_link%></a>
+								</div>
+									<div style="font-size:10px; padding-top:4px; color:#444">Wrong account?  
+
+										<%= link_to "Disconnect",
+										  { :controller => "authentications",
+										  :id => current_user.id,
+										  :provider => "facebook",
+										  :action => "destroy"}, :class=>"BlueLink" %>
+
+									</div>
+
+									<div style="margin-top:10px; padding:10px; border:2px solid #ccc; background:#eee; width:400px;">
+
+										<%if @user.fb_extended_permissions%>
+											<%@onclick1 = ""%>
+											<%@onclick2 = ""%>
+										<%else%>
+											<%@onclick1 = "if($('#user_autopost_facebook_bucket:checked').val() != null) {$.cookie('redirect_settings', 'true'); fblogin2()}"%>
+											<%@onclick2 = "if($('#autopost_facebook_completed:checked').val() != null) {$.cookie('redirect_settings', 'true'); fblogin2()}"%>
+										<%end%>	
+
+										<%=check_box("user", "autopost_facebook_bucket", {:checked =>@user.autopost_facebook_bucket, :onclick=>@onclick1},  true, false)%>Share stuff added to my bucket list on my Facebook news feed<br><br>
+										<%=check_box("user", "autopost_facebook_completed", {:checked =>@user.autopost_facebook_completed, :onclick=>@onclick2},  true, false)%>Share completed challenges on my Facebook news feed
+										<div style="padding-top:20px;"><a href="#" class="BlueLink" onclick="alert('Coming Soon')">Find my Facebook Friends on <%=APP_NAME%></a></div>
+									</div>
+
+								<%else%>
+									<div>Share your bucket list and completed adventures on Facebook.</div>
+									<div style="padding-top:10px;">
+										<div style="cursor:pointer;" onclick="$.cookie('redirect_settings', 'true'); fblogin()">
+											<img class="Transparent" src="/images/facebook_login_large.png" style="width:154; height:22px">
+										</div>
+									</div>
+								<%end%>
+
+								<div class="SettingsTitle" style="padding-top:30px;">Twitter</div>
+
+								<%if @user.twitter_link != nil%>
+									<div>You are connected to Twitter as <a target="_blank" class="BlueLink" href="http://twitter.com/<%=@user.twitter_link%>">@<%=@user.twitter_link%></a>
+								</div>
+									<div style="font-size:10px; padding-top:4px; color:#444">Wrong account?  	
+									<%= link_to "Disconnect",
+										  { :controller => "authentications",
+										  :id => current_user.id,
+										  :provider => "twitter",
+										  :action => "destroy"}, :class=>"BlueLink" %></div>
+
+									<div style="margin-top:10px; padding:10px; border:2px solid #ccc; background:#eee; width:400px;">
+												<%=check_box("user", "autopost_twitter_bucket", {:checked =>@user.autopost_twitter_bucket},  true, false)%>Post to Twitter when I add an item to my bucket list<br><br>
+												<%=check_box("user", "autopost_twitter_completed", {:checked =>@user.autopost_twitter_completed},  true, false)%>Post to Twitter when I complete a challenge
+												<div style="padding-top:20px;"><a href="#" class="BlueLink" onclick="alert('Coming Soon')">Find my Twitter Friends on <%=APP_NAME%></a></div>
+									</div>
+
+
+								<%else%>
+									<div>Share your bucket list and completed adventures on Twitter.</div>
+									<div style="padding-top:10px">
+										<div class="Transparent"  style="float:left; cursor:pointer; margin-top:-1px;"><a href="#" onclick="$.cookie('redirect_settings', 'true'); window.location.href='auth/twitter'"><img src="/images/twitter_login_large.png"></a></div>
+									</div>
+
+
+								<%end%>
+								<div style="clear:both"></div>
+								<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+
+
+
+							</div>
+
+
+		
+		
+		
+		
+		<div id="tabs-1" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:3px;">
+
+             <div style="float:left; width:60px; margin-top:4px; text-align:right">Name</div>
+			 <div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="name" name="name" class="TextBox" onblur="verifyName(this)" value="<%=current_user.first_name%> <%=current_user.last_name%>"></div>
+			<div id="name_error" style="float:left; margin-left:10px; width:170px; margin-top:4px; color:red; display:none"></div>
+		     <div style="clear:both; height:15px"></div>
+		
+		     <div style="float:left; width:60px; margin-top:4px;text-align:right">Username</div>
+			 <div style="float:left; margin-left:10px"><input style="width:200px" type="textfield" id="username" name="username" class="TextBox" onkeyup="$('#updateUsername').html($(this).val())" value="<%=current_user.username%>"><div style="font-size:10px; color:#999">http://<%=APP_URL%>/<span id="updateUsername"><%=current_user.username%></span></div></div>
+		     <div style="clear:both; height:15px"></div>
+	
+		     <div style="float:left; width:60px; margin-top:4px;text-align:right">Email</div>
+			 <div style="float:left; margin-left:10px"><input style="width:200px" type="textfield" id="email" name="email" class="TextBox" value="<%=current_user.email%>"></div>
+		     <div style="clear:both; height:15px"></div>
+		
+			 <div style="margin-left:90px" onclick="$(this).hide(); $('#passwords').show(); $('#new_password').focus();">
+				<%if current_user.temp_password%><b>Temp Password</b>: <%=current_user.temp_password%><%end%>
+				[<a href="#" class="BlueLink">Change<%if !current_user.temp_password%> Password<%end%></a>]</div>
+			
+		
+			<div id="passwords" style="display:none">
+		     <div style="float:left; display:none; width:60px; text-align:right">Current Password</div>
+			 <div style="float:left;display:none; margin-left:10px"><input style="width:200px" type="password" id="current_password" name="current_password" class="TextBox"></div>
+		     <div style="clear:both;display:none; height:15px"></div>
+		     <div style="float:left; width:60px; text-align:right">New Password</div>
+			 <div style="float:left; margin-left:10px"><input style="width:200px" type="password" class="TextBox" name="new_password" id="new_password"></div>
+		     <div style="clear:both; height:15px"></div>
+		     <div style="float:left; width:60px; text-align:right">Verify Password</div>
+			 <div style="float:left; margin-left:10px"><input style="width:200px" type="password" id="verify_password" name="verify_password" class="TextBox"></div>
+			<div id="password_error" style="float:left; margin-left:10px; width:170px; margin-top:4px; color:red; display:none">Passwords don't match</div>
+						
+		</div>
+		     <div style="clear:both; height:15px"></div>
+		<div id="SaveButton" class="yellowButton"  style="margin-top:10px; margin-left:90px" onclick="validateSettings(); ">Save</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<div id="tabs-3" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+
+					<div class="SettingsTitle" style="padding-bottom:15px">E-mail me whenever</div>
+
+					<%=check_box("user", "privacy_cc_email", {:checked => @user.privacy_cc_email},  true, false)%>Someone messages me<br><br>
+					
+						<%=check_box("user", "messaging_bucket_comment", {:checked => @user.messaging_bucket_comment},  true, false)%>Someone comments on my bucket<br><br>
+					
+					<%=check_box("user", "messaging_weekly_email", {:checked => @user.messaging_weekly_email},  true, false)%>New challenges are added (max once per week)
+						
+					  
+					
+					
+						
+				
+				
+			<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+		</div>
+		
+		<div id="tabs-4" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+			<div class="SettingsTitle" style="padding-bottom:15px">Allow users to</div>
+			<div style="float:left; width:135px; margin-top:4px; text-align:right">Send me messages</div>
+			<div style="float:left; margin-left:10px"><%= select( "user", "privacy_allow_messages", { "Everyone" => 1, "Only those I follow" => 0}, :selected => @privacy_allow_messages) %></div>
+
+<div style="clear:both; height:15px"></div>
+
+					<div style="float:left;width:135px; margin-top:4px; text-align:right">See my adventure log</div>
+					<div style="float:left; margin-left:10px"><%= select( "user", "privacy_block_adventure_log", { "Everyone" => false, "Only those I follow" => true}, :selected => @user.privacy_block_adventure_log) %></div>
+
+					<div style="clear:both; height:15px"></div>
+
+										<div style="float:left;width:135px; margin-top:4px; text-align:right">See my achievements</div>
+										<div style="float:left; margin-left:10px"><%= select( "user", "privacy_achievement", { "Everyone" => 0, "Only those I follow" => 1}, :selected => @user.privacy_achievement) %></div>
+
+
+														<div style="clear:both; height:15px"></div>
+
+																			<div style="float:left;width:135px; margin-top:4px; text-align:right">See my bucket list</div>
+																			<div style="float:left; margin-left:10px"><%= select( "user", "privacy_bucket", { "Everyone" => 0, "Only those I follow" => 1}, :selected => @user.privacy_bucket) %></div>
+
+
+
+
+
+
+
+
+				<div style="clear:both; height:15px"></div>
+			<div id="SaveButton" class="yellowButton"  style="margin-top:10px" onclick="$('#ProfileEdit').submit()">Save</div>
+		</div>
+		</form>
+		
+		<div id="tabs-5" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+			<div class="SettingsTitle">Do you want to delete your account?</div>
+			<div style="padding-top:10px">We're sorry to see you go! But here's a handy tool to make sure ALL of the personal data that you've shared with <%=APP_NAME%> will be scrubbed. This is irreversible! Once you delete your profile, everything about you is gone.</div>
+
+<div style="padding-top:20px"><b>Why are you canceling? :(</b></div>
+<form id="DestroyUser" name="DestroyUser" action="/users/1" method="post" enctype="multipart/form-data">
+
+	<input type="hidden" name="_method" value="DELETE"/>
+				
+				<%= text_area_tag "why", "", :class=>"TextBox ProfileBox test", :style=>"", :onblur=>"$('#AboutMeHelper').animate({opacity: 0,}, 150 );", :onfocus=>"$('#AboutMeHelper').animate({opacity: 1,}, 150 );" , :onkeyup=>"", :autocomplete=>"off" %>
+
+
+				<div id="SaveButton" class="yellowButton"  style="margin-top:20px; width:200px; height:35px; " onclick="$('#DestroyUser').submit()">Destroy my account forever! <br>(This cannot be undone)</div>
+				</form>
+				
+				
+		</div>
+			
+	</div>	
+	
+	
+
+
+		
+		
+			
+			<script>
+			$('#name').alpha({allow:"., "});
+			$('#username').alphanumeric({allow:"-"});
+			
+			$(document).ready(function() {
+				$("#tabs").tabs({ cookie: { expires: 30 }}).addClass('ui-tabs-vertical ui-helper-clearfix');
+				$("#tabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
+				$('#tabs').show();
+			});
+			
+			</script>
+			
+
+
+
+				<style type="text/css"> 
+
+			/* Vertical Tabs
+			----------------------------------*/
+			.ui-tabs-vertical { width: 55em; }
+			.ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+			.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+			.ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+			.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-selected { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+			.ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+				</style>
+				

@@ -1,0 +1,21 @@
+<% if current_user.unread_messages.length == 0%>
+	<script>
+		$("#InboxIcon").attr("src","/images/message-active.png")
+	</script>
+<%end%>
+
+<div style="float:left">
+	<div class="SubMenu SubInActive" style="border-top:1px solid #ccc;" onclick="window.location.href='/inbox'">
+	Conversations
+	</div>
+
+	<div class="SubMenu SubActive">
+	Notifications
+	</div>
+
+</div>
+
+
+<div style="float:left; margin-left:40px; width:600px;">
+	You have no notifications.	
+</div>

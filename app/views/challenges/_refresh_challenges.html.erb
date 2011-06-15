@@ -1,0 +1,125 @@
+
+<%#Local variable:  source.  Called from bucket_list, bucket_list_completed, challenges, user_profile, and achievement_profile.%>
+
+<%if @challenges%>
+	<% @challenges.each_with_index do |challenge, i| %>
+
+	
+	     	<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>source, :challenge=>challenge, :i=>i}%>
+	
+	
+	<%end%>
+<%end%>
+
+
+<%if !@challenges or @challenges.length == 0%>
+   <div style="text-align:center; margin-top:20px; color:black">
+	<%if source=="bucket_list"%>
+		<div style="font-weight:bold; padding-bottom:15px;">Start filling your bucket list!  Search for some <a class="BlueLink" href="/challenges">challenges</a>!</div>
+    <img src="/images/KickBucket.gif" width="278" height="262" style="padding-bottom:15px">
+	<%else%>
+		<%if source=="bucket_list_completed"%>
+				<div style="text-align:center; margin-top:20px;">
+					<div style="font-weight:bold; padding-bottom:15px;">You've done NOTHING!  You're gonna die!</div>
+			    	<img src="/images/KickBucket.gif" width="278" height="262" style="padding-bottom:15px">
+				</div>
+		<%else%>
+			<%if source=="challenges"%>
+				Sorry!  No challenges meet your criteria!
+			<%else%>
+			    No challenges have been created for this achievement yet.
+			<%end%>
+		<%end%>
+	<%end%>
+	</div>
+<%end%>
+
+<div style="clear:both"></div>
+<%if @challenges%>
+
+    <%if source == "challenges"%>
+		<%= will_paginate @challenges, :params => { :controller => "challenges", :action => "index" } %>
+	<%end%>
+	<%if source == "bucket_list" || source == "bucket_list_completed"%>
+		<%= will_paginate @challenges, :params => { :controller => "subscribed_challenges", :action => "bucket_list" } %>
+	<%end%>
+	<%if source == "user_profile"%>
+		<%= will_paginate @challenges, :params => { :controller => "users", :action => "show" } %>
+	<%end%>
+	
+	
+	
+<%end%>
+<script>
+$('.ChallengeBoxBorder').mouseenter(function(){   
+	highlightChallengeBox(this)
+});
+$('.ChallengeBoxBorder').mouseleave(function(){    
+	unHighlightChallengeBox(this)
+});
+
+<%if source != "bucket_list" and source != "bucket_list_completed"%>
+$(".AchievementIcon").tooltip();
+$(".PeopleIcon").tooltip();
+$(".PointIcon").tooltip();
+$(".LocationIcon").tooltip();
+$(".StompedIcon").tooltip();
+<%end%>
+</script>
+
+
+
+
+
+<div id="HiddenMenu" style="display:none">
+	<%if @all and @all > 0%>
+		    <script>noResults = false</script>
+		
+	        <%i=0%>
+			<script>selectedCategoryH = 0</script>
+			<div class="ChallengeMenu" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'all')">
+			     All<div class="CountCircle"><%=@all%></div>
+			</div>
+			<%if session[:filter_category] == "all"%><script>selectedCategoryH = <%=i%></script><%end%>
+			
+			
+			<%if @sports > 0%>
+				<%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'sports')">Sports & Action<div class="CountCircle"><%=@sports%></div></div>
+				<%if session[:filter_category] == "sports"%><script>selectedCategoryH = <%=i%></script><%end%>						
+			<%end%>
+			<%if @fun > 0%>
+				<%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'fun')">Fun & Wacky<div class="CountCircle"><%=@fun%></div></div>
+				<%if session[:filter_category] == "fun"%><script>selectedCategoryH = <%=i%></script><%end%>
+			<%end%>
+			<%if @outdoor > 0%>
+			    <%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'outdoor')">Nature & Animals<div class="CountCircle"><%=@outdoor%></div></div>
+				<%if session[:filter_category] == "outdoor"%><script>selectedCategoryH = <%=i%></script><%end%>
+			<%end%>
+			<%if @food > 0%>
+			     <%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'food')">Food, Music, & Arts<div class="CountCircle"><%=@food%></div></div>
+				<%if session[:filter_category] == "food"%><script>selectedCategoryH = <%=i%></script><%end%>
+			<%end%>
+			<%if @sightseeing > 0%>
+			    <%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'sightseeing')">Sightseeing<div class="CountCircle"><%=@sightseeing%></div></div>
+				<%if session[:filter_category] == "sightseeing"%><script>selectedCategoryH = <%=i%></script><%end%>
+			<%end%>
+			<%if @classes > 0%>
+				<%i=i+30%>
+				<div class="ChallengeMenu" style="margin-top:<%=i%>px" onmouseover="moveHighlightBar(this,<%=i%>)" onclick="chooseCategory(this,<%=i%>,'classes')">Classes & Creating<div class="CountCircle"><%=@classes%></div></div>
+				<%if session[:filter_category] == "classes"%><script>selectedCategoryH = <%=i%></script><%end%>
+			<%end%>
+			
+			<%height = i +30%>
+			
+			<div style="height:<%=height%>px"></div>
+
+    <%else%>
+	<script>noResults = true</script>
+	<%end%>
+	
+</div>

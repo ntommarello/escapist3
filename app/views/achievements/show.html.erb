@@ -1,0 +1,146 @@
+<div style="float:left; width:180px; ">
+	<div style="text-align:center">
+		<%if @editable%>
+				<%= image_tag @achievement.photo(:thumb_90), :style=>"width:90px; height:90px; cursor:pointer", :class=>"AchievementPhoto Transparent", :onclick=>"uploadAchievement(#{@achievement.id})"%>
+		<%else%>
+				<%= image_tag @achievement.photo(:thumb_90), :style=>"width:90px; height:90px;", :class=>"AchievementPhoto"%>
+		<%end%>
+	</div>
+	
+	<%if @related_achievements.length > 0 %>
+		<div style="margin-top:50px;  margin-bottom:5px; color:#999">Related Achievements</div>
+	
+		<%for a in @related_achievements%>
+			<div style="float:left; padding:2px">
+		      <%= link_to(achievement_path(a)) do
+		        image_tag(a.photo(:thumb_50), :class => "AchievementIconSpotB", :title => a.name)
+		      end %>
+			</div>
+		<%end%>
+	<%end%>
+	
+</div>
+
+
+<div style="float:left; margin-left:30px">
+	
+		<div class="HighlightedTitle">
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"name", :content=>@achievement.name, :id=>@achievement.id, :model=>"achievement", :allow_return=>false, :extra_visibility=>false}%>
+		</div>
+		
+		<div style="margin-top:7px; width:500px; display:none">
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"description", :content=>@achievement.description, :id=>@achievement.id, :model=>"achievement", :allow_return=>false, :extra_visibility=>false}%>
+		</div>
+		
+		<%if @editable%>
+			<div style="float:right; margin-top:-40px; ">
+				<div id="adminlink" style="margin-top:20px">	
+					[<a class="BlueLink" href="#" onclick="$('#adminlink').hide(); $('#AdminOptions').show()">Admin Options</a>]
+				</div>
+
+				<div id="AdminOptions" style="display:none; margin-top:10px; border:1px solid #ccc; background-color:#eee; padding:12px;" >
+					<form action="/achievements/<%=@achievement.id%>" method="post">
+						<input id="_method" name="_method" type="hidden" value="PUT">
+						
+						
+							
+								
+										<%=  
+select("achievement", "category_id", Category.all.collect {|p| [ p.name, p.id ] }, {:include_blank => 'Choose'})
+										%>
+										
+								<br>
+							
+
+								<input type="submit">
+							</form>
+						</div>		
+			</div>
+		<%end%>
+
+<div style="position:absolute; z-index:500; margin-left:545px; margin-top:37px; padding:4px;" class="SuggestChallengeButton" onclick="window.location.href='/challenges/new'">Create a Challenge</div>
+	<div id="tabs" class="ui-tabs" style="width:715px; margin-top:30px;  font-size:12px; border:1px solid #eee; display:none">
+		<ul class="ui-tabs-nav">
+			<%if @challenges.length > 0%><li><div style="float:left"><a href="#tabs-1">Challenges</a></div></li><%end%>
+			<li><div style="float:left"><a href="#tabs-2">	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"group", :content=>@achievement.group, :id=>@achievement.id, :model=>"achievement", :allow_return=>false, :extra_visibility=>false}%></a></div></li>
+		</ul>
+
+
+		<div id="tabs-1" class="ui-tabs-hide ui-tabs-container" style=" min-height:300px; padding-left:25px; padding-bottom:15px; padding-top:20px; padding-right:0px;  ">
+
+				<%= render :partial=>"challenges/refresh_challenges", :locals=>{:source=>"achievement"}%>
+				
+				
+				
+				<%if @related_challenges && @achievement.category%>
+				<%if @related_challenges.length > 0%>
+					<div style="padding-bottom:10px; font-weight:bold; color:#666">Other <%=@achievement.category.name%> Challenges</div>
+					
+					<div id="relatedChallenges">
+						<% @related_challenges.each_with_index do |challenge, i| %>
+
+						     <%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"achievement", :challenge=>challenge, :i=>i}%>
+
+
+						<%end%>
+						</div>
+					<%end%>
+						<script>
+						$("#relatedChallenges > .ChallengeBoxBorder").each(function() {
+							      
+								$(this).mouseenter(function(){   
+									highlightChallengeBox(this)
+								});
+								$(this).mouseleave(function(){    
+									unHighlightChallengeBox(this)
+								});
+								
+										$(".AchievementIcon",this).tooltip();
+										$(".PeopleIcon",this).tooltip();
+										$(".PointIcon",this).tooltip();
+										$(".LocationIcon",this).tooltip();
+							    });
+						</script>				
+				<%end%>
+			
+				
+			
+				
+				<div style="clear:both"></div>
+				
+
+		</div>
+
+		<div id="tabs-2" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:30px;">
+			<%if @users.length == 0%>
+				<div style="padding-top:20px; text-align:center">No one has earned this badge yet!  Be the first!</div>
+			<%end%>
+			
+      <% @users.each do |user| %>
+				<div class="floatThumbnail">
+					<a href="/<%=user.username%>">
+						<%= image_tag user.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer" %>
+					</a>
+					<%=user.first_name%>
+				</div>
+			<%end%>
+			<div style="clear:both"></div>
+			
+		</div>
+	</div>
+</div>
+	
+	
+	
+	
+	
+	
+<script>
+	var $tabs = $("#tabs").tabs({});
+	$(document).ready(function() {
+		$('#tabs').show();
+	 });
+	$('.AchievementIconSpotB').tooltip();
+
+	
+</script>

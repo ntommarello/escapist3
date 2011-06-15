@@ -1,0 +1,43 @@
+<%#this has logic for opening a video or a large photo of proof%>
+
+<%width = 180 unless defined?(width)%>
+<%height = 135 unless defined?(height)%>
+<%display_name = true unless defined?(display_name)%>
+
+
+
+<div style="float:left" onmouseover="$('.play',this).removeClass('PlayVideoButton').addClass('PlayVideoButtonOver');" onmouseout="$('.play',this).addClass('PlayVideoButton').removeClass('PlayVideoButtonOver');">
+	
+	<%if completed.panda_video_id%>
+		<div class="play PlayVideoButton" <%if height<101%> style="margin-top:50px"<%end%> onclick="$('.playlink',$(this).parent()).trigger('click')"></div>
+		<%@onclick="return createVideoLayer(this, #{completed.id},'#{escape_javascript(completed.completed_note)}','#{completed.panda_video_id}')"%>
+	<%else%>
+	<%@onclick=""%>
+	<%end%>
+	
+	<div class="PhotoBorder">
+		<a class="playlink 	<%if !completed.panda_video_id%>lightbox<%end%>"  title="<%= raw completed.completed_note%>" href="<%=completed.proof.url(:large)%>" onclick="<%=@onclick%>" >
+			<%= image_tag completed.proof.url(:thumb_214), :style=>"width:#{width}px; height:#{height}px;", :class=>" Transparent", :onclick=>"" %>
+		</a>
+	<%if display_name%>
+		<a href="/<%=completed.user.username%>">
+			<div class="PhotoFooter UnSelected">
+				<div style="float:left">
+					<%= image_tag completed.user.avatar.url(:thumb_50), :class=>"", :style=>"width:35px; height:35px; border:1px solid #E1E1E1; cursor:pointer"
+					 %>
+				</div>
+				<div style="margin-left:5px; float:left">
+					<%=completed.user.first_name%>
+				</div>
+				<div style="margin-left:5px; margin-top:12px; float:right; margin-right:4px;">
+					<img src="/images/Indicator.png">
+				</div>
+				<div style="clear:both"></div>
+			</div>
+		</a>
+	<%end%>
+	</div>
+
+
+
+</div>

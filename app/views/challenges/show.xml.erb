@@ -1,0 +1,46 @@
+<records>
+ 
+ 	<%if params[:user_id]%>
+    	<%@compareUser = User.find(params[:user_id])%>
+	<%else%>
+		<%if current_user%>
+			<%@compareUser = current_user%>
+		<%end%>
+	<%end%>
+	
+	  <record> 
+	    <id><%=@challenge.id%></id>
+	    <title><%=strip_html(@challenge.title)%></title>
+	    <file_name><%=@challenge.photo_file_name%></file_name>
+	
+		<editable><%=@editable%></editable>
+		<author><%=@author%></author>
+		<author-name><%if @challenge.user%><%=@challenge.user.first_name%> <%=@challenge.user.last_name%><%end%></author-name>
+		<author-id><%if @challenge.user%><%=@challenge.user.id%><%end%></author-id>
+		<author-photo><%if @challenge.user%><%=@challenge.user.avatar_file_name%><%end%></author-photo>
+	    <author-hometown><%if @challenge.user%><%=@challenge.user.hometown%><%end%></author-hometown>
+	
+	    <location><%=strip_html(@challenge.location)%></location>
+
+		<%@details = strip_html(@challenge.details)%>
+        <details><%= sanitize @details.to_xs%></details>
+		<lat><%=@challenge.lat%></lat>
+		<lng><%=@challenge.lng%></lng>
+		
+		<add-bucket><%=!@addBucket%></add-bucket>
+		<disliked><%=@disliked%></disliked>
+		
+		<%if @compareUser and @compareUser.has_completed_challenge?(@challenge)%>
+			<%@subscribed = SubscribedChallenge.find_by_user_id_and_challenge_id(@compareUser.id,@challenge.id)%>
+			<completed>true</completed>
+			<completed-note><%=strip_html(@subscribed.completed_note)%></completed-note>
+			<completed-date><%=time_ago_in_words(@subscribed.date_completed_on)%> ago</completed-date>
+		<%else%>
+			<completed>false</completed>
+		<%end%>
+		
+		<url-link><%=@challenge.url_link%></url-link>
+
+	  </record>
+
+</records>

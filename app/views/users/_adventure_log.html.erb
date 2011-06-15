@@ -1,0 +1,161 @@
+
+
+
+
+
+<%if @displayToggle%>
+	<div style="float:right; margin-right:10px;margin-top:4px" onclick="toggleLog()">
+		<script>toggleAdventureLog = '<%=@toggleAdventureLog%>'</script>
+				<div id="togglePhoto" class="toggleButton<%if @toggleAdventureLog == "gallery"%>Active<%end%>" style="float:left;  ">gallery</div>
+		<div id="toggleList" class="toggleButton<%if @toggleAdventureLog == "text"%>Active<%end%>" style="float:left; margin-left:-1px">history</div>
+
+	</div>
+	<div style="clear:both"></div>
+<%end%>
+
+<%@i=0%>
+<div id="AdventurePhotoGallery"  <%if @toggleAdventureLog != "gallery"%>style="display:none; opacity:0"<%end%> >
+	<%@adventure_log.each_with_index do |log,index|%>
+	
+	  <%if log.proof_file_name%>
+	
+	   	<%@i = @i+1%>
+			<div style="float:left; width:214px; <%if (@i % 3) != 0%>padding-right:25px;<%end%> margin-top:10px; margin-bottom:10px; height:209px">
+					<%= render :partial=>"challenges/preview_thumb", :locals=>{:width=>214, :height=>161, :completed=>log, :display_name=>false}%>
+		
+		 			<div style="margin-left:10px"><%= link_to(challenge_path(log.challenge.id), :class=>"BlueLink") do log.challenge.title end %>
+					</div>
+			</div>
+		<%end%>
+
+		
+	<%end%>
+	<div style="float:left; width:214px; <%if @i and (@i % 3) != 0%>padding-right:25px;<%end%> margin-top:10px; margin-bottom:10px; height:209px">
+			<img src="/images/early.png" style="width:214px; height:161px; margin:3px;" class="PhotoBorder Transparent">
+	
+ 			<div style="margin-left:10px"><%=@user.first_name%> is an <a class="BlueLink" href="/achievements/early-adopter">Early Adopter</a>
+			</div>
+	</div>
+	<div style="clear:both"></div>
+</div>
+
+<div id="AdventureLogText" <%if @toggleAdventureLog == "gallery"%>style="display:none; opacity:0"<%end%> >
+	
+	
+
+
+<%@adventure_log.each_with_index do |log,index|%>
+
+<%#PREVIEW COMPLETED CHALLENGES%>
+
+  <%if log.proof_file_name%>
+	   	<div class="LogRow">
+      	 	<div style="float:left; margin-right:10px;">
+				<%= render :partial=>"challenges/preview_thumb", :locals=>{:width=>133, :height=>100, :completed=>log, :display_name=>false }%>
+			</div>
+		
+			<div style="float:left; width:450px; margin-top:8px">
+		      <div><%=@user.first_name%> stomped <%= link_to(challenge_path(log.challenge.id), :class=>"BlueLink") do log.challenge.title end %></div>
+				
+		         <%= render :partial=>"users/edit_date", :locals=>{:id=>log.id, :date=>log.date_completed_on}%>
+				
+				<div style="margin-top:10px; margin-left:10px">
+				<%if log.challenge.achievement%>
+					<%= link_to(achievement_path(log.challenge.achievement.slug), :class=>"BlueLink") do 
+						image_tag log.challenge.achievement.photo(:thumb_50), :style=>"border:0px; width:50px; height:50px; cursor:pointer; float:left", :class=>"AchievementPhoto Transparent",:title => log.challenge.achievement.name
+					end %>
+				<%end%>
+				</div>
+				<div style="float:left; margin-top:20px; margin-left:10px; font-size:10px; color:#ccc">
+					+<%=log.points_awarded%>pt<% if log.points_awarded > 1%>s<%end%>
+				</div>
+				<div style="font-size:10px; color:#999; margin-left:15px; float:left; width:300px">
+					<%if @editable%><%if log.completed_note.nil? or log.completed_note.strip == "" %><%log.completed_note = "Add a note"%><%end%><%end%>
+							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"completed_note", :content=>log.completed_note, :id=>log.id, :model=>"subscribed_challenge", :allow_return=>false, :required=>true, :extra_visibility=>false, :append=>log.id}%>
+				</div>
+			</div>
+		
+			<div style="clear:both"></div>
+		</div>
+       
+	<%end%>
+
+	
+	
+
+
+<%end%>
+
+
+
+<%#HARD CODE EARLY ADOPTER FEED FOR NOW%>
+<div style="margin-left:10px; 	padding-top:15px; padding-bottom:15px;">
+	
+	<%early = Achievement.find(20)%>
+	
+	<div style="float:left; width:100px">
+		<%= link_to(achievement_path(early.slug), :class=>"BlueLink") do 
+			image_tag early.photo(:thumb_90), :style=>"width:90px; height:90px;border:0px; cursor:pointer", :class=>"AchievementPhoto Transparent" 
+		end %>
+	</div>
+	
+	<div style="float:left; width:380px">
+		<%=@user.first_name%> earned the <%= link_to(achievement_path(early.slug), :class=>"BlueLink") do "Early Adopter" end %> achievement!
+		<div style="margin-top:5px; color:#444; font-size:11px">Thanks for trying <%=APP_NAME%> out early!</div>
+		<div class="SubtleFont" style="margin-top:3px;"><%=time_ago_in_words(@user.created_at)%> ago</div>
+	</div>
+	<div style="clear:both"></div>
+</div>
+
+</div>
+
+
+<%@index=1%>
+<%@adventure_log.each_with_index do |log,index|%>
+  <%unless log.proof_file_name%>
+	<%if @index == 1%>
+		<div style="margin-bottom:10px;margin-top:10px; padding-bottom:7px; border-bottom:1px solid #ccc">
+		<b>Challenges without Photos</b>	<%if @editable%><br><span style="font-size:12px; color:#666">Upload photos to earn achievements and points</span><%end%>
+		</div>
+	
+	<%end%>
+	<div style="margin-bottom:10px;  height:34px;">
+		<%if @editable%>
+		<div style="float:left; margin-right:10px; cursor:pointer" onclick="newUploadProof(<%=log.challenge.id%>,0,0)">
+			<img class="Transparent" src="/images/SendPhoto.png" width="55px" height="34px">
+		</div>
+		<%end%>
+		<div>
+			<div style="padding-top:1px;">
+			<%= link_to(challenge_path(log.challenge.id), :class=>"BlueLink") do log.challenge.title end %>
+			</div>
+			<div style="margin-top:-3px;">
+			<%= render :partial=>"users/edit_date", :locals=>{:id=>log.id, :date=>log.date_completed_on}%>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	</div>
+	<%@index = @index +1%>
+  <%end%>
+<%end%>
+
+
+
+
+<%if current_user and current_user.id == @user.id%>
+	<%if @adventure_log.length < 2%>
+		<div class="tipBox" style="float:left; margin-top:120px; ">
+			<b>Tip:</b>
+			<span style="padding-top:5px;">Already done awesome stuff? Show it off by <a class="BlueLink" href="/challenges/new">creating challenges</a></span>
+		</div>
+		<div style="clear:both"></div>
+	<%end%>
+<%end%>
+
+
+
+
+<script>
+
+$('.AchievementPhoto').tooltip();
+</script>

@@ -1,0 +1,20 @@
+<a target="_blank" style="margin-right:5px;" class="BlueLink" href="http://www.facebook.com/sharer.php?u=http://<%=APP_URL%>/<%=request.request_uri%>">
+	<img style="margin-top:3px; margin-left:9px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+	<div style="margin-top:3px; float:left">facebook</div>
+</a>
+
+<a target="_blank" class="BlueLink" href="http://twitter.com/share?text=I want to <%=@challenge.title%>! Join me! %23StompIO &url= http://<%=APP_URL%>/<%=request.request_uri%>">
+	<img style="margin-top:3px;margin-left:5px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+	<div style="margin-top:3px; margin-left:5px;  float:left">twitter</div> 
+</a>
+
+<%if @challenge.location%>
+	<%strippedLocation = @challenge.location.gsub(/%3Cbr%3E/,'').gsub(%r{</?[^>]+?>}, '')%>
+<%else%>
+	<%strippedLocation = ""%>
+<%end%>
+<a href="mailto:?subject=<%=@challenge.title%>&amp;body=I thought you'd be interested in this <%=APP_NAME%> Challenge:%0D%0A%0D%0AWhat: <%=@challenge.title%>%0D%0A  %0D%0AWhere: <%=strippedLocation%>%0D%0A  %0D%0ASign up at: http://<%=APP_URL%>/<%=request.request_uri%>" class="BlueLink" >
+	<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
+	<div style="margin-top:3px;  float:left">email</div>
+</a>
+<div style="clear:both"></div>

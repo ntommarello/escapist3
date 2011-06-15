@@ -1,0 +1,11 @@
+<%- if @error -%>
+<%= @message %>
+<%- else -%>
+{
+  "id": <%= @user.id %>,
+  "first_name": <%= @user.first_name %>,
+  "last_name": <%= @user.last_name %>,
+  "avatar_file_name": <%= @user.avatar_file_name %>,
+  "auto_login_token": <%= @user.authentication_token %>,
+}
+<%- end -%>

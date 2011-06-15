@@ -1,0 +1,12 @@
+
+	<%if log.likes%>
+		<%if log.likes.length > 0%>
+		<div style="clear:both"></div>
+			<div style="color:#ccc; padding-bottom:3px"><%=log.likes.length%> stomper<%if log.likes.length > 1%>s are<%else%> is<%end%> interested</div>
+		<%end%>
+		<%for like in log.likes do%>
+			<a href="/<%=like.user.username%>">
+				<%= image_tag(like.user.avatar.url(:thumb_40), :class=>"Transparent", :style=>"width:40px; height:40px; border:1px solid #E1E1E1; cursor:pointer") %>
+			</a>
+		<%end%>
+	<%end%>

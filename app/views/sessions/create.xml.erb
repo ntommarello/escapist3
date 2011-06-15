@@ -1,0 +1,12 @@
+<packet>
+	<error><%=@error%></error>
+	<%unless @user.nil?%>
+		<user-id><%=@user.id%></user-id>
+		<first-name><%=@user.first_name%></first-name>
+		<last-name><%=@user.last_name%></last-name>
+		<auto-login-token><%=@user.authentication_token%></auto-login-token>
+		<avatar-file-name><%=@user.avatar_file_name%></avatar-file-name>
+		<push-active>false</push-active>
+		<location><%=@user.location_city%></location>
+	<%end%>
+</packet>

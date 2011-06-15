@@ -1,0 +1,12 @@
+<%
+  @path = "#{RUBBER_ROOT}/config/oauth2_config.yml"
+%>
+
+<%= RUBBER_ENV %>:
+  # Required.
+  client_id: YOUR_APP_API_ID
+  client_secret: YOUR_APP_SECRET_KEY
+  authorization_server: https://graph.facebook.com
+  requested_scope: email,offline_access,publish_stream
+  authorize_path: /oauth/authorize
+  access_token_path: /oauth/access_token

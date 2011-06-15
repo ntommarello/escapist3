@@ -1,0 +1,117 @@
+<div class="FormFieldContainer" style="width:365px; margin-top:0px; font-size:12px; padding-top:10px;">
+	
+	<div style="text-align:center; font-weight:bold; margin-bottom:15px;">
+		<%if source == "challenge_author"%>
+			Broadcast Your Challenge
+			<div style="margin-top:5px; font-weight:normal; font-size:12px">First, get 3 friends to do this.  Then, if we put this challenge in the public directory, we'll award you 10 points.</div>
+		<%elsif source == "challenge_invite"%>
+			Broadcast Your Plans
+		<%end%>
+		
+	</div>
+	
+	
+	<div style="float:left; text-align:right; width:35px">Note:</div>
+	<div style="float:left; margin-left:10px;">
+		<textarea id="Plan" name="Plan" class="NewTextBox" style="height:71px; font-size:12px; line-height:12px; width:314px; height:53px;" onfocus="instruct('detail')"></textarea>
+		<%if source == "challenge_invite"%>
+		  <%= render :partial=>"challenges/add_date"%>
+		<%end%>
+	</div>
+    	<div style="clear:both;"></div>
+	
+	<div id="EmailDiv" style="padding-top:10px; display:none">
+		<div style="float:left; text-align:right; width:35px; margin-top:8px">Invite:</div>
+		<div style="float:left; margin-left:10px;">
+			<input id="Invite"  name="Invite"  type="textfield" class="NewTextBox" value="emails" onfocus="InviteBox(this,1)" onblur="InviteBox(this,0);" style=" font-size:12px; line-height:12px; height:27px; width:316px; color:#ccc">
+		</div>
+	</div>
+
+	<div style="clear:both;"></div>
+	
+	
+	<div style="padding-top:15px;">
+		<div style="float:left; text-align:right; width:35px; margin-top:4px">Post:</div>
+		
+		
+		<div style="float:left; margin-left:10px;">
+			<div id="l3" class="RoundedGreen" style="position:absolute" onclick="toggleCheck($('#share_fb'))">
+
+				<img style="margin-top:3px;  float:left; border:0px; margin-left:23px" height="16" width="16" src="/images/facebook.png" style="cursor:pointer"  >
+			</div>
+			<div style="position:absolute;  margin-top:4px; margin-left:3px">
+				<input id="share_fb" type="checkbox" onclick="PopOff(this)" style="cursor:pointer;" onmouseover="$('#l3').removeClass('RoundedGreen').addClass('RoundedGreenHackHover')" onmouseout="$('#l3').removeClass('RoundedGreenHackHover').addClass('RoundedGreen')">
+			</div>
+			
+			<%if source == "challenge_invite"%>
+			<div id="FacebookPop" style="position:absolute;background-color:#9CBFBB; padding:3px; margin-top:26px; margin-left:4px;padding-right:8px; display:none" >
+				<div style="height:9px; width:40px; margin-top:-9px; margin-left:-3px; background-color:#9CBFBB; "></div>
+				<input id="fb_post_wall" type="checkbox" onclick="closeFBPop()" >Post on my wall<br>
+				<input id="fb_create_event" type="checkbox" onclick="closeFBPop()">Create event
+				
+			</div>
+			<%end%>
+		</div>
+		
+		
+		<div style="margin-left:100px;">
+			<div id="l2" class="RoundedGreen" style="position:absolute;  " onclick="toggleCheck($('#share_twitter'))">
+
+				<img style="margin-top:3px;  float:left; border:0px; margin-left:23px" height="16" width="16" src="/images/twitter.png" >
+			</div>
+			<div style="position:absolute; margin-top:4px; margin-left:3px">
+				<input id="share_twitter" type="checkbox" style="cursor:pointer" onmouseover="$('#l2').removeClass('RoundedGreen').addClass('RoundedGreenHackHover')" onmouseout="$('#l2').removeClass('RoundedGreenHackHover').addClass('RoundedGreen')">
+			</div>
+		</div>
+		
+		<div style="margin-left:155px;">
+			<div id="l1" class="RoundedGreen" style="position:absolute; " onclick="toggleCheck($('#share_stomp'))" >
+				<img style="margin-top:3px;  float:left; border:0px; margin-left:23px" height="16" width="16" src="/images/small_stomp.png" >
+			</div>
+			<div style="margin-top:4px; margin-left:3px;position:absolute;">
+				<input id="share_stomp" type="checkbox" style="cursor:pointer;" onmouseover="$('#l1').removeClass('RoundedGreen').addClass('RoundedGreenHackHover')" onmouseout="$('#l1').removeClass('RoundedGreenHackHover').addClass('RoundedGreen')">
+			</div>
+		</div>
+		
+		<div style="margin-left:210px;font-size:9px; cursor:pointer" onclick="$(this).hide(); $('#EmailDiv').show()">
+			<div class="RoundedGreen" style="position:absolute">
+				<img style="position:absolute; margin-left:3px; margin-top:3px; border:0px; margin-right:2px; " height="16" width="16" src="/images/email.png"><div style="position:absolute; margin-left:21px; margin-top:3px">email</div>
+			</div>
+		</div>
+		
+	
+			
+			
+		<div style="margin-left:275px; margin-top:-3px">
+			<div class="SubmitButton" style="width:90px; height:27px; padding:0px; line-height:27px; margin-top:0px; font-size:12px;" onclick="<%if current_user%>submitInvite(this);<%else%>openRegister('Sign up for Stomp to Send Invite')<%end%>">Send Invite</div>
+			
+		</div>
+			
+			
+			
+			
+	</div>
+		<div style="clear:both;"></div>
+	<div id="NoBoxError" style="color:black; margin-left:50px; margin-top:5px; display:none">Select a checkbox</div>
+
+	
+</div>
+
+
+<script>
+$('#Plan').autoResize({
+    // On resize:
+    onResize : function() {
+        $(this).css({opacity:0.8});
+    },
+    // After resize:
+    animateCallback : function() {
+        $(this).css({opacity:1});
+    },
+    // Quite slow animation:
+    animateDuration : 300,
+    // More extra space:
+    extraSpace : 41
+});
+
+</script>

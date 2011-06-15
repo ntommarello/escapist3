@@ -1,0 +1,11 @@
+
+<records>
+	<%for bucket in  @bucket_list_visual%>
+	<record>
+		<id><%=bucket.id%></id>
+		<title><%=strip_html(bucket.title)%></title>
+		<file_name><%=bucket.photo_file_name%></file_name>
+		<distance><%=decimal_distance(bucket.distance.to_f)%></distance>
+	</record>
+	<%end%>
+</records>

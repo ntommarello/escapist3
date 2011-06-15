@@ -1,0 +1,13 @@
+<packet>
+<error><%=@error%></error>
+<%unless @user.nil?%>
+	<user-id><%=@user.id%></user-id>
+	<first-name><%=@user.first_name%></first-name>
+	<last-name><%=@user.last_name%></last-name>
+	<avatar-file-name><%=@user.avatar_file_name%></avatar-file-name>
+	<auto-login-token><%=@user.authentication_token%></auto-login-token>
+	<push-active></push-active>
+	<unread-messages></unread-messages>	
+	<view-profiles>0</view-profiles>
+<%end%>
+</packet>

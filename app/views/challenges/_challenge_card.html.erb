@@ -1,0 +1,188 @@
+
+
+<%if source=="Spotlight"%>
+	<%@showbottom=false%>
+<%else%>
+	<%@showbottom=true%>
+<%end%>
+
+
+
+
+<div id="challenge<%=challenge.id%>" class="ChallengeBoxBorder <%if @browser.platform.to_s == "mac"%>macCard<%end%>" <%if source=="Spotlight"%><%if i !=4%>style="margin-right:0px"<%else%>style="margin-right:0px"<%end%><%end%> onmouseover="$('.ChallengePic',this).css('opacity',.9)" onmouseout="$('.ChallengePic',this).css('opacity',1)">
+	
+	
+	<%if source == "New"%>
+		
+		<%if challenge.published%>
+		
+			<%if challenge.editor_pick%>
+			<div style="z-index:50; cursor:pointer; position:absolute; width:85px; height:86px; margin-left:-4px; margin-top:-4px;" onclick="$('.ChallengePic',$(this).parent()).click()"
+			<%if challenge.photo_file_name.nil?%>
+			 onmouseover="$('.ChallengePic',$(this).parent()).attr('src','/images/no_pic_b_hover.png')" onmouseout="$('.ChallengePic',$(this).parent()).attr('src','/images/no_pic_b.png')"<%end%>>
+				<img src="/images/editor.png">
+			</div>
+			<%else%>
+				<%if challenge.vetted%>
+			
+				<%end%>
+			<%end%>
+		<%else%>
+			<div style="z-index:50; cursor:pointer; position:absolute; width:85px; height:86px; margin-left:-4px; margin-top:-4px;" onclick="$('.ChallengePic',$(this).parent()).click()"
+			<%if challenge.photo_file_name.nil?%>
+			 onmouseover="$('.ChallengePic',$(this).parent()).attr('src','/images/no_pic_b_hover.png')" onmouseout="$('.ChallengePic',$(this).parent()).attr('src','/images/no_pic_b.png')"<%end%>>
+				<img src="/images/draft.png">
+			</div>
+		<%end%>
+		
+	
+		
+		
+	<%end%>
+	
+	
+	<%if source=="bucket_list"%>
+	
+ <%if @editable%>
+            <div id="RightIcon" class="ChallengeDeleteIcon" onclick="animateAddBucket($('#challenge<%=challenge.id%>'),<%=challenge.id%>,0)" ></div>
+
+    <%else%>
+
+
+
+    <%end%>
+
+	<%elsif source== "user_profile"%>
+	  <%if current_user and current_user.id==@user.id%>
+		<div id="RightIcon" class="ChallengeDeleteIcon" onclick="deleteMyChallenge($('#challenge<%=challenge.id%>'),<%=challenge.id%>)" ></div>
+	   
+			<%end%>
+	<%else%>
+	<%if source !="user_profile" and source != "bucket_list_completed" and source != "Spotlight"%>
+	
+	<%end%>
+	<%end%>
+	<div class="ChallengeInterior" <%if @showbottom%><%else%>style="height:175px"<%end%>>
+		
+		
+		<%@saved=false%>
+		<%if @bucket_ids%>
+			<%if @bucket_ids.include?(challenge.id)%>
+		  		<%@saved=true%>
+			<%end%>
+		<%end%>
+		<%@done=false%>
+		<%if @done_ids%>
+			<%if @done_ids.include?(challenge.id)%>
+		  		<%@done=true%>
+			<%end%>
+		<%end%>
+		
+		<%if source == "New" and challenge.photo_file_name.nil?%>
+		
+		<%else%>
+		<a href="/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>">
+		<%end%>
+			<%if  source=="bucket_list_completed"%>
+				<%#image_tag challenge.subscribed_challenges[0].proof.url(:thumb_180), :class=>"ChallengePic" %>
+				<%#TODO: stupid temp n+1 query because associations screwed%>
+		
+				<%@subscribed = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id,challenge.id)%>
+				<%= image_tag @subscribed.proof.url(:thumb_180), :class=>"ChallengePic" %>
+		
+			<%else%>
+				<%#I AM PURPOSELY NOT USING LINK_FOR AND IMAGE_TAG.  MAJOR PERFORMANCE HIT WHEN 100+ CARDS ARE CALLED%>
+				<%#image_tag challenge.photo.url(:thumb_180), :class=>"ChallengePic" %>
+				
+
+				<%@proofpic=false%>
+				<%if @done%>
+					<%if current_user%>
+						<%@subscribed = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id,challenge.id)%>
+						<%if @subscribed.proof_file_name%>
+							<%@proofpic=true%>
+						 		<%= image_tag @subscribed.proof.url(:thumb_180), :id=>"Image",:class=>"ChallengePic" %>
+						<%end%>
+					<%end%>
+				<%end%>
+				
+				<%if !@proofpic%>
+					<%if challenge.photo_file_name%>
+							<img id="Image" src="http://assets.stomp.io/photos/<%=challenge.id%>/thumb_180_<%=challenge.photo_file_name%><%unless challenge.photo_file_name.include?(".")%>.<%end%>" onclick="window.location.href='/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>'" class = "ChallengePic" >
+					<%else%>
+						<img id="Image" src="/images/no_pic_b.png" class = "ChallengePic" onmouseover="$(this).attr('src','/images/no_pic_b_hover.png')" onmouseout="$(this).attr('src','/images/no_pic_b.png')" onclick="uploadChallengePhoto(<%=challenge.id%>,'create')">
+					<%end%>
+				<%end%>
+				
+				
+			<%end%>
+			<%if source == "New" and challenge.photo_file_name.nil?%>
+
+			<%else%>
+			</a>
+			<%end%>
+		<div style="height:29px; overflow:hidden; padding-bottom:2px;"><a href="/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>" class="BlueLink"><%=raw challenge.title%></a></div>
+		
+
+<%if @showbottom%>
+			<div style="float:left; font-size:10px; padding-top:10px; width:110px; margin-right:10px;">
+				
+				<%if source == "New"%>
+					
+				
+					<%if i and i >-1%>
+					<b><%=challenge.bucketed%></b> saved
+				 		<br><b><%=challenge.stomped%></b> stomped
+					<%end%>
+				<%else%>
+				
+					<%if challenge.user%>
+						by <a href="/<%=challenge.user.username%>" class="BlueLink"><%=challenge.user.first_name%></a>
+					<%end%>
+					<%if challenge.editor_pick%>
+						<br>Editor's Pick
+					<%end%>
+				<%end%>
+			</div>
+			<div style="float:right; height:53px;">
+		
+					<%if challenge.achievement and challenge.achievement.photo_file_name%>
+					<%#I AM PURPOSELY NOT USING LINK_FOR AND IMAGE_TAG.  MAJOR PERFORMANCE HIT WHEN 100+ CARDS ARE CALLED%>
+					<a href="/achievements/<%=challenge.achievement.slug%>">
+						<img src="http://assets.stomp.io/photos/<%=challenge.achievement.id%>/thumb_50_<%=challenge.achievement.photo_file_name%><%unless challenge.achievement.photo_file_name.include?(".")%>.<%end%>" style = "border:0px; width:50px; height:50px;" class = "AchievementIcon" title = "<%=challenge.achievement.name%>">
+        
+	     			</a>
+	
+					<%else%>
+						<img id="Achievement_<%=challenge.id%>"  src="/images/no_achievement.png" onmouseover="if ($(this).attr('src') == '/images/no_achievement.png') { $(this).attr('src','/images/no_achievement_hover.png') }" onmouseout="if ($(this).attr('src') == '/images/no_achievement_hover.png') { $(this).attr('src','/images/no_achievement.png') }"style="width:50px; height:50px; cursor:pointer" onclick="openAchievements(<%=challenge.id%>) ">
+				
+					<%end%>
+			
+			</div>
+			<div style="clear:both"></div>
+	<%end%>
+		<div class="ChallengeBottom" <%if @showbottom%><%else%>style="display:none"<%end%>>
+			
+			<%if source == "New"%>
+	
+			<div class="ChallengeRateBox UnSelected" style="width:82px; color:#929191; text-align:center;" onclick="window.location.href='/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>'">
+			<div style="position:absolute; margin-top:3px; margin-left:7px;"><img style="" src="/images/edit.png"></div><div style="position:absolute; margin-left:25px; ">Edit details</div>
+			</div>
+
+			<div class="ChallengeRateBox UnSelected" style="width:82px;  text-align:center; " onclick="openShareModal($('.Share',$(this).parent()))">
+			<div style="position:absolute; margin-top:3px; margin-left:10px;"><img style="" src="/images/share.png"></div><div style="position:absolute; margin-left:30px">Share</div>
+			</div>
+			<div class="ChallengeRateBox UnSelected" style="width:24px;  border-right:0px; text-align:center; " onclick="deleteMyChallenge($('#challenge<%=challenge.id%>'),<%=challenge.id%>)">
+			<img class="tip" style="padding-top:4px; margin-left:1px;" src="/images/delete.png" title="delete">
+			</div>
+			
+			<div class="Share" style="display:none">
+				<%=render :partial=>"challenges/share", :locals=>{:challenge=>challenge}%>
+			</div>
+			<%else%>
+				<%=render :partial=>"challenges/rating", :locals=>{:challenge=>challenge, :source=>"card"}%>
+			<%end%>
+
+		</div>
+	</div>
+</div>

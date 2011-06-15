@@ -1,0 +1,30 @@
+<plan>
+	<plan-id><%=@feature.plan_id%></plan-id>
+	<plan-title><%=@feature.plan_title%></plan-title>
+	<challenge-id><%=@feature.challenge_id%></challenge-id>
+	<title><%=@feature.title%></title>
+	<photo-file-name><%=@feature.photo_file_name%></photo-file-name>
+	<month><%=@month%></month>
+	<day><%=@day%></day>
+	<%@time_string = calc_end_plan_time(@feature.start_time,@feature.end_time)%>
+	<time><%=@time_string%></time>
+	<address><%=strip_html(@feature.location)%></address>
+	<host-name><%=@host.first_name%> <%=@host.last_name%></host-name>
+	<host-user-id><%=@host.id%></host-user-id>
+	<host-location><%=@host.location_city%></host-location>
+	<host-avatar-file-name><%=@host.avatar_file_name%><%if @host.avatar_file_name%><%unless @host.avatar_file_name.include? '.'%>.<%end%><%end%></host-avatar-file-name>
+	<note><%=strip_html(@feature.note)%></note>
+	<signed-up><%=@signedup%></signed-up>
+	<sold-out><%=@plan.has_soldout %></sold-out>
+
+	<attendees>
+		<%for user in @attendees%>
+			<attendee>
+				<id><%=user.id%></id>
+				<name><%=user.first_name%> <%=user.last_name%></name>
+				<location><%=user.location_city%></location>
+				<avatar-file-name><%=user.avatar_file_name%><%if user.avatar_file_name%><%unless user.avatar_file_name.include? '.'%>.<%end%><%end%></avatar-file-name>
+			</attendee>
+		<%end%>
+	</attendees>
+</plan>

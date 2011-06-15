@@ -1,0 +1,24 @@
+<tags>
+	<%match = 0%>
+	<%for challenge in @challenges%>
+	  	<%if challenge.title.downcase == @search_text.downcase%>
+			<%match = 1%>
+		<%end%>
+	<%end%>
+  
+	<%if match == 0%>
+		<tag>
+			<id>0</id>
+			<title><%=@search_text%></title>
+			<file_name></file_name>
+		</tag>
+	<%end%>
+
+	<%for challenge in @challenges%>
+		<tag>
+			<id><%=challenge.id%></id>
+			<title><%=challenge.title%></title>
+			<file_name><%=challenge.photo_file_name%></file_name>
+		</tag>
+	<%end%>
+</tags>

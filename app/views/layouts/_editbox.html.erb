@@ -1,0 +1,106 @@
+<%numeric = false unless defined?(numeric)%>
+<%allow_return = false unless defined?(allow_return)%>
+<%extra_visibility = false unless defined?(extra_visibility)%>
+<%onblur_hook = false unless defined?(onblur_hook)%>
+<%required = false unless defined?(required)%>
+<%border = false unless defined?(border)%>
+<%append = "" unless defined?(append)%>
+
+<%if @editable%>
+
+<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
+  
+		<span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span>
+	
+	    <%if extra_visibility%>
+			<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">
+				<img src="/images/edit_14.gif" class="EditIcon"  >
+			</span>
+		<%end%>
+	
+</span>
+	<script>
+	
+
+	
+	<%if content == "Required" or content == "Add a note" or content =="I'm new, so I haven't filled out my bio yet!" or content== "You Need to Insert a Title Here" or content == "Tell someone exactly how to upload proof.  What kind of photo or video?" or content == "Type in the address. Google shall find." or content == "Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph."%>
+		$('#<%=field_name%><%=append%>').focus(function(){ 
+		   	window.setTimeout(function() {
+		        var sel, range;
+		        if (window.getSelection && document.createRange) {
+		            range = document.createRange();
+		            range.selectNodeContents(document.getElementById("<%=field_name%><%=append%>"));
+		            sel = window.getSelection();
+		            sel.removeAllRanges();
+		            sel.addRange(range);
+		        } else if (document.body.createTextRange) {
+		            range = document.body.createTextRange();
+		            range.moveToElementText(document.getElementById("<%=field_name%><%=append%>"));
+		            range.select();
+		        }
+		    }, 1);
+		});
+	<%end%>
+	
+	
+	$('#<%=field_name%><%=append%>').blur(function(){    
+
+	   <%if required%>
+			if ($(this).html() == "") {
+				$(this).html("Required")
+				return
+			}
+			if ($(this).html() == "<br/>") {
+				$(this).html("Required")
+				return
+			}
+			if ($(this).html() == "<br>") {
+				$(this).html("Required")
+				return
+			}
+		<%end%>
+		
+		<%if allow_return%>
+			var s = new Sanitize({ 
+			    elements:   ['br']
+			});
+		<%else%>
+			var s = new Sanitize();
+		<%end%>
+			cleanedValue = s.clean_node(this);
+	
+			$(this).html(cleanedValue)
+	
+	     var newValue = escape($(this).html()); 
+	     $.ajax({
+	        type: "POST",
+	        url: "/<%=model%>s/<%=id%>",
+	        data: "_method=PUT&<%=model%>[<%=field_name%>]=" + newValue,
+	        success: function(msg){
+				animateFlashMessage();
+				
+			
+				
+	        }
+	     });
+	
+	    <%if onblur_hook%>
+			<%=raw onblur_hook%>
+		<%end%>
+	
+	//}
+	 });
+	
+	<%if numeric%>
+		$("#<%=field_name%>").numeric()
+	<%end%>
+	
+	</script>
+	
+<%else%>
+
+
+<%= raw  auto_link_urls(render_string_with_breaks(content.to_s), :target => '_blank', :class=>"BlueLink") %>
+
+	
+<%end%>

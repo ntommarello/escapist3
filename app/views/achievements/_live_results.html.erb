@@ -1,0 +1,12 @@
+<% @achievements.each do |achievement| %>
+	<div style="float:left; width:90px; height:130px; margin:10px; text-align:center">
+		<%if achievement.photo_file_name%>
+      <%= 
+        image_tag(achievement.photo(:thumb_90), :style=>"width:90px; height:90px; border:0px", :class=>"AchievementIcon", :id=>"a_img_#{achievement.id}", :onclick=>"replaceAchievement(this,#{achievement.id})")%>
+		<%else%>
+			<%= image_tag(achievement.photo(:thumb_90), :style=>"width:90px; height:90px;", :class=>"AchievementIcon", :onclick=>"uploadAchievement(#{achievement.id})") %>
+		<%end%>
+
+		<%=achievement.name%>
+	</div>
+<%end%>

@@ -1,0 +1,59 @@
+<script>
+	setTimeout("switchMenuBar($('#InboxLink'),1);",10);
+	messageReceiverID=<%=@receiver.id%>
+</script>
+
+<div style="float:left">
+	<div class="SubMenu SubInActive" style="border-top:1px solid #ccc;" onclick="window.location.href='/inbox'">
+	Conversations
+	</div>
+
+	<div class="SubMenu SubInActive" onclick="window.location.href='/notifications'">
+	Notifications
+	</div>
+
+</div>
+
+<div style="float:left; margin-left:40px; width:600px;">
+
+		<div class="MessageBar"><a  class="BlueLink" href="/inbox">< back to messages</a></div>
+
+		<%= text_area_tag "MessageUserField", "", :class=>"TextBox ProfileBox", :style=>"height:50px; ", :onblur=>"$('#HeadLineCounter').hide();", :onfocus=>"" , :onKeyDown=>"", 
+		:onKeyUp=>"", :autocomplete=>"off" %>
+		<div id="HeadLineCounter" style="position:absolute; width:360px; text-align:right; margin-top:5px;"></div>
+		
+		<div id="SaveButton" class="yellowButton"  style="margin-left:280px" onclick="sendMessage(this);">Reply</div>
+
+		<div style="margin-top:25px; margin-bottom:5px; font-weight:bold">Between <a class="BlueLink" href="/<%=@receiver.username%>"><%= @receiver.first_name %> <%= @receiver.last_name %></a> and <a class="BlueLink" href="/<%=@current_user.username%>">You</a></div>
+
+		<div style="border-bottom:2px solid #666; margin-bottom:10px; width:650px;"></div>
+		<div id="MessageThread">
+			<%= render :partial => "messages/messagethread" %>
+		</div>
+	
+	<div style="float:right;padding-top:20px;">
+	  	<%=render :partial=>"users/blockbutton", :locals=>{:user=>@receiver}%>
+	</div>
+	
+	
+</div>
+
+
+<script>$("#MessageUserField").focus();
+
+$('#MessageUserField').autoResize({
+    // On resize:
+    onResize : function() {
+        $(this).css({opacity:0.8});
+    },
+    // After resize:
+    animateCallback : function() {
+        $(this).css({opacity:1});
+    },
+    // Quite slow animation:
+    animateDuration : 300,
+    // More extra space:
+    extraSpace : 10
+});
+
+</script>

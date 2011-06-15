@@ -1,0 +1,79 @@
+
+
+ 
+
+<div>
+	<div class="EditDate" style="float:left" id = "logdate<%=log.id%>" onclick="$('#DatePicker<%=log.id%>').focus();">
+		<%if log.goal_date.nil?%>
+			Know when? <span class="BlueLink" style="cursor:pointer">Add Date</span>
+			<%@showtime="none"%>
+		<%else%>
+			<%=log.goal_date.strftime('%m/%d/%Y')%>
+			<%@showtime="block"%>
+		<%end%>
+	</div>
+	<div class="EditDate" id="showTime<%=log.id%>" style="float:left; display:<%=@showtime%>" onclick="$('#TimePick<%=log.id%>').focus();">
+		
+		<%if log.goal_date.nil? or log.goal_date.strftime('%I:%M%p') == "12:00AM"%>
+			&nbsp; <span class="BlueLink" style="cursor:pointer">Add Time</span>
+		<%else%>
+			&nbsp;@&nbsp;<%=log.goal_date.strftime('%l:%M %p').downcase%>
+		<%end%>
+		
+		</div>
+</div>
+
+	<div style="position:absolute; margin-top:-20px; opacity:0; width:1px; "><input type="text" style="width:1px" id="DatePicker<%=log.id%>" value="	<%if log.goal_date%><%=log.goal_date.strftime('%m/%d/%Y')%><%end%>"> <input type="text" style="width:1px" id="TimePick<%=log.id%>" value="	<%if log.goal_date%><%=log.goal_date.strftime('%l:%M %p')%><%end%>"></div>
+	<script>
+	
+
+	
+	
+		$( "#DatePicker<%=log.id%>" ).datepicker({	minDate: "-0D", 
+													maxDate: "+5Y", 
+													onSelect: function( selectedDate ) {
+											
+														$("#logdate<%=log.id%>").html(selectedDate);
+														$("#showTime<%=log.id%>").show();
+														
+														var time = $('#TimePick<%=log.id%>').val();
+														$('#goal_date<%=log.id%>').attr('value',selectedDate+ ' ' + time)
+														
+														postDate<%=log.id%>();
+													} 
+													});
+													
+													
+			$('#TimePick<%=log.id%>').timepicker({	ampm: true, 
+										stepMinute: 15,
+										hour:13,
+										timeFormat: 'h:mm tt',
+										onClose: function( selectedTime ) {	
+											
+											var date = $('#DatePicker<%=log.id%>').val();
+											$('#goal_date<%=log.id%>').attr('value',date + ' ' +selectedTime)
+											
+											$("#showTime<%=log.id%>").html("&nbsp;@&nbsp;" +selectedTime);
+											$("#showTime<%=log.id%>").show();
+											
+											postDate<%=log.id%>();
+										}
+
+				});
+					function postDate<%=log.id%>() {
+					$.ajax({
+				        type: "POST",
+				        url: "/subscribed_challenges/<%=log.id%>",
+				        data: "_method=PUT&id=<%=log.id%>&subscribed_challenge[goal_date]=" + $('#goal_date<%=log.id%>').val(),
+				        success: function(msg){
+				        }
+				     });
+					}
+	
+			
+	</script>
+	
+	<input type="hidden" id="goal_date<%=log.id%>">
+	
+
+

@@ -1,0 +1,149 @@
+<html> 
+<head> 
+  <title>Stomp</title>
+	<link href="http://stomp.io/stylesheets/base_packaged.css?1300582102" media="screen" rel="stylesheet" type="text/css" /> 
+</head>
+
+<body>
+	
+	<div class="TopBack" style="border-bottom:1px solid #82AAC5; ">
+
+			<div style="position:absolute; left:200px; font-size:18px; margin-top:20px; width:500px;" class="MainMenuLink">
+				Find Fun Things to Do in Boston!
+			</div>
+			
+		<a href="http://stomp.io/">
+			<div id="TempLogo" style="margin-left:25px"></div>
+		</a>
+	
+	
+			
+	
+	</div>
+	
+	
+	<div style="position:absolute;   height:30px; z-index:0; background:url(/images/tile_top.png)"></div>
+
+<div style="clear:both"></div>
+
+<div style="width:750px; margin-left:20px; padding-top:30px;z-index:1;">	
+	
+	
+	
+	<div style="text-align:center; width:100%">
+		<div class="BlueLabel" style="font-size:18px;line-height:22px; ">Plan of the Week</div>
+	</div>
+	
+	<div class="DivLine" style="margin-top:10px; margin-bottom:20px; ">
+		<div class="DivLeft"></div>
+		<div class="DivRight"></div>	
+	</div>
+
+
+	<div style="float:left; width:230px">
+		<div class="PhotoBorder" style="width:214px; height:161px;">
+			<a href="http://stomp.io/plans/<%=@plan.id%>">	
+				<%= image_tag @plan.challenge.photo.url(:thumb_214), :style=>"width:214px; height:161px;", :class=>"Transparent"%>
+			</a>
+		</div>
+	
+		<a href="http://stomp.io/plans/<%=@plan.id%><%if @plan.price and @plan.price > 0%>?pop=yes<%end%>">	
+			<div class="countmein WhiteActiveBorder" style="margin-top:15px;">
+				<div unselectable="on" class="outerB GreenButton" style="width:200px; margin-left:10px;  line-height:38px; height:40px;">
+						<div class="buyticket innerB InnerGreenBorder" style="height:38px; font-size:16px"><%if @plan.price and @plan.price > 0%>Buy Ticket - $<%=@plan.price%><%else%>Count me in! ($0)<%end%></div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	
+
+	<div style="float:left; margin-left:15px; width:500px;">
+	
+		<div style="float:left; width:85px; margin-right:10px;">
+				<div class="DateCircle">
+					<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
+					<%= @plan.start_time.to_date.strftime('%e').strip()%>
+				</div>
+				<div style="clear:both"></div>
+				<div class="DarkBlueLabel" style="font-size:16px; width:85px;  text-align:center; margin-top:6px; ">
+					<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
+					<div style="background:url(/images/3Lines.png) repeat; line-height:20px; padding-bottom:5px; "><%=@timestring%></div>
+				</div>
+		</div>
+	
+	
+	
+		<div class="HighlightedTitle" style="padding-bottom:7px">
+			<%=raw @plan.title%>		
+		</div>
+		<%=raw @plan.note%>	
+	
+	
+	</div>
+	
+	<div style="clear:both"></div>
+	
+	<div style="width:750px;margin-left:20px;">
+	
+		<div class="DivLine" style="margin-top:20px; ">
+			<div class="DivLeft"></div>
+			<div class="DivRight"></div>	
+		</div>
+	
+		<div style="text-align:center; width:100%">
+			<div class="BlueLabel" style="font-size:18px;line-height:22px; ">New Challenges this Week</div>
+		</div>
+		
+		<div style="clear:both; height:20px;"></div>
+		
+		<div style="float:left; width:200px; margin-left:25px; ">
+
+		<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlight", :challenge=>@challenge1, :i=>1}%>
+		</div>
+		<div style="float:left; margin-left:32px; width:200px; ">
+
+		<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlight", :challenge=>@challenge2, :i=>2}%>
+		</div>
+		<div style="float:left; margin-left:32px; width:200px; ">
+
+		<%=render :partial => "/challenges/challenge_card", :locals=>{:source=>"Spotlight", :challenge=>@challenge3, :i=>3}%>
+		</div>
+
+		
+		<div  style="float:right; margin-right:65px; margin-top:-10px; margin-bottom:10px" class="WhiteActiveBorder" >
+			<a href="http://stomp.io/challenges">
+			<div unselectable="on" class="LightGrayGreenButton" style="width:180px; color:#44B24A  " >
+				<div class="InnerLightGrayGreenBorder">
+
+					<div style="position:absolute; margin-top:7px; margin-left:8px;"><img src="/images/all-adventures.png" style="width:17px; height:17px; "></div>
+									 <div style="position:absolute; margin-left:163px; margin-top:7px"><img style="" src="/images/Indicator.png"></div>
+					<div style="margin-left:6px">View all Challenges</div>
+
+				</div>
+			</div>
+			</a>
+		</div>
+		
+	
+		
+		
+	</div>
+	
+	
+	<div id="Foot">	
+		<div style="width:750px; text-align:center; margin-top:10px;">
+				<a class="BottomLink" href="http://stomp.io/about">About</a> /
+				<a class="BottomLink" href="http://stomp.io/jobs">Jobs</a> /
+				<a class="BottomLink" href="http://stomp.io/tos">Terms of Use</a> /
+				<a class="BottomLink" href="http://stomp.io/privacy_policy">Privacy</a>
+				<div class="quote1" style="font-size:12px;">To unsubscribe from the Stomp Weekly Adventure Email, <a class="BlueLink" href="#">click here.<a/></div>
+		</div>	
+	</div>
+	
+	
+</div>
+
+
+</body>
+</html>

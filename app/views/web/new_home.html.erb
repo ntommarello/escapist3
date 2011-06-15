@@ -1,0 +1,258 @@
+	<script>plans = <%=raw @plan_json%>;</script>
+	<div id="spinner"></div>
+	
+	<script>
+	left = ($(window).width()-220) /2	
+	$("#spinner").css("left",left+"px")
+	</script>
+	<div id="big_image_background"></div>
+				
+	<div id="home_info_container" style="margin-top:250px" >
+		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
+		<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
+		<div style="clear:both"></div>
+		<div class="home_slogan">Kickass adventures with awesome people</div>
+		<div class="home_description">
+			<div id="plan_note" class="multiline" style="width:100%; height:88px; overflow:hidden"></div>	
+			<div style="float:left; margin-top:5px;">
+				<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
+				<div id="plan_attendees" style="float:left"></div>
+				<div id="MoreAttendees" onclick="window.location.href='/plans/'+plan_id" class="Transparent"></div>
+			</div>
+				
+			<div style="float:right;margin-top:3px;">
+				<div class="home_info_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id">
+					<div class="DetailIcon"></div>
+					
+					<div style="position:absolute; margin-left:50px;">Details</div>
+				</div>
+					
+				<div class="home_buy_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id+'?pop=yes'">
+					<div class="BuyIcon"></div>
+					<div id="plan_price" style="position:absolute; margin-left:50px;"></div>
+				</div>
+			</div>
+				
+			</div>
+			
+
+			<div class="home_info_next" >
+				<div style="float:right" onmouseover="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#2EA42E')" onmouseout="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#3366CC')">
+					<div id="next_arrow" onclick="nextPlan(1)" class="home_NextArrowButton" ></div>
+					<div id="next_plan_link" onclick="nextPlan(1)" style="float:right; margin-right:5px; margin-left:5px;" class="home_link"></div>
+				</div>
+				<div id="prevarrow" onclick="nextPlan(-1)" class="home_BackArrowButton" ></div>
+				<a href="/schedule">
+					<div style="float:left" onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
+						<div id="viewall1" class="ScheduleIconButton" ></div>
+						<div id="viewall2" style="float:left; margin-left:5px" class="home_link">Schedule</div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<div id="Home_Footer">
+			<a class="HomeFooterLink" href="/about">About</a> / <a class="HomeFooterLink" href="/jobs">Jobs</a> / <a class="HomeFooterLink" href="/tos">Terms</a> / <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
+		</div>
+			
+	
+	
+
+	<img id="hideImage" src="" style="display:none">
+
+	
+	
+	<div style="clear:both"></div>
+	<div name="preload" style="display:none">
+		<img src="/images/ajax-loader_f.gif">
+	</div>
+	
+
+	
+	
+
+<script>
+
+$(document).ready(function() {
+
+	<%if current_user%>
+		loggedIn = 1;
+	<%else%>
+		loggedIn = 0;
+	<%end%>
+	
+	
+	skip = 0;
+	$("#home_info_container").draggable({
+  drag: function(event, ui) {
+  $(".drag").css("opacity", "0.6");
+
+  },
+
+  stop: function(event, ui) {
+  $(".drag").css("opacity", "1.0");
+  },
+
+handle: '.dragIcon',
+  //cursor: "move",
+  containment: 'parent',
+  
+
+  });
+
+	//plan_index = parseInt(getUrlVars()["p"]);
+	
+	plan_index = <%=@start_id%>
+	
+	<%if @city_id%>
+		city_index = <%=@city_id%>;
+	<%else%>
+		city_index = <%=session[:dropdown_city_value]%>;
+	<%end%>
+	
+	start = 1;
+	
+    History.Adapter.bind(window,'statechange',function(){
+
+        State = History.getState(); 
+	
+		if (backButton == 1) {
+			plan_index = plan_index - 1
+		}
+		if (plan_index == NaN) {
+			plan_index = 0;
+		}
+		if (!plan_index) {
+			plan_index = 0;
+		}
+		if (plan_index < 0) {
+			plan_index = 0;
+		}
+		
+		if (skip == 1 ) {
+			
+			loadInfo(plan_index);
+		
+			$('#big_image_background').animate({opacity: 1}, 250);
+		} else {
+	//	$('#big_image_background').css("opacity",.2)
+			
+				$('#big_image_background').animate({
+					opacity: .2,
+				}, 200, function() {
+					loadInfo(plan_index);
+
+					//$('#big_image_background').animate({opacity: 1}, 250);
+				} );
+			//	loadInfo(plan_index);
+			
+				//$('#big_image_background').animate({opacity: 1}, 250);
+		
+		}
+    });
+
+	if (plan_index == NaN) {
+		plan_index = 0;
+	}
+	if (!plan_index) {
+		plan_index = 0;
+	}
+	
+	
+    $(window).resize(function() {
+       setTimeout("adjustWindowSize()",100);
+    });
+	
+	footer_h = $(window).height()-75;
+
+
+
+	image_url = "http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>"
+
+		loadInfo(plan_index);
+		$("#home_info_container").show();
+		setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
+			if ($(window).height() > 600) {
+				margt = $(window).height()-51-40-330;
+				$("#home_info_container").css("margin-top",margt)
+			}
+				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+				if ($(window).height() < topInfo) {
+					$('#big_image_background').css('height', topInfo+'px');
+					footer_h =topInfo-25;
+				} else {
+					$('#big_image_background').css('height', $(window).height()-51);
+					footer_h = $(window).height()-75;
+				}
+				
+		
+				
+				
+	//load main image first, turn off slider and display
+	$('#hideImage').attr('src', image_url).load(function() {
+		
+		//TODO: TEMP HACKY
+		
+	
+		
+		
+		if ($(window).height() > 600) {
+			margt = $(window).height()-51-40-330;
+			$("#home_info_container").css("margin-top",margt)
+		}
+		
+		
+		topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+		if ($(window).height() < topInfo) {
+			$('#big_image_background').css('height', topInfo+'px');
+			footer_h =topInfo;
+		} else {
+			$('#big_image_background').css('height', $(window).height()-51);
+			footer_h = $(window).height()-25;
+		}
+		
+	
+		
+		$('#big_image_background').show();
+		$('#big_image_background').animate({opacity:1},500);	
+		$('#Home_Footer').show();
+		$('#Home_Footer').css("top",footer_h+"px");
+		$('#spinner').hide();
+			
+		//setTimeout("initHomePageAfterImageLoad()",500);
+		
+		preload_image_index = 0;
+		preloadImage();
+		
+	});
+	
+
+	
+});
+
+function preloadImage() {
+	
+	preload_image_index = preload_image_index +1;
+	
+	if (plans.plan != null) {
+		return;
+	} else {
+		preload_plan = plans[preload_image_index].plan;
+	}
+	
+	
+	
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
+	
+	var img = new Image();
+	$(img).load(function(){
+	      preloadImage();
+	}).attr("src", image_url);
+}
+
+
+
+</script>
+
+
+	

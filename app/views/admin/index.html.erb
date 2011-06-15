@@ -1,0 +1,73 @@
+<%#@users.each_with_index do |user,index|%>
+<%#user.email%>,
+<%#end%>
+
+
+<%= render :partial=>"/layouts/dropdown", :locals=>{:model=>"challenge", :fieldname=>"city", :selectedValue=>session[:dropdown_city], :style=>"position:absolute; width:115px; z-index:500", :options=>["Boston","San Francisco","New York City", "Earth"], :values=>[1,2,3,99]}%>
+
+
+
+<div style="float:left; width:300px; margin-top:50px">
+	<%@users.each_with_index do |user,index|%>
+	<div style="padding-top:10px; padding-bottom:10px; border-bottom:1px solid #eee;">
+		<div style="float:left; width:60px; padding-right:10px; color:#777;text-align:center"><%=time_ago_in_words(user.created_at)%>  </div>
+		<div style="float:left; width:50px">
+				 <%= link_to(user_path(user)) do
+		  			image_tag user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer"
+				end %>
+		</div>
+		<div style="float:left; margin-left:10px; width:120px">
+		
+		<a class="BlueLink" href="/<%=raw user.username%>"><%=raw user.first_name%> <%=raw user.last_name%></a>
+					
+						<div style="margin-top:3px; font-size:11px"><%= raw user.location_city%></div>
+		</div>
+		<div style="float:left; margin-left:10px; text-align:right; margin-top:17px; width:30px; font-size:20px; font-weight:bold;" class="HighlightedTitle">
+				<%=user.score%><span style="font-size:11px; font-weight:normal">pts</span>
+		</div>
+
+		<div style="clear:both; "></div>
+		</div>
+	<%end%>
+	
+	<%= will_paginate @users %>
+	
+	
+</div>
+
+
+<div style="float:left; width:400px; margin-top:50px; margin-left:100px; font-size:14px;">
+	<p># Users: <b><%=@total.length%></b></p>
+	<p style="margin-left:20px">% with Pics: <b><%=@percent_pics.round(2)%></b></p>
+	<p style="margin-left:20px">% Active within 10 Days:  <b><%=@percent_active.round(2)%></b></p>
+	<p style="padding-top:20px"># Saved to Bucket:  <b>TBD</b>  (Avg. per User:  <b>TBD</b>)</p>
+	<p># Stomped:  <b>TBD</b>  (Avg. per User:  <b>TBD</b>)</p>
+	
+	
+	
+						<div class="WhiteActiveBorder" style="margin-top:100px" onclick="alert('tbd')">
+							<div unselectable="on" class="GreenButton" style="width:62px; width:300px;">
+								<div  class="InnerGreenBorder">
+									SEND WEEKLY ADVENTURE EMAIL
+								</div>
+							</div>
+						</div>
+						
+						
+						<div style="margin-top:10px">
+							switch to user ID <input id="user_id" type="textfield" value=""><input type="button" value="submit" onclick="switchUser($('#user_id').val());">
+						</div>
+	
+	
+</div>
+
+
+<script>
+
+$('.dropOption').bind('click', function() {
+
+	//setTimeout("window.location.href='/admin'",1000);
+});
+
+</script>
+

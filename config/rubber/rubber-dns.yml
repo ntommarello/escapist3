@@ -1,0 +1,55 @@
+# OPTIONAL: The dns provider to use.  Need to exist in dns_providers below
+# dns_provider: nettica
+
+# OPTIONAL: The configuration for each dns provider (nettica|zerigo|dyndns)
+#          This lets rubber update a dynamic dns service with the instance alias and ip
+#
+# dns_providers:
+  # nettica:
+    # user: joe
+    # password: sekret
+    # type: A
+    # ttl: 300
+  # zerigo:
+    # email: foo@bar.com
+    # token: hexxy
+    # type: A
+    # ttl: 300
+  # dyndns:
+    # user: joe
+    # password: sekret
+    # update_url: https://members.dyndns.org/nic/update?hostname=%host%&myip=%ip%'
+
+# OPTIONAL: Lets you configure your dns service, for example to add other CNAMES
+#           or setup dns round robin, etc.  Run "cap rubber:setup_dns_records"
+#           to apply them as rubber only sets up instance aliases as part of
+#           the standard lifecycle
+#
+dns_records:
+  # 2 of the same A records is a round robin dns
+  - host: "#{(RUBBER_ENV == 'production') ? '' : 'www-' + (RUBBER_ENV || 'default')}"
+    domain: stomp.io
+    data: "#{rubber_instances['web01'].external_ip rescue (RUBBER_ENV + '.stomp.io')}"
+    type: "#{(RUBBER_ENV == 'production') ? 'A' : 'CNAME'}"
+    ttl: 300
+  - host: "#{(RUBBER_ENV == 'production') ? '' : 'www-' + (RUBBER_ENV || 'default')}"
+    domain: stomp.io
+    data: "#{rubber_instances['web02'].external_ip rescue (RUBBER_ENV + '.stomp.io')}"
+    type: "#{(RUBBER_ENV == 'production') ? 'A' : 'CNAME'}"
+    ttl: 300
+
+  - host: www
+    domain: stomp.io
+    data: "#{domain}"
+    type: CNAME
+    ttl: 300
+
+# - host: "#{(RUBBER_ENV == 'production') ? 'tools' : 'tools-' + (RUBBER_ENV || 'default')}"
+#   domain: stomp.io
+#   data: "#{rubber_instances.for_role('web_tools').first.external_host rescue '#{RUBBER_ENV}.stomp.io'}"
+#   type: CNAME
+
+# - host: files
+#   domain: stomp.io
+#   data: files.stomp.io.s3.amazonaws.com
+#   type: CNAME

@@ -1,0 +1,80 @@
+<script>
+	$("#TopBucketIcon").attr("src","/images/bucket-active.png")
+</script>
+
+
+<div class="HighlightedTitle">Stuff to do Before Kicking the Bucket</div>
+
+
+<div id="RenderedContent" style="float:left; width:700px; margin-top:10px">
+	
+
+		<%= render :partial=>"users/bucket_list"%>	
+	
+	
+	
+	</div>
+	<%if !current_user%>
+	<div id="Login" style="margin-top:10px; padding:10px; border:1px solid #F6AAC2; color:#BD1248; font-weight:bold; background-color:#FBE0E8; width:535px;">
+		To save your goals, <a class="RedLink" href="#" onclick="openLoginDrop($('#LoginButton')); ignoreHide=1;">login</a> or <a class="RedLink" href="/register">create an account</a>
+	</div>
+	<%end%>	
+	
+</div>
+
+<div style="float:left; margin-left:15px; margin-top:30px;width:210px;">
+	
+	<%if current_user%>
+	<div style="color:black; font-weight:bold; padding-bottom:4px;">Share Your Bucket List</div>
+	<div style=" padding-bottom:4px;">Maybe some friends want to join?</div>
+	
+
+
+		<Script>
+		var share = {
+	   method: 'stream.share',
+	   u: 'http://<%=APP_URL%>/<%=current_user.username%>#bucket'
+	   };
+	</script>
+	
+
+	
+	<div style="margin-right:5px; cursor:pointer" class="BlueLink" onclick="FB.ui(share, function(response) { console.log(response); });">
+		<img style="margin-top:3px; margin-left:9px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+		<div style="margin-top:3px; float:left">facebook</div>
+	</div>
+
+	<div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=Check out my bucket list!  Join me to do something! %23StompIO &url= http://<%=APP_URL%>/<%=current_user.username%>#bucket', '_blank', 'toolbar=0, status=0, width=626, height=436');">
+		<img style="margin-top:3px;margin-left:5px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+		<div style="margin-top:3px; margin-left:5px;  float:left">twitter</div> 
+	</div>
+
+	<a href="mailto:?subject=My Stomp.io Bucket List&amp;body=Check out my Stomp.io Bucket List: http://<%=APP_URL%>/<%=current_user.username%>#bucket" class="BlueLink" >
+		<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
+		<div style="margin-top:3px;  float:left">email</div>
+	</a>
+	<div style="clear:both; height:25px;"></div>
+	Your Bucket URL:<br>
+		<a class="BlueLink"  href="http://<%=APP_URL%>/<%=current_user.username%>#bucket"><%=APP_URL%>/<%=current_user.username%>#bucket</a>
+	<%end%>
+	
+</div>
+
+
+<div style="clear:both"></div>
+	
+
+
+
+<script>
+var $tabs = $("#tabs").tabs({ cookie: { expires: 30 }});
+$(document).ready(function() {
+	$('#tabs').show();
+ });
+$(".AchievementIcon").tooltip();
+$(".PeopleIcon").tooltip();
+$(".PointIcon").tooltip();
+$(".LocationIcon").tooltip();
+</script>
+
+		

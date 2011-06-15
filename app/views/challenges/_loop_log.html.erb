@@ -1,0 +1,153 @@
+
+
+<%for log in @log%>
+
+<%@oldeditable = @editable%>
+
+
+
+	<%if log.user and log.challenge%>
+	<%if current_user and current_user.id==log.user.id%>
+		<%@editable = true%>
+	<%else%>
+		<%@editable = false%>
+	<%end%>
+	
+	
+		<div class="LogRow" <%if current_user and current_user.id == log.user.id%>style="background-color:#E7F1D9; border:1px solid #9CBFBB; margin-left:-5px; padding-left:5px"<%end%>  onmouseover="$('#ThumbAttend<%=log.id%>').css('opacity',1)" onmouseout="$('#ThumbAttend<%=log.id%>').css('opacity',0)">
+	
+			<%if log.completed%>
+				<%if log.proof_file_name%>
+			<div style="float:left; margin-right:10px;">
+				<%= render :partial=>"challenges/preview_thumb", :locals=>{:width=>133, :height=>100, :completed=>log, :display_name=>false }%>
+			</div>
+		
+			<div style="float:left; width:450px; margin-top:8px">
+		      <div>
+			
+				
+		<%= link_to(user_path(log.user.username), :class=>"BlueLink") do log.user.first_name end%> stomped this!</div>
+			
+				
+		         <%render :partial=>"users/edit_date", :locals=>{:id=>log.id, :date=>log.date_completed_on}%>
+				
+				<div style="margin-top:10px; margin-left:10px">
+				<%if log.challenge.achievement%>
+					<%= link_to(achievement_path(log.challenge.achievement.slug), :class=>"BlueLink") do 
+						image_tag log.challenge.achievement.photo(:thumb_50), :style=>"border:0px; width:50px; height:50px; cursor:pointer; float:left", :class=>"AchievementPhoto Transparent",:title => log.challenge.achievement.name
+					end %>
+				<%end%>
+				</div>
+				<div style="float:left; margin-top:20px; margin-left:10px; font-size:10px; color:#ccc">
+					+<%=log.points_awarded%>pts
+				</div>
+				<div style="font-size:10px; color:#999; margin-left:15px; float:left; width:300px">
+					<%if log.completed_note.nil? or log.completed_note.strip == "" %><%log.completed_note = "Add a note"%><%end%>
+
+							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"completed_note", :content=>log.completed_note, :id=>log.id, :model=>"subscribed_challenge", :allow_return=>false, :required=>true, :extra_visibility=>false, :append=>log.id}%>
+				
+				</div>
+			</div>
+		
+			<div style="clear:both"></div>
+			
+	
+			<%end%>
+	
+	
+			<%else%>
+			
+	
+				
+				
+				<div style="float:left; margin-right:10px; ">
+					<%= link_to(user_path(log.user.username), :class=>"BlueLink") do 
+								image_tag log.user.avatar.url(:thumb_90), :class=>"Transparent", :style=>"border:1px solid #eee; width:90px; height:90px"
+					end%>
+				</div>
+				
+				<div id="CommentsArea<%=log.id%>" style="float:left">  
+					<%= render :partial=>"comments/comment_display", :locals=>{:log=>log, :source=>"challenge"} %>
+				</div>
+				
+				<div id="Admin" style="float:left; margin-left:30px; width:180px; color:#264409">
+			
+					<%if current_user and current_user.id == log.user.id%>
+			        
+						<Script>
+						var share = {
+					   method: 'stream.share',
+					   u: 'http://<%=APP_URL%>/challenges/<%=@challenge.id%>-<%=@challenge.title.parameterize%>'
+					   };
+					</script>
+					
+				
+				    <span style="float:left; margin-top:3px; margin-right:4px;  font-size:11px">Share</span>
+					<div style="cursor:pointer" class="BlueLink" 	onclick="FB.ui(share, function(response) { console.log(response); });">
+						<img style="margin-top:3px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+						<div style="margin-top:3px; float:left">facebook</div>
+					</div>
+
+					<div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=I want to <%=@challenge.title%>! Join me! %23StompIO &url= http://<%=APP_URL%>/challenges/<%=@challenge.id%>-<%=@challenge.title.parameterize%>', '_blank', 'toolbar=0, status=0, width=626, height=436');">
+						<img style="margin-top:3px;margin-left:5px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+						<div style="margin-top:3px; margin-left:5px;  float:left">twitter</div> 
+					</div>
+					
+					<div style="clear:both; padding-bottom:20px"></div>
+							  <%= render :partial=>"challenges/add_date", :locals=>{:log=>log}%>
+					
+					<div style="clear:both; padding-bottom:10px"></div>
+					
+					<div style="cursor:pointer;" onclick="togglePrivacy(this, <%=log.id%>)">
+						<img class="privacyicon" style="float:left" src="/images/<%if log.private !=1%>un<%end%>lock.png">
+						<div class="privacycomment"><%if log.private !=1%>anyone can comment<%else%>commenting disabled<%end%></div>
+					</div>
+					
+					<div style="clear:both"></div>
+					
+					<%else%>
+						<%if log.goal_date %>
+						
+								<%= render :partial=>"layouts/calendar", :locals=>{:date=>log.goal_date}%>
+					
+						<%end%>
+					
+					<%end%>
+			
+					<div id="LikesArea<%=log.id%>" style="margin-top:20px">
+						<%= render :partial=>"likes/likes_display", :locals=>{:log=>log}%>
+					</div>
+				
+					
+			
+				</div>
+					
+				<div style="clear:both"></div>
+			<%end%>
+	
+		</div>
+
+		<%@editable = @oldeditable%>
+	<%end%>
+
+		
+<%end%>
+
+<script>
+$('.smallThumpUp').tooltip();
+$('.resize').autoResize({
+    // On resize:
+    onResize : function() {
+        $(this).css({opacity:0.8});
+    },
+    // After resize:
+    animateCallback : function() {
+        $(this).css({opacity:1});
+    },
+    // Quite slow animation:
+    animateDuration : 300,
+    // More extra space:
+    extraSpace : 1
+});
+
+</script>

@@ -1,0 +1,10 @@
+<p><%=@first_name%> <%=@last_name%> sent you a message.</p>
+
+<p>-------------------------------</p>
+
+<p><%=@message%></p>
+
+<p>-------------------------------</p>
+<p>To reply to this message, visit: <a href="http://<%=APP_URL%>/reply_message.html?id=<%=@message_id%>&user_credentials=<%=@autotoken%>">http://<%=APP_URL%>/reply_message.html?id=<%=@message_id%>&user_credentials=<%=@autotoken%></a>.</p>
+
+<span style="font-size:10px">-----<br>Your <%=APP_NAME%> settings currently copy all messages to your e-mail.  To turn this feature off, visit <a href="http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@autotoken%>">http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@autotoken%></a>.</p>

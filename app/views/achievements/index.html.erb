@@ -1,0 +1,39 @@
+<div class="X" onclick="closeRegister()">x</div>
+<div style="padding-bottom:20px; text-align:center" class="HighlightedTitle">Attach a Tag</div>
+
+<div style="padding-bottom:20px">
+	
+		<input id="achievement_name" name="achievement[name]" type="textfield" maxlength="20" class="ShadowedTextBox" value="" onkeyup="liveAchSearch(this)" style="float:left; margin-right:10px;" onKeyPress="return submitAchOnEnter(this,event)">
+		<div style="margin-top:20px; margin-left:10px"  onclick="createAchievement($('#AchAdd'),$('#achievement_name').val())">
+			<div unselectable="on" class="GreenButton" style="float:left; width:60px; height:30px;">
+				<div id="AchAdd" class="InnerGreenBorder" style="height:28px">
+					Create
+				</div>
+			</div>
+		</div>
+
+</div>
+<div style="clear:both"></div>
+
+
+<div id="Ach_LiveResults">
+
+	<%=render :partial=>"achievements/live_results"%>
+	<div style="clear:both"></div>
+	<%= will_paginate @achievements %>
+</div>
+
+	
+<script>
+$(function() {
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("Page is loading...");
+	$.get(this.href, { }, function(theResponse){
+		$('#RenderAchievements').html(theResponse);
+		setTimeout("$('#achievement_name').focus();",100);
+		return false;
+	});
+    return false;
+  });
+});
+</script>

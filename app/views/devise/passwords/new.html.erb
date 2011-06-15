@@ -1,0 +1,15 @@
+<div class="HighlightedTitle">Forgot your password?</div>
+
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div style="margin-top:20px; margin-bottom:4px;">What is your e-mail?</div>
+  <%= f.text_field :email, :class=>"TextBox", :style=>"width:210px; height:20px" %></p>
+
+<div id="SaveButton" class="yellowButton"  style="margin-top:1px; width:210px" onclick="$('#user_new').submit()">Email Password Reset Instructions!</div>
+
+<% end %>
+
+<script>
+	$(".TextBox").focus();
+</script>

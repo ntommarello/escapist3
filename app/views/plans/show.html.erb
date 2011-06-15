@@ -1,0 +1,205 @@
+
+
+
+<% content_for :page_title do %>
+  <%=raw @plan.title%>
+<% end %>
+
+<% content_for :head do %>
+	<meta  name="description" content="<%=@plan.note%>" />
+	<meta name="image" content="<%=@plan.challenge.photo.url(:thumb_214)%>" />
+<%end%>
+
+
+<Script>
+	var share = {
+   method: 'stream.share',
+   u: '<%= plan_url(@plan) %>'
+   };
+</script>
+
+
+
+
+<div style="margin:0 15px 0 515px;
+  right:100%;
+  ">
+	
+
+
+</div>
+
+
+
+
+
+	<input type="hidden" id="unit_price" value="<%=@plan.price%>">
+	
+
+	<div class="colmask leftmenu"> 
+	    <div class="colright"> 
+	        <div class="col1wrap"> 
+	            <div class="col1"> 
+		
+		
+	                <div style="float:left; margin-right:20px; ">
+						<div class="DateCircle">
+							<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
+							<%= @plan.start_time.to_date.strftime('%e').strip()%>
+						</div>
+						<div style="clear:both"></div>
+						<div class="DarkBlueLabel" style="font-size:16px; width:85px;  text-align:center; margin-top:6px; ">
+							<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
+							<div style="background:url(/images/3Lines.png) repeat; line-height:20px; padding-bottom:5px; "><%=@timestring%></div>
+						</div>
+					</div>
+
+					<div class="HighlightedTitle" style="padding-bottom:7px; font-size:22px;">
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>		
+					</div>
+
+					<div style="font-size:16px; line-height:22px;">
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); resetPublish();}"}%>	
+					</div>
+					<div style="clear:both"></div>
+
+					<div class="DarkBlueLabel" style="padding-top:25px; padding-bottom:8px;">Meeting Place</div>
+						<div style="min-width:600px;">
+							<div style="float:left">		
+								<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
+											<img  id="GoogleMap" width="270" height="125" alt="map error" style=" cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=14&size=270x125&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
+								</div>
+
+								<div style="float:left; margin-left:7px; width:210px;">
+
+									<%if @plan.url_name and @plan.url_link %>
+										<a target="_blank" class="BlueLink" href="<%=@plan.url_link%>"><%=@plan.url_name%></a><br>
+
+									<%else%>
+											<%if @editable%>
+												[<a class="BlueLink" onclick="$('#adminlink').hide(); $('#AdminOptions').show(); $('#challenge_url_name').focus()" href="#">add link</a>]<br>
+											<%end%>
+										<%end%>
+											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
+
+											<p><br><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></p>
+
+											<%if @editable%>
+
+											<div id="AddMeeting" style="padding-top:10px; <%if @plan.transportation%> display:none<%end%>">[<a class="BlueLink" href="#" onclick="$('#MeetingPlace').show(); $('#AddMeeting').hide(); $('#transportation').html('input directions'); $('#transportation').focus();">add meeting instructions</a>]</div>
+
+											<%end%>
+
+									</div>
+
+									<div style="clear:both"></div>
+
+								</div>
+
+
+
+
+
+
+
+
+
+
+								<div style="margin-top:40px;">
+
+
+
+
+
+									<textarea id="TempPassword" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:389px;" onfocus="if ($(this).val()=='comment') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('comment');  $(this).css('color','#ccc')}">comment</textarea>
+
+									<div  class="WhiteActiveBorder"  >
+										<div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for Stomp to comment on  this plan')<%end%>">
+											<div class="InnerLightGrayBorder"style="height:32px;" >
+												Post
+											</div>
+										</div>
+									</div>
+
+									<div style="clear:both; height:10px;"></div>
+
+									<div id="CommentsArea<%=@plan.id%>" style="padding-top:6px">
+										<%=render :partial=>"comments/comment_display", :locals=>{:plan=>@plan}%>
+									</div>
+
+									</div>
+
+							</div>
+
+							<div style="clear:both; height:40px;"></div>
+
+
+				
+	            
+	        </div> 
+	        <div class="col2"> 
+	
+
+
+				<div class="PhotoBorder" style="cursor:default; height:256px; width:400px;">
+					<%if @editable%>
+						<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
+					<%else%>
+						
+							<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>" Transparent"%>
+						
+					<%end%>
+				</div>
+
+				<div style="float:left; width:210px">
+
+
+					<div style="color:#1F527E; margin-top:9px; margin-left:4px; margin-bottom:5px;">
+						<%if @plan.price and @plan.price > 0%>Share with your friends.  Give them a 10% discount.<%else%><div style="padding-top:7px">Share with your friends!</div><%end%></div>
+					
+
+						<div style="cursor:pointer; margin-left:5px;" class="BlueLink" 	onclick="FB.ui(share, function(response) { console.log(response); });">
+								<img style="margin-top:3px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
+								<div style="margin-top:4px;  float:left">facebook</div>
+						</div>
+
+				    <div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=I\'m attending a @stompio plan: <%=CGI.escape(@plan.title)%>&url=http://stomp.io/?id=<%= @plan.id %>. Join me and get 10% off by using discount code JOINME42', '_blank', 'toolbar=0, status=0, width=626, height=436');">
+							<img style="margin-top:3px;margin-left:10px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
+							<div style="margin-top:4px; margin-left:5px;  float:left">twitter</div> 
+						</div>
+
+						<a href="mailto:?subject=I'm Attending a Stomp Adventure: <%=@plan.title%>&amp;body=I'm attending this Stomp adventure: http://stomp.io/?id=<%= @plan.id %>.  If you woud like to join me, get 10 percent off by using discount code JOINME42." class="BlueLink" >
+							<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
+							<div style="margin-top:4px;  float:left">email</div>
+						</a>
+						<div style="clear:both"></div>
+				</div>
+
+				<div style="float:left; margin-top:5px;">
+
+					<%= render :partial=>"plans/attend_button"%>
+				</div>
+
+
+
+				<div style="clear:both"></div>
+
+				 <%@attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id])%>
+
+				<div id="RenderPlan" style="width:410px; margin-top:10px;">
+					<%= render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :host=>@plan.user}%>
+				</div>
+
+				<div style="clear:both"></div>
+	          	
+	        </div> 
+	    </div> 
+	</div>
+
+
+
+
+<%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
+
+
+

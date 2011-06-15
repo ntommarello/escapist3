@@ -1,0 +1,21 @@
+<%if @editable%>
+	<span id="logdate<%=id%>" class="EditActivityDate" onclick="editAdventureDate(this, <%=id%>)" style="margin-top:3px;"><%=time_ago_in_words(date)%> ago</span>
+	<span style="opacity:0; width:1px"><input type="text" style="width:1px" id="datepicker<%=id%>"></span>
+	<script>
+		$( "#datepicker<%=id%>" ).datepicker({	minDate: "-20Y", 
+													maxDate: 0, 
+													onSelect: function( selectedDate ) {
+											
+														$("#logdate<%=id%>").html(selectedDate);
+														
+															$.post("/subscribed_challenges/<%=id%>", { challenge_id: <%=id%>, "subscribed_challenge[date_completed_on]":selectedDate, _method:'put'}, function(theResponse){
+															 $("#logdate<%=id%>").html(theResponse)
+															});
+															
+															
+													} 
+													});
+	</script>
+<%else%>
+	<span class="SubtleFont" style="margin-top:3px;"><%=time_ago_in_words(date)%> ago</span>
+<%end%>

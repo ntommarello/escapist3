@@ -1,0 +1,11 @@
+<%=@first_name%> <%=@last_name%> sent you a message.
+
+-------------------------------
+
+<%=@message%>
+
+-------------------------------
+
+To reply to this message, visit: http://<%=APP_URL%>/reply_message.html?id=<%=@message_id%>&user_credentials=<%=@autotoken%>
+
+Your <%=APP_NAME%> settings currently copy all messages to your e-mail.  To turn this feature off, visit http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@autotoken%>
