@@ -68,7 +68,7 @@ namespace :rubber do
     run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake utils:package"
     # For Apache content negotiation with Multiviews, we need to rename .css files to .css.css and .js files to .js.js.
     # They will live alongside .css.gz and .js.gz files and the appropriate file will be served based on Accept-Encoding header.
-    run "cd #{current_release}/public/assets; for f in *.css; do mv $f `basename $f .css`.css.css; done; for f in *.js; do mv $f `basename $f .js`.js.js; done"
+    #run "cd #{current_release}/public/assets; for f in *.css; do mv $f `basename $f .css`.css.css; done; for f in *.js; do mv $f `basename $f .js`.js.js; done"
   end  
 end
 
