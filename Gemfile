@@ -46,3 +46,4 @@ group :test do
 end
 
 gem "rubber"
+gem "rubber", "1.11.0"
