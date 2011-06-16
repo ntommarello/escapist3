@@ -17,16 +17,16 @@
 
 		     	<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
 					<div class="RegisterLabel2">full name</div>
-					<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="TextBox RegisterBox" size="30"></div>
+					<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="ShadowedTextBox RegisterBox" size="30"></div>
 					<div style="clear:both; position:relative; height:10px; "></div>
 
 					<div class="RegisterLabel2">email</div>
-					<div style="float:left; width:150px;"><%= form.text_field :email, :class => "TextBox RegisterBox" %></div>
+					<div style="float:left; width:150px;"><%= form.text_field :email, :class => "ShadowedTextBox RegisterBox" %></div>
 
 					<div style="clear:both; position:relative; height:10px; "></div>
 
 						<div class="RegisterLabel2">password</div>
-					<div style="float:left; width:220px;"><%= form.password_field :password, :class => "TextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
+					<div style="float:left; width:220px;"><%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
 						
 							<div id="Error" style=" color:red; font-weight:bold">	
 								<%= flash[:notice] || flash[:error] %>

@@ -6,25 +6,21 @@ on :load do
   set :application, rubber_env.app_name
   set :runner,      rubber_env.app_user
   set :deploy_to,   "/mnt/#{application}-#{RUBBER_ENV}"
-  set :copy_exclude, [".git/*", ".bundle/*", "log/*"]
+  set :copy_exclude, [".git/*", ".bundle/*", "log/*", ".rvmrc"]
 end
 
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
 set :scm, :git
-#set :repository, "."
-set :repository,    'git@urbaninteractive.unfuddle.com:urbaninteractive/trek.git'
-#set :deploy_via, :copy
+set :repository, "git@urbaninteractive.unfuddle.com:urbaninteractive/escapist.git"
 set :deploy_via, :remote_cache
 
 set :ssh_options, { :forward_agent => true }
-
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
 set :user, 'root'
 set :password, nil
-set :app_user, 'app'
 
 # Use sudo with user rails for cap deploy:[stop|start|restart]
 # This way exposed services (mongrel) aren't running as a privileged user
@@ -54,13 +50,14 @@ namespace :deploy do
   end
 end
 
+
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
 
 namespace :rubber do
   desc "Set permissions"
   task :set_permissions, :roles => :app do
-    run "cd #{current_path}; chown -R #{app_user} public"
+    run "cd #{current_path}; chown -R root public"
   end
 
   desc "Package deployment assets"
@@ -68,6 +65,7 @@ namespace :rubber do
     run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake asset:packager:build_all"
   end  
 end
+
 
 # load in the deploy scripts installed by vulcanize for each rubber module
 Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|

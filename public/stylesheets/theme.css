@@ -3271,6 +3271,9 @@ span.continued {
   display: none;
   opacity: 0; }
 
+.RegisterBox:focus {
+  background-color: yellow; }
+
 .home_date {
   font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: rgba(22, 184, 14, 0.8);

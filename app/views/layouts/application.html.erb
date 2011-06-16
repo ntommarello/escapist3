@@ -9,10 +9,7 @@
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
 	
-	<%if params[:action] == "new_home"%>
-		<div id="container2" style="position:absolute; margin-top:-230px; width:100%"></div>
-	<%end
-	%>
+
 	<%if current_user%>
 		<div id="LogoutMenu">
 			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/<%=current_user.username%>'" >

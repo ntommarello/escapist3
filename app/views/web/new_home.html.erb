@@ -73,7 +73,7 @@
 
 <script>
 
-height = $(window).height() + 220;
+height = $(window).height() - 60;
 
 $("#container2").css("height",height)
 
@@ -90,7 +90,7 @@ $(document).ready(function() {
 
 	handle: '.dragIcon',
   //cursor: "move",
-  containment: '#container2',
+  containment: [0, -230, $(window).width()-480, $(window).height() -240-330-60],
   
 
   });

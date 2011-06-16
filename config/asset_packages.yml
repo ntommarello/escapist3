@@ -15,7 +15,7 @@ javascripts:
     - history
     - history.adapter.jquery
     - json2
-    - amplify.store.js
+    - amplify.store
         
 - postload:
     - jquery.url.min

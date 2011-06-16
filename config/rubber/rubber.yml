@@ -18,7 +18,7 @@ app_user: app
 
 # REQUIRED: Notification emails (e.g. monit) get sent to this address
 #
-admin_email: "#{RUBBER_ENV == 'production' ? 'services@stomp.io' : 'root@localhost'}"
+admin_email: nick@tommarello.net
 
 # OPTIONAL: If not set, you won't be able to access web_tools
 # server (munin stats, monit status, etc)
@@ -30,7 +30,7 @@ timezone: US/Eastern
 
 # REQUIRED: the domain all the instances should be associated with
 #
-domain: escapist.stomp.io
+domain: escapist.me
 
 # OPTIONAL: See rubber-dns.yml for dns configuration
 # This lets rubber update a dynamic dns service with the instance alias
@@ -40,8 +40,7 @@ domain: escapist.stomp.io
 # OPTIONAL: Additional rubber file to pull config from if it exists.  This file will
 # also be pushed to remote host at RUBBER_ROOT/config/rubber/rubber-secret.yml
 #
-# rubber_secret: "#{File.expand_path('~') + '/.ec2_stomp' + (RUBBER_ENV == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue ''}"
-rubber_secret: "#{File.expand_path('~') + '/.ec2_stomp' + '/rubber-secret.yml' rescue ''}"
+# rubber_secret: "#{File.expand_path('~') + '/.ec2' + (RUBBER_ENV == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue ''}"
 
 # REQUIRED All known cloud providers with the settings needed to configure them
 # There's only one coud provider right now - Amazon Web Services
@@ -49,11 +48,22 @@ rubber_secret: "#{File.expand_path('~') + '/.ec2_stomp' + '/rubber-secret.yml' r
 #
 cloud_providers:
   aws:
+    # REQUIRED The endpoint for the region server that you want to use.
+    # 
+    # Options include
+    # us-east-1.ec2.amazonaws.com
+    # eu-west-1.ec2.amazonaws.com
+    # ap-northeast-1.ec2.amazonaws.com
+    # ap-southeast-1.ec2.amazonaws.com
+    # ap-southeast-2.ec2.amazonaws.com
+    #
+    server_endpoint: us-east-1.ec2.amazonaws.com
+    
     # REQUIRED The amazon keys and account ID (digits only, no dashes) used to access the AWS API
     #
-    access_key: XXX
-    secret_access_key: YYY
-    account: ZZZ
+    access_key: AKIAI3R3BQ2V7SZ3Z62Q
+    secret_access_key: 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
+    account: 1852-2485-8251
 
     # REQUIRED:  The name of the amazon keypair and location of its private key
     #
@@ -62,8 +72,18 @@ cloud_providers:
     # extension ".pub".  The easiest way to get your hand on this is to create the
     # public key from the private key: ssh-keygen -y -f gsg-keypair > gsg-keypair.pub
     #
-    # key_name: gsg-keypair
-    # key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2/*' + cloud_providers.aws.key_name].first}"
+    
+    
+    key_name: "stomp"
+    key_dir: "#{(File.expand_path('~') rescue '/root') + '/.ec2_stomp' }"
+    key_file: "#{Dir[key_dir + '/*' + key_name].first}"
+    pk_file: "#{Dir[key_dir + '/pk-*'].first}"
+    cert_file: "#{Dir[key_dir + '/cert-*'].first}"
+    
+    
+    
+    #key_name: pk-stomp
+    #key_file: "#{Dir[(File.expand_path('~') rescue '/root') + '/.ec2_stomp/*' + cloud_providers.aws.key_name].first}"
 
     # OPTIONAL: Needed for bundling a running instance using rubber:bundle
     #
@@ -73,18 +93,14 @@ cloud_providers:
 
     # OPTIONAL: Needed for backing up database to s3
     backup_bucket: "#{app_name}-backups"
-
+     
     # REQUIRED: the ami and instance type for creating instances
     # The Ubuntu images at http://alestic.com/ work well
-    # Ubuntu 10.04 Lucid	base install	32-bit	ami-6407f20d
-    # Ubuntu 10.04 Lucid	base install	64-bit	ami-ac07f2c5
+    # Ubuntu 10.04 Lucid	base install	32-bit	ami-7000f019
+    # Ubuntu 10.04 Lucid	base install	64-bit	ami-fa01f193
     #
     # m1.small or m1.large or m1.xlarge
     image_type: m1.small
-    # image_id: "#{ %w{m1.small c1.medium}.include?(image_type) ? 'ami-6407f20d' : 'ami-ac07f2c5' }"
-    # image_id: "ami-3e02f257" # 32-bit Ubuntu 10.04 LTS Lucid EBS boot
-    # image_id: "ami-76d2211f" # custom for stomp
-    # image_id: "#{RUBBER_ENV == 'production' ? 'ami-3e02f257' : 'ami-76d2211f'}"
     image_id: 'ami-3e02f257'
 
     # OPTIONAL: EC2 spot instance request support.
@@ -103,6 +119,7 @@ cloud_providers:
 # REQUIRED the cloud provider to use
 #
 cloud_provider: aws
+dns_provider: nettica
 
 # OPTIONAL: Define security groups
 # Each security group is a name associated with a sequence of maps where the
@@ -134,6 +151,10 @@ auto_security_groups: true
 # This makes it safer to have staging and production coexist on the same EC2
 # account, or even multiple apps
 isolate_security_groups: true
+
+# OPTIONAL: Prompts one to sync security group rules when the ones in amazon
+# differ from those in rubber
+prompt_for_security_group_sync: true
 
 # OPTIONAL: The packages to install on all instances
 # You can install a specific version of a package by using a sub-array of pkg, version

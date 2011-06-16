@@ -7,41 +7,22 @@ namespace :rubber do
     task :install_rvm do
       rubber.sudo_script "install_rvm", <<-ENDSCRIPT
         if [[ ! `rvm --version 2> /dev/null` =~ "#{rubber_env.rvm_version}" ]]; then
-          echo "rvm_prefix=/usr/local/" > /etc/rvmrc
-          echo "#{rubber_env.rvm_prepare}" > /etc/profile.d/rvm.sh
+          cd /tmp
+          curl -s https://rvm.beginrescueend.com/install/rvm -o rvm-installer
+          chmod +x rvm-installer
+          rm -f /etc/rvmrc
+          rvm_path=#{rubber_env.rvm_prefix} ./rvm-installer --version #{rubber_env.rvm_version}
 
-          # Copied below from http://rvm.beginrescueend.com/releases/rvm-install-latest
-          #
-
-          if [[ -f /etc/rvmrc ]] ; then source /etc/rvmrc ; fi
-
-          if [[ -f "$HOME/.rvmrc" ]] ; then source "$HOME/.rvmrc" ; fi
-
-          rvm_path="${rvm_path:-$HOME/.rvm}"
-
-          mkdir -p $rvm_path/src/
-
-          builtin cd $rvm_path/src
-
-          stable_version=#{rubber_env.rvm_version}
-
-          echo "rvm-${stable_version}"
-
-          curl -L "http://rvm.beginrescueend.com/releases/rvm-${stable_version}.tar.gz" -o "rvm-${stable_version}.tar.gz"
-
-          tar zxf "rvm-${stable_version}.tar.gz"
-
-          builtin cd "rvm-${stable_version}"
-
-          dos2unix scripts/* >/dev/null 2>&1 || true
-
-          bash ./scripts/install
-
+          # Set up the rubygems version
           sed -i 's/rubygems_version=.*/rubygems_version=#{rubber_env.rubygems_version}/' #{rubber_env.rvm_prefix}/config/db
 
-          #
-          # end rvm install script
+          # Set up the rake version
+          sed -i 's/rake.*/rake -v#{rubber_env.rake_version}/' #{rubber_env.rvm_prefix}/gemsets/default.gems
+          sed -i 's/rake.*/rake -v#{rubber_env.rake_version}/' #{rubber_env.rvm_prefix}/gemsets/global.gems
 
+          # Set up the .gemrc file
+          echo "--- " >> ~/.gemrc
+          echo "gem: --no-ri --no-rdoc" >> ~/.gemrc
         fi
       ENDSCRIPT
     end
@@ -105,33 +86,32 @@ namespace :rubber do
         if [[ ! -f /root/.ssh/id_dsa ]]; then ssh-keygen -q -t dsa -N '' -f /root/.ssh/id_dsa; fi
       ENDSCRIPT
     end
+    
+     after "rubber:base:custom_install", "rubber:base:install_amazon_ses"
+      task :install_amazon_ses do
+        cloud_provider = rubber_env.cloud_providers[rubber_env.cloud_provider]
 
-    # Install and configure Amazon SES for mail transport handling (via
-    # Postfix)
-    after "rubber:base:custom_install", "rubber:base:install_amazon_ses"
-    task :install_amazon_ses do
-      cloud_provider = rubber_env.cloud_providers[rubber_env.cloud_provider]
+        rubber.sudo_script 'install_amazon_ses', <<-ENDSCRIPT
+          export AWS_SES_DIR=/mnt/mail/amazon
+          if [ ! -d $AWS_SES_DIR ]; then
+            mkdir -p $AWS_SES_DIR
+            builtin cd $AWS_SES_DIR
 
-      rubber.sudo_script 'install_amazon_ses', <<-ENDSCRIPT
-        export AWS_SES_DIR=/mnt/mail/amazon
-        if [ ! -d $AWS_SES_DIR ]; then
-          mkdir -p $AWS_SES_DIR
-          builtin cd $AWS_SES_DIR
+            curl -L "http://aws-catalog-download-files.s3.amazonaws.com/AmazonSES-2011-02-02.zip" -o "ses.zip"
+            unzip "ses.zip"
 
-          curl -L "http://aws-catalog-download-files.s3.amazonaws.com/AmazonSES-2011-02-02.zip" -o "ses.zip"
-          unzip "ses.zip"
+            echo "AWSAccessKeyId=#{cloud_provider.access_key}" > $AWS_SES_DIR/aws-credentials
+            echo "AWSSecretKey=#{cloud_provider.secret_access_key}" >> $AWS_SES_DIR/aws-credentials
 
-          echo "AWSAccessKeyId=#{cloud_provider.access_key}" > $AWS_SES_DIR/aws-credentials
-          echo "AWSSecretKey=#{cloud_provider.secret_access_key}" >> $AWS_SES_DIR/aws-credentials
+            mkdir -p /usr/local/lib/site_perl
+            cp $AWS_SES_DIR/bin/SES.pm /usr/local/lib/site_perl
 
-          mkdir -p /usr/local/lib/site_perl
-          cp $AWS_SES_DIR/bin/SES.pm /usr/local/lib/site_perl
+            chmod ugo+x $AWS_SES_DIR/bin/*.pl
+            chown -R mail:mail $AWS_SES_DIR
+            chmod 600 $AWS_SES_DIR/aws-credentials
+          fi
+        ENDSCRIPT
+      end
 
-          chmod ugo+x $AWS_SES_DIR/bin/*.pl
-          chown -R mail:mail $AWS_SES_DIR
-          chmod 600 $AWS_SES_DIR/aws-credentials
-        fi
-      ENDSCRIPT
-    end
   end
 end

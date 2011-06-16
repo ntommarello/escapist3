@@ -2,5 +2,57 @@
 	setTimeout("switchMenuBar($('#CreateLink'),1);",10);
 </script>
 
-<div class="HighlightedTitle">Create Adventures: Invite Only</div>
-<div style="margin-top:7px" class="SubTitle">Want to create and share your own adventures?  It's coming soon.  Apply for an invitation.</div>
+<div class="HighlightedTitle">Create & Share Your Adventures</div>
+<div style="margin-top:7px" class="SubTitle">Apply for an invitation.</div>
+
+
+<div style="float:left; width:310px; margin-left:10px; margin-top:40px;">
+
+
+	<%if !current_user%>
+     	<% form_for :user, :html => { :id => 'RegisterForm' }  do |form| %>
+			<div class="RegisterLabel2">full name</div>
+			<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="ShadowedTextBox" size="30"></div>
+			<div style="clear:both; position:relative; height:10px; "></div>
+
+			<div class="RegisterLabel2">email</div>
+			<div style="float:left; width:150px;"><%= form.text_field :email, :class => "ShadowedTextBox" %></div>
+
+			<div style="clear:both; position:relative; height:10px; "></div>
+
+				<div class="RegisterLabel2">password</div>
+			<div style="float:left; width:220px;"><%= form.password_field :password, :class => " ShadowedTextBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
+				
+					<div id="Error" style=" color:red; font-weight:bold">	
+						<%= flash[:notice] || flash[:error] %>
+					</div>
+					
+				</div>
+				<div style="clear:both; position:relative; height:5px; "></div>
+
+
+		
+				<div class="RegisterBox">
+
+				
+
+
+							<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:80px; width:120px">
+								<div unselectable="on" class="GreenButton" >
+									<div id="registerbutton" class="InnerGreenBorder">
+										Join <%=APP_NAME%>
+									</div>
+								</div>
+							</div>
+							
+
+					<div style="float:left; margin-top:10px; clear:both">
+					</div>
+				</div>
+
+				<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
+
+		<% end %>
+	<%end%>
+		
+</div>

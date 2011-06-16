@@ -1,0 +1,62 @@
+--- 
+- !ruby/object:Rubber::Configuration::InstanceItem 
+  domain: escapist.me
+  external_host: ec2-67-202-21-103.compute-1.amazonaws.com
+  external_ip: 67.202.21.103
+  image_id: ami-3e02f257
+  image_type: m1.small
+  instance_id: i-2d246243
+  internal_host: ip-10-196-15-116.ec2.internal
+  internal_ip: 10.196.15.116
+  name: production
+  platform: linux
+  roles: 
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: web
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: haproxy
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: app
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: passenger
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: apache
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: sphinx
+    options: {}
+
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: db
+    options: 
+      primary: true
+  - !ruby/object:Rubber::Configuration::RoleItem 
+    name: mysql_master
+    options: {}
+
+  root_device_type: ebs
+  security_groups: 
+  - escapist_production_default
+  - escapist_production_web
+  - escapist_production_production
+  - escapist_production_haproxy
+  - escapist_production_app
+  - escapist_production_passenger
+  - escapist_production_apache
+  - escapist_production_sphinx
+  - escapist_production_db
+  - escapist_production_mysql_master
+  zone: us-east-1c
+- volumes: {}
+
+  static_ips: {}
+
