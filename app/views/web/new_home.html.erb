@@ -36,16 +36,16 @@
 			</div>
 			
 
-			<div class="home_info_next" >
+			<div class="home_info_next" style="font-size:17px;">
 				<div style="float:right" onmouseover="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#2EA42E')" onmouseout="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#3366CC')">
 					<div id="next_arrow" onclick="nextPlan(1)" class="home_NextArrowButton" ></div>
 					<div id="next_plan_link" onclick="nextPlan(1)" style="float:right; margin-right:5px; margin-left:5px;" class="home_link"></div>
 				</div>
 				<div id="prevarrow" onclick="nextPlan(-1)" class="home_BackArrowButton" ></div>
 				<a href="/schedule">
-					<div style="float:left" onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
+					<div style="float:left; " onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
 						<div id="viewall1" class="ScheduleIconButton" ></div>
-						<div id="viewall2" style="float:left; margin-left:5px" class="home_link">Schedule</div>
+						<div id="viewall2" style="float:left; margin-left:5px" class="home_link">All Events</div>
 					</div>
 				</a>
 			</div>
@@ -73,16 +73,11 @@
 
 <script>
 
-$(document).ready(function() {
+height = $(window).height() + 220;
 
-	<%if current_user%>
-		loggedIn = 1;
-	<%else%>
-		loggedIn = 0;
-	<%end%>
-	
-	
-	skip = 0;
+$("#container2").css("height",height)
+
+$(document).ready(function() {
 	$("#home_info_container").draggable({
   drag: function(event, ui) {
   $(".drag").css("opacity", "0.6");
@@ -93,12 +88,26 @@ $(document).ready(function() {
   $(".drag").css("opacity", "1.0");
   },
 
-handle: '.dragIcon',
+	handle: '.dragIcon',
   //cursor: "move",
-  containment: 'parent',
+  containment: '#container2',
   
 
   });
+});
+
+
+
+
+	<%if current_user%>
+		loggedIn = 1;
+	<%else%>
+		loggedIn = 0;
+	<%end%>
+	
+	
+	skip = 0;
+
 
 	//plan_index = parseInt(getUrlVars()["p"]);
 	
@@ -228,7 +237,7 @@ handle: '.dragIcon',
 	
 
 	
-});
+
 
 function preloadImage() {
 	

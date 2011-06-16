@@ -11,7 +11,7 @@
 #     packages: [awstats]
 
 # REQUIRED: The name of your application
-app_name: stomp
+app_name: escapist
 
 # REQUIRED: The system user to run your app servers as
 app_user: app
@@ -30,7 +30,7 @@ timezone: US/Eastern
 
 # REQUIRED: the domain all the instances should be associated with
 #
-domain: stomp.io
+domain: escapist.stomp.io
 
 # OPTIONAL: See rubber-dns.yml for dns configuration
 # This lets rubber update a dynamic dns service with the instance alias

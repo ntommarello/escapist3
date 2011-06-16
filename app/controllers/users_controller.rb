@@ -25,42 +25,7 @@ class UsersController < ApplicationController
     # TODO: this should be refactored to a helper method or basic RBAC system
     @editable = current_user && (@user.id == current_user.id)
 
-    # Geokit + scopes == sadness
-    @challenges = Challenge.paginate(:all, :page => params[:page] || 1, :select=>"challenges.*, (select count(*) from subscribed_challenges where completed=1 and challenge_id=challenges.id) as stomped, (select count(*) from subscribed_challenges where completed!=1 and challenge_id=challenges.id) as bucketed", :conditions => ["author_id = ? and published=1", @user.id], :include => [:user, :achievement], :origin => [session[:lat], session[:lng]], :order => "created_at desc")
-    
-    @adventure_log  = @user.subscribed_challenges.include_challenge.completed
-    #@bucket_list  = @user.subscribed_challenges.include_challenge.bucket_list
-    @bucket_list_visual = Challenge.paginate(:all,  :page => params[:page], :select=>"challenges.*, subscribed_challenges.goal_date IS NULL AS isnull,subscribed_challenges.goal_date, subscribed_challenges.updated_at, subscribed_challenges.id as log_id, subscribed_challenges.note as note", :joins=>:subscribed_challenges, :conditions=>"completed=0 and subscribed_challenges.user_id=#{@user.id}", :origin => [session[:lat],session[:lng]], :order=>"isnull asc, subscribed_challenges.goal_date asc, subscribed_challenges.updated_at desc", :include=>[:user,:achievement])
-    @bucket_list  = SubscribedChallenge.find(:all, :select=>"subscribed_challenges.*, subscribed_challenges.goal_date IS NULL AS isnull", :conditions=>"user_id=#{@user.id} and completed !=1", :include=>[:user, :challenge, {:likes => :user}], :order=>"isnull asc, subscribed_challenges.goal_date asc, subscribed_challenges.updated_at desc")
-    
-    begin
-      @adventure_log = @adventure_log.sort_by(&:date_completed_on).reverse
-    rescue
-    
-    end
-    
-    @toggleBucket = "card"
-    @toggleMy = "card"
-    @toggleAdventureLog = "gallery"
-    @displayToggle = true
-
-    if cookies[:toggleAdventureLog]
-     @toggleAdventureLog = cookies[:toggleAdventureLog] 
-    end
-    if cookies[:toggleBucket]
-     @toggleBucket = cookies[:toggleBucket] 
-    end
-    if cookies[:toggleMy]
-     @toggleMy = cookies[:toggleMy] 
-    end
-    
-    if @adventure_log.length < 3
-      @toggleAdventureLog = "text"
-       @displayToggle = false
-    end
-    if @bucket_list.length < 5
-      @toggleBucket = "list"
-    end
+   
   end
   
   def register

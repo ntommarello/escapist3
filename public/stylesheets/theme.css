@@ -665,7 +665,7 @@ body {
   font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #21547E;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.8);
-  font-size: 18px; }
+  font-size: 22px; }
 
 .TopButtons {
   position: absolute;
@@ -1690,7 +1690,7 @@ a:hover {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  cursor: pointer;
+  cursor: default;
   height: 80px;
   width: 80px;
   color: #5691C3;
@@ -1698,11 +1698,6 @@ a:hover {
   margin-top: 5px;
   font-size: 24px;
   text-align: center; }
-
-.PointsBox:hover {
-  background: #F1F1F1;
-  background-image: -moz-linear-gradient(100% 100% 90deg, #f1f1f1, #fefefe);
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#f1f1f1)); }
 
 .CreateScoreBox {
   background: #F4F4F4;

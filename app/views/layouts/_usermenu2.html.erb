@@ -144,8 +144,9 @@
 					<div style="margin-top:<%=margin%>px; ">
 					<a style="color:#537EA3; font-size:12px;" href="<%=new_password_path(:user)%>">Forget password?</a>
 					</div>
-			</div>
-		<% end %>		
+				<% end %></div>
+				
+			
 	</div>
 <%end%>
 
@@ -170,7 +171,6 @@ openRegister('Sign up for <%=APP_NAME%>!')
 <%if alert == "Invalid email or password." %>
 	<script>
 		openLoginDrop($('#LoginButton'))
-	
 	</script>
 <%end%>
 

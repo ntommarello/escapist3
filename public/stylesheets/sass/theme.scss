@@ -787,7 +787,7 @@ cursor:pointer;
 .HighlightedTitle {
 	font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
-	font-size:18px;
+	font-size:22px;
 }
 
 
@@ -1662,14 +1662,11 @@ color:$default-link-color;
 		background:#F4F4F4; 
 			@include lineargradient(#F4F4F4, #FEFEFE);
 		@include roundedCorners(5px);
-		cursor:pointer;
+		cursor:default;
 		height:80px; width:80px; color:#5691C3; border:1px solid #DADADA; margin-top:5px;  font-size:24px; text-align:center; 
 	}
 
-.PointsBox:hover {
-	background:#F1F1F1; 
-		@include lineargradient(#F1F1F1, #FEFEFE);
-}
+
 
 
 
