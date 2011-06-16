@@ -27,6 +27,7 @@ gem "oauth"
 gem "json", "1.5.2"
 gem "devise", "1.1.7"
 gem "jammit"
+gem "rake", "0.9.2"
 
 # To use debugger
 # gem 'ruby-debug'

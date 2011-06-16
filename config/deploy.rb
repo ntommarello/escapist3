@@ -58,6 +58,9 @@ namespace :rubber do
   desc "Set permissions"
   task :set_permissions, :roles => :app do
     run "cd #{current_path}; chown -R root public"
+    run "cd #{current_path}/public; chown -R root assets"
+    run "cd #{current_path}/public; chown -R root javascripts"
+    run "cd #{current_path}/public; chown -R root stylesheets"
   end
 
   desc "Package deployment assets"
