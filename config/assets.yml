@@ -1,5 +1,5 @@
 package_assets: always
-javascript_compressor: uglifier
+#javascript_compressor: uglifier
 
 javascripts: 
     
