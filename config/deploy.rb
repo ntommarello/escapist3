@@ -62,7 +62,7 @@ namespace :rubber do
 
   desc "Package deployment assets"
   task :package_assets, :roles => :app do
-    run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake asset:packager:build_all"
+    run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake utils:package"
   end  
 end
 

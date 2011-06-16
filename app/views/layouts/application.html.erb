@@ -3,8 +3,9 @@
 <head>
   <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure & Travel Network')%></title>
   <%= yield_for(:head, '')%>
-  <%= raw stylesheet_link_merged :base %>
-  <%= raw javascript_include_merged :preload %>
+  <%= raw include_stylesheets :base %>
+  <%= raw include_javascripts :preload %>
+  <%= raw include_javascripts :history %>
 </head>
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
@@ -118,7 +119,7 @@
 	
 
 </body>
-<%= raw javascript_include_merged :postload %>
+  <%= raw include_javascripts :postload %>
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 

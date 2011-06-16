@@ -3,7 +3,9 @@ require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
 Trek::Application.initialize!
-
+Trek::Application.configure do
+config.gem "jammit"
+end
 
 APP_NAME = "Escapist"
 APP_URL = "escapist.com"

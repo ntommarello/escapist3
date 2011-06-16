@@ -3,7 +3,6 @@ source 'http://gems.github.com'
 
 gem 'rails', '3.0.4'
 gem 'mysql', '~> 2.8'
-gem 'devise', '~> 1.1'
 gem 'haml'
 gem 'paperclip'
 gem 'aws-s3'
@@ -17,7 +16,7 @@ gem 'i18n'
 gem 'tzinfo'
 gem 'riddle'
 gem 'koala'
-gem 'omniauth'
+gem 'omniauth', "0.1.6"
 gem 'carmen'
 gem 'twitter'
 gem 'bitly'
@@ -25,7 +24,9 @@ gem "browser"
 gem "awesome_print"
 gem "samsouder-titlecase"
 gem "oauth"
-gem "json"
+gem "json", "1.5.2"
+gem "devise", "1.1.7"
+gem "jammit"
 
 # To use debugger
 # gem 'ruby-debug'
