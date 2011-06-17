@@ -1,4 +1,4 @@
-package_assets: always
+#package_assets: always
 javascript_compressor: uglifier
 embed_assets: on
 

@@ -62,24 +62,6 @@ class WebController < ApplicationController
    end
    
 
-  def rewards
-    
-    if params[:mobile]
-      @limit=25
-    else
-      @limit=100
-    end
-    
-    #temp:  Will need to use subscribed_challenges to figure out when points were awarded
-    @leaders = User.active.sort_photos_first.find(:all, :order=>"score desc", :limit=>@limit)
-    respond_to do |format|
-        format.xml { render }
-         format.html { render }
-        format.json { render :json => @leaders.to_json }
-    end
-
-  end
-
 
   def about
   end
@@ -121,35 +103,7 @@ class WebController < ApplicationController
   end
   
   
-  def live_search
-    
-    @limit = 7
-    set_search_vars
-    
-    render :layout => false
-             
-    
-  end
-  
-  
-  def search
-      @limit = 1000
-      set_search_vars
-  end
-  
-  
-  def set_search_vars
-    @search_text = params[:search_text]
-    lat = (session[:lat] / 180.0) * Math::PI 
-    lng = (session[:lng] / 180.0) * Math::PI
-    @conditions = {:published=>1}
-     
-    @results = Challenge.search "#{@search_text}*", :geo => [lat,lng], :order=>"@geodist ASC", :match_mode => :extended, :with=> @conditions, :limit=>@limit   
-  
-    #@results = ThinkingSphinx.search "#{@search_text}*",  :geo => [lat,lng], :order=>"@geodist ASC", :match_mode => :extended, :limit=>@limit   
-  
-  
-  end  
+ 
   
   
 
