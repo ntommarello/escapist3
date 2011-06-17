@@ -15,6 +15,20 @@ dns_providers:
     ttl: 300
 
 
+dns_records:
+    - host: "#{(RUBBER_ENV == 'production') ? '' : 'www-' + (RUBBER_ENV || 'default')}"
+      domain: escapist.me
+      data: "#{rubber_instances['web01'].external_ip rescue (RUBBER_ENV + '.escapist.me')}"
+      type: "#{(RUBBER_ENV == 'production') ? 'A' : 'CNAME'}"
+      ttl: 300
+
+    - host: www
+      domain: escapist.me
+      data: "#{domain}"
+      type: CNAME
+      ttl: 300
+      
+
 # OPTIONAL: Lets you configure your dns service, for example to add other CNAMES
 #           or setup dns round robin, etc.  Run "cap rubber:setup_dns_records"
 #           to apply them as rubber only sets up instance aliases as part of

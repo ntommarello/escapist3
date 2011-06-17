@@ -159,7 +159,7 @@ prompt_for_security_group_sync: true
 # OPTIONAL: The packages to install on all instances
 # You can install a specific version of a package by using a sub-array of pkg, version
 # For example, packages: [[rake, 0.7.1], irb]
-packages: [postfix, build-essential, git-core, ec2-ami-tools, vim, libxslt1-dev, libsasl2-2, sasl2-bin, libsasl2-modules, procmail, libfreeimage3, libfreeimage-dev, imagemagick, libio-socket-ssl-perl, libxml-libxml-perl, unzip]
+packages: [postfix, build-essential, git-core, ec2-ami-tools, vim, libxslt1-dev, libsasl2-2, sasl2-bin, libsasl2-modules, procmail, libfreeimage3, libfreeimage-dev, imagemagick, libio-socket-ssl-perl, libxml-libxml-perl, unzip, openjdk-6-jdk]
 
 # OPTIONAL: gem sources to setup for rubygems
 # gemsources: ["http://rubygems.org", "http://gems.github.com"]
@@ -188,7 +188,7 @@ staging_roles: "web,app,sphinx,db:primary=true"
 #           globally , unless you really do want all instances to have a
 #           static IP
 #
-# use_static_ip: true
+use_static_ip: true
 
 # OPTIONAL: Specifies an instance to be created in the given availability zone
 #           Availability zones are sepcified by amazon to be somewhat isolated
@@ -206,20 +206,20 @@ staging_roles: "web,app,sphinx,db:primary=true"
 # attached _and_ formatted, but if your host disapears and you recreate
 # it, the volume will only get remounted thereby preserving your data
 #
-# hosts:
-#   my_host:
-#     availability_zone: us-east-1a
-#     volumes:
-#       - size: 100 # size of vol in GBs
-#         zone: us-east-1a # zone to create volume in, needs to match host's zone
-#         device: /dev/sdh # OS device to attach volume to
-#         mount: /mnt/mysql # The directory to mount this volume to
-#         filesystem: ext3 # the filesystem to create on volume
-#       - size: 10 # size of vol in GBs
-#         zone: us-east-1a # zone to create volume in, needs to match host's zone
-#         device: /dev/sdi # OS device to attach volume to
-#         mount: /mnt/logs # The directory to mount this volume to
-#         filesystem: ext3 # the filesystem to create on volume
+hosts:
+   my_host:
+     availability_zone: us-east-1a
+     volumes:
+       - size: 100 # size of vol in GBs
+         zone: us-east-1a # zone to create volume in, needs to match host's zone
+         device: /dev/sdh # OS device to attach volume to
+         mount: /mnt/mysql # The directory to mount this volume to
+         filesystem: ext3 # the filesystem to create on volume
+       - size: 10 # size of vol in GBs
+         zone: us-east-1a # zone to create volume in, needs to match host's zone
+         device: /dev/sdi # OS device to attach volume to
+         mount: /mnt/logs # The directory to mount this volume to
+         filesystem: ext3 # the filesystem to create on volume
 #
 #       # volumes without mount/filesystem can be used in raid arrays
 #
