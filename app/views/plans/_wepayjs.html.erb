@@ -107,7 +107,7 @@ function createBill() {
 }
 
 
-
+$(document).ready(function() {
 	$('.resize').autoResize({
 	    // On resize:
 	    onResize : function() {
@@ -123,7 +123,7 @@ function createBill() {
 	    extraSpace : 1
 	});
 	
-	
+	});	
 	$('#transportation').focus(function(){ 
 		
 		if ($(this).html() == "input directions") {

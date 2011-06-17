@@ -4,29 +4,26 @@ embed_assets: on
 
 javascripts:  
 
-  base1: 
+  preload: 
     - public/javascripts/jquery-1.5.1.min.js
-    - public/javascripts/jquery.inputhints.min.js
     - public/javascripts/application.js
-    - public/javascripts/jquery.tools.min.js
-    - public/javascripts/jquery.alphanumeric.pack.js
-    - public/javascripts/autoresize.jquery.min.js
-    - public/javascripts/jquery.lightbox-0.5.pack.js
+    - public/javascripts/jquery.url.min.js
+    - public/javascripts/history.adapter.jquery.js
+    
+
+  postload:
+    - public/javascripts/history.js
+    - public/javascripts/sanitize.js
     - public/javascripts/json2.js
     - public/javascripts/jquery-impromptu.3.1.min.js
-    - public/javascripts/jquery.url.min.js
-    - public/javascripts/jquery.maskedinput-1.2.2.min.js
-    - public/javascripts/jquery.autocomplete.pack.js
-    - public/javascripts/sanitize.js
-    
-  base2:
+    - public/javascripts/jquery.inputhints.min.js
+    - public/javascripts/jquery.alphanumeric.pack.js
+    - public/javascripts/jquery.tools.min.js
+    - public/javascripts/autoresize.jquery.min.js
     - public/javascripts/jquery-ui-1.8.13.custom.min.js
-    - public/javascripts/history.adapter.jquery.js
-    - public/javascripts/amplify.store.js
+    - public/javascripts/jquery.maskedinput-1.2.2.min.js
     - public/javascripts/jquery.ellipsis.js
-
-  history:
-    - public/javascripts/history.js
+    - public/javascripts/amplify.store.js
 
 
    

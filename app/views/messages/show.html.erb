@@ -39,7 +39,11 @@
 </div>
 
 
-<script>$("#MessageUserField").focus();
+<script>
+
+$(document).ready(function() {
+	
+$("#MessageUserField").focus();
 
 $('#MessageUserField').autoResize({
     // On resize:
@@ -55,5 +59,5 @@ $('#MessageUserField').autoResize({
     // More extra space:
     extraSpace : 10
 });
-
+});
 </script>

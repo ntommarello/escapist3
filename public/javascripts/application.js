@@ -2,6 +2,9 @@
 
 
 $(document).ready(function() {
+	
+	$('#name').alpha({allow:"., "});
+	 
   $('input[title]').inputHints();
 	$(".disallowReturn").keypress(function(e) {
 		$(this).attr("edited","yes");
