@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function() {
   $('input[title]').inputHints();
 	$(".disallowReturn").keypress(function(e) {
@@ -12,6 +15,7 @@ $(document).ready(function() {
 	ignoreHide =0;  //hack for body event
 	$("#settings").tooltip({position: "bottom center"});
  });
+
 
 function getAuthToken() {
   var ret = '';
@@ -3432,6 +3436,28 @@ function refresh_home(json) {
 	$('#spinner').hide();
 	skip = 0;
 //	$('#big_image_background').animate({opacity: 1}, 250);
+}
+
+
+preload_image_index = 0;
+function preloadImage() {
+	
+	preload_image_index = preload_image_index +1;
+	
+	if (plans.plan !== null ) {
+		return;
+	} else {
+		preload_plan = plans[preload_image_index].plan;
+	}
+	
+	
+	
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
+	
+	var img = new Image();
+	$(img).load(function(){
+	      preloadImage();
+	}).attr("src", image_url);
 }
 
 

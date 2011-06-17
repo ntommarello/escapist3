@@ -239,25 +239,6 @@ $(document).ready(function() {
 	
 
 
-function preloadImage() {
-	
-	preload_image_index = preload_image_index +1;
-	
-	if (plans.plan != null) {
-		return;
-	} else {
-		preload_plan = plans[preload_image_index].plan;
-	}
-	
-	
-	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
-	
-	var img = new Image();
-	$(img).load(function(){
-	      preloadImage();
-	}).attr("src", image_url);
-}
 
 
 

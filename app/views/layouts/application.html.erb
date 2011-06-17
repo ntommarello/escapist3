@@ -4,7 +4,8 @@
   <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure & Travel Network')%></title>
   <%= yield_for(:head, '')%>
   <%= raw include_stylesheets :base %>
-  <%= raw include_javascripts :preload %>
+  <%= raw include_javascripts :base1 %>
+  <%= raw include_javascripts :base2 %>
   <%= raw include_javascripts :history %>
 </head>
 
@@ -119,7 +120,7 @@
 	
 
 </body>
-  <%= raw include_javascripts :postload %>
+  
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 

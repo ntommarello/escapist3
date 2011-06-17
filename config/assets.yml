@@ -1,35 +1,34 @@
 package_assets: always
-#javascript_compressor: uglifier
+javascript_compressor: uglifier
+embed_assets: on
 
-javascripts: 
-    
-  preload: 
+javascripts:  
+
+  base1: 
     - public/javascripts/jquery-1.5.1.min.js
     - public/javascripts/jquery.inputhints.min.js
     - public/javascripts/application.js
     - public/javascripts/jquery.tools.min.js
-    - public/javascripts/jquery-ui-1.8.13.custom.min.js
+    - public/javascripts/jquery.alphanumeric.pack.js
     - public/javascripts/autoresize.jquery.min.js
-    - public/javascripts/jquery.numeric.pack.js
-    - public/javascripts/jquery.ptTimeSelect.js
     - public/javascripts/jquery.lightbox-0.5.pack.js
-    - public/javascripts/jquery.ellipsis.js
     - public/javascripts/json2.js
-
-
-  history:
-    #- public/javascripts/history.js
-    - public/javascripts/history.adapter.jquery.js
-    - public/javascripts/amplify.store.js
-
-     
-  postload:
-
+    - public/javascripts/jquery-impromptu.3.1.min.js
     - public/javascripts/jquery.url.min.js
     - public/javascripts/jquery.maskedinput-1.2.2.min.js
     - public/javascripts/jquery.autocomplete.pack.js
     - public/javascripts/sanitize.js
-    - public/javascripts/jquery-impromptu.3.1.min.js
+    
+  base2:
+    - public/javascripts/jquery-ui-1.8.13.custom.min.js
+    - public/javascripts/history.adapter.jquery.js
+    - public/javascripts/amplify.store.js
+    - public/javascripts/jquery.ellipsis.js
+
+  history:
+    - public/javascripts/history.js
+
+
    
 stylesheets: 
   base: 
