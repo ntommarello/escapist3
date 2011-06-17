@@ -66,7 +66,7 @@ namespace :rubber do
   desc "Package deployment assets"
   task :package_assets, :roles => :app do
     
-     run "cd #{deploy_to}/current && bundle exec jammit --base-url 'http://production.escapist.me'"
+     run "cd #{deploy_to}/current && bundle exec jammit --base-url 'http://escapist.me'"
      
     #run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake utils:package"
     # For Apache content negotiation with Multiviews, we need to rename .css files to .css.css and .js files to .js.js.

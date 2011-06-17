@@ -53,9 +53,7 @@
 	
 	
 
-	<img id="hideImage" src="" style="display:none">
 
-	
 	
 	<div style="clear:both"></div>
 	<div name="preload" style="display:none">
@@ -189,46 +187,45 @@ $(document).ready(function() {
 					footer_h = $(window).height()-75;
 				}
 				
-		
-				
-				
-	//load main image first, turn off slider and display
-	$('#hideImage').attr('src', image_url).load(function() {
-		
-		//TODO: TEMP HACKY
-		
 	
 		
-		
-		if ($(window).height() > 600) {
-			margt = $(window).height()-51-40-330;
-			$("#home_info_container").css("margin-top",margt)
-		}
-		
-		
-		topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
-		if ($(window).height() < topInfo) {
-			$('#big_image_background').css('height', topInfo+'px');
-			footer_h =topInfo;
-		} else {
-			$('#big_image_background').css('height', $(window).height()-51);
-			footer_h = $(window).height()-25;
-		}
-		
-	
-		
-		$('#big_image_background').show();
-		$('#big_image_background').animate({opacity:1},500);	
-		$('#Home_Footer').show();
-		$('#Home_Footer').css("top",footer_h+"px");
-		$('#spinner').hide();
-			
-		//setTimeout("initHomePageAfterImageLoad()",500);
-		
-		preload_image_index = 0;
-		preloadImage();
-		
-	});
+					var img = new Image();
+					$(img).load(function(){
+
+
+
+					      	if ($(window).height() > 600) {
+								margt = $(window).height()-51-40-330;
+								$("#home_info_container").css("margin-top",margt)
+							}
+
+
+							topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+							if ($(window).height() < topInfo) {
+								$('#big_image_background').css('height', topInfo+'px');
+								footer_h =topInfo;
+							} else {
+								$('#big_image_background').css('height', $(window).height()-51);
+								footer_h = $(window).height()-25;
+							}
+
+
+
+							$('#big_image_background').show();
+							$('#big_image_background').animate({opacity:1},500);	
+							$('#Home_Footer').show();
+							$('#Home_Footer').css("top",footer_h+"px");
+							$('#spinner').hide();
+
+							//setTimeout("initHomePageAfterImageLoad()",500);
+
+							preload_image_index = 0;
+							preloadImage();
+
+
+
+
+					}).attr("src", image_url);
 	
 
 	

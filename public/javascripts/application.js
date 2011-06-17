@@ -3442,16 +3442,14 @@ function refresh_home(json) {
 }
 
 
-preload_image_index = 0;
+preload_image_index=0;
 function preloadImage() {
-	
+
 	preload_image_index = preload_image_index +1;
 	
-	if (plans.plan !== null ) {
-		return;
-	} else {
+
 		preload_plan = plans[preload_image_index].plan;
-	}
+	
 	
 	
 	
