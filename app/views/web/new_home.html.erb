@@ -1,6 +1,16 @@
 	<script>plans = <%=raw @plan_json%>;</script>
 
-	<div id="big_image_background"></div>
+	 	<div id="spinner"></div>
+   
+	 	<script>
+
+	 	left = ($(window).width()-220) /2	
+   
+	 	$("#spinner").css("left",left+"px")
+  
+		</script>
+	
+	<div id="big_image_background" style="background:url('http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>')"></div>
 				
 	<div id="home_info_container" style="margin-top:250px" >
 		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
@@ -171,13 +181,14 @@ $(document).ready(function() {
 
 	image_url = "http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>"
 
-		loadInfo(plan_index);
-		$("#home_info_container").show();
-		setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
-			if ($(window).height() > 600) {
-				margt = $(window).height()-51-40-330;
-				$("#home_info_container").css("margin-top",margt)
-			}
+	loadInfo(plan_index);
+	$("#home_info_container").show();
+	
+	setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
+		if ($(window).height() > 600) {
+			margt = $(window).height()-51-40-330;
+			$("#home_info_container").css("margin-top",margt)
+		}
 				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
 				if ($(window).height() < topInfo) {
 					$('#big_image_background').css('height', topInfo+'px');
@@ -220,6 +231,7 @@ $(document).ready(function() {
 							//setTimeout("initHomePageAfterImageLoad()",500);
 
 							preload_image_index = 0;
+				
 							preloadImage();
 
 
