@@ -31,3 +31,4 @@ stylesheets:
   base: 
     - public/stylesheets/theme.css
     - public/stylesheets/impromptu.css
+    - public/stylesheets/jquery-ui-1.8.4.custom.css

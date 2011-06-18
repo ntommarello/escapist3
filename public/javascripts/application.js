@@ -2603,12 +2603,13 @@ function toggleUserMenu(layer) {
 	$('#LogoutMenu').css('margin-left',left+'px') 
 	
 	if ( $('#LogoutMenu').is(':visible') ) {
-		$("#UserLinkMenu > .UserLink").css("color","#6090B4")
+		$("#UserLinkMenu > .UserLink").css("color","#21547E")
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#FFFFFF 0 1px 0")
-		$("#UserLinkMenu").css("background","#E4F1F9")
+		$("#UserLinkMenu").css("background","#fff")
 		$("#UserLinkMenu").css("border","1px solid #7094AC")
 	} else {
 		$("#UserLinkMenu > .UserLink").css("color","white")
+			
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
 		
 		$("#UserLinkMenu").css("background","none")
@@ -2620,11 +2621,12 @@ function userMenuMouseOver() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		
 	} else {
-		$("#UserLinkMenu > .UserLink").css("color","#6090B4")
+		$("#UserLinkMenu > .UserLink").css("color","#21547E")
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#FFFFFF 0 1px 0")
 	
+		$("#UserMenuArrow").addClass("upArrowIcon").removeClass("WhiteTriangle");
 		
-		$("#UserLinkMenu").css("background","#D1E6F4")
+		$("#UserLinkMenu").css("background","#fff")
 		$("#UserLinkMenu").css("border","1px solid #6F9CB9")
 	}
 }
@@ -2632,6 +2634,10 @@ function userMenuMouseOut() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		
 	} else {
+		
+		$("#UserMenuArrow").addClass("WhiteTriangle").removeClass("upArrowIcon");
+		
+		
 			$("#UserLinkMenu > .UserLink").css("color","white")
 			$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
 		$("#UserLinkMenu").css("background","none")
@@ -2643,6 +2649,7 @@ function userMenuMouseOut() {
 function closeUserMenu() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		$('#LogoutMenu').hide(); 
+		$("#UserMenuArrow").addClass("WhiteTriangle").removeClass("upArrowIcon");
 		//	$("#UserLinkMenu").removeClass("UserLinkMenuActive")
 			$("#UserLinkMenu > .UserLink").css("color","white")
 			$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
@@ -3461,4 +3468,13 @@ function preloadImage() {
 	}).attr("src", image_url);
 }
 
-
+function iconWhite(type) {
+	$("#"+type).removeClass(type).addClass(type+"_h")
+}
+function iconBlue(type) {
+	$("#"+type).removeClass(type+"_h").addClass(type)
+}
+function setAnimate(row) {
+	$(row).css("text-align","center")
+	$(row).html('<img src="/images/ajax-loader_f.gif">')
+}

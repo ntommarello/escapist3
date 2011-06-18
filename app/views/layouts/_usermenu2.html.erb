@@ -10,9 +10,9 @@
 	
 
 	
-	<div id="UserLinkMenu"  onclick="toggleUserMenu(this)" onmouseover="userMenuMouseOver()" onmouseout="userMenuMouseOut()">
+	<div id="UserLinkMenu"  onmousedown="toggleUserMenu(this);" onmouseover=" userMenuMouseOver()" onmouseout="userMenuMouseOut()">
 		<span id="Profileink" style="float:left" class="UserLink"  >  <%=@name%></span>
-		<div class="WhiteTriangle"></div>
+		<div id="UserMenuArrow" class="WhiteTriangle"></div>
 	</div>
 		
 	<div class="AvatarShadow">
@@ -23,12 +23,16 @@
 		
 
 	<div class="TopIcon" onclick="window.location.href='/inbox'" title="Inbox">
-		<img class="TopImage" id="InboxIcon" src="/images/message<% if current_user.unread_messages.length > 0%>_a<%end%>.png" >
-		<div style="margin-top:-4px">
+		
+		<div class="Envelope<% if current_user.unread_messages.length > 0%>_Closed<%end%>"></div>
+	
+	<% if current_user.unread_messages.length > 0%>
+		<div style="margin-top:0px">
 			<span id="InboxCount">
-				<span id="top_unread_count1" <% if current_user.unread_messages.length > 0%> class="highlightedBold" <%end%>><%=current_user.unread_messages.length%></span>
+				<span id="top_unread_count1" class="highlightedBold"><%=current_user.unread_messages.length%></span>
 			</span> 
 		</div>
+		<%end%>
 	</div>
 
 	

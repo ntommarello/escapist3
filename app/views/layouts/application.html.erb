@@ -2,23 +2,23 @@
 <html>
 <head>
   <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%></title>
-  <%= yield_for(:head, '')%>
   <%= raw include_stylesheets :base %>
   <%= raw include_javascripts :preload %>
+  <%= yield_for(:head, '')%>
 </head>
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
 
 	<%if current_user%>
-		<div id="LogoutMenu">
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/<%=current_user.username%>'" >
-				<a class="MainMenuLink" style="font-size:12px" href="/<%=current_user.username%>">Profile</a>
+		<div id="LogoutMenu" >
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/<%=current_user.username%>'" onmouseover="iconWhite('ProfileIcon')" onmouseout="iconBlue('ProfileIcon')">
+				<div id="ProfileIcon" class="ProfileIcon"></div><div style="float:left">Profile</div>
 			</div>
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/settings'">
-				<a class="MainMenuLink" style="font-size:12px" href="/settings">Settings</a>
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/settings'" onmouseover="iconWhite('SettingsIcon')" onmouseout="iconBlue('SettingsIcon')">
+				<div id="SettingsIcon" class="SettingsIcon"></div><div style="float:left">Settings</div>
 			</div>
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/logout'">
-				<a class="MainMenuLink" style="font-size:12px" href="/logout">Logout</a>
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/logout'" onmouseover="iconWhite('LogoutIcon')" onmouseout="iconBlue('LogoutIcon')">
+				<div id="LogoutIcon" class="LogoutIcon"></div><div style="float:left">Logout</div>
 			</div>
 		</div>
 	<%end%>
