@@ -21,7 +21,7 @@
 				<%=raw plan.note%>
 			</div>
 			
-			<div style="float:left">
+			<div style="float:left; width:70%; max-width:225px; height:42px; overflow:hidden">
 				<a href="/<%=plan.user.username%>">
 				<%= image_tag(plan.user.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>plan.user.first_name, :style=>"width:40px; height:40px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
 				</a>
@@ -34,7 +34,7 @@
 	
 				<%for person in plan.users.sort_photos_first%>
 					<%ii=ii+1%>
-					<%if ii < 5%>
+					<%if ii < 6%>
 						<a href="/<%=person.username%>">
 						<%= image_tag(person.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:39px; height:39px; cursor:pointer; border:1px solid #ddd; float:left; margin-right:1px;") %>
 					<%end%>
