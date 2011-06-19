@@ -1,7 +1,7 @@
 <div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
 	<div class="BrowseBorder" >
-		<A href="/plans/<%=plan.id%>">
-			<div class="BrowseExpandImage" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')"
+		<A class="browselink" href="/plans/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')">
+			<div class="BrowseExpandImage" 
 			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
 			<%else%>
 	style="background:url(/images/no_pic_b.png)"
@@ -26,6 +26,16 @@
 		
 			</div>
 		</a>
+		
+		<Script>
+		$('.browselink').live('touchend', function(e) {
+		    var el = $(this);
+		    var link = el.attr('href');
+		    window.location = link;
+		});
+		</script>
+		
+		
 		<div style="height:95px; margin:5px;">
 			
 			<div style="height:45px; overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
