@@ -3328,7 +3328,7 @@ function loadInfo(index) {
 		$("#plan_signup_words").html("sign-ups");
 	}
 	
-	html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+	html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		
 	
 
@@ -3337,7 +3337,7 @@ function loadInfo(index) {
 		the_user = current_plan.users[i];
 		if (the_user.avatar_file_name != null) {
 			if (pic_count < 4) {
-				html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+				html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			pic_count = pic_count + 1;
 		} else {

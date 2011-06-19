@@ -1,15 +1,14 @@
-<div style="margin-left:auto; width:980px; margin-right:auto">
 <% content_for :page_title do %>
   <%=@user.first_name%> <%=@user.last_name%> - Adventure Log
 <% end %>
 
-
 <%if @editable%><script>setTimeout("switchMenuBar($('#ProfileLink'),1);",10);</script><%end%>
 
-	
-<div style="float:left; width:320px;">
 
-	<div class="PhotoBorder" style="width:302px; height:325px; cursor:default " <%if @editable%>onmouseover="$('#UploadLink').css('color', '#0066FF');" onmouseout="$('#UploadLink').css('color', 'white'); " onclick="uploadPhoto();"<%end%>> 
+
+<div style="margin-left:auto; width:950px; margin-right:auto">
+	<div style="float:left; width:320px;">
+		<div class="PhotoBorder" style="width:302px; height:325px; cursor:default " <%if @editable%>onmouseover="$('#UploadLink').css('color', '#0066FF');" onmouseout="$('#UploadLink').css('color', 'white'); " onclick="uploadPhoto();"<%end%>> 
 		
 		<%if @editable%>
 			<%@t = "Transparent"%>
@@ -35,9 +34,6 @@
 			</div>
 		<%end%>
 	</div>
-	
-
-	
 
 	<div style="clear:both"></div>
 	<div style="margin-top:20px; margin-bottom:5px; font-size:14px"  class="DarkBlueLabel">Home City</div>
@@ -55,13 +51,7 @@
 		<div style="margin-top:25px;  margin-bottom:5px; font-size:14px" class="DarkBlueLabel">My Links</div>
 	<%end%>
 	
-	
-	
-	
-	
-	
-	
-	
+
 	<%if @user.facebook_link != nil%>
 	<div>
 		
@@ -93,14 +83,11 @@
 </div>
 
 
-<div style="float:left;  margin-left:35px; width:615px;">
-
-
-
+<div style="float:left;  margin-left:35px; width:570px;">
 	
 	<div style="margin-top:3px;  margin-bottom:7px;" class="HighlightedTitle"><%=@user.first_name%>  <%=@user.last_name%></div>
 	
-		<div style=" float:left; width:475px; font-size:16px; line-height:22px;">
+		<div style=" float:left; width:420px; font-size:16px; line-height:22px;">
 			
 		<%if @user.about_me.length > 90%><%@border=false%><%else%><%@border=true%><%end%>
 			
@@ -120,53 +107,11 @@
 		 		<%=render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
 			</div>
 		<%end%>
-		
-		
-		
-
-
-	
-
-	
-
-
 </div>
 
-
+</div>
 
 <script>
-//var $tabs = $("#tabs").tabs({ cookie: { expires: 30 }});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$("#comparison").tooltip();
-$("#points").tooltip();
-
-
-	
-	
-});
-
-
-
+	$("#comparison").tooltip();
+	$("#points").tooltip();	
 </script>
-
-</div>
-
-
-
-

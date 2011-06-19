@@ -3508,6 +3508,10 @@ span.continued {
   color: #3366CC;
   cursor: pointer; }
 
+.home_link:active {
+  margin-top: 1px;
+  margin-left: 1px; }
+
 .template_topnav {
   background: #35507c url(/images/topbar-bg3.png) repeat-x;
   border-top: none;
@@ -3577,6 +3581,9 @@ span.continued {
 .ScheduleIconButton_h {
   background-position: -50px -50px; }
 
+.ScheduleIconButton_h:active {
+  margin-top: 5px; }
+
 .home_NextArrowButton {
   background: url(/images/home_tile.png) no-repeat;
   background-position: 0px 0px;
@@ -3589,6 +3596,9 @@ span.continued {
 
 .home_NextArrowButton_h {
   background-position: 0px -50px; }
+
+.home_NextArrowButton_h:active {
+  margin-top: 9px; }
 
 .home_BackArrowButton {
   background: url(/images/home_tile.png) no-repeat;
@@ -3603,6 +3613,9 @@ span.continued {
 
 .home_BackArrowButton:hover {
   background-position: 0px -150px; }
+
+.home_BackArrowButton:active {
+  margin-top: 9px; }
 
 #MoreAttendees {
   background: url(/images/home_tile.png) no-repeat;
@@ -3815,6 +3828,10 @@ span.continued {
 
 .BrowseExpandImage:hover {
   opacity: .95; }
+
+.BrowseExpandImagecx:active {
+  border: 1px solid #fff;
+  box-shadow: inset 3px 3px 1px 1px white, inset -3px -3px 1px 1px white, inset -3px 3px 1px 1px white, inset 3px -3px 1px 1px white; }
 
 .BrowseBorder {
   max-width: 510px;
@@ -4032,6 +4049,27 @@ span.continued {
   background: url(/images/home_tile.png) no-repeat;
   background-position: -110px -100px; }
 
+.ArrowIcon {
+  margin-top: 5px;
+  width: 25px;
+  height: 26px;
+  background: url(/images/home_tile.png) no-repeat;
+  background-position: -293px 0px; }
+
+.ArrowIcon_H {
+  margin-top: 5px;
+  width: 25px;
+  height: 26px;
+  background: url(/images/home_tile.png) no-repeat;
+  background-position: -293px -28px; }
+
+.ArrowIcon_A {
+  margin-top: 5px;
+  width: 25px;
+  height: 26px;
+  background: url(/images/home_tile.png) no-repeat;
+  background-position: -293px -54px; }
+
 .WhiteTriangle {
   float: right;
   margin-top: 5px;
@@ -4039,3 +4077,6 @@ span.continued {
   height: 4px;
   background: url(/images/home_tile.png) no-repeat;
   background-position: -100px -100px; }
+
+.paddingA:active {
+  margin-top: 1px; }

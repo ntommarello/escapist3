@@ -1,7 +1,7 @@
 <div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
 	<div class="BrowseBorder" >
 		<A href="/plans/<%=plan.id%>">
-			<div class="BrowseExpandImage"
+			<div class="BrowseExpandImage" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')"
 			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
 			<%else%>
 	style="background:url(/images/no_pic_b.png)"
@@ -10,7 +10,18 @@
 		
 				<div class="BrowseInfoContainer">
 					<div class="BrowseDate"><div style="margin-top:3px"><%=plan.start_time.to_date.strftime('%b').upcase()%><br><%= plan.start_time.to_date.strftime('%e').strip()%></div></div>
-					<div class="BrowseTitle"><div style="margin-top:3px; margin-left:10px"><%=raw plan.title%><div style="color:#ccc"><%=raw plan.url_name%></div></div></div>
+					<div class="BrowseTitle">
+						<div style="float:left; margin-top:3px; padding-left:10px; width:80% ">
+							<%=raw plan.title%>
+							<div style="color:#ccc">
+								<%=raw plan.url_name%>
+							</div>
+						</div>
+						<div style="float:right; margin-top:3px; padding-right:5px">
+							<div id="Arrow<%=plan.id%>" class="ArrowIcon"></div>
+						</div>
+					</div>
+					
 				</div>
 		
 			</div>
