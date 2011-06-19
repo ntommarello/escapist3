@@ -1,15 +1,14 @@
 <%@user = User.new%>
 <div id="RegisterModal"> 
 		<div class="closeRegister" onclick="closeRegister()"></div>
+		
 		<div id="RegisterTitle" class="HighlightedTitle" style="text-align:center">Sign up for <%=APP_NAME%>!</div>
-					<div style="padding-top:5px; padding-bottom:10px; text-align:center">Already have an account?  <a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
+		
+		<div style="padding-top:5px; padding-bottom:10px; text-align:center">Already have an account?  <a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
 		
 		<div style="float:right; width:250px; margin-right:20px; margin-top:20px;">
 			<b>Why <%=APP_NAME%>?</b>  Go on awesome adventures!
 			<img alt="Thumb_214_carolyndanger1031" class="PhotoBorder" src="http://<%=ASSETS_URL%>/photos/77/thumb_214_CarolynDanger1031.jpg" style="width: 214px; height: 161px; margin-top:5px;cursor:default"/>
-			
-
-			
 		</div>
 
 
@@ -69,7 +68,7 @@
 					<br><b>Privacy:</b>
 					We don’t share your <%=APP_NAME%> data with Facebook, or post anything to your profile.
 					
-					<div id="fb-root" style="padding-top:20px"></div><fb:facepile max-rows="1" width="230"></fb:facepile>
+					<fb:facepile max-rows="1" width="230"></fb:facepile>
 				</div>
 
 	

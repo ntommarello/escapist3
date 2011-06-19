@@ -3158,7 +3158,7 @@ span.continued {
   position: absolute;
   top: 50px;
   left: 0px;
-  min-width: 1000px;
+  min-width: 900px;
   overflow: hidden;
   background-size: 100%;
   padding-right: -20px;
@@ -3511,13 +3511,12 @@ span.continued {
 .template_topnav {
   background: #35507c url(/images/topbar-bg3.png) repeat-x;
   border-top: none;
-  min-width: 1000px;
+  min-width: 900px;
   -moz-user-select: none;
   -webkit-user-select: none;
   -o-user-select: none;
   user-select: none;
-  border-top: 1px solid #fff;
-  height: 50px; }
+  height: 51px; }
 
 .template_logo {
   background: url(/images/home_tile.png) no-repeat;
@@ -3738,7 +3737,7 @@ span.continued {
 .LocIcon {
   position: absolute;
   margin-left: 83px;
-  top: 20px;
+  top: 19px;
   width: 10px;
   height: 13px;
   background: url(/images/home_tile.png) no-repeat;
@@ -3805,7 +3804,7 @@ span.continued {
 .BrowseExpandImage {
   width: 100%;
   max-width: 510px;
-  min-width: 225px;
+  min-width: 200px;
   height: 225px;
   background-size: cover;
   moz-background-size: cover;
@@ -3819,7 +3818,7 @@ span.continued {
 
 .BrowseBorder {
   max-width: 510px;
-  min-width: 300px;
+  min-width: 280px;
   padding-right: 12px;
   border: 1px solid #ddd;
   -moz-border-radius: 7px;
@@ -3909,7 +3908,7 @@ span.continued {
 
 .SignUpBorder {
   max-width: 510px;
-  min-width: 300px;
+  min-width: 280px;
   padding-right: 12px;
   border: 1px solid #ddd;
   -moz-border-radius: 7px;
