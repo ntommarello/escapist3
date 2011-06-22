@@ -24,21 +24,25 @@ class WebController < ApplicationController
      end
 
 
+
+     
+     if !@city_id
+       @city_id = session[:dropdown_city_value];
+     end
+     
      conditions = ""
      if @group
        @slogan = @group.subtitle
        conditions = "and plans.group_id = #{@group.id}"
      else
        @slogan = "Kickass adventures with awesome people"
+       conditions = "and city_id = #{@city_id}"
      end
      
-     if !@city_id
-       @city_id = session[:dropdown_city_value];
-     end
 
      t = Time.zone.now
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
-     @plan = Plan.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id = ? #{conditions}", rounded_t, @city_id],:order=>"start_time asc", :include=>:user)
+     @plan = Plan.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc", :include=>:user)
 
      @start_id = 0;
      if @start_plan
