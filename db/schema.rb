@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613212149) do
+ActiveRecord::Schema.define(:version => 20110622011915) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -145,6 +145,16 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "dislikes", ["id"], :name => "index_dislikes_on_id"
   add_index "dislikes", ["user_id"], :name => "index_dislikes_on_user_id"
 
+  create_table "groups", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "name"
+    t.text     "subtitle"
+    t.boolean  "domain"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "invites", :force => true do |t|
     t.integer  "user_id"
     t.string   "email"
@@ -181,7 +191,6 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "plans", :force => true do |t|
-    t.integer  "challenge_id"
     t.boolean  "featured"
     t.integer  "privacy"
     t.integer  "host_id"
@@ -189,11 +198,10 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
     t.datetime "end_time"
     t.integer  "attendance_cap"
     t.text     "note"
-    t.integer  "subscribed_plans_count"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.decimal  "price",                  :precision => 10, :scale => 2
+    t.decimal  "price",                :precision => 10, :scale => 2
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
@@ -207,6 +215,8 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
     t.integer  "image_file_size"
     t.string   "image_content_type"
     t.integer  "city_id"
+    t.integer  "group_id"
+    t.boolean  "application_required"
   end
 
   create_table "subscribed_achievements", :force => true do |t|
@@ -310,6 +320,7 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
     t.string   "phone_OS"
     t.string   "phone_model"
     t.string   "app_version"
+    t.text     "apply"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"

@@ -43,11 +43,22 @@
 					</div>
 		
 				
-		<a href="/">
-			<div class="template_logo"></div>
-		</a>
+		
+			<%if @group%>
+			<a href="/">
+				<div style="float:left; margin-left:10px; margin-top:14px"><img src="/images/swa_logo.png"></div>
+			</a>
+			<a href="http://<%=APP_URL%>">
+					<div class="powered"><img src="/images/powered.png"></div>
+			</a>
+			<%else%>
+				<a href="/">
+				<div class="template_logo"></div>
+				</a>
+			<%end%>
 	
-			
+	
+		<%if !@group%>
 		<div style="float:left;">
 			<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
 			<div class="LocIcon"></div>
@@ -65,6 +76,7 @@
 				<a id="CreateLink"  <%unless @browser.ie? %>onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"<%end%>  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/create" >Create</a>
 			</div>
 		</div>
+		<%end%>
 		
 		<Script>
 		$('.MainMenuLink2').live('touchend', function(e) {

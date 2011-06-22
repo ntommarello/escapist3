@@ -3,25 +3,30 @@
 </script>
 
 <div class="HighlightedTitle">Create & Share Your Adventures</div>
-<div style="margin-top:7px" class="SubTitle">Apply for an invitation.</div>
+<div style="margin-top:7px" class="SubTitle">Coming soon: create your own adventures! Apply for an invitation.</div>
 
 
 <div style="float:left; width:310px; margin-left:10px; margin-top:40px;">
 
 
 	<%if !current_user%>
-     	<% form_for :user, :html => { :id => 'RegisterForm' }  do |form| %>
-			<div class="RegisterLabel2">full name</div>
-			<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="ShadowedTextBox" size="30"></div>
+	
+	<div class="HighlightedTitle" style="font-size:15px">Create an Account</div>
+		<div style="padding-top:1px; padding-bottom:15px;">Already have an account?  <a href="#" onclick="openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
+	
+	<%@user = User.new%>
+     	<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
+			<div class="RegisterLabel2" style="margin-top:8px">full name</div>
+			<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="ShadowedTextBox" style="width:320px" size="30"></div>
 			<div style="clear:both; position:relative; height:10px; "></div>
 
-			<div class="RegisterLabel2">email</div>
-			<div style="float:left; width:150px;"><%= form.text_field :email, :class => "ShadowedTextBox" %></div>
+			<div class="RegisterLabel2" style="margin-top:8px">email</div>
+			<div style="float:left; width:150px;"><%= form.text_field :email, :class => "ShadowedTextBox", :style=>"width:320px" %></div>
 
 			<div style="clear:both; position:relative; height:10px; "></div>
 
-				<div class="RegisterLabel2">password</div>
-			<div style="float:left; width:220px;"><%= form.password_field :password, :class => " ShadowedTextBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
+				<div class="RegisterLabel2" style="margin-top:8px">password</div>
+			<div style="float:left; width:220px;"><%= form.password_field :password, :class => " ShadowedTextBox", :style=>"width:320px", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
 				
 					<div id="Error" style=" color:red; font-weight:bold">	
 						<%= flash[:notice] || flash[:error] %>
@@ -30,17 +35,19 @@
 				</div>
 				<div style="clear:both; position:relative; height:5px; "></div>
 
-
+				
+				<div class="HighlightedTitle" style="font-size:15px; margin-top:20px;">Adventure Designer Application</div>
+				<div style="width:400px; margin-bottom:5px; margin-top:5px">Please describe an adventure you'd like to organize. How will it be fun? Where is it? How many people can go? How much will it cost?</div>
+				<textarea id="user_apply" name="user[apply]" style="width:400px; height:100px;" class="ShadowedTextBox"></textarea>
+	
+	
 		
 				<div class="RegisterBox">
 
-				
-
-
-							<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:80px; width:120px">
-								<div unselectable="on" class="GreenButton" >
+						<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:140px; width:120px">
+							<div unselectable="on" class="GreenButton" >
 									<div id="registerbutton" class="InnerGreenBorder">
-										Join <%=APP_NAME%>
+										Apply
 									</div>
 								</div>
 							</div>
@@ -52,7 +59,58 @@
 
 				<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
 
+
+
+			
+
+
+	
+
+
 		<% end %>
+		
+				<%else%>
+				
+				
+
+			
+						<%if current_user.apply%>
+								<div class="HighlightedTitle" style="font-size:15px;">Your Application</div>
+
+						
+					<%@user = current_user%>
+					<%@editable = true%>
+	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"apply", :content=>@user.apply, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
+
+
+						<%else%>
+						<%@user = current_user%>
+					     	<% form_for @user, :html => { :id => 'RegisterForm3' }  do |form| %>
+								<div class="HighlightedTitle" style="font-size:15px;">Adventure Designer Application</div>
+
+						
+					<div style="width:400px; margin-bottom:5px; margin-top:5px">Please describe an adventure you'd like to organize. How will it be fun? Where is it? How many people can go? How much will it cost?</div>
+					<textarea id="user_apply" name="user[apply]" style="width:400px; height:100px;" class="ShadowedTextBox"></textarea>
+
+
+
+					<div class="RegisterBox">
+
+							<div id="SignIn"  class="WhiteActiveBorder"  style="margin-left:300px; width:120px" onclick="$('#RegisterForm3').submit()">
+								<div unselectable="on" class="GreenButton" >
+										<div id="registerbutton" class="InnerGreenBorder">
+											Apply
+										</div>
+									</div>
+								</div>
+
+
+				</div>
+				
+				<%end%>
+				
+				<%end%>
+						
 	<%end%>
 		
 </div>

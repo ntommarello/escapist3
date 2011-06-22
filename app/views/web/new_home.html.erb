@@ -13,12 +13,12 @@
 		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
 		<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
 		<div style="clear:both"></div>
-		<div class="home_slogan">Kickass adventures with awesome people</div>
+		<div class="home_slogan"><%=raw @slogan%></div>
 		<div class="home_description">
 			<div id="plan_note" class="multiline" style="width:100%; height:88px; overflow:hidden"></div>	
 			<div style="float:left; margin-top:5px;">
 				<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
-				<div id="plan_attendees" style="float:left"></div>
+				<div id="plan_attendees" style="float:left; min-width:250px;"></div>
 				<div id="MoreAttendees" onclick="window.location.href='/plans/'+plan_id" class="Transparent"></div>
 			</div>
 				
@@ -30,8 +30,7 @@
 				</div>
 					
 				<div class="home_buy_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id+'?pop=yes'">
-					<div class="BuyIcon"></div>
-					<div id="plan_price" style="position:absolute; margin-left:50px;"></div>
+					
 				</div>
 			</div>
 				
@@ -53,10 +52,12 @@
 			</div>
 		</div>
 
+
+<%if !@group%>
 		<div id="Home_Footer">
 			<a class="HomeFooterLink" href="/about">About</a> / <a class="HomeFooterLink" href="/jobs">Jobs</a> / <a class="HomeFooterLink" href="/tos">Terms</a> / <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
 		</div>
-			
+	<%end%>		
 	
 	
 

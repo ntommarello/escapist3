@@ -8,28 +8,7 @@ class PlansController < ApplicationController
   before_filter :login_from_token, :only => [:featured]
   
   def featured
-    @feature = Challenge.find(:first, :select=>"challenges.title, challenges.id as challenge_id, challenges.photo_file_name, challenges.location, challenges.details, challenges.lat, challenges.lng, challenges.url_link, plans.id as plan_id, plans.note, plans.start_time, plans.end_time, plans.host_id, plans.title as plan_title", :joins=>:plans, :conditions=>["plans.featured=1 and plans.start_time >= ?", Time.now],:origin => [current_user.lat,current_user.lng], :order=>"distance asc")
-    @host = User.find(@feature.host_id)
-    @plan = Plan.find(@feature.plan_id)
     
-    #TEMP.  iPhone crashes on no pics
-    @attendees = User.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =? and avatar_file_name != ''",@feature.plan_id])
-    
-    @signedup = false
-    if current_user
-      if @plan.has_signedup?(current_user)
-        @signedup = true
-      end
-    end
-    
-    #Build Date
-    @month = @feature.start_time.to_date.strftime('%b').upcase()
-    @day = @feature.start_time.to_date.strftime('%e').strip()
-  
-    respond_to do |format|
-      format.xml { render }
-      format.json { render }
-    end
   end
   
   
@@ -108,7 +87,7 @@ class PlansController < ApplicationController
   
   def show
     
-    @plan = Plan.find(:first, :conditions=>["id=?",params[:id]], :include=>:challenge)
+    @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
     
     if @plan.location
       @cleaned_location = @plan.location.gsub(%r{</?[^>]+?>}, ' ').gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<br>/,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ')

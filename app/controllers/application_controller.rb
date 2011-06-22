@@ -1,63 +1,24 @@
 class ApplicationController < ActionController::Base
   require 'koala'
-
+ require 'uri'
+ 
   before_filter :locate_user
-  before_filter :check_note
+  before_filter :check_group
   before_filter :set_cache_headers
 
-  def check_note
-    @displayNote = false
-    unless current_user
+  def check_group
+    
+   
+
+    @domain = URI.parse(request.url).host
       
-      @count_bucket = 0
-    	if cookies[:challenges]
-    	    @var =  cookies[:challenges].split(",")
-      		for var in @var
-    			  if var != "0"
-      			  @count_bucket = @count_bucket + 1
-            end
-      		end
-    	 end
-    	 
-    	@count_dislike = 0
-     	if cookies[:dislikes]
-     	    @var =  cookies[:dislikes].split(",")
-       		for var in @var
-     			  if var != "0"
-       			  @count_dislike = @count_dislike + 1
-             end
-       		end
-     	 end
-     	 
-     	 
-     	 @count_stomped = 0
-      	if cookies[:stomped]
-      	    @var =  cookies[:stomped].split(",")
-        		for var in @var
-      			  if var != "0"
-        			  @count_stomped = @count_stomped + 1
-              end
-        		end
-      	 end
-      	 
-      	 
-      	 @count_created = 0
-        	if cookies[:challenges_created]
-        	    @var =  cookies[:challenges_created].split(",")
-          		for var in @var
-        			  if var != "0"
-          			  @count_created = @count_created + 1
-                end
-          		end
-        	 end
-      	 
-    	 if @count_created == 0 and @count_stomped == 0 and 	@count_dislike == 0 and 	@count_bucket == 0
-    	   @displayNote = false
-    	 else
-    	   @displayNote = true
-    	 end
+      
+    if @domain.include? "sparkcloud"
+    
+      @group = Group.find(1)
       
     end
+   
   end
 
 
@@ -79,71 +40,19 @@ class ApplicationController < ActionController::Base
     end 
   end
 
-  def check_cookies
-     if cookies[:challenges]
-       add_challenges_from_cookie(cookies[:challenges])
-       cookies.delete :challenges
-     end
+  def check_cookies 
+  end
 
-     if cookies[:challenges_created]
-       add_challenges_from_cookie(cookies[:challenges_created], true)
-       cookies.delete :challenges_created
-     end
-     
-     if cookies[:dislikes]
-        challenges = cookies[:dislikes].split(',')
-        challenges.each do |challenge_id|
-            check = Dislike.find_by_user_id_and_challenge_id(current_user.id,challenge_id)
-            if !check
-              if challenge_id != "0"
-                Dislike.create(:user_id => current_user.id, :challenge_id=>challenge_id)
-              end
-            end
-        end
-        cookies.delete :dislikes
-     end
-     
-     if cookies[:stomped]
-        challenges = cookies[:stomped].split(',')
-        challenges.each do |challenge_id|
-            check = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id,challenge_id)
-            if !check
-              if challenge_id != "0"
-                SubscribedChallenge.create(:user_id => current_user.id, :challenge_id=>challenge_id, :date_completed_on=>Time.now, :completed=>true)
-              end
-            end
-        end
-        cookies.delete :stomped
-     end
-     
-     
-     
-   end
-
-   def add_challenges_from_cookie(challenges, authored = false)
-     challenges = cookies[authored ? :challenges_created : :challenges].split(',')
-     challenges.each do |challenge_id|
-       if challenge_id != "0" && (challenge = Challenge.find(challenge_id))
-         if authored
-           challenge.update_attribute(:author_id, current_user.id)
-         else
-           check = SubscribedChallenge.find_by_user_id_and_challenge_id(current_user.id,challenge_id)
-           if !check
-             SubscribedChallenge.create(:challenge => challenge, :user_id => current_user.id, :completed => false)
-           end
-         end
-       end
-     end
+  def add_challenges_from_cookie(challenges, authored = false)
   end
   
   
-
   def after_sign_in_path_for(resource_or_scope)
     if resource_or_scope.is_a?(User) 
-      check_cookies
+    
       location = request.env["HTTP_REFERER"] || root_path
       if location.match(/#{register_path}/)
-        root_path
+         root_path
       else
          location
       end
@@ -154,15 +63,11 @@ class ApplicationController < ActionController::Base
   
   
   def after_sign_out_path_for(resource_or_scope)
-   
       location = request.env["HTTP_REFERER"] || root_path
-
   end
   
   
   def set_city_dropdown(location)
-
-    
     calc_closest_city(location)
     session[:dropdown_city] = @returned_city_name 
     session[:dropdown_city_value] =  @returned_city_id 

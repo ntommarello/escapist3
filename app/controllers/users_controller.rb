@@ -55,11 +55,9 @@ class UsersController < ApplicationController
       sign_in @user
       check_cookies      
       location = request.env["HTTP_REFERER"] || root_path
-      if location.match(/plans/)
-        redirect_to "#{location}?pop=yes"
-      else
-        redirect_to user_path(current_user)
-      end
+
+      redirect_to :back
+  
     else
       flash[:error] = @user.errors.to_a.map { |msg| msg }.join(". ")
       render(:action => 'register')
@@ -136,7 +134,11 @@ class UsersController < ApplicationController
       end
       redirect_to settings_path
     else
-      redirect_to user_path(current_user)
+      if params[:user][:apply]
+      redirect_to :back
+      else
+        redirect_to user_path(current_user)
+      end
     end
   end
    

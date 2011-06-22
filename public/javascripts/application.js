@@ -3247,7 +3247,7 @@ function nextPlan(offset) {
 
 
 function loadInfo(index) {
-
+$("#MoreAttendees").hide();
 	start = 0;
 	if (plan_index == 0) {
 		$("#prevarrow").hide();
@@ -3269,8 +3269,33 @@ function loadInfo(index) {
 	plan_id = current_plan.id
 	$('#plan_title').html(current_plan.title);
 	$('#plan_url_name').html(current_plan.url_name);
-	$('#plan_note').html(current_plan.note);
+	
+	note = current_plan.note
+	if (note.length > 300) {
+		note = note.substring(0, 300)
+	}
+	$('#plan_note').html(note);
+	
+
+	
 	setTimeout("$('.multiline').ellipsis();",500);
+	
+	
+	if(current_plan.application_required) {
+		html = '<div style="text-align:center">Apply Now!</div>'
+	} else {
+		html = '<div class="BuyIcon"></div>'
+		html = html +'<div id="plan_price" style="position:absolute; margin-left:50px;"></div>'
+	}
+	$(".home_buy_button").html(html)
+	if (current_plan.price) {
+		string_price = ''+current_plan.price+''
+		string_price = string_price.replace('.0','');
+		$('#plan_price').html('$'+string_price);
+    } else {
+		$('#plan_price').html('FREE');
+	}
+	
 	
 	//start_time = new Date(current_plan.start_time);
 	
@@ -3285,13 +3310,7 @@ function loadInfo(index) {
 	$('#plan_startdate_day').html(day);
 	$('#plan_startdate_month').html(month);
 	
-	if (current_plan.price) {
-		string_price = ''+current_plan.price+''
-		string_price = string_price.replace('.0','');
-		$('#plan_price').html('$'+string_price);
-    } else {
-		$('#plan_price').html('FREE');
-	}
+
 
 	if (plans.length-1 > plan_index) {
 		$('#next_plan_link').show();
@@ -3321,6 +3340,11 @@ function loadInfo(index) {
 	//	$('#next_arrow').hide();
 	}
 	
+	
+
+	
+	
+	
 	$("#plan_signup_count").html(current_plan.users.length+1);
 	if (current_plan.users.length+1 == 1) {
 		$("#plan_signup_words").html("sign-up");
@@ -3334,7 +3358,7 @@ function loadInfo(index) {
 
 	pic_count = 0;
 	for (var i = 0; i < current_plan.users.length; i++) {
-		the_user = current_plan.users[i];
+			the_user = current_plan.users[i];
 		if (the_user.avatar_file_name != null) {
 			if (pic_count < 4) {
 				html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
@@ -3345,6 +3369,14 @@ function loadInfo(index) {
 		}
 	}
 	
+	if (pic_count < 2) {
+		$("#plan_signup_count").html('')
+		$("#plan_signup_words").html("Hosted by")
+		the_user = current_plan.user;
+		html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+		html = html + '<div style="margin-left:5px; float:left; font-size:12px">'+the_user.first_name+' '+the_user.last_name +'</div>';
+	}
+	
 	//html = html + "<script>$('.tip').tooltip();</script>"
  
 	//setTimeout(" $('.tl').tooltip();",1000)
@@ -3353,6 +3385,10 @@ function loadInfo(index) {
 	}
 	
 	$("#plan_attendees").html(html)
+	
+	
+	
+	
 	
 	//if (plans.length < 2) {
 	//	$('.home_info_next').hide();

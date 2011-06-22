@@ -1,5 +1,4 @@
 class Plan < ActiveRecord::Base
-  belongs_to :challenge
   belongs_to :user, :foreign_key => 'host_id'
   has_many :users, :through => :subscribed_plans
   has_many :subscribed_plans, :dependent => :destroy

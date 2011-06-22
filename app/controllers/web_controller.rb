@@ -23,13 +23,22 @@ class WebController < ApplicationController
        end
      end
 
+
+     conditions = ""
+     if @group
+       @slogan = @group.subtitle
+       conditions = "and plans.group_id = #{@group.id}"
+     else
+       @slogan = "Kickass adventures with awesome people"
+     end
+     
      if !@city_id
        @city_id = session[:dropdown_city_value];
      end
 
      t = Time.zone.now
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
-     @plan = Plan.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id = ?", rounded_t, @city_id],:order=>"start_time asc", :include=>:user)
+     @plan = Plan.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id = ? #{conditions}", rounded_t, @city_id],:order=>"start_time asc", :include=>:user)
 
      @start_id = 0;
      if @start_plan
@@ -43,7 +52,9 @@ class WebController < ApplicationController
 
      end
 
-     @plan_json = @plan.to_json(:include=>[:user,:users], :only=>[:first_name, :id, :title, :note, :url_name, :start_time, :price, :avatar_file_name, :username, :image_file_name])
+
+
+     @plan_json = @plan.to_json(:include=>[:user,:users], :only=>[:first_name, :last_name, :id, :title, :note, :url_name, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
 
      if !@skip
        render 

@@ -4081,3 +4081,12 @@ span.continued {
 
 .paddingA:active {
   margin-top: 1px; }
+
+.powered {
+  float: left;
+  margin-left: 6px;
+  margin-top: 19px;
+  opacity: .8; }
+
+.powered:hover {
+  opacity: 1; }

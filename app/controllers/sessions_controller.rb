@@ -30,7 +30,8 @@ class SessionsController < Devise::SessionsController
         @user.app_version = params[:app_version] if params[:app_version]
         @user.lat = params[:lat] if params[:lat]
         @user.lng = params[:lng] if params[:lng]
-
+        @user.apply = params[:apply] if params[:apply]
+        
         if params[:lat] and params[:lng]
           if params[:lat].to_i != 0
             loc=GoogleGeocoder.reverse_geocode([params[:lat] ,params[:lng] ])
