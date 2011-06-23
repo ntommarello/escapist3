@@ -1691,14 +1691,15 @@ a:hover {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   float: left;
-  height: 35px;
+  margin-left: 3px;
+  height: 45px;
   width: 50px;
   color: #5691C3;
   border: 1px solid #DADADA;
   margin-top: 15px;
   font-size: 24px;
   text-align: center;
-  padding-top: 15px; }
+  padding-top: 5px; }
 
 #LogoutMenu {
   display: none;

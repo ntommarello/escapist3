@@ -1671,7 +1671,8 @@ color:$default-link-color;
 	@include lineargradient(#F4F4F4, #FEFEFE);
 	@include roundedCorners(5px);
 	float:left;
-	height:35px; width:50px; color:#5691C3; border:1px solid #DADADA; margin-top:15px;  font-size:24px; text-align:center; padding-top:15px;
+	margin-left:3px;
+	height:45px; width:50px; color:#5691C3; border:1px solid #DADADA; margin-top:15px;  font-size:24px; text-align:center; padding-top:5px;
 }
 #LogoutMenu {
 	display:none; position:absolute; padding:0px; line-height:23px;  z-index:1000; border:1px solid  $top-border-color; margin-top:40px;  background-color:white;
