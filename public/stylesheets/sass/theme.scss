@@ -1001,6 +1001,7 @@ cursor:pointer;
 	border:1px solid #849981;
 	border:1px solid #7BDF84;
 		@include gradient(#30D31A,#02A204);
+		@include roundedCorners(7px);
 }
 .GreenButton2:hover {
 	background: #50D759;
@@ -1025,6 +1026,7 @@ cursor:pointer;
 	background: #72CC78;
 	border:1px solid #849981;
 	@include lineargradient(#43BB4A, #7BDF84);
+	@include roundedCorners(7px);
 }
 .GreenButtonInactive {
 	@include button();
@@ -1033,6 +1035,7 @@ cursor:pointer;
 	background-image: none;
 	background: #E6E6E6;
 	border:1px solid #D8D8D8;
+	@include roundedCorners(7px);
 }
 .GreenButton:hover {
 	background: #50D759;
@@ -3139,6 +3142,7 @@ span.continued{
 .LoginButtonHover {
 	background: #ECECEC;
 	@include gradient(#fff,#ccc);
+	@include rounded_corners(7px);
 }
 .test {
 	background: #fff;

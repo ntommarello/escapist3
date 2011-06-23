@@ -960,7 +960,10 @@ body {
   background: #72CC78;
   border: 1px solid #849981;
   background-image: -moz-linear-gradient(100% 100% 90deg, #43bb4a, #7bdf84);
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7bdf84), to(#43bb4a)); }
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7bdf84), to(#43bb4a));
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px; }
 
 .GreenButtonInactive {
   -moz-border-radius: 7px;
@@ -980,7 +983,10 @@ body {
   text-shadow: #d4d4d4 0 -1px 0;
   background-image: none;
   background: #E6E6E6;
-  border: 1px solid #D8D8D8; }
+  border: 1px solid #D8D8D8;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px; }
 
 .GreenButton:hover {
   background: #50D759;
