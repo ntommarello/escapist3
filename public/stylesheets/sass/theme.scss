@@ -25,7 +25,7 @@ $top-link-color:#6090B4;
 @mixin rounded_corners($px) {
   -moz-border-radius:($px);
   -webkit-border-radius:($px);
-  border-radius:($px);
+  border-radius:($px) ($px) ($px) ($px);
   -webkit-background-clip: padding-box;
 }
 
@@ -3140,6 +3140,7 @@ span.continued{
 }
 
 .LoginButtonHover {
+	@include button();
 	background: #ECECEC;
 	@include gradient(#fff,#ccc);
 	@include rounded_corners(7px);

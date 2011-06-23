@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%></title>
-  <%= raw include_stylesheets :base %>
-  <%= raw include_javascripts :preload %>
-  <%= yield_for(:head, '')%>
+  	<title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%></title>
+  	<%= raw include_stylesheets :base %>
+  	<%= raw include_javascripts :preload %>
+  	<%= yield_for(:head, '')%>
+	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 </head>
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
