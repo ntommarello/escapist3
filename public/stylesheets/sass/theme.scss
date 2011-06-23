@@ -34,7 +34,7 @@ $top-link-color:#6090B4;
   background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #{$top}),color-stop(1, #{$bottom})); /* Saf4+, Chrome */
   background-image: -webkit-linear-gradient(#{$top}, #{$bottom}); /* Chrome 10+, Saf6 */
   background-image: linear-gradient(top, #{$top}, #{$bottom});
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$top}', EndColorStr='#{$bottom}'); /* IE6–IE9 */
+            
 }
 
 
