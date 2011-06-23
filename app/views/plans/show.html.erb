@@ -6,8 +6,7 @@
 <% end %>
 
 <% content_for :head do %>
-	<meta  name="description" content="<%=@plan.note%>" />
-	<meta name="image" content="<%=@plan.image.url(:thumb_214)%>" />
+	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
 <%end%>
 
 
@@ -151,32 +150,24 @@
 					<%end%>
 				</div>
 
-				<div style="float:left; width:210px">
+				<div style="float:left; width:225px">
 
 
-					<div style="color:#1F527E; margin-top:9px; margin-left:4px; margin-bottom:5px;">
+					<div style="color:#1F527E; margin-top:9px; margin-left:3px; margin-bottom:5px;">
 						<%if @plan.price and @plan.price > 0%>Share with your friends.  Give them a 10% discount.<%else%><div style="padding-top:7px">Share with your friends!</div><%end%></div>
 					
-
-						<div style="cursor:pointer; margin-left:5px;" class="BlueLink" 	onclick="FB.ui(share, function(response) { console.log(response); });">
-								<img style="margin-top:3px; float:left; border:0px; margin-right:5px;" height="16" width="16" src="/images/facebook.png">
-								<div style="margin-top:4px;  float:left">facebook</div>
-						</div>
-
-				    <div style="cursor:pointer" class="BlueLink" onclick="window.open('http://twitter.com/share?text=I\'m attending a @stompio plan: <%=CGI.escape(@plan.title)%>&url=http://stomp.io/?id=<%= @plan.id %>. Join me and get 10% off by using discount code JOINME42', '_blank', 'toolbar=0, status=0, width=626, height=436');">
-							<img style="margin-top:3px;margin-left:10px; border:0px; float:left" height="16" width="16" src="/images/twitter.png">
-							<div style="margin-top:4px; margin-left:5px;  float:left">twitter</div> 
-						</div>
-
-						<a href="mailto:?subject=I'm Attending a Stomp Adventure: <%=@plan.title%>&amp;body=I'm attending this Stomp adventure: http://stomp.io/?id=<%= @plan.id %>.  If you woud like to join me, get 10 percent off by using discount code JOINME42." class="BlueLink" >
-							<img style="margin-top:3px; border:0px; float:left; margin-left:10px; margin-right:4px;" height="16" width="16" src="/images/email.png">
-							<div style="margin-top:4px;  float:left">email</div>
-						</a>
-						<div style="clear:both"></div>
+					
+					<div style="float:left; margin-left:3px">
+				   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="escapist" data-related="escapist, startupworkaway" data-url="http://stomp.io/?id=<%= @plan.id %>" data-text="I'm attending <%=@plan.title%>.  Join me and get 10% off by using discount code JOINME42">Tweet</a> 
+				   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+				     </div>
+				<div style="float:left; margin-left:10px;">
+				         <fb:like href="http://stomp.io/?id=<%= @plan.id %>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
+				   </div>
+						
 				</div>
 
 				<div style="float:left; margin-top:5px;">
-
 					<%= render :partial=>"plans/attend_button"%>
 				</div>
 

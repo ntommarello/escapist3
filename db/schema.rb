@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110622174359) do
+ActiveRecord::Schema.define(:version => 20110623184156) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20110622174359) do
     t.integer  "city_id"
     t.integer  "group_id"
     t.boolean  "application_required"
+    t.date     "application_deadline"
   end
 
   create_table "subscribed_achievements", :force => true do |t|

@@ -1,0 +1,18 @@
+<meta name="description" content="<%=raw plan.note%>" /> 
+<meta property="fb:app_id" content="176765569051964" /> 
+<meta property="og:site_name" content="<%=APP_NAME%>" /> 
+<meta property="og:title" content="<%=plan.title%> | <%=APP_NAME%>" /> 
+<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>" /> 
+<meta property="og:type" content="website" /> 
+<%if plan.city_id == 1%>
+	<meta property="og:locality" content="Boston" /> 
+<%end%>
+<%if plan.city_id == 2%>
+	<meta property="og:locality" content="San Francisco" /> 
+<%end%>
+<%if plan.city_id == 3%>
+	<meta property="og:locality" content="New York City" /> 
+<%end%>
+<meta property="og:image" content="http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_50_<%=plan.image_file_name%>"/> 
+<meta property="og:description" content="<%=raw plan.note%>" /> 
+<meta property="fb:admins" content="176765569051964" />

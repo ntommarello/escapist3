@@ -40,16 +40,30 @@
 			<div unselectable="on" class="outerB <%=@color_count%>Button" style="width:180px; margin-left:10px;  line-height:38px; height:50px;">
 					<div class="buyticket innerB Inner<%=@color_count%>Border" style="height:43px; font-size:16px; line-height:40px; padding-top:5px;">
 					
+					<%if !@plan.application_required%>
 							<div style="position:absolute; margin-left:7px; margin-top:3px;">
 							<img src="/images/buy-icon.png" style="width:24px; height:21px">
 							</div>
-							<div style="margin-left:31px;">
-								<%if @plan.price and @plan.price > 0%>
-									$<%=@plan.price.to_s.sub( ".0", "") %> per ticket
+					<%end%>
+						
+								
+								<%if @plan.application_required%>
+								<div style="margin-top:3px; line-height:14px">
+									Apply Now!
+								</div>
+								<div style="font-size:12px; line-height:14px; margin-top:6px;">
+									Deadline: <%=@plan.application_deadline.to_date.strftime('%b').titlecase()%> <%=@plan.application_deadline.to_date.strftime('%e').strip()%>
+								</div>
 								<%else%>
-									Sign Up for FREE
+									<div style="margin-left:31px;">
+										<%if @plan.price and @plan.price > 0%>
+											$<%=@plan.price.to_s.sub( ".0", "") %> per ticket
+										<%else%>
+											Sign Up for FREE
+										<%end%>
+									</div>
 								<%end%>
-							</div>
+							
 						
 				 
 					</div>
