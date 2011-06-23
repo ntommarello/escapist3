@@ -43,27 +43,11 @@
 	
 <%else%>
 
-<%#cookies.delete :challenges%>
-
-    <%@bucketcount = 0%>
-	<%if cookies[:challenges]%>
-	    <%@var =  cookies[:challenges].split(",")%>
-  		<%for var in @var%>
-			<%if var != "0"%>
-  			  <%@bucketcount = @bucketcount + 1%>
-             <%end%>
-  		 <%end%>
-	 <%end%>
-	
 
 	
 	
 	
 
-
-		<div id="NotLoggedInBucket" style="float:right;  margin-top:22px; <%if cookies[:challenges_created]%>margin-right:10px;<%else%>margin-right:300px;<%end%> font-size:12px; color:#999; <%if @bucketcount == 0%>display:none;<%end%>">
-<a id="BucketListLink" class="UserLink" href="/bucket_list">Bucket List</a><span id="insertBucket"><%if @bucketcount > 0%><span id="BucketCount">(<span id="top_bucket_count"><%=@bucketcount%></span>) </span><%end%></span>
-		</div>
 
 
 		<div id="SignUp2" unselectable="on" class="GreenButton2">
@@ -95,7 +79,7 @@
 	</script>
 
 
-	<div id="LoginLayer" style="top:36px" onclick="ignoreHide=1;">
+	<div id="LoginLayer" style="top:34px" onclick="ignoreHide=1;">
 		<div class="LoginBorder">
 			<div style="margin-top:-18px; position:absolute; width:99px; height:5px; left:90px; background:#ECECEC; border-right:1px solid #fff"></div>
 		

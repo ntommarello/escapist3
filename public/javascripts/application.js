@@ -2,6 +2,7 @@
 
 
 $(document).ready(function() {
+
 	
 	$('#name').alpha({allow:"., "});
 	 
@@ -3247,7 +3248,8 @@ function nextPlan(offset) {
 
 
 function loadInfo(index) {
-$("#MoreAttendees").hide();
+	$("#MoreAttendees").hide();
+	
 	start = 0;
 	if (plan_index == 0) {
 		$("#prevarrow").hide();
@@ -3307,10 +3309,16 @@ $("#MoreAttendees").hide();
 	month_index = start_time.getUTCMonth()+1;
 	month = getShortMonth(month_index);
 	day = start_time.getUTCDate()
-	$('#plan_startdate_day').html(day);
+	year  = str[0];
+	 currentTime = new Date()
+	 thisYear = currentTime.getFullYear();
 	$('#plan_startdate_month').html(month);
 	
-
+	if (year > thisYear ) {
+		$('#plan_startdate_day').html(year);
+	} else {
+		$('#plan_startdate_day').html(day);
+	}
 
 	if (plans.length-1 > plan_index) {
 		$('#next_plan_link').show();
@@ -3352,39 +3360,77 @@ $("#MoreAttendees").hide();
 		$("#plan_signup_words").html("sign-ups");
 	}
 	
-	html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+	//html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		
 	
 
-	pic_count = 0;
+	
+	organizer_count = 0;
+	signup_count = 0;
+	total_count = 0;
+	hosts = ''
+	html = ''
+	host_names = ''
+	for (var i = 0; i < current_plan.organizers.length; i++) {
+			the_user = current_plan.organizers[i];
+		if (the_user.avatar_file_name != null) {
+			if (organizer_count < 5) {
+				transition =''
+				if (organizer_count == 0) {
+					
+				} else {
+					if (organizer_count == 4 || organizer_count+1 == current_plan.organizers.length) {
+						transition ='& '
+					} else {
+						transition =', '
+					}
+				}
+				host_names = host_names + ' '+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
+				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+			}
+			organizer_count = organizer_count + 1;
+		} 
+	}
+	
+	total_count = organizer_count;
+	
+	
+	html = hosts;
 	for (var i = 0; i < current_plan.users.length; i++) {
 			the_user = current_plan.users[i];
 		if (the_user.avatar_file_name != null) {
-			if (pic_count < 4) {
-				html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+			if (total_count < 5) {
+				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
-			pic_count = pic_count + 1;
+			signup_count = signup_count + 1;
+			total_count = total_count + 1;
+			
 		} else {
 		//	html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent" src="/images/no_avatar.png?1263875148" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		}
 	}
 	
-	if (pic_count < 2) {
+	
+	if (signup_count < 2) {
 		$("#plan_signup_count").html('')
-		$("#plan_signup_words").html("Hosted by")
+		$("#plan_signup_words").html("Hosted by "+host_names)
 		the_user = current_plan.user;
-		html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
-		html = html + '<div style="margin-left:5px; float:left; font-size:12px">'+the_user.first_name+' '+the_user.last_name +'</div>';
+		$("#plan_attendees").html(hosts)
+		//html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+		//html = html + '<div style="margin-left:5px; float:left; font-size:12px">'+the_user.first_name+' '+the_user.last_name +'</div>';
+	} else {
+		$("#plan_attendees").html(html)
 	}
 	
 	//html = html + "<script>$('.tip').tooltip();</script>"
  
 	//setTimeout(" $('.tl').tooltip();",1000)
-	if (pic_count > 4)	{
+	if (total_count > 4)	{
 		$("#MoreAttendees").show();
 	}
 	
-	$("#plan_attendees").html(html)
+
+	
 	
 	
 	
@@ -3412,6 +3458,9 @@ $("#MoreAttendees").hide();
 	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+current_plan.image_file_name
 	switchPhoto(image_url);
 	
+	
+
+	
 }
 
 
@@ -3425,6 +3474,8 @@ function switchPhoto(image_url) {
 	      
 				$('#big_image_background').animate({opacity: 1}, 250);
 	}).attr("src", image_url);
+	
+	
 		
 //	$('#hideImage').attr('src', image_url).load(function() {
 //		alert('ho')
@@ -3489,12 +3540,7 @@ preload_image_index=0;
 function preloadImage() {
 
 	preload_image_index = preload_image_index +1;
-	
-
-		preload_plan = plans[preload_image_index].plan;
-	
-	
-	
+	preload_plan = plans[preload_image_index].plan;
 	
 	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
 	

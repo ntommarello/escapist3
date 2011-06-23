@@ -13,4 +13,5 @@ APP_PEOPLE = "Escapists"
 APP_CONTENT = "Challenges"
 ASSETS_URL = "assets.stomp.io"
 
+
 ActionMailer::Base.default_url_options = { :host => APP_URL }

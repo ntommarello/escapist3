@@ -4090,3 +4090,10 @@ span.continued {
 
 .powered:hover {
   opacity: 1; }
+
+.LightLink {
+  color: #EDE9CD; }
+
+.LightLink:hover {
+  color: #EDE9CD;
+  text-decoration: underline; }

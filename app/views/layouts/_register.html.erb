@@ -4,7 +4,14 @@
 		
 		<div id="RegisterTitle" class="HighlightedTitle" style="text-align:center">Sign up for <%=APP_NAME%>!</div>
 		
-		<div style="padding-top:5px; padding-bottom:10px; text-align:center">Already have an account?  <a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
+
+		<div style="padding-top:5px; padding-bottom:10px; text-align:center">
+			<%if @group%>
+				<b><%=@group.name%></b> is powered by Escapist.
+			<%end%>
+			
+			
+			Already have an account?  <a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
 		
 		<div style="float:right; width:250px; margin-right:20px; margin-top:20px;">
 			<b>Why <%=APP_NAME%>?</b>  Go on awesome adventures!

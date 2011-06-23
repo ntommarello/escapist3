@@ -1,10 +1,14 @@
 class ApplicationController < ActionController::Base
   require 'koala'
  require 'uri'
+ require 'valid_browser'
+ include ValidBrowser
  
-  before_filter :locate_user
+  before_filter :browser_detect
   before_filter :check_group
-  before_filter :set_cache_headers
+  before_filter :locate_user
+
+  
 
   def check_group
     
@@ -12,23 +16,33 @@ class ApplicationController < ActionController::Base
 
     @domain = URI.parse(request.url).host
       
-      
-    if @domain.include? "sparkcloud"
     
+    if @domain.include? "sparkcloud"
       @group = Group.find(1)
-      
     end
+    if @domain.include? "tropicaljobhunt"
+      @group = Group.find(2)
+    end
+    
    
   end
 
 
-  def set_cache_headers
+  def browser_detect
     #Brute force hack.  For ajax back button stuff. Otherwise stale content loaded.
     
     #response.headers['Cache-Control'] = 'no-store'
     #response.headers['Vary'] = '*'
     
     @browser = Browser.new(:ua => request.env["HTTP_USER_AGENT"], :accept_language => "en-us")
+    
+    unless params[:action] == "upgrade_browser"
+     unless valid_browser?
+      redirect_to '/upgrade_browser'
+     end
+    end
+    
+      
   end
   
   protected

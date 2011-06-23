@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%></title>
+  <%= raw include_stylesheets :base %>
+  <%= raw include_javascripts :preload %>
+  <%= yield_for(:head, '')%>
+</head>
+
+<body>
+	
+	<div class="template_topnav">
+		<div id="TheCenter">
+					<div id="TheTab" class="TheActiveTab">	
+						<div class="lc"></div>
+						<div class="stretch"></div>
+						<div class="rc"></div>
+					</div>
+					<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
+						<div class="lc"></div>
+						<div class="stretch"></div>
+						<div class="rc"></div>
+					</div>
+		
+				
+		
+			<%if @group%>
+			<a href="/">
+				<div style="float:left; margin-left:10px; margin-top:14px"><img src="/images/swa_logo.png"></div>
+			</a>
+			<a href="http://<%=APP_URL%>">
+					<div class="powered"><img src="/images/powered.png"></div>
+			</a>
+			<%else%>
+				<a href="/">
+				<div class="template_logo"></div>
+				</a>
+			<%end%>
+	
+	
+							
+	</div>
+	
+
+	
+	<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
+		<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+		<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
+		<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
+		
+		<div style="position:relative; min-width:900px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
+			<div style="text-align:center">
+
+				<div class="HighlightedTitle" style="font-size:40px; margin:20px;">
+					Please upgrade your browser!
+				</div>
+
+				<div style="width:600px; margin-left:auto; margin-right:auto; font-size:24px; line-height:30px;">
+					<p>We're sorry!  We have a small development team, and don't have the resources to support old browsers.</p>
+
+					<p>Please download the latest version of <a href="www.google.com/chrome" class="BlueLink">Chrome</a>, <a href="www.apple.com/safari/download/" class="BlueLink">Safari</a>, <a href="www.mozilla.com/ " class="BlueLink">Firefox</a>,  <a href="www.opera.com/download " class="BlueLink">Opera</a>, or <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie" class="BlueLink">Internet Explorer 9</a>.</p>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+
+</body>

@@ -21,6 +21,7 @@ gem 'carmen'
 gem 'twitter'
 gem 'bitly'
 gem "browser" 
+gem "useragent" 
 gem "awesome_print"
 gem "samsouder-titlecase"
 gem "oauth"

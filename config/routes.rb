@@ -99,6 +99,7 @@ Trek::Application.routes.draw do
   match 'wepay_callback', :controller => 'plans', :action => 'wepay_callback'
   match 'schedule', :controller => 'plans', :action => 'schedule'
   match 'create', :controller => 'web', :action => 'apply'
+  match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'
   match ':username', :controller => 'users', :action => 'show'
   
   

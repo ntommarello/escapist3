@@ -187,7 +187,7 @@
 				 <%@attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id])%>
 
 				<div id="RenderPlan" style="width:410px; margin-top:10px;">
-					<%= render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :host=>@plan.user}%>
+					<%= render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}%>
 				</div>
 
 				<div style="clear:both"></div>

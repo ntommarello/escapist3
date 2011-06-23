@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :likes, :dependent => :destroy
   has_many :dislikes, :dependent => :destroy
   has_many :challenges, :through => :subscribed_challenges 
+
   
   has_many :authentications
     

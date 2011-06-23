@@ -1,26 +1,41 @@
 <div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Hosted by</div>
 
+<%for host in hosts%>
 <div style="float:left">
+	
+	
+	
 	<a href="/<%=host.username%>">
 		<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
 	</a>
 </div>
-<div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=@plan.user.username%>"><%=@plan.user.first_name%> <%=@plan.user.last_name%></a>
-	<div style="padding-top:5px; color:black"><%=APP_NAME%> Founder</div>
+<div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
+	<div style="padding-top:5px; color:black; width:250px">
+		<%if host.id ==1%>Founder of <%=APP_NAME%> and Startup Workaway.<%end%>
+		<%if host.id ==1089%>Venture partner at SOSventures.  Founder of Chinaccelerator.<%end%>
+	</div>
 </div>
 
 <div style="clear:both"></div>
 
-<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Who's coming? <span style="color:#666">(<%=attendees.length + 1%>)</span></div>
+<%end%>
 
-<a href="/<%=host.username%>">
-	<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>host.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
-</a>
-	
-<%for person in attendees%>
-	<a href="/<%=person.username%>">
-	<%= image_tag(person.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
+<div style="clear:both"></div>
+
+<%if attendees.length > 1%>
+	<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Who's coming? <span style="color:#666">(<%=attendees.length + hosts.length%>)</span></div>
+
+	<%for host in hosts%>
+	<a href="/<%=host.username%>">
+		<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>host.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
 	</a>
+	<%end%>
+	
+	<%for person in attendees%>
+		<a href="/<%=person.username%>">
+		<%= image_tag(person.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
+		</a>
+	<%end%>
 <%end%>
 
 <div style="clear:both; height:40px;"></div>
