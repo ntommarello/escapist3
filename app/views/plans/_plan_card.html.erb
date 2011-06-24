@@ -1,5 +1,5 @@
 <div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
-	<div class="BrowseBorder" >
+	<div class="BrowseBorder"  >
 		<A class="browselink" href="/plans/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')">
 			<div class="BrowseExpandImage" 
 			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"

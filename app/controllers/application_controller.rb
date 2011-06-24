@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
     #response.headers['Vary'] = '*'
     
     @browser = Browser.new(:ua => request.env["HTTP_USER_AGENT"], :accept_language => "en-us")
+    @user_agent = UserAgent.parse(request.user_agent)
     
     unless params[:action] == "upgrade_browser"
      unless valid_browser?

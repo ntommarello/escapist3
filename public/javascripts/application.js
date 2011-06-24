@@ -1229,7 +1229,7 @@ function GeoCode_Plan(location, plan_id) {
 			$('#error').html('Could not convert address to GPS coordinates.')
 		} else {
 	
-			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=100x100&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=270x125&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
 			
 			//mapURL = 'http://maps.google.com/staticmap?center='+Lat+','+Lng+'&zoom=14&size=90x90&maptype=roadmap&markers='+Lat+','+Lng+'&sensor=false&key=ABQIAAAAd5t8h7gf8hlpFfM_zmOU7hT39yqx9PTFa5e5gPxu0g05YTxiBBQVciAICRx_q0y51mk2-CbIMukdNA';
 			//jQuery('#GeoCodeMap').html('<img style="border:1px solid #ccc" src="'+mapURL+'">');

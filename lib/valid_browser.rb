@@ -57,4 +57,12 @@ module ValidBrowser
       user_agent = UserAgent.parse(request.user_agent)
       SupportedBrowsers.detect { |browser| user_agent >= browser }
     end
+    
+    
+   
+    
+    
+    
+    
+    
 end

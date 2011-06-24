@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
 
         Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
                               @subscribed.user.email, params[:comments][:comment], 
-                              @subscribed.user.authentication_token, @subscribed.challenge.title,@challenge_url,"commented on").deliver
+                              @subscribed.user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
       end
     end
     
@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
           if user.id != @subscribed.user.id
              Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
                                        user.email, params[:comments][:comment], 
-                                        user.authentication_token, @subscribed.challenge.title,@challenge_url,"commented on").deliver
+                                        user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
           end
         end
       end
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
 
       
 
-    @challenge=  @subscribed.challenge
+    @challenge=  @subscribed
     
     render :partial=>"comments/comment_display", :locals=>{:plan=>@subscribed}
     
