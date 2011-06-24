@@ -12,6 +12,7 @@ APP_URL = "escapist.me"
 APP_PEOPLE = "Escapists"
 APP_CONTENT = "Challenges"
 ASSETS_URL = "assets.stomp.io"
+TWITTER_NAME = "escapist_me"
 
 
 ActionMailer::Base.default_url_options = { :host => APP_URL }

@@ -153,21 +153,47 @@
 				<div style="float:left; width:225px">
 
 
-					<div style="color:#1F527E; margin-top:9px; margin-left:3px; margin-bottom:5px;">
-						<%if @plan.price and @plan.price > 0%>Share with your friends.  Give them a 10% discount.<%else%><div style="padding-top:7px">Share with your friends!</div><%end%></div>
+					<div style="color:#1F527E; margin-top:8px; margin-left:3px; margin-bottom:5px;">
+						<%if @plan.price and @plan.price > 0 and !@plan.application_required%><b>Share with your friends</b>  <br>Send them discount code: JOINME42.<%else%><div style="padding-top:7px; font-size:16px; margin-bottom:10px"><b>Share with your friends!</b></div><%end%></div>
 					
 					
 					<div style="float:left; margin-left:3px">
-				   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="escapist" data-related="escapist, startupworkaway" data-url="http://stomp.io/?id=<%= @plan.id %>" data-text="I'm attending <%=@plan.title%>.  Join me and get 10% off by using discount code JOINME42">Tweet</a> 
+						
+						
+						<%@twitter_user = TWITTER_NAME%>
+						<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
+						<%if @plan.price and @plan.price > 0 and !@plan.application_required%>
+							<%@twitter_text = "#{@twitter_text}!"%>
+						<%else%>
+							<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
+						<%end%>
+						<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}" %>
+					
+						
+						<%if @plan.group%>
+							<%if @plan.group.custom_twitter_text%>
+								<%@twitter_text = @plan.group.custom_twitter_text%>
+							<%end%>
+							<%if @plan.group.twitter_name%>
+								<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
+							<%end%>
+							<%if @plan.group.url%>
+								<%#@data_url = @plan.group.url%>
+							<%end%>
+						<%end%>
+						
+						
+						
+				   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
 				   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 				     </div>
 				<div style="float:left; margin-left:10px;">
-				         <fb:like href="http://stomp.io/?id=<%= @plan.id %>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
+				         <fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
 				   </div>
 						
 				</div>
 
-				<div style="float:left; margin-top:5px;">
+				<div style="float:left; margin-top:6px; margin-left:-13px">
 					<%= render :partial=>"plans/attend_button"%>
 				</div>
 

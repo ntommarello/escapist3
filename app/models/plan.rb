@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
   has_many :hosts
+  belongs_to :group
   belongs_to :user, :foreign_key => 'host_id'
   has_many :users, :through => :subscribed_plans
   has_many :subscribed_plans, :dependent => :destroy
