@@ -145,7 +145,7 @@
 						<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
 					<%else%>
 						
-							<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>" Transparent"%>
+							<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>""%>
 						
 					<%end%>
 				</div>
@@ -178,7 +178,7 @@
 								<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
 							<%end%>
 							<%if @plan.group.url%>
-								<%#@data_url = @plan.group.url%>
+								<%@data_url = @plan.group.url%>
 							<%end%>
 						<%end%>
 						
