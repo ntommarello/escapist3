@@ -28,10 +28,10 @@
 
 
 	<%if @plan.id==15%>
-	<div class="PhotoBorder" style="cursor:default; height:256px; width:400px;">
+	<div class="PhotoBorder" style="cursor:default; height:313px; width:400px; background:#DADADA; border:5px solid #DADADA ">
 		<%= render :partial=>"plans/temp_bali"%>
 	</div>
-	<div style="height:75px">&nbsp;</div>
+	<div style="height:7px">&nbsp;</div>
 	<%else%>
 
 		<div class="PhotoBorder" style="cursor:default; height:256px; width:400px;">
@@ -44,59 +44,85 @@
 			<%end%>
 		</div>
 	<%end%>
-		<div style="float:left; width:225px">
+		<div style="float:left; width:50%; margin-top:11px;">
 
+		
+		
+				<div unselectable="on" class="LightGrayGreenButton" style="width:180px; margin-left:10px; line-height:38px; height:50px; color:#44B24A  " >
+					<div class="InnerLightGrayGreenBorder" style="height:43px;font-size:16px; line-height:40px; padding-top:5px;"onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');" >
+										
+										 
+								<div style="margin-top:3px; line-height:14px">
+									Subscribe
+								</div>
+									<div style="font-size:12px; line-height:14px; margin-top:6px;">
+										Learn about future dates
+									</div>
 
-			<div style="color:#1F527E; margin-top:8px; margin-left:3px; margin-bottom:5px;">
-				<%if @plan.price and @plan.price > 0 and !@plan.application_required%><b>Share with your friends</b>  <br>Send them discount code: JOINME42.<%else%><div style="padding-top:7px; font-size:16px; margin-bottom:10px"><b>Share with your friends!</b></div><%end%></div>
+					</div>
+				</div>
+		
+		
 			
-			
-			<div style="float:left; margin-left:3px">
-				
-				
-				<%@twitter_user = TWITTER_NAME%>
-				<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-				<%if @plan.price and @plan.price > 0 and !@plan.application_required%>
-					<%@twitter_text = "#{@twitter_text}!"%>
-				<%else%>
-					<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
-				<%end%>
-				<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}" %>
-			
-				
-				<%if @plan.group%>
-					<%if @plan.group.custom_twitter_text%>
-						<%@twitter_text = @plan.group.custom_twitter_text%>
-					<%end%>
-					<%if @plan.group.twitter_name%>
-						<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
-					<%end%>
-					<%if @plan.group.url%>
-						<%@data_url = @plan.group.url%>
-					<%end%>
-				<%end%>
-				
-				
-				
-		   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
-		   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-		     </div>
-		<div style="float:left; margin-left:10px;">
-		         <fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
-		   </div>
 				
 		</div>
 
-		<div style="float:left; margin-top:6px; margin-left:-13px">
+		<div style="float:left; width:50%; margin-top:10px; ">
 			<%= render :partial=>"plans/attend_button"%>
 		</div>
 
 
 		<div style="clear:both"></div>
+		
+		
+		<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
+			<div class="HighlightedTitle" style="margin-top:-2px; font-size:16px; ">Share with your friends!</div>
+			
+			<%if @plan.price and @plan.price > 0 and !@plan.application_required%>Send them discount code: JOINME42.<%end%></div>
+		
+		
+		<div style="float:left; margin-left:3px; margin-top:5px">
+			
+			
+			<%@twitter_user = TWITTER_NAME%>
+			<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
+			<%if @plan.price and @plan.price > 0 and !@plan.application_required%>
+				<%@twitter_text = "#{@twitter_text}!"%>
+			<%else%>
+				<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
+			<%end%>
+			<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}" %>
+		
+			
+			<%if @plan.group%>
+				<%if @plan.group.custom_twitter_text%>
+					<%@twitter_text = @plan.group.custom_twitter_text%>
+				<%end%>
+				<%if @plan.group.twitter_name%>
+					<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
+				<%end%>
+				<%if @plan.group.url%>
+					<%@data_url = @plan.group.url%>
+				<%end%>
+			<%end%>
+			
+			
+			
+	   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
+	   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
+	     </div>
+	<div style="float:left; margin-left:-3px;margin-top:5px">
+	         <fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
+	   </div>
+	
+	<div style="clear:both"></div>
+	
+	
+	
 
 		 <%@attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id])%>
 
-		<div id="RenderPlan" style="width:410px; margin-top:10px;">
+		<div id="RenderPlan" style="width:410px; margin-top:5px;">
 			<%= render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}%>
 		</div>
 
@@ -115,28 +141,67 @@
 	<div style="float:left; <%if @user_agent.mobile?%>width:460px;<%else%>width:490px;<%end%>">
 		
 		
-	                <div style="float:left; margin-right:20px; ">
+	                <div style="float:left; margin-right:30px; ">
 						<div class="DateCircle">
 							<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
 							<%= @plan.start_time.to_date.strftime('%e').strip()%>
 						</div>
 						<div style="clear:both"></div>
-						<div class="DarkBlueLabel" style="font-size:16px; width:85px;  text-align:center; margin-top:6px; ">
+						<div class="DarkBlueLabel" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; ">
 							<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
-							<div style="background:url(/images/3Lines.png) repeat; line-height:20px; padding-bottom:5px; "><%=@timestring%></div>
+							<div style="  "><%=@timestring%></div>
 						</div>
 					</div>
 
-					<div class="HighlightedTitle" style="padding-bottom:7px; ">
+					<div class="HighlightedTitle" style="padding-bottom:2px; font-size:24px; line-height:28px; ">
 						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>		
 					</div>
+					<div style="font-size:16px;color:#808598">			
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>
+					</div>
+					<div style="margin-top:20px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>
+					</div>
+					
+			
 
-					<div style="font-size:15px; line-height:20px;">
+				
+					
+					<div style="clear:both; "></div>
+					<div style="border-top:1px dotted #DEDFE5; margin-top:15px;">&nbsp;</div>
+					
+
+					<div style="font-size:15px; line-height:20px; ">
 						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); resetPublish();}"}%>	
 					</div>
+					
+					
+				
+					
+					<%if @plan.group%>
+						<%if @plan.group.tumblr%>
+									<div style="float:left; margin-top:15px">
+											<a target="_blank"
+										href="<%=@plan.group.tumblr%>">
+										<img src="/images/Tumblr-Follow-Button.png" width="135" height="21" border="0" CLASS="TransparentOpposite" title="Follow Me on Tumblr" />
+										</a>
+									</div>
+						<%end%>
+						<%if @plan.group.twitter_name%>
+									<div style="float:left; margin-left:20px; margin-top:16px">
+										<a href="http://twitter.com/<%=@plan.group.twitter_name%>" class="twitter-follow-button" data-show-count="false">Follow @<%=@plan.group.twitter_name%></a>
+									</div>
+						<%end%>
+			
+				<%end%>
+				
 					<div style="clear:both"></div>
+					
+							<div style="border-top:1px dotted #DEDFE5; margin-top:15px;">&nbsp;</div>
+							
+				
 
-					<div class="DarkBlueLabel" style="padding-top:25px; padding-bottom:8px;">Meeting Place</div>
+					<div class="DarkBlueLabel" style="padding-top:15px; padding-bottom:8px;">Meeting Place</div>
 						<div style="min-width:600px;">
 							<div style="float:left">		
 								<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
@@ -174,13 +239,14 @@
 
 
 
+										<div style="clear:both; "></div>
+										<div style="border-top:1px dotted #DEDFE5; margin-top:30px;">&nbsp;</div>
 
 
 
+								<div style="margin-top:10px;">
 
-								<div style="margin-top:40px;">
-
-
+	<div class="DarkBlueLabel" style="padding-top:0px; padding-bottom:8px;">Comments</div>
 
 
 

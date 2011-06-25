@@ -56,7 +56,7 @@ class WebController < ApplicationController
 
      end
 
-     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :id, :title, :note, :url_name, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
+     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
 
      if !@skip
        render 

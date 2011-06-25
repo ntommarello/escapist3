@@ -36,8 +36,8 @@
 
 	<%else%>
 	
-		<div id="attend"  class="countmein WhiteActiveBorder" style="margin-top:4px;  float:left" onclick="<%if current_user%><%if @plan.price and @plan.price > 0%>payBill();<%else%>signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)<%end%><%else%>openRegister('Sign up for <%=APP_NAME%> to attend this plan')<%end%>">
-			<div unselectable="on" class="outerB <%=@color_count%>Button" style="width:170px; margin-left:20px;  line-height:38px; height:50px;">
+		<div id="attend"  class="countmein WhiteActiveBorder" style=" float:right; margin-right:70px;" onclick="<%if current_user%><%if @plan.price and @plan.price > 0%>payBill();<%else%>signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)<%end%><%else%>openRegister('Sign up for <%=APP_NAME%> to attend this plan')<%end%>">
+			<div unselectable="on" class="outerB <%=@color_count%>Button" style="width:180px; line-height:38px; height:50px;">
 					<div class="buyticket innerB Inner<%=@color_count%>Border" style="height:43px; font-size:16px; line-height:40px; padding-top:5px;">
 					
 					<%if !@plan.application_required%>

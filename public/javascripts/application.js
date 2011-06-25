@@ -3270,7 +3270,7 @@ function loadInfo(index) {
 	}
 	plan_id = current_plan.id
 	$('#plan_title').html(current_plan.title);
-	$('#plan_url_name').html(current_plan.url_name);
+	$('#plan_url_name').html(current_plan.short_location);
 	
 	note = current_plan.note
 	if (note.length > 300) {
