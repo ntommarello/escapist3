@@ -3533,7 +3533,7 @@ span.continued {
   background-position: -50px -50px; }
 
 .ScheduleIconButton_h:active {
-  margin-top: 5px; }
+  margin-top: 8px; }
 
 .home_NextArrowButton {
   background: url(/images/home_tile.png) no-repeat;
@@ -3549,7 +3549,7 @@ span.continued {
   background-position: 0px -50px; }
 
 .home_NextArrowButton_h:active {
-  margin-top: 9px; }
+  margin-top: 12px; }
 
 .home_BackArrowButton {
   background: url(/images/home_tile.png) no-repeat;
@@ -3566,7 +3566,7 @@ span.continued {
   background-position: 0px -150px; }
 
 .home_BackArrowButton:active {
-  margin-top: 9px; }
+  margin-top: 12px; }
 
 #MoreAttendees {
   background: url(/images/home_tile.png) no-repeat;
