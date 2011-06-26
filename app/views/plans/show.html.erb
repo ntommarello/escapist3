@@ -10,6 +10,9 @@
 <%end%>
 
 
+
+
+
 <Script>
 	var share = {
    method: 'stream.share',
@@ -20,9 +23,14 @@
 </script>
 
 
-<div style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+
+<div >
 
 
+<div  style="margin-left:auto; margin-right:auto; margin-top:10px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+
+
+	
 
 <div style="float:left; width:470px">
 
@@ -152,6 +160,8 @@
 							<div style="  "><%=@timestring%></div>
 						</div>
 					</div>
+					
+					<div style="float:left; <%if @user_agent.mobile?%>width:345px;<%else%>width:375px;<%end%>:">
 
 					<div class="HighlightedTitle" style="padding-bottom:2px; font-size:24px; line-height:28px; ">
 						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>		
@@ -163,7 +173,7 @@
 					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>
 					</div>
 					
-			
+				</div>
 
 				
 					
@@ -279,7 +289,96 @@
 
 </div>
 
-<%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
+<%if @plan.id==15%>
+<div style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+	<h2 class="HighlightedTitle" style="margin-top:0px">FAQ</h2>
 
+	<div style="float:left; width:45%; font-size:15px; line-height:20px;">
+
+
+		<h2 class="FaqTitle" style="margin-top:0px;">Why are you doing this?</h2>
+		<p class="FaqAnswer">Because we all thought it was a kick-ass idea!  We believe magic happens when smart people are stranded in an exotic getaway. We hope life-long friendships (and a few companies) will form.</p>
+
+		<h2 class="FaqTitle">How luxurious is this? What's included?</h2>
+		<p class="FaqAnswer">You can count on some sort of bed (or sofa), food prepared by our private chef, daily maid service, and wifi.  Otherwise, this ain't the Ritz. If there's a problem, we hope you can fix it yourself.</p>
+
+		<h2 class="FaqTitle">Who gets the Master Bedroom? Who gets the couch?</h2>
+		<p class="FaqAnswer">Air mattresses, couches, and futons are available for $595.  <br>King and queen size beds for $895.</p>
+
+		<h2 class="FaqTitle">What kind of people will attend?</h2>
+		<p class="FaqAnswer">Those with the startup spirit who "get stuff done" and JFDI.  Developers, designers, engineers, & biz guys are all welcome.</p>
+		
+		<h2 class="FaqTitle">Am I welcome if I don't have a start-up idea?</h2>
+		<p class="FaqAnswer">Yes!  As long as you spend your time helping other start-ups.</p>
+		
+
+	</div>
+
+	<div style="float:right; width:45%; font-size:15px; line-height:20px;">
+
+
+		<h2 class="FaqTitle" style="margin-top:0px;">How much 'official programming' is there?</h2>
+		<p class="FaqAnswer">We're keeping it light. Every day, we have a group dinner, followed by a round table discussion on a challenge one of us is facing. We also have a few adventures & expeditions planned.</p>
+		
+		
+		<h2 class="FaqTitle">How does mentorship work?</h2>
+		<p class="FaqAnswer">We're a strong believer in peer mentorship - everyone who attends is working on a projet, and we all help each other.  Also, off-site mentors are available via Skype.<p>
+			
+		<h2 class="FaqTitle">What is the balance between work and play?</h2>
+		<p class="FaqAnswer">We're all adults - it's up to you.  But we're targeting 8 hours of solid work per day.  Along with 3 hours of mandatory fun.</p>
+
+
+
+
+
+		<h2 class="FaqTitle">Are you guys making money? Do you want our equity?</h2>
+		<p class="FaqAnswer">No on both counts!  We're probably losing money.  <br>Free to <a href="mailto:nick@tommarello.net?subject=Startup Workaway Sponsorship">sponsor us</a>!</p>
+
+
+
+
+	</div>
+
+	<div style="clear:both"></div>
+</div>
+
+
+
+	<div  style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+		<div style="float:left">
+			<h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>
+		</div>
+		<div class="HighlightedTitle" style="float:right; font-size:15px">
+			Deadline: October 15th, 2011
+			
+		</div>
+		<div style="clear:both"></div>
+		
+		<div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
+		
+			<script type="text/javascript">var host = (("https:" == document.location.protocol) ? "https://secure." : "http://");document.write(unescape("%3Cscript src='" + host + "wufoo.com/scripts/embed/form.js' type='text/javascript'%3E%3C/script%3E"));</script>
+
+			<script type="text/javascript">
+			var z7x3k7 = new WufooForm();
+			z7x3k7.initialize({
+			'userName':'startupworkaway', 
+			'formHash':'z7x3k7', 
+			'autoResize':true,
+			<%if @current_user%>
+			 'defaultValues':'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>',
+			<%end%>
+			'height':'782'});
+			z7x3k7.display();
+			</script>
+			
+	</div>
+
+<%end%>
+
+
+
+
+
+<%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
 
 

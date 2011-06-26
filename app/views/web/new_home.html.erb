@@ -14,14 +14,14 @@
 	
 	<div id="big_image_background" style="background:url('http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>')"></div>
 				
-	<div id="home_info_container" style="margin-top:250px" >
+	<div id="home_info_container" style="margin-top:274px" >
 		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
 		<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
 		<div style="clear:both"></div>
 		<div class="home_slogan"><%=raw @slogan%></div>
 		<div class="home_description">
-			<div id="plan_note" class="multiline" style="width:100%; height:88px; overflow:hidden"></div>	
-			<div style="float:left; margin-top:5px;">
+			<div id="plan_note" class="multiline" style="width:100%; height:48px; overflow:hidden; font-size:17px; line-height:24px;"></div>	
+			<div style="float:left; margin-top:8px;">
 				<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
 				<div id="plan_attendees" style="float:left; min-width:250px;"></div>
 				<div id="MoreAttendees" onclick="window.location.href='/plans/'+plan_id" class="Transparent"></div>
@@ -189,10 +189,10 @@ $(document).ready(function() {
 	
 	setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
 		if ($(window).height() > 600) {
-			margt = $(window).height()-51-40-330;
+			margt = $(window).height()-51-40-330+24;
 			$("#home_info_container").css("margin-top",margt)
 		}
-				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340-24;
 				if ($(window).height() < topInfo) {
 					$('#big_image_background').css('height', topInfo+'px');
 					footer_h =topInfo-25;
@@ -208,13 +208,10 @@ $(document).ready(function() {
 
 
 
-					      	if ($(window).height() > 600) {
-								margt = $(window).height()-51-40-330;
-								$("#home_info_container").css("margin-top",margt)
-							}
+					      
 
 
-							topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+							topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340-24;
 							if ($(window).height() < topInfo) {
 								$('#big_image_background').css('height', topInfo+'px');
 								footer_h =topInfo;

@@ -251,8 +251,6 @@ body {
 
 .ShadowedTextBox {
   background: #FDFDFD;
-  background-image: -moz-linear-gradient(100% 100% 90deg, #fdfdfd, #ececec);
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ececec), to(#fdfdfd));
   color: #666;
   border: 1px solid #B9B9B9;
   font-size: 13px;
@@ -260,7 +258,9 @@ body {
   height: 16px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
-  border-radius: 7px; }
+  border-radius: 7px;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #fdfdfd, #ececec);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ececec), to(#fdfdfd)); }
 
 .ShadowedTextBox:focus {
   color: #333;
@@ -3283,21 +3283,22 @@ span.continued {
   font-size: 15px;
   line-height: 22px;
   color: #fff;
-  height: 190px; }
+  height: 160px; }
 
 .home_slogan {
   position: absolute;
   text-align: right;
-  margin-left: -420px;
+  margin-left: -400px;
   font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: rgba(53, 64, 90, 0.8);
-  width: 360px;
+  width: 340px;
   padding: 20px;
+  padding-top: 15px;
   padding-right: 40px;
-  font-size: 40px;
-  line-height: 60px;
+  font-size: 38px;
+  line-height: 55px;
   color: #fff;
-  height: 190px;
+  height: 165px;
   text-shadow: #1C2439 0px 2px 0; }
 
 .home_info_button {
@@ -3437,8 +3438,8 @@ span.continued {
   float: right;
   color: #2D3752;
   font-size: 15px;
-  height: 30px;
-  line-height: 30px;
+  height: 36px;
+  line-height: 36px;
   margin-right: 20px;
   width: 460px; }
 
@@ -3522,7 +3523,7 @@ span.continued {
   float: left;
   width: 17px;
   height: 20px;
-  margin-top: 4px;
+  margin-top: 7px;
   margin-left: 6px;
   cursor: pointer;
   background: url(/images/home_tile.png) no-repeat;
@@ -3540,7 +3541,7 @@ span.continued {
   float: right;
   width: 15px;
   height: 14px;
-  margin-top: 8px;
+  margin-top: 11px;
   margin-right: 10px;
   cursor: pointer; }
 
@@ -3556,7 +3557,7 @@ span.continued {
   float: right;
   width: 15px;
   height: 14px;
-  margin-top: 8px;
+  margin-top: 11px;
   cursor: pointer;
   margin-right: 25px;
   display: none; }
@@ -4048,3 +4049,25 @@ span.continued {
 .LightLink:hover {
   color: #EDE9CD;
   text-decoration: underline; }
+
+.FaqTitle {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-size: 15px; }
+
+.FaqAnswer {
+  margin-top: 0px; }
+
+.panel {
+  position: absolute;
+  width: 100%;
+  background-size: 100%;
+  overflow: hidden;
+  min-width: 1000px;
+  background-position: 0px -100px; }
+
+#slideContainer {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  min-width: 1100px; }

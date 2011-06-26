@@ -36,35 +36,29 @@
 		</script>
 		
 		
-		<div style="height:95px; margin:5px;">
+		<div style="height:82px; margin:5px;">
 			
-			<div style="height:45px; overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
-				<%=raw plan.note%>
-			</div>
-			
-			<div style="float:left; width:70%; max-width:225px; height:42px; overflow:hidden">
+		
+			<div>
+			<div style="position:absolute; height:80px;">
 				<a href="/<%=plan.user.username%>">
-				<%= image_tag(plan.user.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>plan.user.first_name, :style=>"width:40px; height:40px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
+				<%= image_tag(plan.user.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>"Hosted by #{plan.user.first_name}", :style=>"width:80px; height:80px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
 				</a>
 				
-				<%if plan.users.length == 0%>
-					<div style="float:left; margin-left:5px; margin-top:5px; coloe:#ccc; font-size:11px">Hosted by:<br> <a href="/<%=plan.user.username%>" class="BlueLink"><%=plan.user.first_name%> <%=plan.user.last_name%></a></div>
-				<%end%>
+			</div>
 				
-				<%ii=0%>
+		
 	
-				<%for person in plan.users.sort_photos_first%>
-					<%ii=ii+1%>
-					<%if ii < 6%>
-						<a href="/<%=person.username%>">
-						<%= image_tag(person.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:39px; height:39px; cursor:pointer; border:1px solid #ddd; float:left; margin-right:1px;") %>
-					<%end%>
-					</a>
-				<%end%>
+					<div style="height:45px; margin-left:90px;   overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
+						
+						<%if plan.short_desc%>
+							<%=sanitize plan.short_desc.gsub("<br>","").gsub("&nbsp;","")%>
+						<%end%>
+					</div>
 			</div>
 			
 			
-			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:8px; margin-left:0px;width:83px; height:30px; margin-right:-10px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/plans/<%=plan.id%>?pop=yes'">
+			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/plans/<%=plan.id%>?pop=yes'">
 				<%if !plan.application_required%>
 				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
 				<%end%>

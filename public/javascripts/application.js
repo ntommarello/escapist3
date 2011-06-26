@@ -3161,7 +3161,7 @@ function adjustWindowSize() {
 	
 	
 	if ($(window).height() > 600) {
-		margt = $(window).height()-51-40-330;
+		margt = $(window).height()-51-40-330+24;
 		$("#home_info_container").css("margin-top",margt)
 	}
 	
@@ -3272,7 +3272,7 @@ function loadInfo(index) {
 	$('#plan_title').html(current_plan.title);
 	$('#plan_url_name').html(current_plan.short_location);
 	
-	note = current_plan.note
+	note = current_plan.short_desc
 	if (note.length > 300) {
 		note = note.substring(0, 300)
 	}
@@ -3280,7 +3280,7 @@ function loadInfo(index) {
 	
 
 	
-	setTimeout("$('.multiline').ellipsis();",500);
+	//setTimeout("$('.multiline').ellipsis();",500);
 	
 	
 	if(current_plan.application_required) {
@@ -3559,4 +3559,103 @@ function iconBlue(type) {
 function setAnimate(row) {
 	$(row).css("text-align","center")
 	$(row).html('<img src="/images/ajax-loader_f.gif">')
+}
+
+
+
+
+
+
+function slideOverview() {
+	$("#applyNowLayer")
+            .animate(
+              { left: "200%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+				$("#faqLayer")
+			            .animate(
+			              { left: "100%",  }, {
+			                duration: 1500,
+			                easing: 'easeOutBack'
+			              });
+
+	$("#learnMoreLayer")
+            .animate(
+			        { left: "0%",  }, {
+			          duration: 1500,
+			          easing: 'easeOutBack'
+	            });
+	
+				$('.learn-more').addClass('mainLinkActive');
+								$('.faq-link').removeClass('mainLinkActive');
+					$('.apply-now').removeClass('mainLinkActive');
+					
+					height = $("#learnMoreLayer").height()
+					$("#maincontainer").css("height",height+20)
+}
+
+function slideFaq() {
+	$("#applyNowLayer")
+            .animate(
+              { left: "200%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+			$("#learnMoreLayer")
+		            .animate(
+		              { left: "-100%",  }, {
+		                duration: 1500,
+		                easing: 'easeOutBack'
+		              });
+
+
+	$("#faqLayer")
+            .animate(
+			        { left: "0%",  }, {
+			          duration: 1500,
+			          easing: 'easeOutBack'
+	            });
+	
+				$('.learn-more').removeClass('mainLinkActive');
+								$('.faq-link').addClass('mainLinkActive');
+					$('.apply-now').removeClass('mainLinkActive');
+					
+					height = $("#faqLayer").height()
+					$("#maincontainer").css("height",height+20)
+					
+}
+
+function slideApp() {
+
+	$("#learnMoreLayer")
+            .animate(
+              { left: "-100%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+				$("#faqLayer")
+			            .animate(
+			              { left: "-100%",  }, {
+			                duration: 1500,
+			                easing: 'easeOutBack'
+			              });
+
+	$("#applyNowLayer")
+            .animate(
+              { left: "100%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+
+
+			height = $("#applyNowLayer").height()
+			$("#maincontainer").css("height",height+20)
+			
+
+
+$('.learn-more').removeClass('mainLinkActive');
+				$('.faq-link').removeClass('mainLinkActive');
+	$('.apply-now').addClass('mainLinkActive');
+	
 }

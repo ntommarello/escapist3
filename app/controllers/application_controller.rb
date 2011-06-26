@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     @domain = URI.parse(request.url).host
       
     
-    if @domain.include? "sparkcloud"
+    if @domain.include? "startupworkaway"
       @group = Group.find(1)
     end
     if @domain.include? "tropicaljobhunt"
