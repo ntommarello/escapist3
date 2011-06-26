@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     if @domain.include? "tropicaljobhunt"
       @group = Group.find(2)
     end
-   
+    @group = Group.find(1)
   end
 
 

@@ -369,6 +369,7 @@
 	<div style="clear:both"></div>
 	
 	<div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
+	<script>defaultVals = '';</script>
 		<%if current_user%>
 			<script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
 		<%end%>

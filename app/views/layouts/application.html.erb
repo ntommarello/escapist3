@@ -6,7 +6,14 @@
 <head>
   	<title>
 		<%if @group%>
-			<%=@group.name%> | <%= yield_for(:page_title, @group.subtitle)%>
+			<%if @group.subtitle%>
+				<%sanitizedTitle = sanitize @group.subtitle%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<div>","")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("/<div>","")%>
+			<%else%>
+				<%sanitizedTitle = 'Social Adventure Travel'%>
+			<%end%>
+			<%=@group.name%> | <%= yield_for(:page_title, sanitizedTitle)%>
 		<%else%>
 			<%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%>
 	  	<%end%>
