@@ -352,35 +352,29 @@
 
 
 
-	<div  style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
-		<div style="float:left">
-			<h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>
-		</div>
-		<div class="HighlightedTitle" style="float:right; font-size:15px">
-			Deadline: October 15th, 2011
-			
-		</div>
-		<div style="clear:both"></div>
-		
-		<div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
-		
-			<script type="text/javascript">var host = (("https:" == document.location.protocol) ? "https://secure." : "http://");document.write(unescape("%3Cscript src='" + host + "wufoo.com/scripts/embed/form.js' type='text/javascript'%3E%3C/script%3E"));</script>
 
-			<script type="text/javascript">
-			var z7x3k7 = new WufooForm();
-			z7x3k7.initialize({
-			'userName':'startupworkaway', 
-			'formHash':'z7x3k7', 
-			'autoResize':true,
-			<%if @current_user%>
-			 'defaultValues':'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>',
-			<%end%>
-			'height':'782'});
-			z7x3k7.display();
-			</script>
-			
+<%end%>
+
+
+<%if @plan.application_required%>
+<div id="ApplicationLayer" style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+	
+	<div style="float:left">
+		<h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>
 	</div>
-
+	<div class="HighlightedTitle" style="float:right; font-size:15px">
+		Deadline: <%=@plan.application_deadline.to_date.strftime('%B').titlecase()%> <%=@plan.application_deadline.to_date.strftime('%e').strip()%>, <%=@plan.application_deadline.to_date.strftime('%Y')%>
+	</div>
+	
+	<div style="clear:both"></div>
+	
+	<div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
+		<%if current_user%>
+			<script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
+		<%end%>
+		<%=raw @plan.application_wufoo%>
+	</div>
+</div>
 <%end%>
 
 

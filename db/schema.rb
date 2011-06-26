@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110624221655) do
+ActiveRecord::Schema.define(:version => 20110626184518) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(:version => 20110624221655) do
     t.date     "application_deadline"
     t.string   "short_location"
     t.string   "short_desc"
+    t.text     "application_wufoo"
   end
 
   create_table "subscribed_achievements", :force => true do |t|

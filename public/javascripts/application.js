@@ -3659,3 +3659,11 @@ $('.learn-more').removeClass('mainLinkActive');
 	$('.apply-now').addClass('mainLinkActive');
 	
 }
+
+
+function goToByScroll(id){
+      $('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
+}
+
+
+
