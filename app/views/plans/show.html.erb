@@ -41,6 +41,13 @@
 	</div>
 	<div style="height:7px">&nbsp;</div>
 	<%else%>
+	
+	<%if @plan.id==16%>
+	<div class="PhotoBorder" style="cursor:default; height:313px; width:400px; background:#DADADA; border:5px solid #DADADA ">
+		<%= render :partial=>"plans/temp_tropical"%>
+	</div>
+	<div style="height:7px">&nbsp;</div>
+	<%else%>
 
 		<div class="PhotoBorder" style="cursor:default; height:256px; width:400px;">
 			<%if @editable%>
@@ -51,6 +58,7 @@
 				
 			<%end%>
 		</div>
+	<%end%>
 	<%end%>
 		<div style="float:left; width:50%; margin-top:11px;">
 
