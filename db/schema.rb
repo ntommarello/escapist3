@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110626184518) do
+ActiveRecord::Schema.define(:version => 20110626225813) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20110626184518) do
     t.text     "custom_twitter_text"
     t.string   "twitter"
     t.string   "tumblr"
+    t.text     "statcounter"
   end
 
   create_table "hosts", :force => true do |t|
