@@ -6,7 +6,7 @@
 <head>
   	<title>
 		<%if @group%>
-			<%@group.name%> | <%= yield_for(:page_title, @group.slogan)%>
+			<%@group.name%> | <%= yield_for(:page_title, @group.subtitle)%>
 		<%else%>
 			<%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%>
 	  	<%end%>
