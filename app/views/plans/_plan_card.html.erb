@@ -1,6 +1,6 @@
 <div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
 	<div class="BrowseBorder"  >
-		<A class="browselink" href="/plans/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')">
+		<A class="browselink" href="/plans/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
 			<div class="BrowseExpandImage" 
 			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
 			<%else%>
@@ -17,7 +17,8 @@
 								<%=raw plan.short_location%>
 							</div>
 						</div>
-						<div style="float:right; margin-top:3px; padding-right:5px">
+						<div style="float:right; margin-top:3px; padding-right:5px; ">
+							<div id="blackSpinner<%=plan.id%>" class="blackSpinner"><img src="/images/blackSpinner.gif"></div>
 							<div id="Arrow<%=plan.id%>" class="ArrowIcon"></div>
 						</div>
 					</div>
