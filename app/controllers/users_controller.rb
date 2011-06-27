@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     @user.hometown = session[:location_city]
     @user.lat = session[:lat] #TODO:  iphone and android will pass in lat/lng in params
     @user.lng = session[:lng]
-    @user.source = "web" #todo:  iphone and android will pass in differently
+    @user.source = @source
     
     if @user.save
       sign_in @user

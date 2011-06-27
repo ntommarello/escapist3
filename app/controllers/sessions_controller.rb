@@ -1,6 +1,27 @@
 class SessionsController < Devise::SessionsController
   include GeoKit::Geocoders
 
+
+  def twitter_setup
+    
+    @fb
+    
+    
+    request.env['omniauth.strategy'].consumer_key = current_user.consumer_key
+    request.env['omniauth.strategy'].consumer_secret = current_user.consumer_secret
+
+    render :text => "Setup complete.", :status => 404
+  end
+    
+  def twitter_setup
+    request.env['omniauth.strategy'].consumer_key = TWITTER_KEY
+    request.env['omniauth.strategy'].consumer_secret = TWITTER_SECRET
+
+    render :text => "Setup complete.", :status => 404
+  end
+    
+    
+    
   def new
     @user = User.new
     render(:template => 'devise/sessions/new')

@@ -100,7 +100,7 @@ class AuthenticationsController < ApplicationController
  
         
         user = User.new(@user_params)
-        user.source = "web"
+        user.source = @source
         if @user_params['location_city']
           location = Geokit::Geocoders::MultiGeocoder.geocode(@user_params['location_city'])
           if location.lat

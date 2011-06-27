@@ -16,10 +16,10 @@ gem 'i18n'
 gem 'tzinfo'
 gem 'riddle'
 gem 'koala'
-gem 'omniauth', "0.1.6"
+gem 'omniauth', "0.2.6"
 gem 'carmen'
-gem 'twitter'
-gem 'bitly'
+#gem 'twitter'
+#gem 'bitly'
 gem "browser" 
 gem "useragent" 
 gem "awesome_print"
