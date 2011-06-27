@@ -304,7 +304,7 @@ if (keycode == 13)
 		}
 	}
 	if (type == 2) {
-		validateRegister();
+		validateRegister(myfield);
 	}
 	if (type == 3) {
 		if ($('#searchfield').val() != '' && $('#searchfield').val() != 'search nearby') {
@@ -382,61 +382,50 @@ function uploadPhoto() {
 }
 
 
-function validateRegister() {
+function validateRegister(field) {
 	
-	$('#Error').html('')
-	$('#Error').hide()
-	error = 0
+	
+	parent = $(field).parent();
 
 	
-	if ($('#user_password', '#RegisterForm').val() == '') {
-		$('#Error').show()
-		$('#Error').html('Password required')
-		$('#user_password', '#RegisterForm').focus()
+	$('.Error',parent).html('')
+	$('.Error',parent).hide()
+	error = 0
+	
+	if ($('#user_password', parent).val() == '') {
+		$('.Error',parent).show()
+		$('.Error',parent).html('Password required')
+		$('#user_password', parent).focus()
 		error = 1
 	} else {
-		if ($('#user_password', '#RegisterForm').val().length < 4) {
-			$('#Error').show()
-			$('#Error').html('Needs 4+ characters')
-			$('#user_password', '#RegisterForm').val('')
-			$('#user_password', '#RegisterForm').focus()
+		if ($('#user_password', parent).val().length < 4) {
+			$('.Error',parent).show()
+			$('.Error',parent).html('Needs 4+ characters')
+			$('#user_password', parent).val('')
+			$('#user_password', parent).focus()
 			error = 1
 		}
 	}
 	
-	if ($('#user_email', '#RegisterForm').val().length < 2) {
-		$('#Error').show()
-		$('#Error').html('Email required')
-		$('#user_email', '#RegisterForm').focus()
+	if ($('#user_email', parent).val().length < 2) {
+		$('.Error',parent).show()
+		$('.Error',parent).html('Email required')
+		$('#user_email', parent).focus()
 		error = 1
 	}
 	
-	wordcount = verifyName($('#name'))
+	wordcount = verifyName($('#name',parent))
 	
 	if (wordcount < 2) {
-		$('#Error').show()
-		$('#Error').html('First and last name required')
-		$('#name').focus()
+		$('.Error',parent).show()
+		$('.Error',parent).html('First and last name required')
+		$('#name',parent).focus()
 		error = 1	
 	}
-	
-	//if ($('#user_last_name').val().length < 2) {
-	//	$('#Error').show()
-	//	$('#Error').html('Last name required')
-	//	$('#user_last_name').focus()
-	//	error = 1
-	//}
-	
-	//if ($('#user_first_name').val().length < 2) {
-	//	$('#Error').show()
-	//	$('#Error').html('First name required')
-	//	$('#user_first_name').focus()
-	//	error = 1
-	//}
 
 	if (error == 0) {
-		$('#registerbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
-		$('#RegisterForm').submit();
+		$('#registerbutton',parent).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+		$(parent).submit();
 	}	
 }
 
@@ -2564,7 +2553,7 @@ $.ajax({
 
 
 function openRegister(title) {
-	$("#RegisterTitle").html(title)
+	$(".registerTitle").html(title)
 	$("#BlackModal").show();
 	$("#BlackModal").animate({opacity: .4,}, 100 );
 	$("#BlackModal").height($(document).height())

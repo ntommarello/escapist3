@@ -23,12 +23,12 @@
 			<div style="float:left; width:220px;">
 				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
 			</div>
-			<div id="Error" style=" color:red; font-weight:bold">	
+			<div id="Error" class="Error" style=" color:red; font-weight:bold">	
 				<%= flash[:notice] || flash[:error] %>
 			</div>
 			<div style="clear:both; position:relative; height:2px; "></div>
 		
-			<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:80px; width:120px">
+			<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister(this)" style="margin-left:80px; width:120px">
 				<div unselectable="on" class="LightGrayGreenButton" >
 					<div id="registerbutton" class="InnerLightGrayGreenBorder">
 						Join <%=APP_NAME%>
@@ -49,7 +49,7 @@
 		We won’t share your data with Facebook, or post anything to your wall, without your explicit permission.
 	</div>
 	<div style="clear:both"></div>
-	<div style="margin-top:20px; width:300px; font-size:10px;" >
+	<div style="margin-top:10px; width:300px; font-size:10px;" >
 		<fb:facepile max-rows="1" width="300"></fb:facepile>
 	</div>
 </div>
