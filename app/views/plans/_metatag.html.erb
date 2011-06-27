@@ -1,4 +1,4 @@
-<meta name="description" content="<%=raw plan.note[ 0 .. 200 ]%>" /> 
+<meta name="description" content="<%=raw plan.note[ 0 .. 300 ]%>" /> 
 
 
 <meta property="fb:app_id" content="<%=@fb_id%>" /> 
@@ -6,7 +6,7 @@
 
 <%if @group%>
 	<meta property="og:site_name" content="<%=@group.name%>" /> 
-	<meta property="og:title" content="<%=raw plan.title%> | <%=@group.name%>" /> 
+	<meta property="og:title" content="<%=raw plan.title%>" /> 
 	<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>" /> 
 <%else%>
 	<meta property="og:site_name" content="<%=APP_NAME%>" /> 
@@ -26,5 +26,5 @@
 	<meta property="og:locality" content="New York City" /> 
 <%end%>
 <meta property="og:image" content="http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_50_<%=plan.image_file_name%>"/> 
-<meta property="og:description" content="<%=raw plan.note[ 0 .. 200 ]%>" /> 
+<meta property="og:description" content="<%=raw plan.note[ 0 .. 300 ]%>" /> 
 <meta property="fb:admins" content="<%=@fb_id%>" />
