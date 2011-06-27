@@ -3272,7 +3272,12 @@ function loadInfo(index) {
 	$('#plan_title').html(current_plan.title);
 	$('#plan_url_name').html(current_plan.short_location);
 	
-	note = current_plan.short_desc
+	if (group == 0) {
+		note = current_plan.short_desc
+	} else {
+		note = current_plan.note
+		setTimeout("$('.multiline').ellipsis();",500);
+	}
 	if (note.length > 300) {
 		note = note.substring(0, 300)
 	}
@@ -3280,7 +3285,7 @@ function loadInfo(index) {
 	
 
 	
-	//setTimeout("$('.multiline').ellipsis();",500);
+	//
 	
 	
 	if(current_plan.application_required) {

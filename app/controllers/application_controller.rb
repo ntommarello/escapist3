@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
       @group = Group.find(2)
       @fb_id = @group.fb_id
     end
+    
+    
   end
 
 
