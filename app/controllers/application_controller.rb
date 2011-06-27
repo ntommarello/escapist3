@@ -45,13 +45,17 @@ class ApplicationController < ActionController::Base
     @browser = Browser.new(:ua => request.env["HTTP_USER_AGENT"], :accept_language => "en-us")
     @user_agent = UserAgent.parse(request.user_agent)
     
-    unless params[:action] == "upgrade_browser"
-     unless valid_browser?
-      redirect_to '/upgrade_browser'
-     end
-    end
     
-      
+    agent = request.env["HTTP_USER_AGENT"]
+    matches = nil
+    matches = agent.match(/(facebook|postrank|voyager|twitterbot|googlebot|slurp|butterfly|pycurl|tweetmemebot|metauri|evrinid|reddit|digg)/mi) if agent
+    if (!matches)
+       unless params[:action] == "upgrade_browser"
+         unless valid_browser?
+          redirect_to '/upgrade_browser'
+         end
+        end
+     end
   end
   
   protected
