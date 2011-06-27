@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:og="http://ogp.me/ns#"
-      xmlns:fb="http://www.facebook.com/2008/fbml">
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="https://www.facebook.com/2008/fbml">
 
 <head>
-  	<title>
+  	
+	<%= raw include_stylesheets :base %>
+  	<%= raw include_javascripts :preload %>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	
+	<title>
 		<%if @group%>
 			<%if @group.subtitle%>
 				<%sanitizedTitle = sanitize @group.subtitle%>
@@ -18,9 +21,7 @@
 			<%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%>
 	  	<%end%>
 	</title>
-	<%= raw include_stylesheets :base %>
-  	<%= raw include_javascripts :preload %>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	
 	<%= yield_for(:head, '')%>
 </head>
 
@@ -51,73 +52,65 @@
 	
 	<div class="template_topnav">
 		<div id="TheCenter">
-					<div id="TheTab" class="TheActiveTab">	
-						<div class="lc"></div>
-						<div class="stretch"></div>
-						<div class="rc"></div>
-					</div>
-					<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
-						<div class="lc"></div>
-						<div class="stretch"></div>
-						<div class="rc"></div>
-					</div>
-		
-				
+			<div id="TheTab" class="TheActiveTab">	
+				<div class="lc"></div>
+				<div class="stretch"></div>
+				<div class="rc"></div>
+			</div>
+			<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
+				<div class="lc"></div>
+				<div class="stretch"></div>
+				<div class="rc"></div>
+			</div>
 		
 			<%if @group%>
-			<a href="/">
-				
+				<a href="/">
 					<%if @group.id == 1%>
-					<div style="float:left; margin-left:10px; margin-top:14px; margin-right:3px">
-						<img src="/images/swa_logo.png">
-					</div>
+						<div style="float:left; margin-left:10px; margin-top:14px; margin-right:3px">
+							<img src="/images/swa_logo.png">
+						</div>
 					<%end%>
 					<%if @group.id == 2%>
-					<div style="float:left; margin-left:10px; margin-top:11px; margin-right:5px">
-						<img src="/images/tropical.png">
-					</div>
+						<div style="float:left; margin-left:10px; margin-top:11px; margin-right:5px">
+							<img src="/images/tropical.png">
+						</div>
 					<%end%>
-			
-			</a>
-			<a href="http://<%=APP_URL%>">
-					<div class="powered"><img src="/images/powered.png"></div>
-			</a>
+				</a>
+				<a href="http://<%=APP_URL%>">
+						<div class="powered"><img src="/images/powered.png"></div>
+				</a>
 			<%else%>
 				<a href="/">
-				<div class="template_logo"></div>
+					<div class="template_logo"></div>
 				</a>
 			<%end%>
 	
 	
-		<%if !@group%>
-		<div style="float:left;">
-			<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
-			<div class="LocIcon"></div>
-					<div id="CityLabel" style="top:19px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
-					
-			
-			</button>
-		</div>
+			<%if !@group%>
+				<div style="float:left;">
+					<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
+						<div class="LocIcon"></div>
+						<div id="CityLabel" style="top:19px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
+					</button>
+				</div>
 		
-		<div style="position:absolute; left:280px; z-index:10; width:200px;">
-			<div style="float:left; margin-left:20px; margin-top:17px;">
-				<a id="AdventuresLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/schedule" >Browse</a>
-			</div>
-			<div style="float:left; margin-left:5px; margin-top:17px;">
-				<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/create" >Create</a>
-			</div>
-		</div>
-		<%end%>
+				<div style="position:absolute; left:280px; z-index:10; width:200px;">
+					<div style="float:left; margin-left:20px; margin-top:17px;">
+						<a id="AdventuresLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/schedule" >Browse</a>
+					</div>
+					<div style="float:left; margin-left:5px; margin-top:17px;">
+						<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/create" >Create</a>
+					</div>
+				</div>
+			<%end%>
 		
-		<Script>
-		$('.MainMenuLink2').live('touchend', function(e) {
-		    var el = $(this);
-		    var link = el.attr('href');
-		    window.location = link;
-		});
-		</script>
-		
-		
+			<Script>
+			$('.MainMenuLink2').live('touchend', function(e) {
+			    var el = $(this);
+			    var link = el.attr('href');
+			    window.location = link;
+			});
+			</script>
 		</div>						
 		<div style="float:right">
 			<%=render :partial => "layouts/usermenu2" %>
@@ -127,29 +120,24 @@
 	<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
 			
 	<%if params[:action] != "new_home"%>
-	
-	<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
-		<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
-		<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
-		<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
+		<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
+			<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+			<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
+			<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
 		
-		<div id="maincontainer" style="position:relative; min-width:900px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
-		<%= yield%>
+			<div id="maincontainer" style="position:relative; min-width:900px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
+			<%= yield%>
+			</div>
 		</div>
-	</div>
-	
 	<%else%>
-	<div ONCLICK="closeUserMenu()">
-						<%= yield%>
-		
-	</div>
-	<%end%>
-
-			
+		<div ONCLICK="closeUserMenu()">
+			<%= yield%>
 		</div>
+	<%end%>
+</div>
 			
 
-	<%if params[:action] != "new_home"%>
+<%if params[:action] != "new_home"%>
 	<div id="Foot">	
 		<div id="FootBorder"></div>
 		
@@ -168,7 +156,7 @@
 				<%end%>
 		</div>	
 	</div>
-	<%end%>
+<%end%>
 	
 	<div id="flipthis"></div>
 	
