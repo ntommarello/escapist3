@@ -42,20 +42,21 @@ class ApplicationController < ActionController::Base
     #response.headers['Cache-Control'] = 'no-store'
     #response.headers['Vary'] = '*'
     
+
+    
+    
+    
     @browser = Browser.new(:ua => request.env["HTTP_USER_AGENT"], :accept_language => "en-us")
     @user_agent = UserAgent.parse(request.user_agent)
     
-    
-    agent = request.env["HTTP_USER_AGENT"]
-    matches = nil
-    matches = agent.match(/(facebook|postrank|voyager|twitterbot|googlebot|slurp|butterfly|pycurl|tweetmemebot|metauri|evrinid|reddit|digg)/mi) if agent
-    if (!matches)
-       unless params[:action] == "upgrade_browser"
-         unless valid_browser?
-          redirect_to '/upgrade_browser'
-         end
-        end
-     end
+    unless is_bot?(request)
+      unless params[:action] == "upgrade_browser"
+       unless valid_browser?
+        redirect_to '/upgrade_browser'
+       end
+      end
+    end
+      
   end
   
   protected
@@ -169,6 +170,18 @@ class ApplicationController < ActionController::Base
     password
   end
   
+  def is_bot?(request)
+  
+    agent = request.env["HTTP_USER_AGENT"]
+    matches = nil
+    matches = agent.match(/(facebook|postrank|voyager|twitterbot|googlebot|slurp|butterfly|pycurl|tweetmemebot|metauri|evrinid|reddit|digg)/mi) if agent
+    if ( agent.nil? or matches)
+       return true
+
+     else
+       return false
+    end
+  end
 	
   
   
