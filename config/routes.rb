@@ -33,6 +33,8 @@ Trek::Application.routes.draw do
   resources :users
   match 'confirm_email/:id' => 'users#confirm_email', :as => :confirm_email
   
+  match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
+   match '/auth/facebook/setup', :to => 'sessions#fb_setup'
   match 'auth/:provider/callback' =>'authentications#create'
   
   resources :challenges
@@ -100,8 +102,7 @@ Trek::Application.routes.draw do
   match 'schedule', :controller => 'plans', :action => 'schedule'
   match 'create', :controller => 'web', :action => 'apply'
   
-  match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
-  match '/auth/facebook/setup', :to => 'sessions#fb_setup'
+ 
   
   match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'
   match ':username', :controller => 'users', :action => 'show'
