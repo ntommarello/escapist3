@@ -4,8 +4,8 @@ class SessionsController < Devise::SessionsController
 
   def fb_setup
     
-    request.env['omniauth.strategy'].consumer_key = @fb_id
-    request.env['omniauth.strategy'].consumer_secret = @fb_secret
+    request.env['omniauth.strategy'].client_id = @fb_id
+    request.env['omniauth.strategy'].client_secret = @fb_secret
 
     render :text => "Setup complete.", :status => 404
   end
