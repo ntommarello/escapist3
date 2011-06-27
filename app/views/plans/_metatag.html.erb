@@ -7,7 +7,7 @@
 <%if @group%>
 	<meta property="og:site_name" content="<%=@group.name%>" /> 
 	<meta property="og:title" content="<%=raw plan.title%> | <%=@group.name%>" /> 
-	<meta property="og:url" content="http://<%=@group.domain%>/?id=<%=plan.id%>" /> 
+	<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>" /> 
 <%else%>
 	<meta property="og:site_name" content="<%=APP_NAME%>" /> 
 	<meta property="og:title" content="<%=raw plan.title%> | <%=APP_NAME%>" /> 
