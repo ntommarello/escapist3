@@ -1,6 +1,6 @@
 <!DOCTYPE html> 
 <html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-<head id="html-head">
+<head>
   	<%= yield_for(:head, '')%>
 	<%= raw include_stylesheets :base %>
   	<%= raw include_javascripts :preload %>
@@ -96,7 +96,7 @@
 			</script>
 		</div>						
 		<div style="float:right">
-			<%=render :partial => "layouts/usermenu2" %>
+			<%#render :partial => "layouts/usermenu2" %>
 		</div>
 	</div>
 	
@@ -221,14 +221,6 @@ $(document).ready(function() {
 
 </script>
 
-
-<script type="text/javascript">
-    var fbVMetaFixObject = document.getElementById("html-head");
-    var fbRMetaFixObject = fbVMetaFixObject.innertHTML;
-    var fbRMetaFixObject = fbRMetaFixObject.replace(/<!-- FBML /g, "");
-    var fbRMetaFixObject = fbRMetaFixObject.replace(/ FBML --> /g, "");
-    fbVMetaFixObject.innerHTML = fbRMetaFixObject;
-</script>
 
 
 </body>
