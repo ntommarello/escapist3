@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
    
     @fb_id = FACEBOOK_APP_ID
     @fb_secret = FACEBOOK_SECRET
-    @source = "escapist web"
+    @source = APP_URL
 
     @domain = URI.parse(request.url).host
       
@@ -23,13 +23,13 @@ class ApplicationController < ActionController::Base
       @group = Group.find(1)
       @fb_id = @group.fb_id
       @fb_secret = @group.fb_secret
-      @source = "startupworkaway web"
+      @source = @group.url
     end
     if @domain.include? "tropicaljobhunt"
       @group = Group.find(2)
       @fb_id = @group.fb_id
       @fb_secret = @group.fb_secret
-      @source = "tropical web"
+      @source = @group.url
     end
     
     

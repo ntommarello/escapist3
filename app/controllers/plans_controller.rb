@@ -89,6 +89,12 @@ class PlansController < ApplicationController
     
     @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
     
+    if !@plan
+      redirect_to "/"
+      return
+    end
+    
+    
     if @plan.location
       @cleaned_location = @plan.location.gsub(%r{</?[^>]+?>}, ' ').gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<br>/,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ')
     end
