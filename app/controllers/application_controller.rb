@@ -13,15 +13,17 @@ class ApplicationController < ActionController::Base
   def check_group
     
    
+    @fb_id = FACEBOOK_APP_ID
 
     @domain = URI.parse(request.url).host
       
-    
     if @domain.include? "startupworkaway"
       @group = Group.find(1)
+      @fb_id = @group.fb_id
     end
     if @domain.include? "tropicaljobhunt"
       @group = Group.find(2)
+      @fb_id = @group.fb_id
     end
   end
 
