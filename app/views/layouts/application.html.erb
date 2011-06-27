@@ -22,6 +22,8 @@
 	  	<%end%>
 	</title>
 	
+	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan[0]}%>
+	
 	<%= yield_for(:head, '')%>
 </head>
 
