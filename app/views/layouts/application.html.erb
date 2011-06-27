@@ -173,7 +173,10 @@
 	<div id="flipthis"></div>
 	
 	<%if !current_user and params[:action] != "register"%>
-		<%= render :partial => "layouts/register" %>
+		<div id="RegisterModal"> 
+			<div class="closeRegister" onclick="closeRegister()"></div>
+			<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}!", :font_size=>"35"}%>
+		</div>
 	<%end%>
 
 	 <%= raw include_javascripts :postload %>

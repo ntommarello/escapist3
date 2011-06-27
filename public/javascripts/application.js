@@ -2568,7 +2568,7 @@ function openRegister(title) {
 	$("#BlackModal").show();
 	$("#BlackModal").animate({opacity: .4,}, 100 );
 	$("#BlackModal").height($(document).height())
-	setTimeout("centerBox($('#RegisterModal')); $('#RegisterModal').show(); $('#name').focus(); $('#RegisterModal').animate({ opacity: 1,}, 250 );",50);
+	setTimeout("centerBox($('#RegisterModal')); $('#RegisterModal').show();  $('#RegisterModal').animate({ opacity: 1,}, 250 );",50);
 }
 
 function closeRegister() {
