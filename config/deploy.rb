@@ -82,3 +82,6 @@ Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
 end
 
 after "deploy", "deploy:cleanup"
+
+        require './config/boot'
+        require 'hoptoad_notifier/capistrano'
