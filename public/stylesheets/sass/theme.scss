@@ -3060,6 +3060,7 @@ span.continued{
 	font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
 	background-color:rgba(255,255,255,0.85);
 	float:left;
+	overflow:hidden;
 	padding:10px;
 	padding-left:20px;
 	padding-top:8px;
@@ -3077,7 +3078,7 @@ span.continued{
 	height:20px;
 	overflow:hidden;
 	color:#808598;
-	margin-top:5px;
+	margin-top:2px;
 }
 .home_description {
 	background-color:rgba(31,42,65,0.85);
@@ -3282,7 +3283,7 @@ span.continued{
 	margin-top:12px; margin-left:10px;
 	
 }
-#plan_title { line-height:25px; }
+#plan_title { line-height:28px; }
 
 .ScheduleIconButton {
  float:left; width:17px; height:20px; margin-top:7px; margin-left:6px; cursor:pointer;
