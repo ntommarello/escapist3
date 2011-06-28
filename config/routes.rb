@@ -30,6 +30,7 @@ Trek::Application.routes.draw do
     match "/api/login", :to => "sessions#create", :via => [:get, :post], :mobile => true
     match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
     match '/auth/facebook/setup', :to => 'sessions#fb_setup'
+    match '/auth/:provider/callback' =>'authentications#create'
   end
 
   resources :users
@@ -37,7 +38,7 @@ Trek::Application.routes.draw do
 
 
   
-  match '/auth/:provider/callback' =>'authentications#create'
+  
 
    
   resources :challenges
