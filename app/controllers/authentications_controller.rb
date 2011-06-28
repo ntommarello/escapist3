@@ -98,7 +98,7 @@ class AuthenticationsController < ApplicationController
         end
         current_user.save
         current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
-        redirect_to user_path(current_user)
+        redirect_to request.env['omniauth.origin'] || '/'
       else
         
         #totally new user: register
@@ -133,7 +133,7 @@ class AuthenticationsController < ApplicationController
           current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
           #redirect_to user_path(current_user)
           #redirect_to :back
-          request.env['omniauth.origin'] || '/default'
+          request.env['omniauth.origin'] || '/'
         else
           session[:omniauth] = omniauth.except('extra')
           flash[:error] = user.errors.to_a.map { |msg| msg }.join(". ")
