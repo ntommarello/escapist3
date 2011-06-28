@@ -33,6 +33,8 @@ match '/auth/:provider/callback' =>'authentications#create'
     get "/logout" => "devise/sessions#destroy"
     match "/api/login", :to => "sessions#create", :via => [:get, :post], :mobile => true
     
+    get '/auth/:provider' => 'sessions#passthru'
+    
     match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
     match '/auth/facebook/setup', :to => 'sessions#fb_setup'
 

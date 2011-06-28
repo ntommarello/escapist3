@@ -2,6 +2,10 @@ class SessionsController < Devise::SessionsController
   include GeoKit::Geocoders
 
 
+  def passthru
+     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+   end
+
   def fb_setup
     
     request.env['omniauth.strategy'].client_id = @fb_id
