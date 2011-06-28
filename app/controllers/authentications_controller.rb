@@ -123,7 +123,7 @@ class AuthenticationsController < ApplicationController
         if @avatar_link
           begin
             tempfile = Tempfile.new("test")
-            tempfile.write open(@avatar_link).read
+            tempfile.write open(@avatar_link).read.force_encoding('utf-8')
             user.avatar  = tempfile
           rescue
             
