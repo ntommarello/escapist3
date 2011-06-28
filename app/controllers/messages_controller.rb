@@ -16,6 +16,10 @@ class MessagesController < ApplicationController
   def show
     @receiver = User.find(params[:id])
     @offset = params[:offset].to_i
+    
+    if !current_user or !@receiver
+      redirect_to "/"
+    end
 
     Message.update_all("unread_receiver = 0", "user_id=#{@receiver.id} AND receiver_id=#{current_user.id}")
     @messages = Message.messages_to_or_from(current_user).messages_to_or_from(@receiver).all(

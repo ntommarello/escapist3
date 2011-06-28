@@ -43,7 +43,8 @@ class AuthenticationsController < ApplicationController
            cookies.delete :redirect_settings
            redirect_to settings_path
       else
-        redirect_to user_path(current_user)
+        redirect_to request.env['omniauth.origin'] || '/'
+        #redirect_to user_path(current_user)
       end
     elsif current_user
       #no need to add account, but add auth link
