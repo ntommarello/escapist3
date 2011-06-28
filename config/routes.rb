@@ -25,10 +25,14 @@ Trek::Application.routes.draw do
   get "subscribed_challenges/create"
   get "subscribed_challenges/destroy"
 
-  map.devise_for :users, :as => '', :path_names => { :sign_in => "login", :password => "reset_password" }, :controllers => { :sessions => 'sessions' } do
+
+match '/auth/:provider/callback' =>'authentications#create'
+
+
+  devise_for :users, :as => '', :path_names => { :sign_in => "login", :password => "reset_password" }, :controllers => { :sessions => 'sessions' } do
     get "/logout" => "devise/sessions#destroy"
     match "/api/login", :to => "sessions#create", :via => [:get, :post], :mobile => true
-    match '/auth/:provider/callback' =>'authentications#create'
+    
     match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
     match '/auth/facebook/setup', :to => 'sessions#fb_setup'
 
