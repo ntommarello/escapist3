@@ -29,7 +29,11 @@ class AuthenticationsController < ApplicationController
       authentication.token = omniauth['credentials']['token']
       authentication.secret = @secret
       authentication.save
-      sign_in authentication.user
+      if authentication.user
+        sign_in authentication.user
+      else
+        authentication.destroy
+      end
       if cookies[:redirect_settings]
            if omniauth['provider'] == "facebook"
              current_user.fb_extended_permissions = true
