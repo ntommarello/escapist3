@@ -34,6 +34,7 @@ class AuthenticationsController < ApplicationController
       else
         authentication.destroy
         redirect_to '/'
+        return
       end
       if cookies[:redirect_settings]
            if omniauth['provider'] == "facebook"
