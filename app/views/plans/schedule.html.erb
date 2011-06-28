@@ -18,7 +18,7 @@
 
 		<%if !@current_user%>
 			<div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
-				<div class="SignUpBorder" style="height:337px" onclick="openRegister('Sign up for <%=APP_NAME%>!')">
+				<div class="SignUpBorder" style="height:325px" onclick="openRegister('Sign up for <%=APP_NAME%>!')">
 					<div style="margin-top:60px; font-size:30px; padding:20px; text-align:center; line-height:35px" >Sign up</div>
 				
 					<div  style="text-align:center; line-height:25px; margin-left:10px;">We're always adding new <br>adventures in <%=session[:dropdown_city]%><p>Sign up to keep in the loop<br><span style="font-size:12px">(never more than one email per week)</span></p></div>

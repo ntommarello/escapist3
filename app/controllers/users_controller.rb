@@ -44,7 +44,6 @@ class UsersController < ApplicationController
       end
     end
     
-    
     @user.location_city = session[:location_city]
     @user.hometown = session[:location_city]
     @user.lat = session[:lat] #TODO:  iphone and android will pass in lat/lng in params
@@ -56,7 +55,12 @@ class UsersController < ApplicationController
       check_cookies      
       location = request.env["HTTP_REFERER"] || root_path
 
-      redirect_to :back
+      if location.include? "plans/"
+        redirect_to :back
+      else
+        redirect_to "/#{@user.username}"
+      end
+      
   
     else
       flash[:error] = @user.errors.to_a.map { |msg| msg }.join(". ")

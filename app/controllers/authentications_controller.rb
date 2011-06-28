@@ -105,7 +105,7 @@ class AuthenticationsController < ApplicationController
         current_user.save
         current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
         redirect_to user_path(current_user)
-       # redirect_to request.env['omniauth.origin'] || '/'
+        
       else
         
         #totally new user: register
@@ -138,7 +138,16 @@ class AuthenticationsController < ApplicationController
           check_cookies
           sign_in user
           current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
-          redirect_to user_path(current_user)
+          
+          location = request.env['omniauth.origin']  || root_path
+
+          if location.include? "plans/"
+            redirect_to location
+          else
+            redirect_to "/#{@user.username}"
+          end
+          
+          #redirect_to user_path(current_user)
           #redirect_to :back
           #request.env['omniauth.origin'] || '/'
         else
