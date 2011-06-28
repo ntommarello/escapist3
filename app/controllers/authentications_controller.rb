@@ -132,7 +132,8 @@ class AuthenticationsController < ApplicationController
           sign_in user
           current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
           #redirect_to user_path(current_user)
-          redirect_to :back
+          #redirect_to :back
+          request.env['omniauth.origin'] || '/default'
         else
           session[:omniauth] = omniauth.except('extra')
           flash[:error] = user.errors.to_a.map { |msg| msg }.join(". ")
