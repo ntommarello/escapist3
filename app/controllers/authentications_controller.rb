@@ -33,6 +33,7 @@ class AuthenticationsController < ApplicationController
         sign_in authentication.user
       else
         authentication.destroy
+        redirect_to '/'
       end
       if cookies[:redirect_settings]
            if omniauth['provider'] == "facebook"
@@ -202,7 +203,7 @@ class AuthenticationsController < ApplicationController
       @custom_link = omniauth['user_info']['nickname']   #evntually use if firstname-lastname taken
     end
     
-    @avatar_link = "http://graph.facebook.com/#{omniauth['uid']}/picture?type=large"
+    @avatar_link = "http://graph.facebook.com/#{omniauth['extra']['user_hash']['id']}/picture?type=large"
     
     
   end
