@@ -42,6 +42,14 @@ GEM
       builder
       mime-types
       xml-simple
+    aws-ses (0.3.2)
+      builder
+      builder
+      mail (~> 2.2.5)
+      mime-types
+      mime-types
+      xml-simple
+      xml-simple
     bcrypt-ruby (2.1.4)
     browser (0.1.2)
     builder (2.1.2)
@@ -235,6 +243,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   aws-s3
+  aws-ses (~> 0.3.2)
   browser
   carmen
   devise (= 1.1.7)

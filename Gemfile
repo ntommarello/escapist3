@@ -30,6 +30,7 @@ gem "devise", "1.1.7"
 gem "jammit"
 gem "rake", "0.9.2"
 gem "sass"
+#gem "aws-ses", "~> 0.3.2", :require => 'aws/ses'
 
 # To use debugger
 # gem 'ruby-debug'

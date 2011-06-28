@@ -1,6 +1,6 @@
 class Postoffice < ActionMailer::Base
-  default :from => "Stomp <no-reply@stomp.io>"
-  default_url_options[:host] = "stomp.io"
+  default :from => "#{APP_NAME} <noreply@#{APP_URL}>"
+  default_url_options[:host] = "#{APP_URL}"
     
   def newmember(to_email, user_id)
     @user_id = user_id
@@ -57,7 +57,7 @@ class Postoffice < ActionMailer::Base
    @from_name = "#{from_first_name} #{from_last_name}" 
     
    mail(:to      => to_email,
-       :subject => "#{from_first_name} #{from_last_name} invited you to join Stomp!")
+       :subject => "#{from_first_name} #{from_last_name} invited you to join #{APP_NAME}!")
          
   end
   
