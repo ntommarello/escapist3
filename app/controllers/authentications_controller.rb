@@ -145,7 +145,7 @@ class AuthenticationsController < ApplicationController
           if location.include? "plans/"
             redirect_to location
           else
-            redirect_to "/#{@user.username}"
+            redirect_to "/#{current_user.username}"
           end
           
           #redirect_to user_path(current_user)
