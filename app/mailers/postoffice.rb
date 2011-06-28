@@ -1,6 +1,6 @@
 class Postoffice < ActionMailer::Base
-  default :from => "#{APP_NAME} <noreply@#{APP_URL}>"
-  default_url_options[:host] = "#{APP_URL}"
+  default :from => "Escapist <noreply@escapist.me>"
+  default_url_options[:host] = "escapist.me"
     
   def newmember(to_email, user_id)
     @user_id = user_id
