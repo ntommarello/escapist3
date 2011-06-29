@@ -59,7 +59,7 @@
 			</div>
 			
 			
-			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/plans/<%=plan.id%>?pop=yes'">
+			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'}); window.location.href='/plans/<%=plan.id%>'">
 				<%if !plan.application_required%>
 				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
 				<%end%>

@@ -53,6 +53,7 @@ function payBill() {
 	            focus: 1,
 				submit: function(v, m, f) {
 			         if (v == 0) {
+				$.cookie('showAttendPop', null, { path: '/plans/'});
 						$.prompt.close();
 							return false;
 					} else {
@@ -78,14 +79,20 @@ function payBill() {
 	            focus: 0,
 	            submit: function(v, m, f) {
 	                if (v === 0) {
+						$.cookie('showAttendPop', null, { path: '/plans/'});
 	                    $.prompt.close();
 		return false;
 	                }
 	            }
 	        }
 	    };
-	    $.prompt(temp);
+	    $.prompt(temp,{ callback: mycallbackfunc });
 }
+
+function mycallbackfunc(v,m,f){
+		$.cookie('showAttendPop', null, { path: '/plans/'});
+}
+
 
 function createBill() {
 	$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
@@ -157,12 +164,14 @@ $(document).ready(function() {
 	        }
 	     });
 	}
-	
-	<%if params[:pop] == "yes"%>
-	  
-	   $(document).ready(function() {
+
+	<%if cookies[:showAttendPop] == 'true'%>
+		 $(document).ready(function() {
+			<%if @plan.application_required%>
+				$.cookie('showAttendPop', null, { path: '/plans/'});
+			<%end%>
+		  	setTimeout('$("#attend").click();',1000);
 		
-	  	setTimeout('$("#attend").click();',1000);
-	 });
+		 });
 	<%end%>
 </SCRIPT>

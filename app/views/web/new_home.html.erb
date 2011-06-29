@@ -34,7 +34,7 @@
 					<div style="position:absolute; margin-left:50px;">Details</div>
 				</div>
 					
-				<div class="home_buy_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id+'?pop=yes'">
+				<div class="home_buy_button" onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'}); window.location.href='/plans/'+plan_id">
 					
 				</div>
 			</div>

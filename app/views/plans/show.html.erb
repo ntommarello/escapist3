@@ -53,9 +53,7 @@
 			<%if @editable%>
 				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
 			<%else%>
-				
-					<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>""%>
-				
+				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>""%>
 			<%end%>
 		</div>
 	<%end%>

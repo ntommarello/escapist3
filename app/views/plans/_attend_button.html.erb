@@ -43,16 +43,16 @@
 				<%if @plan.application_required%>
 					goToByScroll('ApplicationLayer');
 				<%else%>
-					payBill();
+					payBill(); 
 				<%end%>
 			<%else%>
-				signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)
+				signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>); 
 			<%end%>
 		<%else%>
 			<%if @plan.application_required%>
 				goToByScroll('ApplicationLayer');
 			<%else%>
-				openRegister('Sign up for <%=APP_NAME%> to attend')
+				openRegister('Sign up for <%=APP_NAME%> to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'});
 			<%end%>
 		<%end%>">
 		

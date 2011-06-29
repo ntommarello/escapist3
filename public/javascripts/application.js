@@ -2561,15 +2561,22 @@ function openRegister(title) {
 }
 
 function closeRegister() {
-	$("#BlackModal").animate({ 
-   		opacity: 0,
-  		}, 100 );
-		setTimeout("$('#BlackModal').hide();",150);
+	
+	if ($("#RegisterModal").is(":visible")) {
+	
+		$("#BlackModal").animate({ 
+	   		opacity: 0,
+	  		}, 100 );
+			setTimeout("$('#BlackModal').hide();",150);
 
-		$("#RegisterModal").hide();
-		$("#RegisterModal").css('opacity',0)
+			$.cookie('showAttendPop', null, { path: '/plans/'});
+			$("#RegisterModal").hide();
+			$("#RegisterModal").css('opacity',0)
 		
-		$("#RenderAchievements").hide();
+			$("#RenderAchievements").hide();
+		}
+		
+		
 }
 
 function centerBox(box) {
