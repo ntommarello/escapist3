@@ -4117,3 +4117,6 @@ span.continued {
   margin-bottom: 15px;
   width: 300px;
   text-align: left; }
+
+#clipboard {
+  display: none; }

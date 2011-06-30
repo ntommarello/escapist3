@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110626225813) do
+ActiveRecord::Schema.define(:version => 20110630154701) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -158,6 +158,9 @@ ActiveRecord::Schema.define(:version => 20110626225813) do
     t.string   "twitter"
     t.string   "tumblr"
     t.text     "statcounter"
+    t.string   "fb_id"
+    t.string   "fb_key"
+    t.string   "fb_secret"
   end
 
   create_table "hosts", :force => true do |t|
@@ -338,6 +341,7 @@ ActiveRecord::Schema.define(:version => 20110626225813) do
     t.string   "phone_model"
     t.string   "app_version"
     t.text     "apply"
+    t.text     "short_bio"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"

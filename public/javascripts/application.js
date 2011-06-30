@@ -2713,9 +2713,9 @@ function signupPlan(button,render,plan_id) {
 		outer_maybe = $(".outerB",maybe)
 		inner_maybe = $(".innerB",outer_maybe)
 		
-		if (label == "Count me in! ($0)") {
+		if (label == "Sign Up for FREE") {
 			$(maybe).hide();
-			$(inner).html("I can't come. Remove me.");
+			$(inner).html("I'm coming");
 			$(outer).addClass("RedButton").removeClass("GreenButton").removeClass("LightGrayButton")
 			$(inner).addClass("InnerRedBorder").removeClass("InnerGreenBorder").removeClass("InnerLightGrayBorder")
 			
@@ -2729,7 +2729,7 @@ function signupPlan(button,render,plan_id) {
 			
 		} else {
 			$(maybe).show();
-			$(inner).html("Count me in! ($0)");
+			$(inner).html("Sign Up for FREE");
 			$(outer).addClass("GreenButton").removeClass("RedButton")
 			$(inner).addClass("InnerGreenBorder").removeClass("InnerRedBorder")
 			
@@ -3038,13 +3038,7 @@ function publishChallenge(a_id) {
 
 
 function resetPublish() {
-	if (draftTag == 0 && draftTitle == 0 && draftUser == 0 && draftDetails == 0 && draftLocation == 0 && draftPhoto == 0) {
-		$("#draftButton").css("opacity",1);
-		$('#PublishText').html('You are ready to publish your adventure!');
-		$("#PublishIntruct").hide();
-		$("#draftButtonInactive").hide();
-		$("#draftButton").show();
-	} 
+
 }
 
 

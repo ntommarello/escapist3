@@ -27,7 +27,9 @@ class SubscribedPlansController < ApplicationController
        
        
        @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",params[:plan_id]])
-       render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :host=>@plan.user}
+       render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}
+       
+     
        	
    end
    
@@ -40,7 +42,7 @@ class SubscribedPlansController < ApplicationController
        @plan = Plan.find(params[:plan_id])
        @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =? ",params[:plan_id]])
        
-      render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :host=>@plan.user}
+      render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}
         
     end
 

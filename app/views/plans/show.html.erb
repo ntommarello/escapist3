@@ -170,13 +170,13 @@
 					<div style="float:left; <%if @user_agent.mobile?%>width:345px;<%else%>width:375px;<%end%>:">
 
 					<div class="HighlightedTitle" style="padding-bottom:2px; font-size:24px; line-height:28px; ">
-						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>		
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
 					</div>
 					<div style="font-size:16px;color:#808598">			
-					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 					</div>
 					<div style="margin-top:20px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
-					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); resetPublish();}", :extra_visibility=>@extra_visibility}%>
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 					</div>
 					
 				</div>
@@ -188,7 +188,7 @@
 					
 
 					<div style="font-size:15px; line-height:20px; ">
-						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); resetPublish();}"}%>	
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); }"}%>	
 					</div>
 					
 					

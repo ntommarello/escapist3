@@ -10,7 +10,7 @@
 
 <span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
   
-		<span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span>
+		<p style="display: inline;"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></p>
 	
 	    <%if extra_visibility%>
 			<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">
