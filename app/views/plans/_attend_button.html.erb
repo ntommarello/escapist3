@@ -1,3 +1,21 @@
+<%@over = false%>
+<%t = Time.zone.now%>
+<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
+<%if rounded_t >= @plan.start_time%>
+	<%@over = true%>
+<%end%>
+
+<%plural = ""%>
+<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
+
+<%if @plan.seats_remaining < 7%>
+			<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
+<%else%>
+		<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
+		
+<%end%>
+
+
 <%if current_user && @plan.has_signedup?(current_user)%>
 	<%@signedup = TRUE%>
 	<%@signup_color = "Red"%>
@@ -25,51 +43,54 @@
 <%end%>
 
 
-<div id="attend"  class="countmein WhiteActiveBorder" style="float:right; margin-right:70px;" onclick="<%=@clickaction%>">
-	<div unselectable="on" class="outerB <%=@signup_color%>Button" style="width:180px; line-height:38px; height:50px;">
-		<div class="buyticket innerB Inner<%=@signup_color%>Border" style="height:43px; font-size:16px; line-height:40px; padding-top:5px;">		
-								
-		<%if @plan.application_required%>
-			<div style="margin-top:3px; line-height:14px">
-				Apply Now!
-			</div>
-			<div style="font-size:12px; line-height:14px; margin-top:6px;">
-				Deadline: <%=@plan.application_deadline.to_date.strftime('%b').titlecase()%> <%=@plan.application_deadline.to_date.strftime('%e').strip()%>
-			</div>
-		<%else%>
-			<%if @plan.price and @plan.price > 0%>
-				<div style="position:absolute; margin-left:7px; margin-top:3px;">
-					<img src="/images/buy-icon.png" style="width:24px; height:21px">
-				</div>
-				<div style="margin-left:31px;">
-					$<%=@plan.price.to_s.sub( ".0", "") %> per ticket
-				</div>
+	<%if @plan.application_required%>
+		<%@title = "Apply Now!"%>
+		<%@subtitle = "Deadline: #{@plan.application_deadline.to_date.strftime('%b').titlecase()} #{@plan.application_deadline.to_date.strftime('%e').strip()}"%>
+	<%else%>
+		<%if @plan.price and @plan.price > 0%>
+			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@plan.price.to_s.sub( ".0", "")}</div>"%>
+
+
+			<%if @signedup%>
+				<%@subtitle = "You've bought 1 ticket"%>	
 			<%else%>
-				<%if @signedup%>
-					I'm coming
+				<%if @plan.seats_remaining < 10%>
+					<%@subtitle = @tickets_remaining%>	
 				<%else%>
-					Sign Up for FREE
+					<%@subtitle = "per ticket"%>
 				<%end%>
 			<%end%>
+		<%else%>
+			<%if @signedup%>
+				<%@title = "I'm coming"%>
+			<%else%>
+				<%@title = "Sign Up: FREE"%>
+			<%end%>
+			
+			
+	
+			<%@subtitle = @tickets_remaining%>
+		
 		<%end%>
-	</div>
-  </div>
-</div>
-
-
-
-<div style="clear:both"></div>
-<%if @plan.seats_remaining != 0 and @plan.seats_remaining < 10 %>
-	<%if current_user && @plan.has_signedup?(current_user)%>	
-<%else%>
-	<div style="text-align:center; ; margin-right:70px; padding-top:15px; font-size:14px; font-weight:bold; color:red"><b><%=@plan.seats_remaining%></b> ticket<%if @plan.seats_remaining !=1%>s<%end%> left!</div><%end%>
-<%end%>
+	<%end%>
 	
 	
-<%t = Time.zone.now%>
-<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
-<%if rounded_t >= @plan.start_time%>
-	<div style="text-align:center; ; margin-right:70px; padding-top:15px; font-size:14px; font-weight:bold; color:red">
-		This plan is over
-	</div>
-<%end%>
+
+
+
+		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
+		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
+			<%if @over == true%>
+				<span style="color:red; font-weight:bold">This plan is over</span>
+			<%else%>
+				<%=raw @subtitle%>
+			<%end%>
+		</div>
+		
+
+
+
+
+<script>
+seats_remaining = <%=@plan.seats_remaining%>
+</script>

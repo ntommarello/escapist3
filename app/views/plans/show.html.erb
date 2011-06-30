@@ -58,32 +58,23 @@
 		</div>
 	<%end%>
 	<%end%>
-		<div style="float:left; width:50%; margin-top:11px;">
-
-		
-		
-				<div unselectable="on" class="LightGrayGreenButton" style="width:180px; margin-left:10px; line-height:38px; height:50px; color:#44B24A  " >
-					<div class="InnerLightGrayGreenBorder" style="height:43px;font-size:16px; line-height:40px; padding-top:5px;"onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');" >
-										
-										 
-								<div style="margin-top:3px; line-height:14px">
-									Subscribe
-								</div>
-									<div style="font-size:12px; line-height:14px; margin-top:6px;">
-										Learn about future dates
-									</div>
-
-					</div>
-				</div>
-		
-		
-			
-				
+		<div style="float:left;  margin-top:11px; margin-left:29px; text-align:center">
+			<button class="newGrayButton" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px " onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');">Watch</button>
+			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for future dates</div>		
 		</div>
-
-		<div style="float:left; width:50%; margin-top:10px; ">
-			<%= render :partial=>"plans/attend_button"%>
+		
+		<div style="float:left; margin-top:10px; margin-left:30px;">
+			<img src="/images/or.png" style="width:12px; height:56px;">
 		</div>
+		
+		<div style="float:left;  margin-top:11px; margin-left:30px;">
+		<%= render :partial=>"plans/attend_button"%>
+		</div>
+		
+		
+		
+
+
 
 
 		<div style="clear:both"></div>

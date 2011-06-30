@@ -7,7 +7,22 @@
 	</a>
 </div>
 <div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
+	
 	<div style="padding-top:5px; color:black; width:250px"><%=host.short_bio%></div>
+	
+	<%@disabled = false%>
+	<%if current_user%>
+		<%if !host.allow_messages_from?(current_user)%>
+			<%@disabled = true%>
+		<%end%>
+		<%if host.id  == current_user.id%>
+			<%@disabled = true%>
+		<%end%>
+	<%end%>
+	
+	
+	<button class="newGrayButton" style="margin-top:5px; width:116px; <%if @disabled%>opacity:.3; cursor:default<%end%>" onclick="<%if !current_user%>openRegister('Sign up for Stomp to Message <%=host.first_name%>')<%else%><%if !@disabled%>SendMessage('<%=host.first_name%>',<%=host.id%>)<%end%><%end%>"><img style="float:left; height:11px; width:17px; margin-top:4px; margin-left:2px" src="/images/sendmessage.png"><div style="float:left; margin-left:7px">Contact me</div></button>
+	
 </div>
 
 <div style="clear:both"></div>

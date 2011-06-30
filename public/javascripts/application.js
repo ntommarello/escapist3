@@ -2704,40 +2704,38 @@ function maybePlan(button,render,plan_id) {
 }	
 	
 function signupPlan(button,render,plan_id) {
-		outer = $(".outerB",button)
-		inner = $(".innerB",outer)
-		label = $(inner).html()
+		label = $(button).html()
 		id = plan_id;
-		
-		maybe = $(".maybe",$(button).parent().parent()) 
-		outer_maybe = $(".outerB",maybe)
-		inner_maybe = $(".innerB",outer_maybe)
-		
-		if (label == "Sign Up for FREE") {
-			$(maybe).hide();
-			$(inner).html("I'm coming");
-			$(outer).addClass("RedButton").removeClass("GreenButton").removeClass("LightGrayButton")
-			$(inner).addClass("InnerRedBorder").removeClass("InnerGreenBorder").removeClass("InnerLightGrayBorder")
+		$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+	
+		if (label == "Sign Up: FREE") {
 			
-			$(outer_maybe).addClass("LightGrayButton").removeClass("RedButton")
-			$(inner_maybe).addClass("InnerLightGrayBorder").removeClass("InnerRedBorder")
 			
 				$.post("/subscribed_plans", { plan_id:plan_id, maybe:0}, function(theResponse){
+					
+						seats_remaining = seats_remaining - 1;
+
+						$("#seat_remain").html(seats_remaining)
+						
+					$(button).addClass("RedB").removeClass("GreenB").removeClass("LightGrayButton")
+					$(button).html("I'm coming!");
 						$('#RenderPlan').html(theResponse)
 				});
 	
 			
 		} else {
-			$(maybe).show();
-			$(inner).html("Sign Up for FREE");
-			$(outer).addClass("GreenButton").removeClass("RedButton")
-			$(inner).addClass("InnerGreenBorder").removeClass("InnerRedBorder")
+			
+	
 			
 			$.post("/subscribed_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
+				
+					seats_remaining = seats_remaining + 1;
+					$("#seat_remain").html(seats_remaining)
+					
+					$(button).addClass("GreenB").removeClass("RedB")
+				$(button).html("Sign Up: FREE");
 					$('#RenderPlan').html(theResponse)
 			});
-			
-			
 		}
 }
 

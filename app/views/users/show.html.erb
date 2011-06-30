@@ -97,14 +97,18 @@
 
 		<%if !@editable%>
 			<div style='float:right'>
-				<div id="MessageButton" style="width:100px; margin-top:6px;   <%if current_user and !@user.allow_messages_from?(current_user)%>opacity:.3<%end%>" title="<%=@user.first_name%> has messages disabled" class="ProfileButton" onclick="<%if !current_user%>openRegister('Sign up for Stomp to Message <%=@user.first_name%>')<%else%><%if @user.allow_messages_from?(current_user)%>SendMessage('<%=@user.first_name%>',<%=@user.id%>)<%end%><%end%>">Message</div>
-
+				
+					<button id="MessageButton" class="newGrayButton" style="margin-top:5px; height:35px; line-height:30px; width:140px; font-size:14px;  width:126px; <%if current_user and !@user.allow_messages_from?(current_user)%>opacity:.3<%end%>" <%if current_user and !@user.allow_messages_from?(current_user)%>title="<%=@user.first_name%> has messages disabled"<%end%> ><img style="float:left; height:11px; width:17px; margin-top:10px; margin-left:4px" src="/images/sendmessage.png"><div style="float:left; margin-left:7px" onclick="<%if !current_user%>openRegister('Sign up for Stomp to Message <%=@user.first_name%>')<%else%><%if @user.allow_messages_from?(current_user)%>SendMessage('<%=@user.first_name%>',<%=@user.id%>)<%end%><%end%>">Contact me</div></button>
+				
+			
 				<%if current_user%>
 					<% unless @user.allow_messages_from?(current_user) %>
 						<script>$("#MessageButton").tooltip();</script>
 					<% end %>
 				<%end%>
-		 		<%=render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
+				<div style="display:none">
+		 		<%render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
+				</div>
 			</div>
 		<%end%>
 </div>
