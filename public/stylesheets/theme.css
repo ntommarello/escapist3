@@ -4051,12 +4051,15 @@ span.continued {
 
 .powered {
   float: left;
-  margin-left: 6px;
-  margin-top: 19px;
+  margin-left: 10px;
+  margin-top: 10px;
   opacity: .8; }
 
 .powered:hover {
   opacity: 1; }
+
+.powered:active {
+  margin-top: 11px; }
 
 .LightLink {
   color: #EDE9CD; }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110630154701) do
+ActiveRecord::Schema.define(:version => 20110630230917) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -161,6 +161,8 @@ ActiveRecord::Schema.define(:version => 20110630154701) do
     t.string   "fb_id"
     t.string   "fb_key"
     t.string   "fb_secret"
+    t.string   "favicon"
+    t.string   "logo"
   end
 
   create_table "hosts", :force => true do |t|

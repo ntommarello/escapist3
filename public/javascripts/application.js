@@ -3112,6 +3112,10 @@ function ApplyReward(value) {
 		ReducePriceBy(20,2)
 		return;
 	}
+	if (value=='joinme42') {
+		ReducePriceBy(.90,1)
+		return;
+	}
 	
 	alert('invalid code')
 	

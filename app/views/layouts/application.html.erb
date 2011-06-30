@@ -1,11 +1,20 @@
 <!DOCTYPE html> 
 <html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
   	<%= yield_for(:head, '')%>
 	<%= raw include_stylesheets :base %>
   	<%= raw include_javascripts :preload %>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
 	<title><%if @group%><%if @group.subtitle%><%sanitizedTitle = sanitize @group.subtitle%><%sanitizedTitle = sanitizedTitle.gsub("<div>","")%><%sanitizedTitle = sanitizedTitle.gsub("/<div>","")%><%else%><%sanitizedTitle = 'Social Adventure Travel'%><%end%><%=@group.name%> | <%= yield_for(:page_title, sanitizedTitle)%><%else%><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%><%end%></title>
+		
+		
+	<%if @group and  @group.favicon%>
+	
+		<link rel="shortcut icon" type="image/png"  href="/images/<%=@group.favicon%>"/>
+	<%else%>
+		<link rel="shortcut icon" type="image/png"  href="/images/escapist.ico"/>
+	<%end%>	
+		
 </head>
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
@@ -46,21 +55,16 @@
 				<div class="rc"></div>
 			</div>
 		
-			<%if @group%>
+			<%if @group and @group.logo%>
 				<a href="/">
-					<%if @group.id == 1%>
-						<div style="float:left; margin-left:10px; margin-top:14px; margin-right:3px">
-							<img src="/images/swa_logo.png">
-						</div>
-					<%end%>
-					<%if @group.id == 2%>
-						<div style="float:left; margin-left:10px; margin-top:11px; margin-right:5px">
-							<img src="/images/tropical.png">
-						</div>
-					<%end%>
+					<div style="float:left; margin-left:10px;  margin-right:5px">
+						
+						<%=raw @group.logo%>
+					
+					</div>
 				</a>
 				<a href="http://<%=APP_URL%>">
-						<div class="powered"><img src="/images/powered.png"></div>
+						<div class="powered"><img src="/images/powered-by.png"></div>
 				</a>
 			<%else%>
 				<a href="/">
