@@ -102,15 +102,16 @@ class PlansController < ApplicationController
     
     
     if current_user && @plan
-       if @plan.host_id == current_user.id
+      for host in @plan.hosts
+       if host.user_id == current_user.id
           @author=true
+          @editable = true
+          @extra_visibility = true
         end
-      if @plan.host_id == current_user.id or current_user.mod_level == 5
-        @editable = true
-        @extra_visibility = true
       end
       if current_user.mod_level == 5
         @admin = true
+        @editable = true
         @extra_visibility = false
       end
     end

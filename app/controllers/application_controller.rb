@@ -32,9 +32,13 @@ class ApplicationController < ActionController::Base
       @source = @group.url
     end
     
+    
+    @group = Group.find(3)
+    
     #dev
     #@fb_id = "164081146992153";
     #@fb_secret = "55a03475946d67b6f761c48da2f59cbe";
+
   
     
   end
