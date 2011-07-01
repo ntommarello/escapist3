@@ -31,6 +31,12 @@ class ApplicationController < ActionController::Base
       @fb_secret = @group.fb_secret
       @source = @group.url
     end
+    if @domain.include? "connectorcampfire"
+      @group = Group.find(3)
+      @fb_id = @group.fb_id
+      @fb_secret = @group.fb_secret
+      @source = @group.url
+    end
     
     
     #@group = Group.find(3)
