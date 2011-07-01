@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     end
     
     
-    @group = Group.find(3)
+    #@group = Group.find(3)
     
     #dev
     #@fb_id = "164081146992153";
