@@ -24,21 +24,18 @@
 	<%@signup_color = "Green"%>
 <%end%>
 
-<%if current_user%>
-	<%if @plan.price and @plan.price > 0%>
-		<%if @plan.application_required%>
-			<%@clickaction = "goToByScroll('ApplicationLayer');"%>
-		<%else%>
+
+<%if @plan.application_required%>
+	<%@clickaction = "goToByScroll('ApplicationLayer');"%>
+<%else%>
+	<%if current_user%>
+		<%if @plan.price and @plan.price > 0%>
 			<%@clickaction = "payBill();"%>
+		<%else%>
+			<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
 		<%end%>
 	<%else%>
-		<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
-	<%end%>
-<%else%>
-	<%if @plan.application_required%>
-		<%@clickaction = "goToByScroll('ApplicationLayer');"%>
-	<%else%>
-		<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'});"%>
+			<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'});"%>
 	<%end%>
 <%end%>
 
