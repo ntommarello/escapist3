@@ -73,7 +73,9 @@ class UsersController < ApplicationController
     error = ""
     
     params[:user].each  do |key, value| 
+       unless key == "avatar"
         params[:user][key] = CGI::unescape(value) 
+       end
      end
      
      

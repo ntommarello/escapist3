@@ -127,7 +127,9 @@ class PlansController < ApplicationController
     
     
     params[:plan].each  do |key, value| 
-       params[:plan][key] = CGI::unescape(value) 
+      unless key == "image"
+       params[:plan][key] = CGI::unescape(value)
+      end 
     end
     
     #params[:plan][:short_desc] = CGI::unescape(params[:plan][:short_desc] )
