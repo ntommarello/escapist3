@@ -4,21 +4,38 @@
 <%onblur_hook = false unless defined?(onblur_hook)%>
 <%required = false unless defined?(required)%>
 <%border = false unless defined?(border)%>
+<%full_editor = false unless defined?(full_editor)%>
 <%append = "" unless defined?(append)%>
 
 <%if @editable%>
 
-<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
+
+<%if full_editor%>
+
+<div id="<%=field_name%><%=append%>_def" onclick="$(this).hide(); $('#<%=field_name%><%=append%>').show();">
+<%=raw render_string_with_breaks(content)%>
+
+	<textarea id="<%=field_name%><%=append%>" name="<%=field_name%><%=append%>" rows="15" cols="80" style="width: 100%; display:none">
+		<%=raw render_string_with_breaks(content)%>
+	</textarea>
+	
+</div>
+
+<%else%>
+
+	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
   
-		<p style="display: inline;"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></p>
+			<span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span>
 	
-	    <%if extra_visibility%>
-			<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">
-				<img src="/images/edit_14.gif" class="EditIcon"  >
-			</span>
-		<%end%>
+		    <%if extra_visibility%>
+				<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">
+					<img src="/images/edit_14.gif" class="EditIcon"  >
+				</span>
+			<%end%>
 	
-</span>
+	</span>
+
+<%end%>
 	<script>
 	
 
@@ -42,6 +59,8 @@
 		});
 	<%end%>
 	
+
+	
 	
 	$('#<%=field_name%><%=append%>').blur(function(){    
 
@@ -62,20 +81,20 @@
 		
 		<%if allow_return%>
 			var s = new Sanitize({ 
-			    elements:   ['br']
+			    elements:   ['br','ul','li','b']
 			});
 		<%else%>
 			var s = new Sanitize();
 		<%end%>
 			cleanedValue = s.clean_node(this);
 	
-			//$(this).html(cleanedValue)
+			$(this).html(cleanedValue)
 	
 	     var newValue = escape($(this).html()); 
 	     $.ajax({
 	        type: "POST",
 	        url: "/<%=model%>s/<%=id%>",
-	        data: "_method=PUT&<%=model%>[<%=field_name%>]=" + newValue,
+	        data: "_method=PUT&<%=model%>[<%=field_name%>]=" + escape(newValue),
 	        success: function(msg){
 				animateFlashMessage();
 				

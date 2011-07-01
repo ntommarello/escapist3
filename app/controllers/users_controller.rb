@@ -71,6 +71,12 @@ class UsersController < ApplicationController
   
   def update
     error = ""
+    
+    params[:user].each  do |key, value| 
+        params[:user][key] = CGI::unescape(value) 
+     end
+     
+     
     current_user.update_attributes(params[:user])
       
     if params[:name]

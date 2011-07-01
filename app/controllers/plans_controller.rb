@@ -125,6 +125,14 @@ class PlansController < ApplicationController
 
     @plan = Plan.find(params[:id])
     
+    
+    params[:plan].each  do |key, value| 
+       params[:plan][key] = CGI::unescape(value) 
+    end
+    
+    #params[:plan][:short_desc] = CGI::unescape(params[:plan][:short_desc] )
+    
+    
     @plan.update_attributes(params[:plan])
     
     if @plan.transportation == ""
