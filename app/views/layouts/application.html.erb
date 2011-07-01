@@ -69,13 +69,15 @@
 				</a>
 			<%else%>
 				<a href="/">
-					<div class="template_logo"></div>
+					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
+					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
+					
 				</a>
 			<%end%>
 	
 	
 			<%if !@group%>
-				<div style="float:left;">
+				<div style="position:absolute; margin-left:155px;">
 					<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
 						<div class="LocIcon"></div>
 						<div id="CityLabel" style="top:19px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>

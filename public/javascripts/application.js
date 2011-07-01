@@ -176,12 +176,12 @@ function returnHoverBarPerform () {
 }
 
 function logoHover() {
-$("#TempLogoHover").animate({ opacity: 1}, 500);
-$("#TempLogo").animate({ opacity: 0}, 500);
+$(".template_logo").animate({ opacity: 0}, 500);
+//$("#TempLogo").animate({ opacity: 0}, 500);
 }
 function logoUnhover() {
-$("#TempLogoHover").animate({ opacity: 0 }, 500);
-$("#TempLogo").animate({ opacity: 1}, 500);
+$(".template_logo").animate({ opacity: 1 }, 500);
+//$("#TempLogo").animate({ opacity: 1}, 500);
 }
 
 

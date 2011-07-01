@@ -91,7 +91,7 @@
 			
 			<%@twitter_user = TWITTER_NAME%>
 			<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-			<%if  @plan.price < 1 or @plan.application_required%>
+			<%if  (@plan.price and @plan.price < 1) or @plan.application_required%>
 				<%@twitter_text = "#{@twitter_text}!"%>
 			<%else%>
 				<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>

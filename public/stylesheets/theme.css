@@ -3483,12 +3483,25 @@ span.continued {
 .template_logo {
   background: url(/images/home_tile.png) no-repeat;
   background-position: -150px 0px;
-  float: left;
+  position: absolute;
   margin-top: 9px;
   margin-left: 15px;
   width: 131px;
   height: 35px;
   cursor: pointer; }
+
+.template_logo_h {
+  background: url(/images/home_tile.png) no-repeat;
+  background-position: 0px -175px;
+  position: absolute;
+  margin-top: 9px;
+  margin-left: 15px;
+  width: 131px;
+  height: 35px;
+  cursor: pointer; }
+
+.template_logo_h:active {
+  margin-top: 10px; }
 
 .template_in {
   float: left;
