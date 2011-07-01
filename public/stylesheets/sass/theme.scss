@@ -3905,6 +3905,36 @@ webkit-box-shadow: 1px 1px 0px 0px #eee, -1px -1px 0px 0px #eee, -1px 1px 0px 0p
 	box-shadow: inset 0 0 4px 2px #000, 0 0 2px 0 #fff;
 }
 
+.newGrayButtonPushed {
+	border:1px solid #ABACB2;
+	background:#EDEEF5;
+	font-size:12px;
+	font-weight:bold;
+	cursor:pointer;
+	color:#223452;
+	text-shadow: rgba(255, 255, 255, .9) 0px 1px 0;
+	height:24px; line-height:18px; width:120px;
+	@include noselect();
+	@include rounded_corners(8px);
+	text-align:center;
+	@include gradient(#D3D3DC,#AFAFB7);
+	-moz-box-shadow: inset 0 0 4px 2px #000, 0 0 2px 0 #fff;
+	-webkit-box-shadow: inset 0 0 4px 2px #000, 0 0 2px 0 #fff;
+	box-shadow: inset 0 0 4px 2px #000, 0 0 2px 0 #fff;
+}
+
+.newGrayButtonPushed:hover {
+	@include gradient(#D7D6E1,#C0C0C8);
+}
+
+.newGrayButtonPushed:active {
+	@include gradient(#D7D6E1,#C0C0C8);
+	-moz-box-shadow: inset 0 0 6px 2px #000, 0 0 2px 0 #fff;
+	-webkit-box-shadow: inset 0 0 6px 2px #000, 0 0 2px 0 #fff;
+	box-shadow: inset 0 0 6px 2px #000, 0 0 2px 0 #fff;
+}
+
+
 .GreenB {
 	border:1px solid #8A8B91;
 	@include gradient(#17D217,#01A301);

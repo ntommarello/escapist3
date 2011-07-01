@@ -64,8 +64,8 @@
 	<%end%>
 	<%end%>
 		<div style="float:left;  margin-top:11px; margin-left:29px; text-align:center">
-			<button class="newGrayButton" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px " onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');">Watch</button>
-			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for future dates</div>		
+			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/plans/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Watching<%else%>Watch<%end%></button>
+			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
 		</div>
 		
 		<div style="float:left; margin-top:10px; margin-left:30px;">
@@ -271,7 +271,7 @@
 									<textarea id="TempPassword" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:389px; " onfocus="if ($(this).val()=='comment') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('comment');  $(this).css('color','#ccc')}">comment</textarea>
 
 									<div  class="WhiteActiveBorder"  >
-										<div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for Stomp to comment on  this plan')<%end%>">
+										<div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for <%=APP_NAME%> to comment')<%end%>">
 											<div class="InnerLightGrayBorder"style="height:32px;" >
 												Post
 											</div>
@@ -330,7 +330,7 @@
 		
 		
 		<h2 class="FaqTitle">How does mentorship work?</h2>
-		<p class="FaqAnswer">We're a strong believer in peer mentorship - everyone who attends is working on a projet, and we all help each other.  Also, off-site mentors are available via Skype.<p>
+		<p class="FaqAnswer">We're a strong believer in peer mentorship - everyone who attends is working on a project, and we all help each other.  Also, off-site mentors are available via Skype.<p>
 			
 		<h2 class="FaqTitle">What is the balance between work and play?</h2>
 		<p class="FaqAnswer">We're all adults - it's up to you.  But we're targeting 8 hours of solid work per day.  Along with 3 hours of mandatory fun.</p>

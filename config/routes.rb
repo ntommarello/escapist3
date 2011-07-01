@@ -1,4 +1,8 @@
 Trek::Application.routes.draw do
+  get "watched_plans/create"
+
+  get "watched_plans/destroy"
+
   get "admin/index"
 
   get "dislikes/create"
@@ -80,6 +84,7 @@ match '/auth/:provider/callback' =>'authentications#create'
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
   resources :plans
   resources :subscribed_plans
+  resources :watched_plans
   match 'initial_comment' => 'comments#initial_comment', :as => :initial_comment
   
   

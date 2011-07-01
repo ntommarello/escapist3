@@ -33,6 +33,14 @@ class UsersController < ApplicationController
   end
   
   def create
+    
+    @check = User.find_by_email(params[:user][:email]) 
+    if @check
+      flash[:error] = "#{params[:user][:email]} already has an account"
+      redirect_to "/register"
+      return
+    end
+    
     @user = User.new(params[:user])
     
     if params[:name]

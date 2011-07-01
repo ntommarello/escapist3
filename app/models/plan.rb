@@ -8,6 +8,8 @@ class Plan < ActiveRecord::Base
  # has_many :organizers, :through => :hosts, :foreign_key => 'user_id'
   has_many :organizers, :through => :hosts, :source => :user
   
+  has_many :watched_plans
+  
   acts_as_mappable
   
   def has_signedup?(user)
@@ -17,6 +19,9 @@ class Plan < ActiveRecord::Base
   def has_maybed?(user)
     subscribed_plans.find(:first, :conditions=>["user_id=? and maybe = 1",user.id])
   end
+  
+
+  
   
   def has_soldout
     seats_remaining <= 0

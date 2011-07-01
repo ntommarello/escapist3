@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110630230917) do
+ActiveRecord::Schema.define(:version => 20110701225009) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -163,6 +163,8 @@ ActiveRecord::Schema.define(:version => 20110630230917) do
     t.string   "fb_secret"
     t.string   "favicon"
     t.string   "logo"
+    t.string   "mailchimp_key"
+    t.string   "mailchimp_list"
   end
 
   create_table "hosts", :force => true do |t|
@@ -352,5 +354,13 @@ ActiveRecord::Schema.define(:version => 20110630230917) do
   add_index "users", ["id"], :name => "index_users_on_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "watched_plans", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   include GeoKit::Mappable
   acts_as_mappable
 
+  has_many :watched_plans 
+
   slug :full_name, :column => :username
   
   has_many :subscribed_challenges, :dependent => :destroy
@@ -113,6 +115,14 @@ class User < ActiveRecord::Base
   def my_challenge_count
     count = Challenge.find(:all, :conditions=> ["author_id=?", id])
     return count.length
+  end
+  
+  def has_watched?(plan)
+    if plan.group_id
+      watched_plans.find(:first, :conditions=>["group_id=?",plan.group_id])
+    else
+      watched_plans.find(:first, :conditions=>["plan_id=?",plan.id])
+    end
   end
   
   

@@ -386,7 +386,6 @@ function validateRegister(field) {
 	
 	
 	parent = $(field).parent();
-
 	
 	$('.Error',parent).html('')
 	$('.Error',parent).hide()
@@ -2570,6 +2569,7 @@ function closeRegister() {
 			setTimeout("$('#BlackModal').hide();",150);
 
 			$.cookie('showAttendPop', null, { path: '/plans/'});
+			$.cookie('watchPlan', null, { path: '/plans/'});
 			$("#RegisterModal").hide();
 			$("#RegisterModal").css('opacity',0)
 		
@@ -2702,6 +2702,47 @@ function maybePlan(button,render,plan_id) {
 		
 	}	
 }	
+	
+	
+function watchMouseDown(button) {
+	label = $(button).html()
+	if (label == "Watch") {
+		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
+	} else {
+		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
+	}
+}	
+
+function watchMouseUp(button) {
+
+	label = $(button).html()
+	if (label == "Watching") {
+		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
+	}
+	if (label == "Watch") {
+		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
+	}
+}
+
+
+	
+function watchPlan(button,plan_id) {
+	label = $(button).html()
+	$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+	
+	
+	if (label == "Watch") {
+		$.post("/watched_plans", { plan_id:plan_id}, function(theResponse){		
+			
+			$(button).html("Watching");
+		});
+	} else {
+		$.post("/watched_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
+			
+			$(button).html("Watch");
+		});
+	}
+}
 	
 function signupPlan(button,render,plan_id) {
 		label = $(button).html()

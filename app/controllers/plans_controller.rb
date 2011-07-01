@@ -100,6 +100,15 @@ class PlansController < ApplicationController
     end
     
     
+    @watched = false
+    if current_user
+      if current_user.has_watched?(@plan)
+        @watched = true
+      end
+    end
+    
+    
+    
     
     if current_user && @plan
       for host in @plan.hosts

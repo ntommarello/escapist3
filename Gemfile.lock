@@ -74,6 +74,7 @@ GEM
       rails (~> 3.0.4)
     haml (3.1.2)
     highline (1.6.2)
+    hominid (3.0.2)
     hoptoad_notifier (2.4.11)
       activesupport
       builder
@@ -243,6 +244,7 @@ DEPENDENCIES
   faker (~> 0.3)
   geokit-rails3
   haml
+  hominid
   hoptoad_notifier
   i18n
   jammit

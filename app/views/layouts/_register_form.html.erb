@@ -21,7 +21,7 @@
 			<div style="clear:both; position:relative; height:10px; "></div>
 			<div class="RegisterLabel2">password</div>
 			<div style="float:left; width:220px;">
-				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
+				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitOnEnter($(this).parent(),event,2)"   %>
 			</div>
 			<div id="Error" class="Error" style=" color:red; font-weight:bold">	
 				<%= flash[:notice] || flash[:error] %>
