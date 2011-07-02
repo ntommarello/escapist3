@@ -218,9 +218,13 @@ class AuthenticationsController < ApplicationController
     @user_params['temp_password'] = @user_params['password'] 
     if omniauth['extra']['user_hash']['hometown']
       @user_params['hometown'] = omniauth['extra']['user_hash']['hometown']['name']
+    else
+      @user_params['hometown'] = session[:location_city]
     end
     if omniauth['extra']['user_hash']['location']
       @user_params['location_city'] = omniauth['extra']['user_hash']['location']['name']
+    else
+      @user_params['location_city'] = session[:location_city]
     end
     if omniauth['extra']['user_hash']['birthday']
       @user_params['birthday'] = omniauth['extra']['user_hash']['birthday']
