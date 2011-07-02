@@ -42,11 +42,12 @@ class ApplicationController < ActionController::Base
       @fb_secret = @group.fb_secret
       @source = @group.url
     end
+    
     if @group
-      if @group.wepay_token.length > 0
+      if @group.wepay_token
         @wepay_token = @group.wepay_token
       end
-      if @group.wepay_group_id.length > 0
+      if @group.wepay_group_id
         @wepay_group_id = @group.wepay_group_id
       end
     end
