@@ -43,8 +43,8 @@ class ApplicationController < ActionController::Base
       @source = @group.url
     end
     if @group
-      if @group.we_pay_token.length > 0
-        @wepay_token = @group.we_pay_token
+      if @group.wepay_token.length > 0
+        @wepay_token = @group.wepay_token
       end
       if @group.wepay_group_id.length > 0
         @wepay_group_id = @group.wepay_group_id
