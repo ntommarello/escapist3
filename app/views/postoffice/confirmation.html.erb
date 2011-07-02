@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+	
+	<p>Hi <%=@first%>,</p>
+
+	<p>This is a confirmation that you've signed up to attend <a href="<%=@link%>"><%=strip_tags raw @title%></a> on <%=@date%>.</p> 
+
+	<p>We're looking forward to seeing you there!</p>
+
+	<p>The <%=APP_NAME%> Team</p>
+
+</body>
+</html>

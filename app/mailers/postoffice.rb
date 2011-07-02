@@ -61,8 +61,17 @@ class Postoffice < ActionMailer::Base
          
   end
   
-  
-  
-  
+  def confirmation(user,plan)
+    @first = user.first_name
+    
+    @title = plan.title
+    
+    @link = "http://#{APP_URL}/plans/#{plan.id}"
+    
+    @date = plan.start_time.strftime('%A, %B %e at %i:%M %p')
+
+    mail(:to      => user.email,
+        :subject => "Escapist e-Ticket Confirmation: #{plan.title}")
+  end
   
 end

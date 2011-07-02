@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110701225009) do
+ActiveRecord::Schema.define(:version => 20110702033848) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -133,6 +133,14 @@ ActiveRecord::Schema.define(:version => 20110701225009) do
   end
 
   add_index "deleted_users", ["id"], :name => "index_deleted_users_on_id"
+
+  create_table "digest_emails", :force => true do |t|
+    t.string   "email"
+    t.integer  "edition"
+    t.boolean  "joined"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "dislikes", :force => true do |t|
     t.integer  "user_id"

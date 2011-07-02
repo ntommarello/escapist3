@@ -10,10 +10,7 @@ class AuthenticationsController < ApplicationController
   end
 
   def create
-    
-    
-    
-    
+  
     
     omniauth = request.env["omniauth.auth"]
      @secret = ""

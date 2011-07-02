@@ -2704,6 +2704,23 @@ function maybePlan(button,render,plan_id) {
 }	
 	
 	
+function joinDigest(edition) {
+	if ($("#digest_email").val() == "" || $("#digest_email").val() == "email") {
+		$("#digest_email").focus()
+	} else {
+		$("#JoinDigest").html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
+			$("#JoinDigest").html("Join");
+			$("#SignUpCard").hide();
+			openRegister('Sign up for Escapist!'); 
+			$("#user_email",$("#RegisterForm")).val($("#digest_email").val())
+			
+			$.cookie('digestJoined', 'true', { expires: 7, path: '/schedule'});
+			
+		});
+	}
+}		
+	
 function watchMouseDown(button) {
 	label = $(button).html()
 	if (label == "Watch") {

@@ -95,9 +95,12 @@ function mycallbackfunc(v,m,f){
 
 
 function createBill() {
+	
+	<%if plan.title%>
+	
 	$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
-         {  token: "a8a520ec65", 
-            group_id: "11377",
+         {  token: "<%=@wepay_token%>", 
+            group_id: "<%=@wepay_group_id%>",
             buyer_email: "<%if current_user%><%=current_user.email%><%end%>",
             amount: price,
 			fee_payer: "recipient",
@@ -105,12 +108,13 @@ function createBill() {
 			message: "<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>",
 			silent: 0,
 			<%if current_user%>
-				rd: "http://<%=APP_URL%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
+				rd: "http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
 			<%end%>
-            reason: "<%=plan.title%> (x"+qty+")"
+            reason: "<%=strip_tags raw plan.title.gsub('&amp;','&')%> (x"+qty+")"
          } ,function(data) {
             window.location.href=data.result;
          });
+		<%end%>
 }
 
 

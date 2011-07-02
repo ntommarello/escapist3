@@ -63,6 +63,10 @@ class UsersController < ApplicationController
       check_cookies      
       location = request.env["HTTP_REFERER"] || root_path
 
+
+
+
+
       if location.include? "plans/"
         redirect_to :back
       else

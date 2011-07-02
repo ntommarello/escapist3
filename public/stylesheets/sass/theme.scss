@@ -3651,7 +3651,7 @@ background:rgba(0,51,255,.03);
 	border:1px solid #ddd;
 	@include rounded_corners(7px);
 	box-shadow: 5px 5px 1px 1px #eee, -5px -5px 1px 1px #eee, -5px 5px 1px 1px #eee, 5px -5px 1px 1px #eee,inset 3px 3px 1px 1px #fff, inset -3px -3px 1px 1px #fff, inset -3px 3px 1px 1px #fff, inset 3px -3px 1px 1px #fff;
-	cursor:pointer;
+
 	font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
 	font-size:18px;
@@ -3660,10 +3660,7 @@ background:rgba(0,51,255,.03);
 }
 
 .SignUpBorder:hover {
-	background:rgba(33,84,125,.8);
 	
-	text-shadow:0 0px 0 rgba(0,0,0,0.15);
-	color:#fff;
 }
 
 .TopIcon {

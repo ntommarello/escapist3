@@ -12,7 +12,10 @@ class ApplicationController < ActionController::Base
 
   def check_group
     
-   
+    @wepay_token = "a8a520ec65"
+    @wepay_group_id = "11377"
+    
+    
     @fb_id = FACEBOOK_APP_ID
     @fb_secret = FACEBOOK_SECRET
     @source = APP_URL
@@ -37,7 +40,14 @@ class ApplicationController < ActionController::Base
       @fb_secret = @group.fb_secret
       @source = @group.url
     end
-    
+    if @group
+      if @group.we_pay_token.length > 0
+        @wepay_token = @group.we_pay_token
+      end
+      if @group.wepay_group_id.length > 0
+        @wepay_group_id = @group.wepay_group_id
+      end
+    end
     
     #@group = Group.find(3)
     

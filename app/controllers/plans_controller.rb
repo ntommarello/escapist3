@@ -13,11 +13,18 @@ class PlansController < ApplicationController
   
   
   def confirmation
-      #ugly temp hack. to be replaced by callback
+      #ugly temp hack. to be replaced by callback. Need to figre out QTY.
       check = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],params[:user_id])
       if check
       else
         SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>params[:user_id])
+        
+        @user =  User.find(params[:user_id])
+        @plan = Plan.find(params[:plan_id])
+        
+        Postoffice.deliver_confirmation(@user,@plan)
+        
+        
       end
   end
   

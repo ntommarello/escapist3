@@ -3905,18 +3905,12 @@ span.continued {
   border-radius: 7px 7px 7px 7px;
   -webkit-background-clip: padding-box;
   box-shadow: 5px 5px 1px 1px #eeeeee, -5px -5px 1px 1px #eeeeee, -5px 5px 1px 1px #eeeeee, 5px -5px 1px 1px #eeeeee, inset 3px 3px 1px 1px white, inset -3px -3px 1px 1px white, inset -3px 3px 1px 1px white, inset 3px -3px 1px 1px white;
-  cursor: pointer;
   font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #21547E;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.8);
   font-size: 18px;
   background: #fff;
   background: rgba(0, 51, 255, 0.03); }
-
-.SignUpBorder:hover {
-  background: rgba(33, 84, 125, 0.8);
-  text-shadow: 0 0px 0 rgba(0, 0, 0, 0.15);
-  color: #fff; }
 
 .TopIcon {
   width: 18px;

@@ -5,6 +5,14 @@ class UserObserver < ActiveRecord::Observer
     #if achievement = Achievement.find_by_slug('early-adopter')
     #  SubscribedAchievement.create(:user => user, :achievement => achievement, :level => 1, :sort_order => 1)
     #end
+    
+    @checkdigest = DigestEmail.find_by_email(user.email)
+    if @checkdigest
+      @checkdigest.joined = true
+      @checkdigest.save
+    end
+    
+    
 
     Postoffice.newmember(user.email, user.authentication_token).deliver
 
