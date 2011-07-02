@@ -3962,8 +3962,12 @@ webkit-box-shadow: 1px 1px 0px 0px #eee, -1px -1px 0px 0px #eee, -1px 1px 0px 0p
 		@include lineargradient(#E76464, #D55E5E);
 }
 
-
-
+.UploadAvatarIcon {
+	text-align:center; position:absolute; width:300px; margin-top:-65px; cursor:pointer; height:28px; line-height:30px; color:green
+}
+.UploadAvatarIcon:hover {
+	opacity:.8;
+}
 
 
 	

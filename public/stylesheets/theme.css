@@ -4236,3 +4236,16 @@ span.continued {
 .RedB:active {
   background-image: -moz-linear-gradient(100% 100% 90deg, #e76464, #d55e5e);
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#d55e5e), to(#e76464)); }
+
+.UploadAvatarIcon {
+  text-align: center;
+  position: absolute;
+  width: 300px;
+  margin-top: -65px;
+  cursor: pointer;
+  height: 28px;
+  line-height: 30px;
+  color: green; }
+
+.UploadAvatarIcon:hover {
+  opacity: .8; }

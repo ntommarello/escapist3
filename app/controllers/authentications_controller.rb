@@ -100,6 +100,20 @@ class AuthenticationsController < ApplicationController
         if @user_params['facebook_link']
            current_user.facebook_link  = @user_params['facebook_link']
         end
+        
+        if @avatar_link
+          unless current_user.avatar_file_name
+            begin
+              tempfile = Tempfile.new("test")
+              tempfile.write open(@avatar_link).read.force_encoding('utf-8')
+              current_user.avatar  = tempfile
+            rescue
+            
+            end  
+          end
+        end
+        
+        
         current_user.save
         current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
         redirect_to user_path(current_user)

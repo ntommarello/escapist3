@@ -23,15 +23,16 @@
 			last signed in <%=@user.current_sign_in_at.strftime('%B %e')%>
 		</div>
 		<%if @editable%>
-			<div style="text-align:center; width:300px; margin-top:3px;">
-				<a id="UploadLink"  class="AppLink" href="#"> 
-					<%if @user.avatar_file_name.nil?%> 
-						Upload Photo 
-					<%else%> 
-						Replace Photo 
-					<%end%> 
+			<%if @user.avatar_file_name.nil?%>
+			<div class="UploadAvatarIcon">
+				<img src="/images/addavatar.png" style="width:31px; height:28px; float:left; margin-left:115px;"><div style="float:left">Upload</div>
+			</div>
+			<%else%>
+			<div style="text-align:center;  width:300px; margin-top:3px;">
+				<a id="UploadLink"  class="AppLink" href="#">Replace Photo 
 				</a>
 			</div>
+			<%end%>
 		<%end%>
 	</div>
 
