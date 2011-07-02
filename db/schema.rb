@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110702033848) do
+ActiveRecord::Schema.define(:version => 20110702044048) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -173,6 +173,8 @@ ActiveRecord::Schema.define(:version => 20110702033848) do
     t.string   "logo"
     t.string   "mailchimp_key"
     t.string   "mailchimp_list"
+    t.string   "wepay_token"
+    t.string   "wepay_group_id"
   end
 
   create_table "hosts", :force => true do |t|
