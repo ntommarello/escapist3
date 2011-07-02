@@ -4,8 +4,10 @@ class ApplicationController < ActionController::Base
  require 'valid_browser'
  include ValidBrowser
  
+ 
+ before_filter :check_group
   before_filter :browser_detect
-  before_filter :check_group
+  
   before_filter :locate_user
 
   
