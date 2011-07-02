@@ -72,6 +72,19 @@ class AuthenticationsController < ApplicationController
        end
        if omniauth['provider'] == "twitter"
          current_user.twitter_link = omniauth['user_info']['nickname']
+         
+         if @avatar_link
+            unless current_user.avatar_file_name
+              begin
+                tempfile = Tempfile.new("test")
+                tempfile.write open(@avatar_link).read.force_encoding('utf-8')
+                current_user.avatar  = tempfile
+              rescue
+
+              end  
+            end
+          end
+          
          current_user.save
        end
        
@@ -267,7 +280,7 @@ class AuthenticationsController < ApplicationController
     end
     
     if omniauth['user_info']['image']
-      @avatar_link =  omniauth['user_info']['image'].gsub("_normal", "_bigger")
+      @avatar_link =  omniauth['user_info']['image'].gsub("_normal", "")
       @user_params['small_twitter_pic'] = true
     end
   
