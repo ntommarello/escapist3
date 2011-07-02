@@ -71,6 +71,7 @@ class AuthenticationsController < ApplicationController
          current_user.save
        end
        if omniauth['provider'] == "twitter"
+         parse_twitter_data(omniauth)
          current_user.twitter_link = omniauth['user_info']['nickname']
          
          if @avatar_link
