@@ -96,6 +96,14 @@ class ApplicationController < ActionController::Base
   end
 
   def check_cookies 
+    
+    if session[:refer_id]
+      @user.referred_by = session[:refer_id]
+      @user.discount_active = true
+      session[:refer_id] = nil
+      @user.save
+    end
+    
   end
 
   def add_challenges_from_cookie(challenges, authored = false)

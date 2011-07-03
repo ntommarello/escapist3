@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110702044048) do
+ActiveRecord::Schema.define(:version => 20110703192739) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -356,6 +356,8 @@ ActiveRecord::Schema.define(:version => 20110702044048) do
     t.string   "app_version"
     t.text     "apply"
     t.text     "short_bio"
+    t.integer  "referred_by"
+    t.boolean  "discount_active"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"

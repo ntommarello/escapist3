@@ -6,6 +6,8 @@ class UserObserver < ActiveRecord::Observer
     #  SubscribedAchievement.create(:user => user, :achievement => achievement, :level => 1, :sort_order => 1)
     #end
     
+
+    
     @checkdigest = DigestEmail.find_by_email(user.email)
     if @checkdigest
       @checkdigest.joined = true

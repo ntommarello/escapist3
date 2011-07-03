@@ -55,11 +55,13 @@
 		<fb:facepile max-rows="1" width="300"></fb:facepile>
 	</div>
 	
-	<%if params[:refer_id]%>
-	<%@refer = User.find(params[:refer_id])%>
-	<%if @refer%>
-		<div style="font-size:16px; line-height:22px; margin-top:10px;"><b><%=@refer.first_name%> <%=@refer.last_name%></b> gave you a $5 discount off your next adventure when you sign up!</div>
-	<%end%>
+	<%if params[:refer_id] || session[:refer_id]%>
+		<%if params[:refer_id]%><%@id=params[:refer_id]%><%else%><%@id=session[:refer_id]%><%end%>
+		<%@refer = User.find_by_id(@id)%>
+		<%if @refer%>
+			<%session[:refer_id] = @refer.id%>
+			<div style="font-size:16px; line-height:22px; margin-top:10px;"><b><%=@refer.first_name%> <%=@refer.last_name%></b> gave you a $5 discount off your next adventure when you sign up!</div>
+		<%end%>
 	<%end%>
 	
 </div>

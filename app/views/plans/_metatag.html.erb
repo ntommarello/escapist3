@@ -7,11 +7,19 @@
 <%if @group%>
 	<meta property="og:site_name" content="<%=@group.name%>" /> 
 	<meta property="og:title" content="<%=strip_tags plan.title%>" /> 
-	<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>" /> 
+	<%if params[:refer_id]%>
+		<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>&refer_id=<%=refer_id%>" /> 
+	<%else%>
+		<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>" /> 
+	<%end%>
 <%else%>
 	<meta property="og:site_name" content="<%=APP_NAME%>" /> 
 	<meta property="og:title" content="<%=strip_tags plan.title%> | <%=APP_NAME%>" /> 
-	<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>" /> 
+	<%if params[:refer_id]%>
+		<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>&refer_id=<%=params[:refer_id]%>" /> 
+	<%else%>
+		<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>" /> 
+	<%end%>
 <%end%>
 	
 
