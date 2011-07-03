@@ -162,6 +162,7 @@ class AuthenticationsController < ApplicationController
         
 
         if user.save
+          @user = user
           check_cookies
           sign_in user
           current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
