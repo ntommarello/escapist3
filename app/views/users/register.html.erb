@@ -1,3 +1,21 @@
+<% content_for :head do %>
+	<meta property="fb:app_id" content="<%=@fb_id%>" /> 
+	<meta property="og:site_name" content="<%=APP_NAME%>" /> 
+	<meta property="og:title" content="<%=APP_NAME%>" /> 
+
+	<%if params[:refer_id]%>
+		<meta property="og:url" content="http://<%=APP_URL%>/register?refer_id=<%=params[:refer_id]%>" />	
+	<%else%>
+		<meta property="og:url" content="http://<%=APP_URL%>/register" /> 
+	<%end%>	
+
+	<meta property="og:type" content="website" /> 
+	<meta property="og:image" content="http://assets.stomp.io/images/10/thumb_50_original_sail3_hl2.jpg"/> 
+	<meta property="og:description" content="Join kick-ass adventures and meet awesome people.  Sign up now and save $5 off your next adventure." /> 
+	<meta property="fb:admins" content="14902644" />
+<% end %>
+
+
 <div style="width:700px; margin-left:auto; margin-right:auto">	
 	<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}", :font_size=>"32"}%>
 </div>

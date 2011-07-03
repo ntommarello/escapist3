@@ -12,20 +12,19 @@
 
 <%if full_editor%>
 
-<div id="<%=field_name%><%=append%>_def" onclick="$(this).hide(); $('#<%=field_name%><%=append%>').show();">
+<div id="<%=field_name%><%=append%>" class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
 <%=raw render_string_with_breaks(content)%>
-
-	<textarea id="<%=field_name%><%=append%>" name="<%=field_name%><%=append%>" rows="15" cols="80" style="width: 100%; display:none">
-		<%=raw render_string_with_breaks(content)%>
-	</textarea>
-	
 </div>
-
+<script>
+$(document).ready(function() {
+	$('#<%=field_name%><%=append%>').aloha();
+});
+</script>
 <%else%>
 
 	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
   
-			<span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span>
+			<p style="display: inline"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></p>
 	
 		    <%if extra_visibility%>
 				<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">

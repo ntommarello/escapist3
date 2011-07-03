@@ -8,9 +8,6 @@
 <% content_for :head do %>
 	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
 
-
-
-	
 <%end%>
 
 
@@ -88,7 +85,7 @@
 		<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
 			<div class="HighlightedTitle" style="margin-top:-2px; font-size:16px; ">Share with your friends!</div>
 			
-			<%if @plan.price and @plan.price > 0 and !@plan.application_required%>Send them discount code: JOINME42. They'll save 10%.<%end%></div>
+			<%if @plan.price and @plan.price > 0 and !@plan.application_required%>Send them discount code: JOINME42. They'll save $5.<%end%></div>
 		
 		
 		<div style="float:left; margin-left:3px; margin-top:5px">

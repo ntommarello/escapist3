@@ -2939,6 +2939,55 @@ function animateLabel(on) {
 	}
 }	
 
+function bioCounter(input) {
+	value = $(input).val().length;
+	
+	chars_left = 100 - value;
+	if (chars_left < 100) {
+		$("#BioCounter").show();
+		$("#BioCounter").html(chars_left);
+	} else {
+		$("#BioCounter").hide();
+	}
+	
+	if (chars_left < 0) {
+		$(input).val($(input).val().slice(0,100))
+		$("#BioCounter").html("0");
+	}
+	
+}
+
+function updateUser(id,field,value) {
+	
+	if (field == "short_bio") {
+		$('#short_bio').html(value)
+		$('#showShortBio').show();
+		$('#showShortBioBox').hide();
+	}
+	
+	if (field == "about_me") {
+		$('#about_me').html(value)
+		$('#showAboutMe').show();
+		$('#showAboutMeBox').hide();
+	}
+	
+	
+	
+	
+    $.ajax({
+        type: "POST",
+        url: "/users/"+id,
+        data: "_method=PUT&user["+field+"]=" + escape(value),
+        success: function(msg){
+			animateFlashMessage();
+        }
+     });
+}
+
+
+
+
+
 
 function CharacterCount(input) {
 	

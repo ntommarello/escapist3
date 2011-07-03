@@ -4,6 +4,8 @@
 	<%if @group%><b><%=@group.name%></b> is powered by Escapist.<%end%> Already have an account?  
 	<a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.
 </div>
+
+
 	
 <div class="registerRight">
 	<div class="registerBorder">
@@ -52,5 +54,13 @@
 	<div style="margin-top:10px; width:300px; font-size:10px;" >
 		<fb:facepile max-rows="1" width="300"></fb:facepile>
 	</div>
+	
+	<%if params[:refer_id]%>
+	<%@refer = User.find(params[:refer_id])%>
+	<%if @refer%>
+		<div style="font-size:16px; line-height:22px; margin-top:10px;"><b><%=@refer.first_name%> <%=@refer.last_name%></b> gave you a $5 discount off your next adventure when you sign up!</div>
+	<%end%>
+	<%end%>
+	
 </div>
 <div style="clear:both"></div>
