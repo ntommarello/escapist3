@@ -42,9 +42,9 @@
 		
 			<div>
 			<div style="position:absolute; height:80px;">
-				<a href="/<%=plan.user.username%>">
+				<a href="/<%=plan.organizers[0].username%>">
 				
-				<%= image_tag(plan.user.avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{plan.user.first_name}", :style=>"width:80px; height:80px; cursor:pointer; float:left; margin-right:1px;") %>
+				<%= image_tag(plan.organizers[0].avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{plan.organizers[0].first_name}", :style=>"width:80px; height:80px; cursor:pointer; float:left; margin-right:1px;") %>
 			
 				</a>
 				
