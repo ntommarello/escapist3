@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
     unless is_bot?(request)
       unless params[:action] == "upgrade_browser"
        unless valid_browser?
-        redirect_to '/upgrade_browser'
+        #redirect_to '/upgrade_browser'
        end
       end
     end
