@@ -49,7 +49,7 @@
 
 
 			<%if @signedup%>
-				<%@subtitle = "You've bought 1 ticket"%>	
+				<%@subtitle = "You are attending!"%>	
 			<%else%>
 				<%if @plan.seats_remaining < 10%>
 					<%@subtitle = @tickets_remaining%>	

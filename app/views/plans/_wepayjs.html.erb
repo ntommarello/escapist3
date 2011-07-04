@@ -37,12 +37,51 @@
 
 
 
+<form id="BB_BuyButtonForm" style="display:none" action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/830265948339379" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+    <input name="item_name_1" type="hidden" value="<%=strip_tags raw @plan.title%>"/>
+    <input name="item_description_1" type="hidden" value="<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>"/>
+    <input name="email-allowed" type="hidden" value="false"/>
+<input id="item_quantity_1"  name="item_quantity_1" type="hidden" value="1"/>
+	<%if current_user%>
+		<input name="merchant-private-data" type="hidden" value="<%=current_user.id%>"/>
+	<%end%>
+    <input id="item_price_1" name="item_price_1" type="hidden" value="5.95"/>
+    <input name="item_currency_1" type="hidden" value="USD"/>
+    <input name="_charset_" type="hidden" value="utf-8"/>
+    <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=830265948339379&amp;w=117&amp;h=48&amp;style=white&amp;variant=text&amp;loc=en_US" type="image"/>
+</form>
+
+
+
+<form id="PaypalForm" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_xclick">
+	<input type="hidden" name="business" value="683NJLTA6DXEN">
+	<input type="hidden" name="lc" value="US">
+	<input type="hidden" name="item_name" value="<%= strip_tags raw @plan.title%> on <%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>">
+	<%if current_user%>
+		<input type="hidden" name="custom" value="<%=current_user.id%>">
+	<%end%>
+	<input type="hidden" id="amount" name="amount" value="<%=@plan.price%>">
+	<input type="hidden" name="item_number" value="<%=@plan.id%>">
+	<input type="hidden" name="return" value="http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>" />
+	<input type="hidden" name="currency_code" value="USD">
+	<input type="hidden" name="button_subtype" value="services">
+	<input type="hidden" id="quantity" name="quantity" value="1" />
+	<input type="hidden" name="no_note" value="1" />
+	<input type="hidden" name="no_shipping" value="1" />
+	<input type="hidden" name="tax_rate" value="6.25">
+	<input type="hidden" name="notify_url" value="http://<%=APP_URL%>/ipn">
+	<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+
 <SCRIPT>
 plan_id=<%=plan.id%>
 qty=1;
+original_price = <%=plan.price%>;
 price=<%=plan.price%>;
-
-
 
 
 function roundNumber(num, dec) {
@@ -109,25 +148,36 @@ function mycallbackfunc(v,m,f){
 
 function createBill() {
 	
+	$("#amount").val(original_price)
+	$("#quantity").val(qty)
+	$("#PaypalForm").submit();
+	
+//	$("#item_quantity_1").val(qty)
+//	$("#item_price_1").val(original_price)
+	
+	
+	
+//	$("#BB_BuyButtonForm").submit();
+	
 	<%if plan.title%>
 	
-	$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
-         {  token: "<%=@wepay_token%>", 
-            group_id: "<%=@wepay_group_id%>",
-            buyer_email: "<%if current_user%><%=current_user.email%><%end%>",
-            amount: price,
-			fee_payer: "recipient",
-			ref_id: "<%=plan.id%>",
-			message: "<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>",
-			silent: 0,
-			<%if current_user%>
-				rd: "http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
-			<%end%>
-            reason: "<%=strip_tags raw plan.title.gsub('&amp;','&')%> (x"+qty+")"
-         } ,function(data) {
-            window.location.href=data.result;
-         });
-		<%end%>
+	//$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
+     //    {  token: "<%=@wepay_token%>", 
+      //      group_id: "<%=@wepay_group_id%>",
+      //      buyer_email: "<%if current_user%><%=current_user.email%><%end%>",
+       //     amount: price,
+	//		fee_payer: "recipient",
+	//		ref_id: "<%=plan.id%>",
+	//		message: "<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>",
+	//		silent: 0,
+	//		<%if current_user%>
+	//			rd: "http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
+	//		<%end%>
+      //      reason: "<%=strip_tags raw plan.title.gsub('&amp;','&')%> (x"+qty+")"
+     //    } ,function(data) {
+      //      window.location.href=data.result;
+      //   });
+	s	<%end%>
 }
 
 

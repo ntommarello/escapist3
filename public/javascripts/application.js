@@ -3265,8 +3265,10 @@ function ApplyReward(value) {
 function ReducePriceBy(amount,type) {
 	if (type == 1) { //percent
 		newprice = $('#unit_price').val() * amount;
+		original_price = original_price * amount;
 	} else { //dollar amount
 		newprice = $('#unit_price').val() - amount;	
+		original_price = original_price - amount;
 	}
 	
 	$('#unit_price').val(newprice);
