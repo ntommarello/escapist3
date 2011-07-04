@@ -46,9 +46,9 @@ class PlansController < ApplicationController
        if notify.acknowledge
            if notify.complete?
              
-             @user_id = params[:custom]
-             @plan_id = params[:item_number]
-             @qty = params[:quantity]
+             @user_id = params[:custom].to_i
+             @plan_id = params[:item_number].to_i
+             @qty = params[:quantity].to_i
              @amountpaid = params[:mc_gross]
              @email = params[:payer_email]
 

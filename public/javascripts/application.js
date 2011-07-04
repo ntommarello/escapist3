@@ -3254,7 +3254,7 @@ function ApplyReward(value) {
 		return;
 	}
 	if (value=='joinme42') {
-		ReducePriceBy(.90,1)
+		ReducePriceBy(5,2)
 		return;
 	}
 	

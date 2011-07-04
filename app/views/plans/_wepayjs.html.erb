@@ -63,7 +63,7 @@
 	<%end%>
 	<input type="hidden" id="amount" name="amount" value="<%=@plan.price%>">
 	<input type="hidden" name="item_number" value="<%=@plan.id%>">
-	<input type="hidden" name="return" value="http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>" />
+	<input type="hidden" name="return" value="http://<%=@source%>/plans/<%=@plan.id%>" />
 	<input type="hidden" name="currency_code" value="USD">
 	<input type="hidden" name="button_subtype" value="services">
 	<input type="hidden" id="quantity" name="quantity" value="1" />
