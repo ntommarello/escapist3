@@ -12,14 +12,27 @@
 		
 	</select>
 	
+
+	
 	<div style="clear:both; height:15px;"></div>
 	<span class="SubTitle" style="font-weight:normal; font-size:12px;"><b>Refund Policy</b>:  100% refund if requested, for any reason.</span>
 	
-	<div class="rewardlink" style="font-weight:normal" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Have a reward code?</a></div>
+	<%if current_user and current_user.discount_active%>
+	<div style="float:left">
+			<div style="font-weight:normal; float:left; " onclick="$(this).parent().hide(); ReducePriceBy(5,2)"><a href="#"  class="BlueLink">Apply $5 Discount</a></div>
+			<div style="float:left; font-weight:normal; margin-right:10px; margin-left:10px">|</div>
+		</div>
+	<%end%>
+	
+	<div class="rewardlink" style="font-weight:normal; float:left;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Have a reward code?</a></div>
 	<div class="RewardDiv" style="display:none">
 		<input class="RewardCode" type="textfield" style="font-size:12px;">
 		<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
 	</div>
+	<div style="clear:both"></div>
+
+	
+	
 </div>
 
 
@@ -39,7 +52,7 @@ function roundNumber(num, dec) {
 }
 
 
-function payBill() {
+function payBill(discount) {
  	
 	txt = $("#Payment").html();
 

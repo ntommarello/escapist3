@@ -30,7 +30,7 @@
 <%else%>
 	<%if current_user%>
 		<%if @plan.price and @plan.price > 0%>
-			<%@clickaction = "payBill();"%>
+			<%@clickaction = "payBill(#{current_user.discount_active});"%>
 		<%else%>
 			<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
 		<%end%>

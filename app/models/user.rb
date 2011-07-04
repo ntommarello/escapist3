@@ -44,15 +44,9 @@ class User < ActiveRecord::Base
   
   has_attached_file :avatar, attachment_attrs(
     :default_url => "/images/no_avatar.png",
-    :styles => { :thumb_40 => ["40x40#"], :thumb_50 => ["50x50#"], :thumb_90 => ["90x90#"], :thumb_150 => ["150x150#"], :thumb_350 => ["350x350#"] },
-    :convert_options => { :all => '-quality 75' }
+    :styles => { :thumb_40 => ["40x40#"], :thumb_50 => ["50x50#"], :rounded_90 => ["90x90#", :png], :rounded_50 => ["50x50#", :png], :thumb_90 => ["90x90#"], :thumb_150 => ["150x150#"], :thumb_350 => ["350x350#"] },
+    :convert_options => { :all => '-quality 75', :rounded_90 => Proc.new{self.convert_options}, :rounded_50 => Proc.new{self.convert_options} }
     )
- 
- 
-
-   
- 
- 
  
   scope :active, :conditions => ["active = ? and hidden_reputation > ?",true,50]
   
@@ -156,7 +150,15 @@ class User < ActiveRecord::Base
     self.about_me = self.about_me.strip
   end
   
-
+  def self.convert_options
+      trans = ""
+      px = 5
+      trans << " \\( +clone  -threshold -1 "
+      trans << "-draw 'fill black polygon 0,0 0,#{px} #{px},0 fill white circle #{px},#{px} #{px},0' "
+      trans << "\\( +clone -flip \\) -compose Multiply -composite "
+      trans << "\\( +clone -flop \\) -compose Multiply -composite "
+      trans << "\\) +matte -compose CopyOpacity -composite "
+    end
   
   
 end

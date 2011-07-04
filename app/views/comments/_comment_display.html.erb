@@ -4,7 +4,7 @@
 		<div class="commentBox" style="background-color:<%if  current_user and current_user.id == comment.user.id%>#CBD5C2<%end%>;">
 			<div style="float:left">
 				<a href="/<%=comment.user.username%>">
-					<%= image_tag(comment.user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer") %>
+					<%= image_tag(comment.user.avatar.url(:rounded_50), :class=>"Transparent rounded50", :style=>"width:50px; height:50px;  cursor:pointer") %>
 				</a>
 			</div>
 

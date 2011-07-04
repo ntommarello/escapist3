@@ -43,7 +43,9 @@
 			<div>
 			<div style="position:absolute; height:80px;">
 				<a href="/<%=plan.user.username%>">
-				<%= image_tag(plan.user.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>"Hosted by #{plan.user.first_name}", :style=>"width:80px; height:80px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
+				
+				<%= image_tag(plan.user.avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{plan.user.first_name}", :style=>"width:80px; height:80px; cursor:pointer; float:left; margin-right:1px;") %>
+			
 				</a>
 				
 			</div>

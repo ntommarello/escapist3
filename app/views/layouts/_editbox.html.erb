@@ -58,11 +58,30 @@ $(document).ready(function() {
 		});
 	<%end%>
 	
+	<%if field_name == "short_bio"%>
+		$('#<%=field_name%><%=append%>').keyup(function(){  
 
-	
+			value = $(this).html().length;
+
+			chars_left = 100 - value;
+			if (chars_left < 100) {
+				$("#BioCounter").show();
+				$("#BioCounter").html(chars_left);
+			} else {
+				$("#BioCounter").hide();
+			}
+
+			if (chars_left < 0) {
+				$(this).html($(this).html().slice(0,100))
+				$("#BioCounter").html("0");
+			}
+			
+		 });
+	<%end%>
 	
 	$('#<%=field_name%><%=append%>').blur(function(){    
 
+		$("#BioCounter").hide();
 	   <%if required%>
 			if ($(this).html() == "") {
 				$(this).html("Required")

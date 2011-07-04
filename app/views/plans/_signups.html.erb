@@ -3,7 +3,7 @@
 <%for host in hosts%>
 <div style="float:left">
 	<a href="/<%=host.username%>">
-		<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
+		<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:90px; height:90px; cursor:pointer") %>
 	</a>
 </div>
 <div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
@@ -36,13 +36,13 @@
 
 	<%for host in hosts%>
 	<a href="/<%=host.username%>">
-		<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>host.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
+		<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>host.first_name, :style=>"width:90px; height:90px; margin:2px; cursor:pointer") %>
 	</a>
 	<%end%>
 	
 	<%for person in attendees%>
 		<a href="/<%=person.username%>">
-		<%= image_tag(person.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
+		<%= image_tag(person.avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>person.first_name, :style=>"width:90px; height:90px;  margin:2px;cursor:pointer") %>
 		</a>
 	<%end%>
 <%end%>
