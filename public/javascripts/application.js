@@ -2470,6 +2470,27 @@ else
    return true;
 }
 
+function submitDigestOnEnter(myfield,type,edition)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
+
+if (keycode == 13)
+   {
+	
+	if(type==1) {
+		joinCreateDigest(88)
+	} else {
+		joinDigest(edition)
+	}
+   }
+else
+   return true;
+}
+
+
 
 function toggleMenu(button,layer) {
 
@@ -2720,6 +2741,19 @@ function joinDigest(edition) {
 		});
 	}
 }		
+	
+function joinCreateDigest(edition) {
+	if ($("#digest_email").val() == "" || $("#digest_email").val() == "email") {
+		$("#digest_email").focus()
+	} else {
+		$("#JoinDigest").html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
+			$("#invite").html("<b>Thanks!  We'll be in touch.</b>")
+			
+		});
+	}
+}	
+	
 	
 function watchMouseDown(button) {
 	label = $(button).html()

@@ -25,7 +25,7 @@
 				
 					<div  style="text-align:center; line-height:25px; margin-left:10px;">Learn when we add new <br>adventures in <%=session[:dropdown_city]%>
 						<div style="margin-top:10px; width:266px; margin-left:auto; margin-right:auto">	
-							<textarea id="digest_email" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox" style="float:left; height:20px; margin-left:0px; line-height:20px; float:left;  color:#ccc;margin-top:10px; width:190px; " onfocus="if ($(this).val()=='email') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('email');  $(this).css('color','#ccc')}">email</textarea>
+							<textarea id="digest_email" type="textfield"  onKeyPress="return submitDigestOnEnter(this,2,<%=session[:dropdown_city_value]%>)" class="ShadowedTextBox" style="float:left; height:20px; margin-left:0px; line-height:20px; float:left;  color:#ccc;margin-top:10px; width:190px; " onfocus="if ($(this).val()=='email') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('email');  $(this).css('color','#ccc')}">email</textarea>
 							
 							<div  class="WhiteActiveBorder"  >
 								<div unselectable="on" class="LightGrayButton" style="width:50px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="joinDigest(<%=session[:dropdown_city_value]%>)">

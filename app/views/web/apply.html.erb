@@ -2,147 +2,72 @@
 	setTimeout("switchMenuBar($('#CreateLink'),1);",10);
 </script>
 
-<div class="HighlightedTitle">Create & Share Your Adventures</div>
-<div style="margin-top:7px" class="SubTitle">Coming soon: create your own adventures! Apply for an invitation.</div>
 
+<div class="HighlightedTitle" style="margin-left:auto; font-size:32px; margin-right:auto; width:900px; text-align:Center; height:50px; line-height:50px;">Create an Adventure Web Site in Minutes</div>
 
-<div style="float:left; width:310px; margin-left:10px; margin-top:40px;">
-
-
-	<%if !current_user%>
+<div class="CreateBox">
+	<div class="CreateBoxShadow"></div>
+	<div style="margin-top:-25px; float:left"><A target="_blank" href="http://startupworkaway.com/"><img src="/images/create.png" style="margin-top:1px; margin-left:1px;height:348px; width:540px; border:0"></a></div>
 	
-	<div class="HighlightedTitle" style="font-size:15px">Create an Account</div>
-		<div style="padding-top:1px; padding-bottom:15px;">Already have an account?  <a href="#" onclick="openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
-	
-	<%@user = User.new%>
-     	<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
-			<div class="RegisterLabel2" style="margin-top:8px">full name</div>
-			<div style="float:left; width:150px;"><input id="name" name="name" type="textfield" class="ShadowedTextBox" style="width:320px" size="30"></div>
-			<div style="clear:both; position:relative; height:10px; "></div>
-
-			<div class="RegisterLabel2" style="margin-top:8px">email</div>
-			<div style="float:left; width:150px;"><%= form.text_field :email, :class => "ShadowedTextBox", :style=>"width:320px" %></div>
-
-			<div style="clear:both; position:relative; height:10px; "></div>
-
-				<div class="RegisterLabel2" style="margin-top:8px">password</div>
-			<div style="float:left; width:220px;"><%= form.password_field :password, :class => " ShadowedTextBox", :style=>"width:320px", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
-				
-					<div id="Error" style=" color:red; font-weight:bold">	
-						<%= flash[:notice] || flash[:error] %>
-					</div>
-					
-				</div>
-				<div style="clear:both; position:relative; height:5px; "></div>
-
-				
-				<div class="HighlightedTitle" style="font-size:15px; margin-top:20px;">Adventure Designer Application</div>
-				<div style="width:400px; margin-bottom:5px; margin-top:5px">Please describe an adventure you'd like to organize. How will it be fun? Where is it? How many people can go? How much will it cost?</div>
-				<textarea id="user_apply" name="user[apply]" style="width:400px; height:100px;" class="ShadowedTextBox"></textarea>
-	
-	
+	<div style="float:left; margin-left:35px; width:300px;">
+		<div class="HighlightedTitle" style="font-size:22px">Coming Fall 2011</div>
+		<div style="font-size:16px; line-height:22px;">
 		
-				<div class="RegisterBox">
-
-						<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister()" style="margin-left:140px; width:120px">
-							<div unselectable="on" class="GreenButton" >
-									<div id="registerbutton" class="InnerGreenBorder">
-										Apply
-									</div>
-								</div>
+			<ul style="margin-left:-5px">
+				<li>Enjoy meeting awesome people from around the world?</li><br>
+				<li>Like to earn cash while having fun?</li><br>
+				<li>Are you the life of the party, and like spreading the joy around?</li>
+			</ul>
+			
+			<div id="invite">
+			<b>Ask for an invite</b><br>
+				<span style="font-size:13px">We're in beta testing.  Request early access.</span>
+			
+			
+			
+				<div style="width:266px;">	
+					<textarea id="digest_email" type="textfield"  onKeyPress="return submitDigestOnEnter(this,1,0)" class="ShadowedTextBox" style="float:left; height:20px; margin-left:0px; line-height:20px; float:left;  color:#ccc;margin-top:5px; width:190px; " onfocus="if ($(this).val()=='email') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('email');  $(this).css('color','#ccc')}">email</textarea>
+					
+					<div  class="WhiteActiveBorder"  >
+						<div unselectable="on" class="LightGrayButton" style="width:50px; margin-left:3px; float:left;height:34px; margin-top:4px; line-height:34px; font-size:12px " onclick="joinCreateDigest(88)">
+							<div id="JoinDigest" class="InnerLightGrayBorder"style="height:32px;" >
+								Submit
 							</div>
-							
-
-					<div style="float:left; margin-top:10px; clear:both">
+						</div>
 					</div>
+					
 				</div>
-
-				<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
-
-
-
-			
-
-
-	
-
-
-		<% end %>
-		
-				<%else%>
-				
-				
-
-			
-						<%if current_user.apply%>
-								<div class="HighlightedTitle" style="font-size:15px;">Your Application</div>
-
-						
-					<%@user = current_user%>
-					<%@editable = true%>
-	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"apply", :content=>@user.apply, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
-
-
-						<%else%>
-						<%@user = current_user%>
-					     	<% form_for @user, :html => { :id => 'RegisterForm3' }  do |form| %>
-								<div class="HighlightedTitle" style="font-size:15px;">Adventure Designer Application</div>
-
-						
-					<div style="width:400px; margin-bottom:5px; margin-top:5px">Please describe an adventure you'd like to organize. How will it be fun? Where is it? How many people can go? How much will it cost?</div>
-					<textarea id="user_apply" name="user[apply]" style="width:400px; height:100px;" class="ShadowedTextBox"></textarea>
-
-
-
-					<div class="RegisterBox">
-
-							<div id="SignIn"  class="WhiteActiveBorder"  style="margin-left:300px; width:120px" onclick="$('#RegisterForm3').submit()">
-								<div unselectable="on" class="GreenButton" >
-										<div id="registerbutton" class="InnerGreenBorder">
-											Apply
-										</div>
-									</div>
-								</div>
-
-
 				</div>
 				
-				<%end%>
-				
-				<%end%>
-						
-	<%end%>
-	
-	
-
-		
+			</div>
+	</div>
+	<div style="clear:both"></div>
 </div>
-
-<div style="float:right; width:200px; margin-right:50px;">
-	<div style="float:right; margin-top:20px; margin-left:0px">
-
-		<div class="SidePaper">
-			<div style="text-align:center; padding-top:15px; font-size:15px; line-height:19px; font-weight:bold; color:#5591C3; ; 	text-shadow:#FFFFFF 0 1px 0;">Help people live more adventurously</div>
-					<div style=" padding-top:10px; padding-left:20px; padding-right:20px;  color:#8F8F8F; 	text-shadow:#FFFFFF 0 1px 0;"><div style="margin-bottom:10px;">Spread the joy.  Create and sell awesome experiences.</div>
-
-			
-					<div class="CreateScoreBox" ><img src="/images/icon_dollar.png"></div>
-					<div style="float:left; margin-left:10px; width:115px; padding-top:19px; color:#558CBF; margin-top:0px">Get paid to have fun! Keep 90% of the revenue you earn.</div>
-					<div style="clear:both"></div>
-					
-					<div class="CreateScoreBox"><img src="/images/icon_monkey.png"></div>
-					<div style="float:left; margin-left:10px; width:110px; padding-top:19px; color:#558CBF">Meet awesome people from around the world</div>
-					<div style="clear:both"></div>
-					
-						
-									<div class="CreateScoreBox" style=""><img src="/images/icon_easy.png"></div>
-									<div style="float:left; margin-left:10px; width:110px; padding-top:19px; color:#558CBF">It's easy!  Set up your own .com with a couple clicks.</div>
-									<div style="clear:both"></div>
-									
-										</div>
-									
-		</div>
-
+	<div style="clear:both"></div>
+<div style="width:900px; margin-top:10px;margin-left:auto; margin-right:auto">
+	
+	<div style="float:left; margin-left:20px;">
+	<div class="CreateScoreBox" style=""><img src="/images/icon_easy.png"></div>
+	<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF">
+		<div class="HighlightedTitle" style="font-size:14px;">It's gorgeous and easy!</div>
+		Set up your own .com with a couple of clicks. Customize it as you like.
+	</div>
 	</div>
 	
+	<div class="CreateScoreBox" ><img src="/images/icon_dollar.png"></div>
+	<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF; margin-top:0px">
+		<div class="HighlightedTitle" style="font-size:14px;">Shopping Cart</div>
+		Billing system is seamlessly integrated. We take care of the hassle.
+	</div>
+						
+
+						<div class="CreateScoreBox"><img src="/images/icon_monkey.png"></div>
+						<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF">
+							<div class="HighlightedTitle" style="font-size:14px;">Cross-Promoted on Escapist</div>
+							Meet awesome escapists from around the world!</div>
+						
+	
+	
 </div>
+
+	
