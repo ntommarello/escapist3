@@ -2,6 +2,7 @@
 
 class PlansController < ApplicationController
   
+  include ActiveMerchant::Billing::Integrations
   
   
   include GeoKit::Geocoders
@@ -35,6 +36,42 @@ class PlansController < ApplicationController
         
         
       end
+  end
+  
+  
+  def paypal_ipn
+    
+    if request.post?
+       notify = Paypal::Notification.new(request.raw_post)
+       if notify.acknowledge
+           if notify.complete?
+             
+             @user_id = params[:custom]
+             @plan_id = params[:item_number]
+             @qty = params[:quantity]
+             @amountpaid = params[:mc_gross]
+             @email = params[:payer_email]
+
+             #ugly temp hack. to be replaced by callback. Need to figre out QTY.
+             check = SubscribedPlan.find_by_plan_id_and_user_id(@plan_id,@user_id)
+             unless check
+               SubscribedPlan.create(:plan_id => @plan_id, :user_id=>@user_id, :num_guests=>@qty)
+               @user =  User.find(params[:user_id])
+               @plan = Plan.find(params[:plan_id])
+
+               if @plan.price and @plan.price > 0
+                 if @user.discount_active == true
+                   @user.discount_active = false
+                   @user.save
+                 end 
+               end
+
+               Postoffice.deliver_confirmation(@user,@plan)
+              end
+           end
+       end
+       render :nothing => true
+     end
   end
   
   
