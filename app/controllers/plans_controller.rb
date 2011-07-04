@@ -56,8 +56,8 @@ class PlansController < ApplicationController
              check = SubscribedPlan.find_by_plan_id_and_user_id(@plan_id,@user_id)
              unless check
                SubscribedPlan.create(:plan_id => @plan_id, :user_id=>@user_id, :num_guests=>@qty)
-               @user =  User.find(params[:user_id])
-               @plan = Plan.find(params[:plan_id])
+               @user =  User.find(@user_id)
+               @plan = Plan.find(@plan_id)
 
                if @plan.price and @plan.price > 0
                  if @user.discount_active == true
