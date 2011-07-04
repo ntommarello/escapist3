@@ -13,7 +13,7 @@ class Plan < ActiveRecord::Base
   acts_as_mappable
   
   def has_signedup?(user)
-    subscribed_plans.find(:first, :conditions=>["user_id=? and maybe != 1",user.id])
+    subscribed_plans.find(:first, :conditions=>["user_id=?",user.id])
   end
   
   def has_maybed?(user)

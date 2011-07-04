@@ -85,6 +85,7 @@ match '/auth/:provider/callback' =>'authentications#create'
   resources :dislikes
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
   resources :plans
+  match "plans/:id", :controller => 'plans', :action => 'show', :via => [:get, :post]
   resources :digest_emails
   resources :subscribed_plans
   resources :watched_plans
