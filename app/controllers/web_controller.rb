@@ -142,14 +142,11 @@ class WebController < ApplicationController
  def upgrade_browser
    
    
- 	if valid_browser?
 
- 		redirect_to "/"
- 	else
  	
    render :layout=>false
    
- end
+
  end
   
 

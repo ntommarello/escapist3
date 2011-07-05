@@ -76,10 +76,11 @@ class ApplicationController < ActionController::Base
     @browser = Browser.new(:ua => request.env["HTTP_USER_AGENT"], :accept_language => "en-us")
     @user_agent = UserAgent.parse(request.user_agent)
     
+    @old_browser = false
     unless is_bot?(request)
       unless params[:action] == "upgrade_browser"
        unless valid_browser?
-        #redirect_to '/upgrade_browser'
+         @old_browser = true
        end
       end
     end

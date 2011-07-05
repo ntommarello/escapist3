@@ -114,7 +114,14 @@
 			
 	<%if params[:action] != "new_home"%>
 		<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
-			<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+			
+			<%if @old_browser%>
+				<div style="position:relative;  margin-bottom:10px; width:100%; border-bottom:1px solid #999; margin-top:-25px; height:25px; color:#000; line-height:25px; font-weight:bold; text-align:center; background:yellow; z-index:0">Your Internet browser is not supported.   Please  <a href="/upgrade_browser">upgrade</a> to a modern browser.</div>
+			<%else%>
+				<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+			<%end%>
+			
+			
 			<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
 			<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
 		
@@ -124,6 +131,11 @@
 		</div>
 	<%else%>
 		<div ONCLICK="closeUserMenu()">
+			
+			<%if @old_browser%>
+				<div style="position:absolute; width:100%; border-bottom:1px solid #999; margin-top:1px; height:25px; color:#000; line-height:25px; font-weight:bold; text-align:center; background:yellow; z-index:1000">Your Internet browser is not supported.   Please  <a href="/upgrade_browser">upgrade</a> to a modern browser.</div>
+			<%end%>	
+			
 			<%= yield%>
 		</div>
 	<%end%>
