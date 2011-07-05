@@ -77,14 +77,14 @@ class ApplicationController < ActionController::Base
     @user_agent = UserAgent.parse(request.user_agent)
     
     @old_browser = false
-    unless is_bot?(request)
-      unless params[:action] == "upgrade_browser"
+    #unless is_bot?(request)
+      #unless params[:action] == "upgrade_browser"
        unless valid_browser?
          @old_browser = true
        end
-      end
-    end
-      
+      #end
+    #end
+
   end
   
   protected
