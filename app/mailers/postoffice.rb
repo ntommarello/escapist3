@@ -68,7 +68,7 @@ class Postoffice < ActionMailer::Base
     
     @link = "http://#{APP_URL}/plans/#{plan.id}"
     
-    @date = plan.start_time.strftime('%A, %B %e at %i:%M %p')
+    @date = plan.start_time.strftime('%A, %B %e at %I:%M %p')
 
     mail(:to      => user.email,
         :subject => "Escapist e-Ticket Confirmation: #{plan.title}")
