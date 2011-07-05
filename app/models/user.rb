@@ -142,7 +142,7 @@ class User < ActiveRecord::Base
 
   def capitalize_names
     self.first_name = first_name.titleize
-    self.last_name = last_name.capitalize
+    self.last_name = last_name.slice(0,1).capitalize + last_name.slice(1,last_name.length);
     set_slug  
   end
   
