@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     for group in groups
-      if @domain.include? group.domain
+      if @domain.include? group.url
         @group = group
         @fb_id = group.fb_id
         @fb_secret = group.fb_secret
@@ -35,8 +35,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-  
-    
   end
 
 
