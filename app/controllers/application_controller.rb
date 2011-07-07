@@ -24,39 +24,15 @@ class ApplicationController < ActionController::Base
 
     @domain = URI.parse(request.url).host
       
-    if @domain.include? "startupworkaway"
-      @group = Group.find(1)
-      @fb_id = @group.fb_id
-      @fb_secret = @group.fb_secret
-      @source = @group.url
-    end
-    if @domain.include? "tropicaljobhunt"
-      @group = Group.find(2)
-      @fb_id = @group.fb_id
-      @fb_secret = @group.fb_secret
-      @source = @group.url
-    end
-    if @domain.include? "connectorcampfire"
-      @group = Group.find(3)
-      @fb_id = @group.fb_id
-      @fb_secret = @group.fb_secret
-      @source = @group.url
-    end
+    groups = Group.find(:all)  
     
-    if @group
-      if @group.wepay_token
-        @wepay_token = @group.wepay_token
-      end
-      if @group.wepay_group_id
-        @wepay_group_id = @group.wepay_group_id
-      end
+    for group in groups
+      if @domain.include? group.domain
+        @group = group
+        @fb_id = group.fb_id
+        @fb_secret = group.fb_secret
+        @source = group.url
     end
-    
-    #@group = Group.find(3)
-    
-    #dev
-    #@fb_id = "164081146992153";
-    #@fb_secret = "55a03475946d67b6f761c48da2f59cbe";
 
   
     
