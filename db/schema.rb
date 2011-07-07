@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110707023148) do
+ActiveRecord::Schema.define(:version => 20110707033628) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20110707023148) do
     t.string   "mailchimp_list"
     t.string   "wepay_token"
     t.string   "wepay_group_id"
+    t.string   "paypal_email"
   end
 
   create_table "hosts", :force => true do |t|

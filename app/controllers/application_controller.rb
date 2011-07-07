@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
         @fb_id = group.fb_id
         @fb_secret = group.fb_secret
         @source = group.url
+      end
     end
 
   
