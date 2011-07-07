@@ -20,8 +20,6 @@
    method: 'stream.share',
    u: '<%= plan_url(@plan) %>'
    };
-
-
 </script>
 
 
@@ -85,7 +83,9 @@
 		<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
 			<div class="HighlightedTitle" style="margin-top:-2px; font-size:16px; ">Share with your friends!</div>
 			
-			<%if @plan.price and @plan.price > 0 and !@plan.application_required%>Send them discount code: JOINME42. They'll save $5.<%end%></div>
+			<%if @plan.price and @plan.price > 0 and !@plan.application_required and @plan.discount_enabled%>
+			Send them discount code: JOINME42. They'll save $5.
+			<%end%></div>
 		
 		
 		<div style="float:left; margin-left:3px; margin-top:5px">
@@ -93,16 +93,16 @@
 			
 			<%@twitter_user = TWITTER_NAME%>
 			<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-			<%if  (@plan.price and @plan.price < 1) or @plan.application_required%>
+			<%if  (@plan.price and @plan.price < 1 and @plan.discount_enabled) or @plan.application_required %>
 				<%@twitter_text = "#{@twitter_text}!"%>
 			<%else%>
 				<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
 			<%end%>
 			
 			<%if current_user%>
-				<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}&refer_id=#{current_user.id}" %>
+				<%@data_url = "http://#{APP_URL}/" %>
 			<%else%>
-				<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}" %>
+				<%@data_url = "http://#{APP_URL}/" %>
 			<%end%>
 			
 			<%if @plan.group%>
@@ -114,9 +114,9 @@
 				<%end%>
 				<%if @plan.group.url%>
 					<%if current_user%>
-						<%@data_url = "#{@plan.group.url}?refer_id=#{current_user.id}"%>
+						<%@data_url = "http://#{@plan.group.url}"%>
 					<%else%>
-						<%@data_url = @plan.group.url%>
+						<%@data_url = "#{@plan.group.url}"%>
 					<%end%>
 				<%end%>
 			<%end%>
@@ -162,7 +162,7 @@
 						<div style="clear:both"></div>
 						<div class="DarkBlueLabel" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; ">
 							<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
-							<div style="  "><%=@timestring%></div>
+							<div style="line-height:18px;"><%=@timestring%></div>
 						</div>
 					</div>
 					

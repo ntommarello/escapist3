@@ -3472,7 +3472,7 @@ function loadInfo(index) {
 		
 		
 		new_month_index = new_start_time.getUTCMonth()+1;
-		new_month = getShortMonth(month_index).toLowerCase();
+		new_month = getShortMonth(new_month_index).toLowerCase();
 		new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
 		new_day = new_start_time.getUTCDate()
 		$('#next_plan_link').html(next_plan.title+' on '+new_month+' '+new_day);

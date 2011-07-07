@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110703192739) do
+ActiveRecord::Schema.define(:version => 20110707023148) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20110703192739) do
     t.string   "short_location"
     t.string   "short_desc"
     t.text     "application_wufoo"
+    t.boolean  "discount_enabled"
   end
 
   create_table "subscribed_achievements", :force => true do |t|
