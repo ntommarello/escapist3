@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     
     @wepay_token = "a8a520ec65"
     @wepay_group_id = "11377"
-    
+    @paypal_email = "683NJLTA6DXEN"
     
     @fb_id = FACEBOOK_APP_ID
     @fb_secret = FACEBOOK_SECRET
@@ -32,9 +32,11 @@ class ApplicationController < ActionController::Base
         @fb_id = group.fb_id
         @fb_secret = group.fb_secret
         @source = group.url
+        if @group.paypal_email
+          @paypal_email = @group.paypal_email
+        end
       end
     end
-
   end
 
 
