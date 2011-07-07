@@ -65,6 +65,13 @@ class PlansController < ApplicationController
                    @user.save
                  end 
                end
+               
+               if @plan.group
+                 if @plan.group.mailchimp_key and @plan.group.mailchimp_list
+                   h = Hominid::API.new(@plan.group.mailchimp_key)
+                   h.list_subscribe(@plan.group.mailchimp_list, @user.email, {'FNAME' => @user.first_name, 'LNAME' => @user.last_name}, 'html', false, true, true, false)
+                 end
+               end
 
                Postoffice.deliver_confirmation(@user,@plan)
               end

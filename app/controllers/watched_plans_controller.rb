@@ -10,7 +10,7 @@ class WatchedPlansController < ApplicationController
         WatchedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :group_id=>@plan.group_id)
       end
       
-      if @plan.group.mailchimp_key
+      if @plan.group.mailchimp_key and @plan.group.mailchimp_list
         h = Hominid::API.new(@plan.group.mailchimp_key)
         
         h.list_subscribe(@plan.group.mailchimp_list, current_user.email, {'FNAME' => current_user.first_name, 'LNAME' => current_user.last_name}, 'html', false, true, true, false)

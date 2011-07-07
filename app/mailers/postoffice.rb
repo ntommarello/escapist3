@@ -61,6 +61,7 @@ class Postoffice < ActionMailer::Base
          
   end
   
+  
   def confirmation(user,plan)
     @first = user.first_name
     
@@ -70,8 +71,12 @@ class Postoffice < ActionMailer::Base
     
     @date = plan.start_time.strftime('%A, %B %e at %I:%M %p')
 
+    host = plan.organizers[0]
+
     mail(:to      => user.email,
+        :bcc => host.email,
         :subject => "Escapist e-Ticket Confirmation: #{plan.title}")
   end
+  
   
 end
