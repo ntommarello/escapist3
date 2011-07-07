@@ -93,7 +93,7 @@
 			
 			<%@twitter_user = TWITTER_NAME%>
 			<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-			<%if  (@plan.price and @plan.price < 1 and @plan.discount_enabled) or @plan.application_required %>
+			<%if  (@plan.price and @plan.price < 1) or @plan.application_required or !@plan.discount_enabled%>
 				<%@twitter_text = "#{@twitter_text}!"%>
 			<%else%>
 				<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
@@ -241,7 +241,7 @@
 										<%end%>
 											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
 
-											<p><br><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></p>
+											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
 
 											<%if @editable%>
 
