@@ -52,7 +52,7 @@
 </form>
 
 
-
+<%if @plan.group%><%if @plan.group.paypal_email%><%@paypal_email = @plan.group.paypal_email%><%end%><%end%>
 <form id="PaypalForm" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post">
 	<input type="hidden" name="cmd" value="_xclick">
 	<input type="hidden" name="business" value="<%=@paypal_email%>">
