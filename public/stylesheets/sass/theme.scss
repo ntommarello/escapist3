@@ -1677,7 +1677,7 @@ color:$default-link-color;
 	display:none; position:absolute; padding:0px; line-height:23px;  z-index:1000; border:1px solid  $top-border-color; margin-top:40px;  background-color:white;
     background-color:#fff;
 	@include noselect();
-	z-index:100;
+	z-index:900;
 
 }
 .smallTip {

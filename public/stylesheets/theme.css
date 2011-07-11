@@ -1715,7 +1715,7 @@ a:hover {
   -webkit-user-select: none;
   -o-user-select: none;
   user-select: none;
-  z-index: 100; }
+  z-index: 900; }
 
 .smallTip {
   font-size: 10px;
