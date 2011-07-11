@@ -196,6 +196,39 @@ class ApplicationController < ActionController::Base
     end
   end
 	
+	
+	
+	
+	def remove_end_breaks(text)  
+       if text != nil and text != ""
+           text.strip!
+
+           index = text.rindex("<br>")
+
+           while index != nil and index == text.length - 4
+               text = text[0, text.length - 4]
+
+               text.strip!
+
+               index = text.rindex("<br>")
+           end
+
+           text.strip!
+
+           index = text.index("<br>")
+
+           while index != nil and index == 0
+               text = test[4, text.length]
+
+               text.strip!
+
+               index = text.index("<br>")
+           end
+       end
+
+       return text
+   end
+   
   
   
 end

@@ -197,6 +197,11 @@ class PlansController < ApplicationController
   end
   
   
+  
+  
+ 
+  
+  
   def update
     
   
@@ -206,7 +211,8 @@ class PlansController < ApplicationController
     
     params[:plan].each  do |key, value| 
       unless key == "image"
-       params[:plan][key] = CGI::unescape(value)
+        params[:plan][key] = CGI::unescape(value)
+        params[:plan][key] = remove_end_breaks(params[:plan][key])
       end 
     end
     

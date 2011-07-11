@@ -87,6 +87,7 @@ class UsersController < ApplicationController
     params[:user].each  do |key, value| 
        unless key == "avatar"
         params[:user][key] = CGI::unescape(value) 
+        #params[:user][key] = remove_end_breaks(params[:user][key])
        end
      end
      
