@@ -22,13 +22,13 @@ $(document).ready(function() {
 </script>
 <%else%>
 
-	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
+	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc; padding-left:2px"<%end%>>
   
-			<p style="display: inline"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></p>
+			<div style="display: inline"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></div>
 	
 		    <%if extra_visibility%>
-				<span id="ShowEdit" onclick="$('#<%=field_name%>').focus();">
-					<img src="/images/edit_14.gif" class="EditIcon"  >
+				<span id="ShowEdit"  onclick="$('#<%=field_name%>').focus();">
+					<img  class="EditIcon" src="/images/ok_pen1.png"   >
 				</span>
 			<%end%>
 	
@@ -57,6 +57,10 @@ $(document).ready(function() {
 		    }, 1);
 		});
 	<%end%>
+	
+		$('#<%=field_name%><%=append%>').focus(function(){ 
+			oldValue = $(this).html();
+	});
 	
 	<%if field_name == "short_bio"%>
 		$('#<%=field_name%><%=append%>').keyup(function(){  
@@ -109,18 +113,23 @@ $(document).ready(function() {
 			$(this).html(cleanedValue)
 	
 	     var newValue = escape($(this).html()); 
-	     $.ajax({
-	        type: "POST",
-	        url: "/<%=model%>s/<%=id%>",
-	        data: "_method=PUT&<%=model%>[<%=field_name%>]=" + escape(newValue),
-	        success: function(msg){
-				animateFlashMessage();
-				
-			
-				
-	        }
-	     });
+
 	
+		if (oldValue != $(this).html()) {
+			displaySavingInProgress();
+	
+		     $.ajax({
+		        type: "POST",
+		        url: "/<%=model%>s/<%=id%>",
+		        data: "_method=PUT&<%=model%>[<%=field_name%>]=" + escape(newValue),
+		        success: function(msg){
+					//animateFlashMessage();
+				
+					displaySaved();
+				
+		        }
+		     });
+		}
 	    <%if onblur_hook%>
 			<%=raw onblur_hook%>
 		<%end%>

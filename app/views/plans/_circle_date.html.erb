@@ -1,0 +1,9 @@
+	<div class="DateCircle <%if @editable%>EditBoxHide<%end%>" <%if @editable%>onclick="displayEditDate()<%end%>">
+		<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
+		<%= @plan.start_time.to_date.strftime('%e').strip()%>
+	</div>
+	<div style="clear:both"></div>
+	<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%end%>" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; " <%if @editable%>onclick="displayEditDate()<%end%>">
+		<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
+		<div style="line-height:18px;"><%=@timestring%></div>
+	</div>

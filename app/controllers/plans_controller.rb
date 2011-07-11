@@ -168,12 +168,14 @@ class PlansController < ApplicationController
     end
     
     
+    @real_edit_for_toggle = false
     
     
     if current_user && @plan
       for host in @plan.hosts
        if host.user_id == current_user.id
           @author=true
+          @real_edit_for_toggle = true
           @editable = true
           @extra_visibility = true
         end
@@ -181,9 +183,16 @@ class PlansController < ApplicationController
       if current_user.mod_level == 5
         @admin = true
         @editable = true
-        @extra_visibility = false
+        #@extra_visibility = false
       end
     end
+    
+    
+    if cookies[:disable_edit]
+      @editable = false
+    end
+    
+    
     
   end
   
@@ -289,6 +298,39 @@ class PlansController < ApplicationController
   
   
   def new
+    
+  end
+  
+  
+  
+  def edit_plan_date
+    
+    @plan = Plan.find(params[:plan_id])
+    
+    @start_hour = params[:start_time_hour]
+    @end_hour = params[:end_time_hour]
+    if params[:start_time_ampm] == "pm"
+      @start_hour = @start_hour + 12
+    end
+    if params[:end_time_ampm] == "pm"
+      @end_hour = @end_hour + 12
+    end
+    
+    
+    date_and_time = '%m/%d/%Y %H:%M %p'
+  
+
+    
+    
+    
+    @plan.start_time = DateTime.strptime("#{params[:start_time_date]} #{params[:start_time_hour]}:#{params[:start_time_minute]} #{params[:start_time_ampm].upcase()}", date_and_time)
+    @plan.end_time = DateTime.strptime("#{params[:end_time_date]} #{params[:end_time_hour]}:#{params[:end_time_minute]} #{params[:end_time_ampm].upcase()}", date_and_time)
+    @plan.save
+    
+    @editable = true
+    
+    
+    render :partial=>"plans/circle_date"
     
   end
   

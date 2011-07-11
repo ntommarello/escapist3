@@ -18,6 +18,24 @@ $(document).ready(function() {
 	logindropopen=0;
 	ignoreHide =0;  //hack for body event
 	$("#settings").tooltip({position: "bottom center"});
+	
+	
+	
+	$(window).scroll(function() {
+	  	if ( $("#StatusBar").is(':visible') ) {
+			var scrolltop = $(window).scrollTop()
+			if (scrolltop < 50) {
+				scrolltop = 50 - scrolltop
+			} else {
+				scrolltop = 0;
+			}
+			$("#StatusBar").css("top",scrolltop+"px");
+		}
+	});
+	
+	
+	
+	
  });
 
 
@@ -1171,7 +1189,43 @@ function RemoveBucketCount() {
 
 }
 
+
+function displaySavingInProgress() {
+	
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	
+	$("#StatusBar").removeClass("error").removeClass("warning").removeClass("success").addClass("info");
+	$("#StatusBar").html("Saving");
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "20",}, 300 );	
+}
+
+function displaySaved() {
+	$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+	$("#StatusBar").html("Saved");
+	setTimeout("animateStatusBarUp()",1000)	
+}
+
+function animateStatusBarUp() {
+	$("#StatusBar").animate({ height: "0",}, 300 );
+	setTimeout("removeStatusBar()",290)	
+}
+function removeStatusBar() {
+	$("#StatusBar").hide();
+}
+
+
+
 function animateFlashMessage() {
+	
+
 	$("#flashMessage").animate({ opacity: "1",}, 300 );
 	
 	setTimeout("$('#flashMessage').animate({opacity: 0,}, 500); ",1000)	
@@ -2582,17 +2636,29 @@ function openRegister(title) {
 
 function closeRegister() {
 	
-	if ($("#RegisterModal").is(":visible")) {
+	if ($("#BlackModal").is(":visible")) {
 	
 		$("#BlackModal").animate({ 
 	   		opacity: 0,
 	  		}, 100 );
+	
+	
 			setTimeout("$('#BlackModal').hide();",150);
 
 			$.cookie('showAttendPop', null, { path: '/plans/'});
 			$.cookie('watchPlan', null, { path: '/plans/'});
 			$("#RegisterModal").hide();
 			$("#RegisterModal").css('opacity',0)
+			setTimeout("$('#EditDateLayer').hide();",150);
+			$("#EditDateLayer").hide();
+			$("#EditDateLayer").css('opacity',0)
+			setTimeout("$('#EditLinkLayer').hide();",150);
+			$("#EditLinkLayer").hide();
+			$("#EditLinkLayer").css('opacity',0)
+		
+		
+		
+		
 		
 			$("#RenderAchievements").hide();
 		}
@@ -3805,5 +3871,82 @@ function goToByScroll(id){
       $('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
 }
 
+
+
+function editDate(plan_id) {
+	closeRegister();
+displaySavingInProgress();
+	
+	$.post("/edit_plan_date", { plan_id: plan_id, start_time_date:$("#start_time_date").val(), start_time_hour:$("#start_time_hour").val(), start_time_minute:$("#start_time_minute").val(), start_time_ampm:$("#start_time_ampm").val(), end_time_date:$("#end_time_date").val(), end_time_hour:$("#end_time_hour").val(), end_time_minute:$("#end_time_minute").val(), end_time_ampm:$("#end_time_ampm").val()}, function(theResponse){
+		$('#RenderDate').html(theResponse)
+		displaySaved();
+	});
+}
+
+
+function displayEditDate() {
+
+		$('#end_time_date').datepicker({
+		   onClose: function(dateText, inst) { 
+
+			var startDate = new Date($("#start_time_date").val());
+			var endDate = new Date($("#end_time_date").val());
+
+			if (startDate > endDate) {
+
+				$("#start_time_date").val(dateText)
+			}
+		 	}
+		});
+		
+		
+		
+			$('#start_time_date').datepicker({
+			   onClose: function(dateText, inst) { 
+				
+				var startDate = new Date($("#start_time_date").val());
+				var endDate = new Date($("#end_time_date").val());
+			
+				if (startDate > endDate) {
+				
+					$("#end_time_date").val(dateText)
+				}
+			 	}
+			});
+		
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#EditDateLayer')); $('#EditDateLayer').css('top','35px');  $('#EditDateLayer').show();  $('#EditDateLayer').animate({ opacity: 1,}, 250 );",50);
+}
+
+function editLink(plan_id) {
+//	$("#MapLink").attr("href", $("#url_link").val());
+	$("#MapLink").html($("#url_name").val());
+	closeRegister();
+	displaySavingInProgress();
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "/plans/"+plan_id,
+        data: "_method=PUT&plan[url_link]=" + escape($("#url_link").val()) + "&plan[url_name]="+escape($("#url_name").val()),
+        success: function(msg){
+			displaySaved();
+        }
+     });
+	
+	
+	
+}
+
+
+function openLinkEditor() {
+	
+		$("#BlackModal").show();
+		$("#BlackModal").animate({opacity: .4,}, 100 );
+		$("#BlackModal").height($(document).height())
+		setTimeout("centerBox($('#EditLinkLayer')); $('#EditLinkLayer').css('margin-top','-35px');  $('#EditLinkLayer').show();  $('#EditLinkLayer').animate({ opacity: 1,}, 250 );",50);
+	}
 
 

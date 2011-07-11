@@ -13,8 +13,6 @@
 
 
 
-
-
 <Script>
 	var share = {
    method: 'stream.share',
@@ -23,13 +21,65 @@
 </script>
 
 
+<%if @editable%>
+	<%=render :partial=>"plans/edit_date"%>
+<%end%>
+
+
 
 <div >
 
 
 <div  style="margin-left:auto; margin-right:auto; margin-top:10px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
 
-
+<%if @real_edit_for_toggle%>
+<div style="float:right; width:66px">
+	<div id="itoggle" style="position:absolute; top:-29px"><div style="float:left; margin-right:5px; margin-top:1px; font-size:11px;"></div><div style="float:left">
+	<input type="checkbox" id="example_1" style="display:none" <%if @editable%>checked<%end%>/></div>
+	</div>
+</div>
+	<script>
+	$(document).ready(function() {
+		$('#example_1').iToggle({
+			easing: 'easeOutExpo',
+			type: 'checkbox',
+			keepLabel: true,
+			easing: 'easeInExpo',
+			speed: 300,
+			onClick: function(){
+				//Function here
+			},
+			onClickOn: function(){
+				$.cookie('disable_edit', null, { path: '/plans/'});
+	
+				window.location.reload();
+			},
+			onClickOff: function(){
+				$.cookie('disable_edit', 'yes', { path: '/plans/', expires: 1});
+							$(".EditBox").each( function(i,n) {
+								$(this).addClass("EditBoxHide").removeClass("EditBox");
+							} );
+							
+									$(".EditIcon").each( function(i,n) {
+										$(this).hide();
+									} );
+							
+				
+				window.location.reload();
+			},
+			onSlide: function(){
+				//Function here
+			},
+			onSlideOn: function(){
+				//Function here
+			},
+			onSlideOff: function(){
+				//Function here
+			},
+		});
+	});
+	</script>
+<%end%>
 	
 
 <div style="float:left; width:470px">
@@ -120,13 +170,18 @@
 					<%end%>
 				<%end%>
 			<%end%>
+				<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 			
-	   			<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
+	   			<a href="http://twitter.com/share"  class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
 	   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 	     </div>
 	<div style="float:left; margin-left:-3px;margin-top:5px">
 	         <fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
+	
+		
+			
 	   </div>
+		<div style="float:left; display:none; margin-top:5px; margin-left:0px"><g:plusone size="Medium" count="false"></g:plusone></div>
 	
 	<div style="clear:both"></div>
 	
@@ -154,16 +209,8 @@
 	<div style="float:left; <%if @user_agent.mobile?%>width:460px;<%else%>width:490px;<%end%>">
 		
 		
-	                <div style="float:left; margin-right:30px; ">
-						<div class="DateCircle">
-							<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
-							<%= @plan.start_time.to_date.strftime('%e').strip()%>
-						</div>
-						<div style="clear:both"></div>
-						<div class="DarkBlueLabel" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; ">
-							<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
-							<div style="line-height:18px;"><%=@timestring%></div>
-						</div>
+	                <div id="RenderDate" style="float:left; margin-right:30px; ">
+						<%= render :partial=>"plans/circle_date"%>
 					</div>
 					
 					<div style="float:left; <%if @user_agent.mobile?%>width:345px;<%else%>width:375px;<%end%>:">
@@ -232,7 +279,7 @@
 								<div style="float:left; margin-left:7px; max-width:210px; min-width:110px;">
 
 									<%if @plan.url_name and @plan.url_link %>
-										<a target="_blank" class="BlueLink" href="<%=@plan.url_link%>"><%=@plan.url_name%></a><br>
+										<a id="MapLink" class="BlueLink <%if @editable%> EditBoxHide<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
 
 									<%else%>
 											<%if @editable%>
@@ -241,7 +288,7 @@
 										<%end%>
 											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
 
-											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
+											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
 
 											<%if @editable%>
 
@@ -351,6 +398,9 @@
 	</div>
 
 	<div style="clear:both"></div>
+	
+
+	
 </div>
 
 
@@ -428,6 +478,8 @@
 		<%end%>
 	</div>
 <%end%>
+
+
 
 
 
