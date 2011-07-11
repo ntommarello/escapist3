@@ -1190,6 +1190,22 @@ function RemoveBucketCount() {
 }
 
 
+function showConfirmMessage() {
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+	$("#StatusBar").html("You are attending this event!");
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "20",}, 300 );
+}
+
+
 function displaySavingInProgress() {
 	
 	var scrolltop = $(window).scrollTop()
@@ -1198,7 +1214,6 @@ function displaySavingInProgress() {
 	} else {
 		scrolltop = 0;
 	}
-	
 	
 	$("#StatusBar").removeClass("error").removeClass("warning").removeClass("success").addClass("info");
 	$("#StatusBar").html("Saving");
@@ -2635,6 +2650,8 @@ function openRegister(title) {
 }
 
 function closeRegister() {
+	
+
 	
 	if ($("#BlackModal").is(":visible")) {
 	

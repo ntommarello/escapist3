@@ -476,8 +476,11 @@
 <%end%>
 
 
-
-
+<%if params[:confirm]%>
+	<script>
+		showConfirmMessage();
+	</script>
+<%end%>
 
 <%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
 
