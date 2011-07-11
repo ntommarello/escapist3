@@ -183,6 +183,7 @@ class PlansController < ApplicationController
       if current_user.mod_level == 5
         @admin = true
         @editable = true
+        @real_edit_for_toggle = true
         #@extra_visibility = false
       end
     end

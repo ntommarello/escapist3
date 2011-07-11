@@ -3591,8 +3591,9 @@ function loadInfo(index) {
 						transition =', '
 					}
 				}
+				file_name = fixFBImages(the_user.avatar_file_name)
 				host_names = host_names + ' '+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
-				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			organizer_count = organizer_count + 1;
 		} 
@@ -3606,7 +3607,11 @@ function loadInfo(index) {
 			the_user = current_plan.users[i];
 		if (the_user.avatar_file_name != null) {
 			if (total_count < 5) {
-				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+				
+				
+				file_name = fixFBImages(the_user.avatar_file_name)
+				
+				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			signup_count = signup_count + 1;
 			total_count = total_count + 1;
@@ -3667,6 +3672,16 @@ function loadInfo(index) {
 	
 
 	
+}
+
+function fixFBImages(name) {
+	
+	test = name.indexOf(".", 0)
+	
+	if (test == -1) {
+		name = name+"."
+	}
+	return name;
 }
 
 
