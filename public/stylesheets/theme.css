@@ -1795,16 +1795,25 @@ a:hover {
 
 .EditBox {
   cursor: pointer;
-  padding: 2px;
-  padding-left: 0px; }
+  border: 1px dotted transparent; }
 
 .EditBox:hover {
+  background-color: #FFFFCC;
+  border: 1px dotted #ccc; }
+
+.EditBox:focused {
   background-color: #FFFFCC; }
 
 .EditBoxHide {
   cursor: pointer; }
 
+.transparent_border {
+  border: 1px solid transparent; }
+
 .EditBoxHide:hover {
+  background-color: #FFFFCC; }
+
+.EditBoxHide:focused {
   background-color: #FFFFCC; }
 
 .EditIcon {

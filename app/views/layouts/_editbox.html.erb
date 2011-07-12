@@ -12,22 +12,27 @@
 
 <%if full_editor%>
 
-<div id="<%=field_name%><%=append%>" class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc"<%end%>>
-<%=raw render_string_with_breaks(content)%>
-</div>
-<script>
-$(document).ready(function() {
-	$('#<%=field_name%><%=append%>').aloha();
-});
-</script>
+	<%if extra_visibility%>
+	<div style="float:right;  margin-right:2px;">
+		<div style="position:absolute; " id="ShowEdit"  onclick="$('#<%=field_name%>').focus();">
+			<img  class="EditIcon" src="/images/ok_pen1.png"   >
+		</div>
+	</div>
+	<%end%>
+
+		<div  id="<%=field_name%><%=append%>" class="transparent_border <%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%> <%if !allow_return%>disallowReturn<%end%>"  onmouseover="$(this).css('background','#FFFFCC')" onmouseout="if (<%=field_name%>Focused == 0) { $(this).css('background','transparent') }" contenteditable="true" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>><%=raw render_string_with_breaks(content)%></div>
+
+
+
+
 <%else%>
 
-	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc; padding-left:2px"<%end%>>
+	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>>
   
 			<div style="display: inline"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></div>
 	
 		    <%if extra_visibility%>
-				<span id="ShowEdit"  onclick="$('#<%=field_name%>').focus();">
+				<span id="ShowEdit" style="padding-top:2px;" onclick="$('#<%=field_name%>').focus();">
 					<img  class="EditIcon" src="/images/ok_pen1.png"   >
 				</span>
 			<%end%>
@@ -36,7 +41,7 @@ $(document).ready(function() {
 
 <%end%>
 	<script>
-	
+	<%=field_name%>Focused = 0;
 
 	
 	<%if content == "Required" or content == "Add a note" or content =="I'm new, so I haven't filled out my bio yet!" or content== "You Need to Insert a Title Here" or content == "Tell someone exactly how to upload proof.  What kind of photo or video?" or content == "Type in the address. Google shall find." or content == "Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph."%>
@@ -60,6 +65,8 @@ $(document).ready(function() {
 	
 		$('#<%=field_name%><%=append%>').focus(function(){ 
 			oldValue = $(this).html();
+			<%=field_name%>Focused = 1;
+			$(this).css("background","#FFFFCC");
 	});
 	
 	<%if field_name == "short_bio"%>
@@ -84,7 +91,8 @@ $(document).ready(function() {
 	<%end%>
 	
 	$('#<%=field_name%><%=append%>').blur(function(){    
-
+		$(this).css("background","transparent");
+		<%=field_name%>Focused = 0;
 		$("#BioCounter").hide();
 	   <%if required%>
 			if ($(this).html() == "") {
@@ -145,8 +153,8 @@ $(document).ready(function() {
 	
 <%else%>
 
-
+<div class="transparent_border" >
 <%= raw  auto_link_urls(render_string_with_breaks(content.to_s), :target => '_blank', :class=>"BlueLink") %>
-
+</div>
 	
 <%end%>

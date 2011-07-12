@@ -39,15 +39,16 @@
 	</div>
 
 	<div style="clear:both"></div>
+
 	<div style="margin-top:20px; margin-bottom:5px; font-size:14px"  class="DarkBlueLabel">Home City</div>
-	
-	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"hometown", :content=>@user.hometown, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
+
+	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"hometown", :content=>@user.hometown, :id=>@user.id, :model=>"user", :allow_return=>false,  :extra_visibility=>true, :border=>true}%>
 	
 	
 	<div style="margin-top:20px;  margin-bottom:5px; font-size:14px"  class="DarkBlueLabel">Current City</div>
 	
 	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location_city", :content=>@user.location_city, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
-	
+
 	
 	
 	<%if @editable or @user.facebook_link or @user.twitter_link%>
@@ -93,12 +94,12 @@
 	
 		
 
-		<div style=" float:left; width:420px; font-size:16px; line-height:22px;">
+		<div style=" float:left; width:390px; font-size:16px; line-height:22px;">
 			
 			<%unless @user.short_bio and @user.short_bio != ""%><div id="showShortBio" style="display:none"><%end%>
 					<div id="BioCounter" style="float:right; font-size:12px; display:none; margin-top:-25px; margin-right:15px">100</div>
 				<div style="margin-top:-3px; font-size:18px">
-			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_bio", :content=>@user.short_bio, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_bio", :full_editor=>true, :content=>@user.short_bio, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
 			</div>
 			<%unless @user.short_bio  and @user.short_bio != ""%></div><%end%>
 			
@@ -121,7 +122,7 @@
 				
 				
 		<%unless @user.about_me and @user.about_me != "" and @user.about_me != "I'm new, so I haven't filled out my bio yet!"%><div id="showAboutMe" style="display:none"><%end%>
-						<DIV STYLE="MARGIN-TOP:20PX; font-size:14px; line-height:18px;"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"about_me", :content=>@user.about_me, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+						<DIV STYLE="MARGIN-TOP:20PX; font-size:14px; line-height:18px;"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"about_me", :full_editor=>true, :content=>@user.about_me, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
 							</div>
 		<%unless @user.about_me  and @user.about_me != "" and @user.about_me != "I'm new, so I haven't filled out my bio yet!"%></div><%end%>		
 				

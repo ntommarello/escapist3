@@ -203,13 +203,13 @@
 					<div style="float:left; <%if @user_agent.mobile?%>width:345px;<%else%>width:375px;<%end%>:">
 
 					<div class="HighlightedTitle" style="padding-bottom:2px; font-size:24px; line-height:28px; ">
-						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
 					</div>
 					<div style="font-size:16px;color:#808598">			
-					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :full_editor=>true, :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 					</div>
 					<div style="margin-top:20px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
-					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 					</div>
 					
 					
@@ -227,7 +227,7 @@
 					
 
 					<div style="font-size:15px; line-height:20px; ">
-						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>false, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); }"}%>	
+						<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); }"}%>	
 					</div>
 			
 					
@@ -273,9 +273,9 @@
 												[<a class="BlueLink" onclick="$('#adminlink').hide(); $('#AdminOptions').show(); $('#challenge_url_name').focus()" href="#">add link</a>]<br>
 											<%end%>
 										<%end%>
-											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
+											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
 
-											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
+											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
 
 											<%if @editable%>
 
