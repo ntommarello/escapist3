@@ -157,9 +157,9 @@
 				<%end%>
 				<%if @plan.group.url%>
 					<%if current_user%>
-						<%@data_url = "http://#{@plan.group.url}"%>
+						<%@data_url = "http://#{@plan.group.url}/"%>
 					<%else%>
-						<%@data_url = "http://#{@plan.group.url}"%>
+						<%@data_url = "http://#{@plan.group.url}/"%>
 					<%end%>
 				<%end%>
 			<%end%>
@@ -168,12 +168,7 @@
 	   			<a href="http://twitter.com/share"  class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
 	   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
 	     </div>
-	<div style="float:left; margin-left:-3px;margin-top:5px">
-	         <fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like> 
-	
-		
-			
-	   </div>
+	<div style="float:left; margin-left:-3px;margin-top:5px"><fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like></div>
 
 	<div style="clear:both"></div>
 	
