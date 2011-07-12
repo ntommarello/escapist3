@@ -245,8 +245,11 @@ class PlansController < ApplicationController
     
     @cleaned_location = params[:location].gsub(%r{</?[^>]+?>}, ' ')
     @cleaned_location = @cleaned_location.gsub(/%3Cbr%3E/,' ')
+    @cleaned_location = @cleaned_location.gsub(/%3Cdiv%3E/,' ')
+    @cleaned_location = @cleaned_location.gsub(/%3C\/div%3E/,' ')
     @cleaned_location = @cleaned_location.gsub(/%20/,' ')
     @cleaned_location = @cleaned_location.gsub(/&nbsp;/,' ')
+    
     @cleaned_location = @cleaned_location.gsub(/%26nbsp/, ' ')
     
     loc = MultiGeocoder.geocode(@cleaned_location)
