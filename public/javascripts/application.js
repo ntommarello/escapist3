@@ -4093,15 +4093,21 @@ function slideSettings() {
 	      	$('#SettingsLayer').css("padding-top","1px");
 			$('#SettingsLayer').css("padding-bottom","1px");
 			$("#SettingsLink").show();
+			
 		});
 	} else {
+				$('#plan_application_deadline').datepicker({
+				   onClose: function(dateText, inst) { 
+				 	}
+				});
+				
 		$('#SettingsLayer').css("height","1px");
 		$('#SettingsLayer').css("padding-bottom","1px");
 		$('#SettingsLayer').css("padding-top","1px");
 		$("#SettingsLink").hide();
 		$('#SettingsLayer').show();
 		$("#SettingsLayer").animate({ "height": 500, "padding-top":20,  "padding-bottom":20}, 300, function(){
-		  //$(this).css('height','auto').css('max-height',350);
+		  $(this).css('height','auto').css('max-height',1000);
 		});
 	}
 }

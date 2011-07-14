@@ -41,10 +41,10 @@
 		<div style="float:left; margin-top:17px;">
 			<input name="application" value="1" type="radio" onclick="$('#WufooLayer').hide();" <%unless @plan.application_required%>checked<%end%>><b>None</b>. Anyone may immediately purchase tickets.<br>
 			<input name="application" value="2" type="radio" onclick="$('#WufooLayer').show();" <%if @plan.application_required%>checked<%end%>><b>Application Required</b>. I must approve applicants first.<br>
-			<div id="WufooLayer" style="<%unless @plan.application_required%>display:none;<%end%> margin-left:20px; width:345px; margin-top:10px">
+			<div id="WufooLayer" style="<%unless @plan.application_required%>display:none;<%end%> margin-left:20px; width:300px; margin-top:10px">
 				<span style="text-decoration:underline">Step 1: Insert Application Form</span><br>
 				Applications are powered by <a href="http://wufoo.com/" target="_blank" class="BlueLink">Wufoo</a>.  Create your form on Wufoo, then <a href="#" id="insert-wufoo-form">insert the javascript embed code by clicking this link</a>
-				<textarea id="plan_application_wufoo" name="plan[application_wufoo]" style="width:340px; height:100px; <%if  @plan.application_wufoo.nil? or @plan.application_wufoo == ""%>display:none;<%end%>" class="ShadowedTextBox" disabled="disabled"><%=@plan.application_wufoo%></textarea><br>
+				<textarea id="plan_application_wufoo" name="plan[application_wufoo]" style="width:300px; height:100px; <%if  @plan.application_wufoo.nil? or @plan.application_wufoo == ""%>display:none;<%end%>" class="ShadowedTextBox" disabled="disabled"><%=@plan.application_wufoo%></textarea><br>
 				<div style="margin-top:10px; text-decoration:underline">Step 2: Set Application Deadline</div>
 				<input id="plan_application_deadline" class="ShadowedTextBox" style="width:100px" value="<%if @plan.application_deadline%><%=@plan.application_deadline.strftime('%m/%d/%Y')%><%end%>">
 			</div>
@@ -149,10 +149,7 @@
 	
 		<script>
 		$(document).ready(function() {
-			$('#plan_application_deadline').datepicker({
-			   onClose: function(dateText, inst) { 
-			 	}
-			});
+	
 			$('#plan_price').numeric({allow:"."});
 			$('#plan_attendance_cap').numeric();
 	

@@ -282,7 +282,7 @@
 
 									<%else%>
 											<%if @editable%>
-												[<a class="BlueLink" onclick="$('#adminlink').hide(); $('#AdminOptions').show(); $('#challenge_url_name').focus()" href="#">add link</a>]<br>
+												<a class="BlueLink" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
 											<%end%>
 										<%end%>
 											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
