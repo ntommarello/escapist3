@@ -3,7 +3,7 @@ class WebController < ApplicationController
   def new_home
 
      if params[:id]
-       @start_plan = Plan.find(:all, :conditions=>["id=?", params[:id].to_i],:order=>"start_time asc", :include=>:user)
+       @start_plan = Plan.find(:all, :conditions=>["id=?", params[:id].to_i],:order=>"start_time asc")
        if @start_plan 
          @city_id = @start_plan[0].city_id
          #@no_ids = "(#{@start_plan[0].id})"  
