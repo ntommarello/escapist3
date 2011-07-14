@@ -4038,7 +4038,7 @@ function saveSettings(plan_id) {
 		enable_signups = 1;
 	}
 	enable_discount = 0;
-	if ($('#enable_sharing').is(':checked')) {
+	if ($('#enable_discount').is(':checked')) {
 		enable_discount = 1;
 	}
 	application_required = 0;
