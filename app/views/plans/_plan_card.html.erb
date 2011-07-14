@@ -9,7 +9,15 @@
 			>
 		
 				<div class="BrowseInfoContainer">
-					<div class="BrowseDate"><div style="margin-top:3px"><%=plan.start_time.to_date.strftime('%b').upcase()%><br><%= plan.start_time.to_date.strftime('%e').strip()%></div></div>
+					<div class="BrowseDate"><div style="margin-top:3px">
+					<%=plan.start_time.to_date.strftime('%b').upcase()%><br>
+					
+					<%if Date.today.strftime('%Y') == plan.start_time.to_date.strftime('%Y')%>
+						<%= plan.start_time.to_date.strftime('%e').strip()%>
+					<%else%>
+						<%= plan.start_time.to_date.strftime('%Y').strip()%>
+					<%end%>
+					</div></div>
 					<div class="BrowseTitle">
 						<div style="float:left; margin-top:3px; padding-left:10px; width:80% ">
 							<%=raw plan.title%>
