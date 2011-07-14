@@ -10,6 +10,10 @@ class Plan < ActiveRecord::Base
   
   has_many :watched_plans
   
+  
+   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
+  
+  
   acts_as_mappable
   
   def has_signedup?(user)

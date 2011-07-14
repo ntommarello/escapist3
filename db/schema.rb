@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110707033628) do
+ActiveRecord::Schema.define(:version => 20110712152248) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -224,7 +224,6 @@ ActiveRecord::Schema.define(:version => 20110707033628) do
   create_table "plans", :force => true do |t|
     t.boolean  "featured"
     t.integer  "privacy"
-    t.integer  "host_id"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "attendance_cap"
@@ -239,9 +238,6 @@ ActiveRecord::Schema.define(:version => 20110707033628) do
     t.text     "transportation"
     t.string   "url_link"
     t.string   "url_name"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.string   "photo_content_type"
     t.string   "image_file_name"
     t.integer  "image_file_size"
     t.string   "image_content_type"
@@ -252,7 +248,12 @@ ActiveRecord::Schema.define(:version => 20110707033628) do
     t.string   "short_location"
     t.string   "short_desc"
     t.text     "application_wufoo"
-    t.boolean  "discount_enabled"
+    t.boolean  "enable_comments"
+    t.boolean  "enable_sharing"
+    t.boolean  "enable_signups"
+    t.boolean  "enable_discount"
+    t.string   "password"
+    t.boolean  "published"
   end
 
   create_table "subscribed_achievements", :force => true do |t|

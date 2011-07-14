@@ -214,6 +214,15 @@ class PlansController < ApplicationController
       unless key == "image"
         params[:plan][key] = CGI::unescape(value)
         params[:plan][key] = remove_end_breaks(params[:plan][key])
+        
+        if key == "application_deadline"
+          if params[:plan][key] != ""
+           date_and_time = '%m/%d/%Y'
+           params[:plan][key] = DateTime.strptime("#{params[:plan][key]}", date_and_time)
+          end
+        end
+
+        
       end 
     end
     
@@ -289,14 +298,14 @@ class PlansController < ApplicationController
       @origin = [40.7144,-74.006]
     end
     if session[:dropdown_city_value].to_i == 99  #globe
-       @plans = Plan.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:user, :users])
+       @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
     else
  
-      @plans = Plan.find(:all, :conditions=>["start_time >= ?", rounded_t], :origin => @origin, :within=>100, :order=>"start_time asc", :include=>[:user, :users])
+      @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
 
       @ids = @plans.collect(&:id).to_s.sub('[','(')
       @ids = @ids.sub(']',')')
-      @other_plans = Plan.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:user, :users])
+      @other_plans = Plan.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
     end
     
     if params[:dropdown_city_value]

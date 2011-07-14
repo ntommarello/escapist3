@@ -42,7 +42,7 @@ class WebController < ApplicationController
 
      t = Time.zone.now
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
-     @plan = Plan.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc", :include=>:user)
+     @plan = Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
 
      @start_id = 0;
      if @start_plan

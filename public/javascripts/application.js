@@ -3982,3 +3982,126 @@ function openLinkEditor() {
 	}
 
 
+function saveSettings(plan_id) {
+	
+	if ($("#plan_attendance_cap").val() < 1) {
+		showWarningMessage("Error:  Set Quantity.  How many tickets are there?")
+		$("#plan_attendance_cap").focus();
+		return;
+	}
+	
+	if ($('input[name=privacy]:checked').val() == 3) {	
+		if ($("#plan_password").val() == "password") {
+			showWarningMessage("Error:  Set password.")
+			$("#plan_password").focus();
+			return;
+		}
+		if ($("#plan_password").val().length < 3) {
+			showWarningMessage("Error:  Password requires at least 3 characters.")
+			$("#plan_password").focus();
+			return;
+		}
+	}
+	
+	price = 0;
+	if ($('input[name=plan_price_radio]:checked').val() == 2) {	
+		if ($("#plan_price").val() == "") {
+			showWarningMessage("Error:  Set Price.")
+			$("#plan_price").focus();
+			return;
+		} else {
+			price = $("#plan_price").val();
+		}
+	}
+	
+	if ($('input[name=application]:checked').val() == 2) {	
+		if ($("#plan_application_wufoo").val() == "") {
+			showWarningMessage("Error:  Embed Wufoo Form Code")
+		}
+		if ($("#plan_application_deadline").val() == "") {
+			showWarningMessage("Error: Set Application Deadline")
+			$("#plan_application_deadline").focus();
+			return;
+		}
+	}
+	
+	enable_sharing = 0;
+	if ($('#enable_sharing').is(':checked')) {
+		enable_sharing = 1;
+	}
+	enable_comments = 0;
+	if ($('#enable_comments').is(':checked')) {
+		enable_comments = 1;
+	}
+	enable_signups = 0;
+	if ($('#enable_signups').is(':checked')) {
+		enable_signups = 1;
+	}
+	enable_discount = 0;
+	if ($('#enable_sharing').is(':checked')) {
+		enable_discount = 1;
+	}
+	application_required = 0;
+	if ($('input[name=application]:checked').val() == 2) {	
+		application_required = 1;
+	}
+	
+
+	displaySavingInProgress();
+	slideSettings()
+	$.ajax({
+        type: "POST",
+        url: "/plans/"+plan_id,
+        data: "_method=PUT&plan[price]=" + price + "&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing,
+        success: function(msg){
+			displaySaved();
+			window.location.reload();
+        }
+     });
+	
+	
+	
+	
+}
+
+
+function showWarningMessage(error) {
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	$("#StatusBar").removeClass("warning").removeClass("success").removeClass("info").addClass("error");
+	$("#StatusBar").html(error);
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "20",}, 300 );
+}
+
+
+function slideSettings() {
+	
+	
+	if ( $("#SettingsLayer").is(':visible') ) {
+		
+		
+		$("#SettingsLayer").animate({ "height": 1, "padding-top":1,"padding-bottom":1}, 300, function(){
+		  	$('#SettingsLayer').hide();
+		  	$('#SettingsLayer').css("height","1px");
+	      	$('#SettingsLayer').css("padding-top","1px");
+			$('#SettingsLayer').css("padding-bottom","1px");
+			$("#SettingsLink").show();
+		});
+	} else {
+		$('#SettingsLayer').css("height","1px");
+		$('#SettingsLayer').css("padding-bottom","1px");
+		$('#SettingsLayer').css("padding-top","1px");
+		$("#SettingsLink").hide();
+		$('#SettingsLayer').show();
+		$("#SettingsLayer").animate({ "height": 500, "padding-top":20,  "padding-bottom":20}, 300, function(){
+		  //$(this).css('height','auto').css('max-height',350);
+		});
+	}
+}

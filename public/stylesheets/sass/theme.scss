@@ -4158,5 +4158,14 @@ display:none;
     }
 }
 
+#SettingsLayer {
+	display:none; height:1px; margin-left:auto; margin-right:auto; margin-top:10px;
+	background:#F1F1F1 url(/images/gridtile.png);
+	padding:20px; border:1px solid #C2C2C2;
+	@include rounded_corners(5px);
+	-moz-box-shadow: inset 0 0 3px #888;
+	-webkit-box-shadow: inset 0 0 3px#888;
+	box-shadow: inner 0 0 3px #888;
+}
 
 

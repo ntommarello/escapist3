@@ -5,10 +5,13 @@
 		<p align="center" style="font-size:15px;" class="HighlightedTitle">Start Time</p>
 		
 		<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:8px; ">Date:</div>
-		<div style="float:left;"><input id="start_time_date" class="ShadowedTextBox" value="<%if @plan.start_time%><%=@plan.start_time.strftime('%m/%d/%Y')%><%end%>"></div>	
+		
+		<div style="float:left;">
+			<input id="start_time_date" class="ShadowedTextBox" value="<%if @plan.start_time%><%=@plan.start_time.strftime('%m/%d/%Y')%><%end%>">
+		</div>	
 		
 		
-			<div style="clear:both"></div>
+		<div style="clear:both"></div>
 		<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:18px; ">Time:</div>
 		<div style="float:left; margin-top:14px">
 			
@@ -35,28 +38,27 @@
 				<option <%if @start_hour == 10%>selected<%end%>>10</option>
 				<option <%if @start_hour == 11%>selected<%end%>>11</option>
 				<option <%if @start_hour == 12%>selected<%end%>>12</option>
-			<select>
+			</select>
 			<select id="start_time_minute">
 				<option <%if @start_minute == 0%>selected<%end%> value="0">:00</option>
 				<option <%if @start_minute == 15%>selected<%end%> value="15">:15</option>
 				<option <%if @start_minute == 30%>selected<%end%> value="30">:30</option>
 				<option <%if @start_minute == 45%>selected<%end%> calue="45">:45</option>
-			<select>
+			</select>
 			<select id="start_time_ampm">
 				<option  <%if @start_ampm == "pm"%>selected<%end%> >PM</option>
 				<option  <%if @start_ampm == "am"%>selected<%end%> >AM</option>
-			<select>
+			</select>
 		</div>
 	</div>
 	
 	<div style="float:left; width:250px; padding:10px;  padding-top:1px; padding-bottom:30px;">
 		<p align="center" style="font-size:15px;" class="HighlightedTitle">End Time</p>	
-			<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:8px; ">Date:</div>
-			<div style="float:left;"><input id="end_time_date" class="ShadowedTextBox" value="<%if @plan.end_time%><%=@plan.end_time.strftime('%m/%d/%Y')%><%end%>"></div>	
+		<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:8px; ">Date:</div>
+		<div style="float:left;"><input id="applicaiton_deadline" class="ShadowedTextBox" value="<%if @plan.end_time%><%=@plan.end_time.strftime('%m/%d/%Y')%><%end%>"></div>	
 
-	
 		<div style="clear:both"></div>
-			<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:18px; ">Time:</div>
+		<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:18px; ">Time:</div>
 			<div style="float:left; margin-top:14px">
 				
 				<%if @plan.end_time%>
@@ -82,17 +84,17 @@
 					<option <%if @end_hour == 10%>selected<%end%>>10</option>
 					<option <%if @end_hour == 11%>selected<%end%>>11</option>
 					<option <%if @end_hour == 12%>selected<%end%>>12</option>
-				<select>
+				</select>
 				<select id="end_time_minute">
 					<option <%if @end_minute == 0%>selected<%end%>  value="0">:00</option>
 					<option <%if @end_minute == 15%>selected<%end%>  value="15">:15</option>
 					<option <%if @end_minute == 30%>selected<%end%>  value="30">:30</option>
 					<option <%if @end_minute == 45%>selected<%end%>  value="45">:45</option>
-				<select>
+				</select>
 				<select id="end_time_ampm">
 					<option <%if @end_ampm == "pm"%>selected<%end%>>PM</option>
 					<option <%if @end_ampm == "am"%>selected<%end%>>AM</option>
-				<select>
+				</select>
 			</div>	
 			
 		
@@ -122,33 +124,24 @@
 	<p align="center" style="font-size:15px;" class="HighlightedTitle">Edit Link</p>
 
 
-			<div style="float:left;  width:80px; text-align:right; margin-right:10px; margin-top:9px; ">Name:</div>
-			<div style="float:left; ">
-				<input id="url_name" class="ShadowedTextBox" style="width:400px" value="<%=@plan.url_name%>">
-			</div>
-			
-			
-				<div style="clear:both"></div>
-				
-					<div style="float:left;  width:80px; text-align:right; margin-right:10px; margin-top:21px; ">URL:</div>
-					<div style="float:left; margin-top:14px">
-						<input id="url_link" class="ShadowedTextBox" style="width:400px" value="<%=@plan.url_link%>">
-					</div>
-					
-
-
-
+	<div style="float:left;  width:80px; text-align:right; margin-right:10px; margin-top:9px; ">Name:</div>
 	
+	<div style="float:left; ">
+		<input id="url_name" class="ShadowedTextBox" style="width:400px" value="<%=@plan.url_name%>"/>
+	</div>
+			
+			
+	<div style="clear:both"></div>
+				
+	<div style="float:left;  width:80px; text-align:right; margin-right:10px; margin-top:21px; ">URL:</div>
+	<div style="float:left; margin-top:14px">
+		<input id="url_link" class="ShadowedTextBox" style="width:400px" value="<%=@plan.url_link%>"/>
+	</div>
+					
 	<div style="clear:both"></div>
 	<div style="width:550px; margin-top:20px;  height:40px; background:#ccc; border-top:1px solid #666">
-		
-				<button  class="newGrayButton GreenB" style="margin-top:5px; padding-top:0px;margin-right:10px; float:right; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="editLink(<%=@plan.id%>)">Save</button>	
-		
-		
+		<button  class="newGrayButton GreenB" style="margin-top:5px; padding-top:0px;margin-right:10px; float:right; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="editLink(<%=@plan.id%>)">Save</button>		
 	</div>
-
-
-
 </div>
 
 

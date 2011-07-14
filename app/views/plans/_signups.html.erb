@@ -29,6 +29,7 @@
 
 <%end%>
 
+<%if @plan.enable_signups%>
 <div style="clear:both"></div>
 
 <%if attendees.length > 1%>
@@ -48,7 +49,4 @@
 <%end%>
 
 <div style="clear:both; height:40px;"></div>
-
-<script>
-	$(".tl").tooltip();
-</script>
+<%end%>
