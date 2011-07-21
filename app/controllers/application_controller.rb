@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   
 
-  def check_group 
+  def check_group  
     
     @wepay_token = "a8a520ec65"
     @wepay_group_id = "11377"
