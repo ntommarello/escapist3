@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
         @source = group.url
         if @group.paypal_email
           @paypal_email = @group.paypal_email
-        end
+        end 
       end
     end
   end
