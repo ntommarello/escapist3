@@ -472,7 +472,13 @@
 	
 		<script>defaultVals = '';</script>
 		<%if current_user%>
-			<script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
+			
+			<%if @plan.id == 22%>
+						<script>defaultVals = 'field1=<%=current_user.first_name%>&field2= <%=current_user.last_name%>&field3=<%=current_user.email%>&field11=<%=current_user.username%>'</script>
+			<%else%>
+						<script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
+			<%end%>
+			
 			<script type="text/javascript">var host = (("https:" == document.location.protocol) ? "https://secure." : "http://");document.write(unescape("%3Cscript src='" + host + "wufoo.com/scripts/embed/form.js' type='text/javascript'%3E%3C/script%3E"));</script>
 			<%=raw @plan.application_wufoo%>
 		<%else%>
