@@ -305,7 +305,7 @@ class PlansController < ApplicationController
 
       @ids = @plans.collect(&:id).to_s.sub('[','(')
       @ids = @ids.sub(']',')')
-      @other_plans = Plan.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+      @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
     end
     
     if params[:dropdown_city_value]
