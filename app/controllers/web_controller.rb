@@ -42,8 +42,13 @@ class WebController < ApplicationController
 
      t = Time.zone.now
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
-     @plan = Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
-
+     
+     if @group  #todo: eventually allow private within a group
+       @plan = Plan.published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
+     else
+       @plan = Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
+     end
+     
      @start_id = 0;
      if @start_plan
        @ids = @plan.collect(&:id)
@@ -53,7 +58,6 @@ class WebController < ApplicationController
          @start_id = 0
          @plan = @start_plan + @plan
        end
-
      end
 
      @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])

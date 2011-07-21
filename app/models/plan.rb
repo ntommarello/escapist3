@@ -11,8 +11,8 @@ class Plan < ActiveRecord::Base
   has_many :watched_plans
   
   
-   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
-  
+  scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
+  scope :published, :conditions => ["published = ?",true]
   
   acts_as_mappable
   
