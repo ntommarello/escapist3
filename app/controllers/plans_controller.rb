@@ -136,12 +136,21 @@ class PlansController < ApplicationController
   
   def destroy
     
-    #mobile bug
-    if params[:version] == "1.0"
-      @splan = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],current_user.id)
-       @splan.destroy
-    end
     
+
+      @plan = Plan.find(params[:id])
+      
+      if current_user
+        for host in @plan.organizers
+          if host.id == current_user.id
+            @plan.destroy
+          end
+        end
+      end
+      
+      redirect_to "/"
+      
+      
   end
   
   
@@ -303,12 +312,32 @@ class PlansController < ApplicationController
        @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
     else
  
-      @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
+ 
+       if @group  #todo: eventually allow private within a group
+         @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
+       else
+         @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
+          @ids = @plans.collect(&:id).to_s.sub('[','(')
+           @ids = @ids.sub(']',')')
+           @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+        
+       end
+       
+      #@plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
 
-      @ids = @plans.collect(&:id).to_s.sub('[','(')
-      @ids = @ids.sub(']',')')
-      @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
-    end
+      #add in ones user is author for
+       if current_user
+         for plan in current_user.plans_authored
+          if plan.published == false 
+            @add_plan = Plan.find(:all, :conditions=>["id=?",plan.id])
+            @plans = @plans + @add_plan
+          end
+         end
+       end
+
+
+
+      end
     
     if params[:dropdown_city_value]
       render :layout=>false

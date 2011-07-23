@@ -3318,6 +3318,29 @@ span.continued {
   height: 165px;
   text-shadow: #1C2439 0px 2px 0; }
 
+.coming_soon {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 2;
+  text-align: right;
+  font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: rgba(53, 64, 90, 0.8);
+  width: 340px;
+  padding: 20px;
+  padding-top: 15px;
+  margin-top: 200px;
+  text-align: center;
+  font-size: 38px;
+  line-height: 55px;
+  color: #fff;
+  text-shadow: #1C2439 0px 2px 0; }
+
+#DraftLayer {
+  position: absolute;
+  z-index: 2;
+  display: none; }
+
 .home_info_button {
   border: 1px solid #fff;
   background: #ffffff;
@@ -4354,7 +4377,7 @@ span.continued {
   text-align: center;
   top: 50px;
   height: 1px;
-  line-height: 20px;
+  line-height: 22px;
   z-index: 400;
   font-weight: bold;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
@@ -4414,3 +4437,204 @@ span.continued {
   -moz-box-shadow: inset 0 0 3px #888;
   -webkit-box-shadow: inset 0 0 3px#888;
   box-shadow: inner 0 0 3px #888; }
+
+.Lionbuttons {
+  background: #eee;
+  padding: 3px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  float: right; }
+
+a.Lionbutton,
+a.Lionicon {
+  color: #484848;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+  font: bold 12px Helvetica, Arial, sans-serif;
+  line-height: 26px;
+  height: 25px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  padding: 0 10px;
+  background: #f0f0f0;
+  background: -webkit-linear-gradient(top, #f7f7f7, #d1d1d1);
+  background: -moz-linear-gradient(top, #f7f7f7, #d1d1d1);
+  background: -ms-linear-gradient(top, #f7f7f7, #d1d1d1);
+  background: -o-linear-gradient(top, #f7f7f7, #d1d1d1);
+  border: solid 1px #7f7f7f;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff')";
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=90, Color='#ffffff');
+  -webkit-transition: border-color .218s;
+  -moz-transition: border .218s;
+  -o-transition: border-color .218s;
+  transition: border-color .218s; }
+
+a.Lionbutton:hover,
+a.Lionicon:hover {
+  border: solid 1px #333;
+  color: #282828;
+  background: -webkit-linear-gradient(top, white, #dfdfdf);
+  background: -moz-linear-gradient(top, white, #dfdfdf);
+  background: -ms-linear-gradient(top, white, #dfdfdf);
+  background: -o-linear-gradient(top, white, #dfdfdf); }
+
+a.Lionbutton:active,
+a.Lionicon:active {
+  border: solid 1px #7f7f7f;
+  background: #d0d0d0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#a8a8a8), color-stop(0.15, #c6c6c6), to(#d8d8d8));
+  background: -webkit-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -moz-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8); }
+
+a.LionHighlight {
+  color: #000;
+  border: solid 1px #7f7f7f;
+  border-right: solid 1px #7f7f7f;
+  border-left: solid 1px #7f7f7f;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e4fbff), color-stop(0.15, #d4ecfe), to(#88c6fa));
+  background: -webkit-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -moz-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -ms-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -o-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa); }
+
+a.LionHighlight:hover {
+  color: #000;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e4fbff), color-stop(0.15, #d4ecfe), to(#88c6fa));
+  background: -webkit-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -moz-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -ms-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -o-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa); }
+
+a.LionHighlight:active {
+  color: #000;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e4fbff), color-stop(0.15, #d4ecfe), to(#88c6fa));
+  background: -webkit-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -moz-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -ms-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa);
+  background: -o-linear-gradient(top, #e4fbff, #d4ecfe 15%, #88c6fa); }
+
+a.LionGreen {
+  color: #fff;
+  text-shadow: #369B3D 0 1px 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#3ffa3f), color-stop(0.15, #16d116), to(#02a502));
+  background: -webkit-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -moz-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -ms-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -o-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502); }
+
+a.LionGreen:hover {
+  color: #fff;
+  text-shadow: #369B3D 0 1px 0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#3ffa3f), color-stop(0.15, #16d116), to(#02a502));
+  background: -webkit-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -moz-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -ms-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502);
+  background: -o-linear-gradient(top, #3ffa3f, #16d116 15%, #02a502); }
+
+a.LionGreen:active {
+  border: solid 1px #7f7f7f;
+  background: #d0d0d0;
+  background: -webkit-gradient(linear, left top, left bottom, from(#a8a8a8), color-stop(0.15, #c6c6c6), to(#d8d8d8));
+  background: -webkit-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -moz-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -ms-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8);
+  background: -o-linear-gradient(top, #a8a8a8, #c6c6c6 15%, #d8d8d8); }
+
+a.Lionicon {
+  padding: 0;
+  margin-bottom: 10px; }
+
+a.Lionicon span {
+  display: block;
+  line-height: 35px;
+  height: 35px;
+  width: 36px;
+  max-width: 36px;
+  overflow: hidden;
+  text-indent: -9999px; }
+
+a.Lionleft {
+  margin: 0;
+  border-right: solid 1px #b0b0b0;
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  border-bottom-right-radius: 0; }
+
+a.Lionmiddle {
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  margin: 0;
+  border-left: solid 1px rgba(255, 255, 255, 0);
+  border-right: solid 1px #b0b0b0; }
+
+a.Lionmiddle:hover,
+a.Lionright:hover {
+  border-left: solid 1px #333; }
+
+a.Lionmiddle:active,
+a.Lionright:active {
+  border-left: solid 1px #7f7f7f; }
+
+a.Lionright {
+  border-left: solid 1px rgba(255, 255, 255, 0);
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-left-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-bottom-left-radius: 0; }
+
+.LockIcon {
+  background: url(/images/editSprite.png);
+  width: 14px;
+  height: 18px;
+  float: left;
+  margin-top: 4px;
+  margin-right: 5px;
+  background-position: 0px -90px;
+  margin-left: -5px; }
+
+.EditPlanIcon {
+  background: url(/images/editSprite.png);
+  float: left;
+  margin-top: 4px;
+  width: 16px;
+  height: 17px;
+  margin-right: 5px;
+  margin-left: -5px;
+  background-position: 0px -120px; }
+
+.EditSettingsIcon {
+  background: url(/images/editSprite.png);
+  margin-top: 4px;
+  width: 18px;
+  height: 19px;
+  background-position: 0px -60px; }
+
+.TrashPlanIcon {
+  background: url(/images/editSprite.png);
+  margin-top: 4px;
+  width: 16px;
+  height: 18px;
+  background-position: 0px -30px; }
+
+.UnpublishIcon {
+  background: url(/images/editSprite.png);
+  margin-top: 4px;
+  width: 14px;
+  height: 18px;
+  background-position: 0px -150px; }

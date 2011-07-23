@@ -7,6 +7,10 @@
 	style="background:url(/images/no_pic_b.png)"
 			<%end%>
 			>
+			
+			<%unless plan.published%>
+					<div id="DraftLayer" style="display:block" class="" title="This event is not published."><img src="/images/draft.png"></div>
+		<%end%>
 		
 				<div class="BrowseInfoContainer">
 					<div class="BrowseDate"><div style="margin-top:3px">

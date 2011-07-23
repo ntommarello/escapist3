@@ -23,7 +23,10 @@ class User < ActiveRecord::Base
 
   alias :messages :received_messages
   
-  has_many :challenges_authored, :class_name => 'Challenge', :foreign_key => :author_id
+ 
+  has_many :hosts
+  has_many :plans_authored, :through => :hosts, :source => :plan
+  
 
   has_many :plans, :dependent => :destroy
   has_many :subscribed_plans, :dependent => :destroy

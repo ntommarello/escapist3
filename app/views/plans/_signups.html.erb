@@ -1,14 +1,14 @@
 <div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Hosted by</div>
 
 <%for host in hosts%>
-<div style="float:left">
+<div style="float:left; margin-bottom:5px">
 	<a href="/<%=host.username%>">
 		<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:90px; height:90px; cursor:pointer") %>
 	</a>
 </div>
-<div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
+<div style='float:left; margin-left:10px; padding-top:5px;margin-bottom:5px'><a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
 	
-	<div style="padding-top:5px; color:black; width:250px"><%=raw host.short_bio%></div>
+	<div style="padding-top:5px; color:black; width:290px"><%=raw host.short_bio%></div>
 	
 	<%@disabled = false%>
 	<%if current_user%>

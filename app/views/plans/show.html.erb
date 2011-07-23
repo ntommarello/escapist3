@@ -35,53 +35,38 @@
 <div  style="margin-left:auto; margin-right:auto; margin-top:10px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
 
 <%if @real_edit_for_toggle%>
-<div style="float:right; margin-right:60px;">
-	<div id="itoggle" style="position:absolute; top:-29px; ">
-				<div style="float:right; margin-right:5px; margin-top:1px; font-size:11px;"></div><div style="float:left">
-		<input type="checkbox" id="example_1" style="display:none" <%if @editable%>checked<%end%>/></div>
-	</div>
-		<%if @editable%>
-			<div id="SettingsLink" style="float:right; position:absolute; margin-left:-80px; color:#aaa; margin-top:-45px">[ <A href="#" onclick="slideSettings()" class="BlueLink">settings</a> ]</div>
-		<%end%>
+	<div id="EditPlanMenu" style="float:right; margin-right:-20px; margin-top:-55px;">
+	
+		<div class="Lionbuttons" >
+		
+			
+			<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="publishPlan(<%=@plan.id%>)">Publish</a>
+			<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
+		
+				<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
+		
+			<a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
+			
+			<a href="#" id="LockLinkIcon" class="Lionbutton Lionleft <%unless @editable%>LionHighlight<%end%>" onclick="planEditToggle()"><div class="LockIcon"></div>Lock</a><a href="#" id="EditLinkIcon" class="Lionbutton Lionright  <%if @editable%>LionHighlight<%end%>"style="margin-right:0px;" onclick="planEditToggle()" ><div class="EditPlanIcon"></div>Edit</a>
+			
+			<script>
+			editable=<%=@editable%>;
+			</script>
+			
+		</div>
+		
+	
+
 
 
 
 </div>
 	<script>
 	$(document).ready(function() {
-		$('#example_1').iToggle({
-			easing: 'easeOutExpo',
-			onClick: function(){
-				//Function here
-			},
-			onClickOn: function(){
-				$.cookie('disable_edit', null, { path: '/plans/'});
-	
-				window.location.reload();
-			},
-			onClickOff: function(){
-				$.cookie('disable_edit', 'yes', { path: '/plans/', expires: 1});
-							$(".EditBox").each( function(i,n) {
-								$(this).addClass("EditBoxHide").removeClass("EditBox");
-							} );
-							
-									$(".EditIcon").each( function(i,n) {
-										$(this).hide();
-									} );
-							
-				
-				window.location.reload();
-			},
-			onSlide: function(){
-				//Function here
-			},
-			onSlideOn: function(){
-				//Function here
-			},
-			onSlideOff: function(){
-				//Function here
-			},
-		});
+		
+		
+		$(".tl").tooltip();
+
 	});
 	</script>
 <%end%>
@@ -106,11 +91,16 @@
 	<%else%>
 
 		<div class="PhotoBorder" style="cursor:default; height:256px; width:400px;">
+				
+					<div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
+			
 			<%if @editable%>
 				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
 			<%else%>
 				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>""%>
 			<%end%>
+			
+		
 		</div>
 	<%end%>
 	<%end%>
@@ -287,7 +277,11 @@
 										<%end%>
 											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
 
-											<div style="margin-top:15px"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%></div>
+
+											
+											<div id="MeetingPlace" style="margin-top:15px; <%if !@plan.transportation or @plan.transportation == ""%>display:none; <%end%>">
+											<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>false, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%>
+											</div>
 
 											<%if @editable%>
 

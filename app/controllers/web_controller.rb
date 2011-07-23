@@ -49,6 +49,19 @@ class WebController < ApplicationController
        @plan = Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
      end
      
+     
+     #add in ones user is author for
+     if current_user
+       for plan in current_user.plans_authored
+        if plan.published == false 
+          @add_plan = Plan.find(:all, :conditions=>["id=?",plan.id])
+          @plan = @plan + @add_plan
+        end
+       end
+     end
+     
+     
+     
      @start_id = 0;
      if @start_plan
        @ids = @plan.collect(&:id)
@@ -60,7 +73,7 @@ class WebController < ApplicationController
        end
      end
 
-     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
+     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
 
      if !@skip
        render 

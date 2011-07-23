@@ -1202,7 +1202,7 @@ function showConfirmMessage() {
 	$("#StatusBar").html("You are attending this event!");
 	$("#StatusBar").css("top",scrolltop+"px");
 	$("#StatusBar").show();
-	$("#StatusBar").animate({ height: "20",}, 300 );
+	$("#StatusBar").animate({ height: "22",}, 300 );
 }
 
 
@@ -1219,7 +1219,7 @@ function displaySavingInProgress() {
 	$("#StatusBar").html("Saving");
 	$("#StatusBar").css("top",scrolltop+"px");
 	$("#StatusBar").show();
-	$("#StatusBar").animate({ height: "20",}, 300 );	
+	$("#StatusBar").animate({ height: "22",}, 300 );	
 }
 
 function displaySaved() {
@@ -2672,6 +2672,10 @@ function closeRegister() {
 			setTimeout("$('#EditLinkLayer').hide();",150);
 			$("#EditLinkLayer").hide();
 			$("#EditLinkLayer").css('opacity',0)
+			
+			setTimeout("$('#DeletePlanLayer').hide();",150);
+			$("#DeletePlanLayer").hide();
+			$("#DeletePlanLayer").css('opacity',0)
 		
 		
 		
@@ -3480,8 +3484,12 @@ function loadInfo(index) {
 	if (plans.plan != null) {
 		current_plan = plans.plan
 	} else {
+		if (plans.length == 0) {
+			return;
+		}
 		current_plan = plans[plan_index].plan;
 	}
+
 	
 	if (plans.length-1 > plan_index) {
 		next_plan = plans[plan_index+1].plan;
@@ -3501,7 +3509,6 @@ function loadInfo(index) {
 	}
 	$('#plan_note').html(note);
 	
-
 	
 	//
 	
@@ -3585,8 +3592,12 @@ function loadInfo(index) {
 	
 	//html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		
-	
 
+	if (current_plan.published == false) {
+		$("#DraftLayer").show();
+	} else {
+		$("#DraftLayer").hide();
+	}
 	
 	organizer_count = 0;
 	signup_count = 0;
@@ -3972,6 +3983,14 @@ function editLink(plan_id) {
 	
 }
 
+function OpenDeletePlan() {
+	
+		$("#BlackModal").show();
+		$("#BlackModal").animate({opacity: .4,}, 100 );
+		$("#BlackModal").height($(document).height())
+		setTimeout("centerBox($('#DeletePlanLayer')); $('#DeletePlanLayer').css('margin-top','-135px');  $('#DeletePlanLayer').show();  $('#DeletePlanLayer').animate({ opacity: 1,}, 250 );",50);
+	}
+
 
 function openLinkEditor() {
 	
@@ -4065,6 +4084,39 @@ function saveSettings(plan_id) {
 }
 
 
+
+function unpublishPlan(plan_id) {
+	displaySavingInProgress();
+	$("#UnpublishLink").hide()
+	$.ajax({
+        type: "POST",
+        url: "/plans/"+plan_id,
+        data: "_method=PUT&plan[published]=0",
+        success: function(msg){
+			displaySaved();
+			$("#PublishLink").show()
+			$("#DraftLayer").show()
+        }
+     });
+}
+function publishPlan(plan_id) {
+	displaySavingInProgress();
+		$("#PublishLink").hide()
+	
+	$.ajax({
+        type: "POST",
+        url: "/plans/"+plan_id,
+        data: "_method=PUT&plan[published]=1",
+        success: function(msg){
+			displaySaved();
+			$("#UnpublishLink").show()
+				$("#DraftLayer").hide()
+        }
+     });
+}
+
+
+
 function showWarningMessage(error) {
 	var scrolltop = $(window).scrollTop()
 	if (scrolltop < 50) {
@@ -4077,7 +4129,7 @@ function showWarningMessage(error) {
 	$("#StatusBar").html(error);
 	$("#StatusBar").css("top",scrolltop+"px");
 	$("#StatusBar").show();
-	$("#StatusBar").animate({ height: "20",}, 300 );
+	$("#StatusBar").animate({ height: "22",}, 300 );
 }
 
 
@@ -4092,7 +4144,7 @@ function slideSettings() {
 		  	$('#SettingsLayer').css("height","1px");
 	      	$('#SettingsLayer').css("padding-top","1px");
 			$('#SettingsLayer').css("padding-bottom","1px");
-			$("#SettingsLink").show();
+			$("#EditPlanMenu").show();
 			
 		});
 	} else {
@@ -4104,10 +4156,53 @@ function slideSettings() {
 		$('#SettingsLayer').css("height","1px");
 		$('#SettingsLayer').css("padding-bottom","1px");
 		$('#SettingsLayer').css("padding-top","1px");
-		$("#SettingsLink").hide();
+		$("#EditPlanMenu").hide();
 		$('#SettingsLayer').show();
 		$("#SettingsLayer").animate({ "height": 500, "padding-top":20,  "padding-bottom":20}, 300, function(){
 		  $(this).css('height','auto').css('max-height',1000);
 		});
 	}
 }
+
+function planEditToggle() {
+	if (editable) {
+		editable = false;
+		$("#LockLinkIcon").addClass("LionHighlight")
+		$("#EditLinkIcon").removeClass("LionHighlight")
+		$.cookie('disable_edit', 'yes', { path: '/plans/', expires: 1});
+					$(".EditBox").each( function(i,n) {
+						$(this).addClass("EditBoxHide").removeClass("EditBox");
+					} );
+
+							$(".EditIcon").each( function(i,n) {
+								$(this).hide();
+							} );
+
+
+		window.location.reload();
+	} else {
+		editable = true;
+		$("#LockLinkIcon").removeClass("LionHighlight")
+		$("#EditLinkIcon").addClass("LionHighlight")
+		$.cookie('disable_edit', null, { path: '/plans/'});
+		window.location.reload();
+	}
+}
+
+
+
+function destroyPlan(id) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/plans/"+id, { id:id, _method:'delete'}, function(theResponse){
+		window.location.href="/"
+	});
+	
+}
+
+
+
+
+
+
+

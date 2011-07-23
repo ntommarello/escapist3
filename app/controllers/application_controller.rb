@@ -26,7 +26,10 @@ class ApplicationController < ActionController::Base
       
     groups = Group.find(:all)  
     
-    for group in groups 
+    
+    #group = Group.find(3)
+    #@group = group
+    for group in groups
       if @domain.include? group.url
         @group = group
         @fb_id = group.fb_id
