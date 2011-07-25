@@ -127,8 +127,10 @@ match '/auth/:provider/callback' =>'authentications#create'
   match 'wepay_callback', :controller => 'plans', :action => 'wepay_callback'
    match 'paypal_ipn', :controller => 'plans', :action => 'paypal_ipn'
   match 'schedule', :controller => 'plans', :action => 'schedule'
-  match 'create', :controller => 'web', :action => 'apply'
   
+  
+  match 'create', :controller => 'web', :action => 'apply'
+  match 'adventure_guide', :controller => 'web', :action => 'adventure_guide'
  
   
   match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'

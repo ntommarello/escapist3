@@ -165,6 +165,13 @@ class WebController < ApplicationController
    
 
  end
+ 
+ 
+ def adventure_guide
+   
+   
+   
+ end
   
 
 end

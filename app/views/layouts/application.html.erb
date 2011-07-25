@@ -102,12 +102,12 @@
 					
 					
 					<%if @group%>
-						<%if current_user and current_user.id == @group.user_id or current_user.mod_level == 5%>
-							<div class="TopDivider" style="float:left; margin-left:31px; margin-right:15px"> </div>
+						<%if (current_user and current_user.id == @group.user_id) or (current_user and current_user.mod_level == 5)%>
+							<div class="TopDivider" style="float:left; margin-left:31px; margin-right:15px;opacity:.5"> </div>
 							<div style="float:left;   margin-top:17px;">
 								<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/my_escapes" >My Escapes</a>
 							</div>
-							<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px"> </div>
+							<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px;opacity:.5"> </div>
 						<%end%>
 					<%else%>
 						<div style="float:left;  margin-top:17px;">
@@ -119,7 +119,7 @@
 								href="/adventure_guide" >Be an Adventure Guide!</a>
 							<%end%>
 						</div>
-						<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px"> </div>
+						<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px; opacity:.5"> </div>
 					<%end%>
 					
 					
