@@ -269,6 +269,21 @@ body {
   background-image: -moz-linear-gradient(100% 100% 90deg, #ffffcc, #ecefc2);
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ecefc2), to(#ffffcc)); }
 
+.CreateLabel {
+  float: left;
+  margin-top: 7px;
+  text-align: right;
+  width: 135px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px; }
+
+.CreateDivider {
+  border-top: 1px dotted #DEDFE5;
+  width: 560px;
+  margin-top: 5px;
+  margin-bottom: 1px; }
+
 .InstructionBox {
   float: left;
   margin-left: 50px;
@@ -277,6 +292,9 @@ body {
   line-height: 25px;
   color: #e2362a;
   padding-top: 65px; }
+
+#ui-datepicker-div {
+  display: none; }
 
 #iPhone {
   position: absolute;
@@ -1608,7 +1626,8 @@ a:hover {
 
 .BlueLink {
   text-decoration: none;
-  color: #0066ff; }
+  color: #0066ff;
+  cursor: pointer; }
 
 .BlueLink:hover {
   text-decoration: underline;

@@ -1,0 +1,77 @@
+ <script src="http://wufoo.com/scripts/iframe/formEmbedKit.js"></script>
+
+<div <%if source=="new"%>class="CreateLabel" style="margin-top:0px"<%else%>style="float:left; width:65px; text-align:right; margin-right:10px"<%end%>>Price:</div>
+
+<div style="float:left">
+		<input name="plan_price_radio" value="1" type="radio" onclick="$('#DiscountCodeLayer').hide();" <%if @plan.price.nil? or @plan.price == 0%>checked<%end%>>Free<br>
+		<input name="plan_price_radio" value="2" type="radio" onclick="$('#DiscountCodeLayer').show(); $('#plan_price').focus()" <%if @plan.price and @plan.price > 0%>checked<%end%>><div id="dollar" style="position:absolute; margin-left:20px; margin-top:-20px; font-size:13px; <%if @plan.price and @plan.price > 0%>color:#333<%else%>color:#aaa<%end%>" >$</div><input class="ShadowedTextBox" style="width:47px; color:#333; padding-left:10px; height:10px;" type="textfield" name="plan[price]" id="plan_price"  value="<%if @plan.price and @plan.price > 0%><%=@plan.price%><%end%>" onfocus="$('#dollar').css('color','#333')" onblur="if ($(this).val() == '') {$('#dollar').css('color','#aaa') }"> <span style="font-size:13px">per ticket</span><br>
+		<div id="DiscountCodeLayer" style="margin-left:15px; <%if @plan.price and @plan.price > 0%><%else%>display:none<%end%>"><input id="enable_discount" name="plan[enable_discount]" type="checkbox" <%if @plan.enable_discount%>checked<%end%>>Enable discount code JOINME42 for $5 off</div>
+	
+</div>
+
+
+
+
+
+
+<div style="clear:both"></div>
+
+<div <%if source=="new"%>class="CreateLabel" style="margin-top:17px"<%else%>style="float:left; width:65px; text-align:right; margin-right:10px;margin-top:19px"<%end%>>Restrictions:</div>
+	
+<div style="float:left; margin-top:17px;">
+	<input  id="application" name="application" value="1" type="radio" onclick="$('#WufooLayer').hide();" <%unless @plan.application_required%>checked<%end%>><b>None</b>. Anyone may immediately purchase tickets.
+	<div style="margin-top:3px">
+	<input id="application" name="application" value="2" type="radio" onclick="$('#WufooLayer').show();" <%if @plan.application_required%>checked<%end%>><b>Application Required</b>. I must approve applicants first.</div>
+	<div id="WufooLayer" style="<%unless @plan.application_required%>display:none;<%end%> margin-left:20px; width:300px; margin-top:10px; font-size:13px">
+		<span style="text-decoration:underline">Step 1: Insert Application Form</span><br>
+		Applications are powered by <a href="http://wufoo.com/" target="_blank" class="BlueLink">Wufoo</a>.  Create your form on Wufoo, then <a href="#" id="insert-wufoo-form">insert the javascript embed code by clicking this link</a>
+		<textarea id="plan_application_wufoo" name="plan[application_wufoo]" style="width:300px; height:100px; <%if  @plan.application_wufoo.nil? or @plan.application_wufoo == ""%>display:none;<%end%>" class="ShadowedTextBox" disabled="disabled"><%=@plan.application_wufoo%></textarea><br>
+		<div style="margin-top:10px; text-decoration:underline">Step 2: Set Application Deadline</div>
+		<input id="plan_application_deadline" name="plan[application_deadline]" class="ShadowedTextBox" style="width:100px" value="<%if @plan.application_deadline%><%=@plan.application_deadline.strftime('%m/%d/%Y')%><%end%>">
+	</div>
+</div>
+
+<div style="clear:both"></div>
+<div <%if source=="new"%>class="CreateLabel" style="margin-top:17px"<%else%>style="float:left; width:65px; text-align:right; margin-right:10px; margin-top:17px"<%end%>>Quantity:</div>
+<div style="float:left"><input id="plan_attendance_cap" name="plan[attendance_cap]" class="ShadowedTextBox" value="<%=@plan.attendance_cap%>" style="width:35px; margin-top:12px; height:10px;" type="textfield"> <span style="font-size:13px">tickets available</span></div>
+
+
+
+	<script>
+	$(document).ready(function() {
+
+		$('#plan_price').numeric({allow:"."});
+		$('#plan_attendance_cap').numeric();
+
+
+	  //FIG. 7: init the form embed kit  (Warning: Global)
+var framework = WufooFormEmbedKit({'userDefinedCallback':userDefinedCallback, 'displayElement':'iframe-goes-here', 'host':'wufoo.com'});
+
+        //Fig 8: Event listeners, intended to build up and tear down the library.
+        $('#insert-wufoo-form').bind('click', function() {
+            $('#popup').show()
+            framework.display();
+ 
+        });
+        // Clicking anywhere outside closes it
+        $('#popup').bind('click', function() {    
+            $('#popup').hide()
+            framework.destroy();
+        });
+
+
+	
+			//FIG. 9: define a callback, with the required parameters
+			function userDefinedCallback(message, transport) {
+				$("#popup").fadeOut();
+				var objMessage = jQuery.parseJSON(message);
+				$("#plan_application_wufoo").val(objMessage.display)
+				$("#plan_application_wufoo").show();
+				// FIG. 12
+				framework.destroy();
+
+			}
+			
+				 });
+	
+	</script>

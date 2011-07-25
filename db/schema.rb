@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712152248) do
+ActiveRecord::Schema.define(:version => 20110725042346) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20110712152248) do
     t.boolean  "joined"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "approved"
   end
 
   create_table "dislikes", :force => true do |t|
@@ -254,6 +255,9 @@ ActiveRecord::Schema.define(:version => 20110712152248) do
     t.boolean  "enable_discount"
     t.string   "password"
     t.boolean  "published"
+    t.text     "availability"
+    t.boolean  "enable_date_requests"
+    t.boolean  "enable_date_poll"
   end
 
   create_table "subscribed_achievements", :force => true do |t|

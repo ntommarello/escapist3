@@ -39,7 +39,9 @@
 
 <form id="BB_BuyButtonForm" style="display:none" action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/830265948339379" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
     <input name="item_name_1" type="hidden" value="<%=strip_tags raw @plan.title%>"/>
+<%if @plan.start_time%>
     <input name="item_description_1" type="hidden" value="<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>"/>
+<%end%>
     <input name="email-allowed" type="hidden" value="false"/>
 <input id="item_quantity_1"  name="item_quantity_1" type="hidden" value="1"/>
 	<%if current_user%>
@@ -57,13 +59,17 @@
 	<input type="hidden" name="cmd" value="_xclick">
 	<input type="hidden" name="business" value="<%=@paypal_email%>">
 	<input type="hidden" name="lc" value="US">
+	<%if @plan.start_time%>
 	<input type="hidden" name="item_name" value="<%= strip_tags raw @plan.title%> on <%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>">
+	<%else%>
+		<input type="hidden" name="item_name" value="<%= strip_tags raw @plan.title%>">
+	<%end%>
 	<%if current_user%>
 		<input type="hidden" name="custom" value="<%=current_user.id%>">
 	<%end%>
 	<input type="hidden" id="amount" name="amount" value="<%=@plan.price%>">
 	<input type="hidden" name="item_number" value="<%=@plan.id%>">
-	<input type="hidden" name="return" value="http://<%=@source%>/plans/<%=@plan.id%>?confirm=yes" />
+	<input type="hidden" name="return" value="http://<%=@source%>/escapes/<%=@plan.id%>?confirm=yes" />
 	<input type="hidden" name="currency_code" value="USD">
 	<input type="hidden" name="button_subtype" value="services">
 	<input type="hidden" id="quantity" name="quantity" value="1" />
@@ -105,17 +111,17 @@ function payBill(discount) {
 	            focus: 1,
 				submit: function(v, m, f) {
 			         if (v == 0) {
-						$.cookie('showAttendPop', null, { path: '/plans/'});
+						$.cookie('showAttendPop', null, { path: '/escapes/'});
 						$.prompt.close();
 							return false;
 					} else {
 						
 						if (price <1) {
-							$.cookie('showAttendPop', null, { path: '/plans/'});
+							$.cookie('showAttendPop', null, { path: '/escapes/'});
 							signUpFree(plan_id)
 							
 						} else {
-							$.cookie('showAttendPop', null, { path: '/plans/'});
+							$.cookie('showAttendPop', null, { path: '/escapes/'});
 							createBill();
 						}
 		  				$.prompt.goToState('state1');
@@ -130,7 +136,7 @@ function payBill(discount) {
 	            focus: 0,
 	            submit: function(v, m, f) {
 	                if (v === 0) {
-						$.cookie('showAttendPop', null, { path: '/plans/'});
+						$.cookie('showAttendPop', null, { path: '/escapes/'});
 	                    $.prompt.close();
 		return false;
 	                }
@@ -141,7 +147,7 @@ function payBill(discount) {
 }
 
 function mycallbackfunc(v,m,f){
-		$.cookie('showAttendPop', null, { path: '/plans/'});
+		$.cookie('showAttendPop', null, { path: '/escapes/'});
 }
 
 
@@ -158,25 +164,7 @@ function createBill() {
 	
 //	$("#BB_BuyButtonForm").submit();
 	
-	<%if plan.title%>
-	
-	//$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
-     //    {  token: "<%=@wepay_token%>", 
-      //      group_id: "<%=@wepay_group_id%>",
-      //      buyer_email: "<%if current_user%><%=current_user.email%><%end%>",
-       //     amount: price,
-	//		fee_payer: "recipient",
-	//		ref_id: "<%=plan.id%>",
-	//		message: "<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>",
-	//		silent: 0,
-	//		<%if current_user%>
-	//			rd: "http://<%=@source%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
-	//		<%end%>
-      //      reason: "<%=strip_tags raw plan.title.gsub('&amp;','&')%> (x"+qty+")"
-     //    } ,function(data) {
-      //      window.location.href=data.result;
-      //   });
-	s	<%end%>
+
 }
 
 
@@ -234,7 +222,7 @@ $(document).ready(function() {
 	<%if cookies[:showAttendPop] == 'true'%>
 		 $(document).ready(function() {
 			<%if @plan.application_required%>
-				$.cookie('showAttendPop', null, { path: '/plans/'});
+				$.cookie('showAttendPop', null, { path: '/escapes/'});
 			<%end%>
 		  	setTimeout('$("#attend").click();',1000);
 		
@@ -245,7 +233,7 @@ $(document).ready(function() {
 		 $(document).ready(function() {
 			setTimeout('watchMouseDown($("#WatchButton"))',100);
 		  	setTimeout('$("#WatchButton").click();',100);
-			$.cookie('watchPlan', null, { path: '/plans/'});
+			$.cookie('watchPlan', null, { path: '/escapes/'});
 		 });
 	<%end%>
 	

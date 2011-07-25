@@ -1,0 +1,133 @@
+<%@plan = Plan.new%>
+
+<form id="EscapeForm" name="EscapeForm" action="/escapes" method="post" enctype="multipart/form-data">
+
+<div id="popup" style="display:none; position:absolute; z-index:1000">
+		<img src="//wufoo.com/images/iframe/demo/fancy_close.png" style="float:right;" alt="Close">
+	<div id="iframe-goes-here"></div> 
+
+</div>
+
+<div style="width:900px; margin-left:auto; margin-right:auto">
+
+<div class="HighlightedTitle">Create an Escape</div>
+
+<div class="CreateDivider">&nbsp;</div>
+<div class="HighlightedTitle" style="margin-bottom:10px; font-size:20px">Basic Info</div>
+
+<div class="CreateLabel">Title:</div>
+<div style="float:left;"><input id="plan_title" name="plan[title]" type="textfield" class="ShadowedTextBox" style="width:400px; color:#aaa" value="Give it a cool name. Try using a verb." onfocus="if ($(this).val() == 'Give it a cool name. Try using a verb.') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Give it a cool name. Try using a verb.'); $(this).css('color','#aaa') }"></div>
+<div style="clear:both; height:15px"></div>
+
+<div class="CreateLabel">Tagline:</div>
+<div style="float:left;"><input id="plan_short_desc" name="plan[short_desc]" type="textfield" class="ShadowedTextBox resize" style="width:400px;  color:#aaa" value="Type up a tweetable one-liner.  Sell it!" onfocus="if ($(this).val() == 'Type up a tweetable one-liner.  Sell it!') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Type up a tweetable one-liner.  Sell it!'); $(this).css('color','#aaa') }"></div>
+<div style="clear:both; height:15px"></div>
+
+<div class="CreateLabel">Photo:</div>
+<div style="float:left;"><input id="plan_image" name="plan[image]" type="file" class="ShadowedTextBox" style="width:400px"><br><span style="font-size:11px">Image should be at least 1250 pixels wide for best results</span></div>
+<div style="clear:both; height:15px"></div>
+
+<div class="CreateLabel">Summary:</div>
+<div style="float:left;"><textarea id="plan_note" name="plan[note]" class="ShadowedTextBox resize" style="width:400px; height:100px; color:#aaa"  onfocus="if ($(this).val() == 'Why is this fun? What can people expect?') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Why is this fun? What can people expect?'); $(this).css('color','#aaa') }">Why is this fun? What can people expect?</textarea></div>
+<div style="clear:both; height:15px"></div>
+
+<div class="CreateDivider">&nbsp;</div>
+<div class="HighlightedTitle" style="margin-bottom:10px; font-size:20px">Where?</div>
+
+<div class="CreateLabel">Venue Name:</div>
+<div style="float:left;"><input id="plan_url_name" name="plan[url_name]" type="textfield" class="ShadowedTextBox" style="width:400px; color:#aaa" value="Place, business, or landmark" onfocus="if ($(this).val() == 'Place, business, or landmark') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Place, business, or landmark'); $(this).css('color','#aaa') }"></div>
+<div style="clear:both; height:15px"></div>
+<div class="CreateLabel">Venue URL:</div>
+<div style="float:left;"><div id="http" style="position:absolute; margin-top:10px;color:#aaa; margin-left:7px; font-size:13px" onclick="$('#plan_url_link').focus()">http://</div><input id="plan_url_link" name="plan[url_link]" type="textfield" class="ShadowedTextBox" style="width:366px; padding-left:41px; color:#333" onfocus="$('#http').css('color','#333')" onblur="if ($(this).val() == '') { $('#http').css('color','#aaa') }"></div>
+<div style="clear:both; height:15px"></div>
+<div class="CreateLabel">Full Address:</div>
+<div style="float:left;"><input id="plan_location" name="plan[location]" type="textfield" class="ShadowedTextBox"    style="width:400px; color:#aaa" value="Type anything Google Maps can figure out" onfocus="if ($(this).val() == 'Type anything Google Maps can figure out') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Type anything Google Maps can figure out'); $(this).css('color','#aaa') } else { if ($(this).val() != '') { GeoCode_PlanNew($(this).val(),0)}}"></div>
+
+<input id="plan_lat" name="plan[lat]" type="hidden" value="0">
+<input id="plan_lng" name="plan[lng]" type="hidden" value="0">
+
+<div style="position:absolute; margin-top:-95px; margin-left:435px">
+<a id="GoogleLink" target="_blank"  href="">
+			<img  id="GoogleMap" width="125" height="125" alt="map error" style="display:none; cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src=""></a>
+</div>
+
+<div style="clear:both; height:15px"></div>
+
+
+<div class="CreateDivider">&nbsp;</div>
+<div class="HighlightedTitle" style="margin-bottom:10px;font-size:20px">When?</div>
+
+<div style="font-size:16px">
+	<input type="radio" id="plan_enable_date_poll" name="plan[enable_date_poll]" value="0" onclick="displayDatesNew(); "> <b>The Date is Set</b>. I know exactly when I'm doing it.
+	
+	<div id="AddDateLayer" style="clear:both; height:15px; display:none; margin-top:5px;">
+	<%=render :partial=>"date_fields", :locals=>{:source=>"new"}%>
+		<div style="clear:both; height:15px"></div>
+	</div>
+	
+
+	<div style="margin-top:5px; clear:both; color:#ccc">
+		<input type="radio" id="plan_enable_date_poll" name="plan[enable_date_poll]" value="1" disabled="true" onclick="$('#AddDateLayer').hide();"> <b>Poll for Date</b>. I'd like people to vote for the best date.
+	</div>
+
+	<div style="clear:both; height:20px"></div>
+	<input type="checkbox" id="plan_enable_date_requests" name="plan[enable_date_requests]" onclick="RequestLayer(this)"> <b>Allow Date Requesting</b>.  I can be asked to run  event on dates not listed.
+	
+	<div style="clear:both; height:20px"></div>
+	<div id="RequestLayer" style="float:left; display:none">
+		<textarea id="plan_availability" name="plan[availability]" class="ShadowedTextBox" style="width:400px; height:50px;  color:#aaa" onfocus="if ($(this).val() == 'When are you typically available? Any limitations?  Ex: Most Wednesdays at 6:30pm. Minimum 10 people or $500') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('When are you typically available? Any limitations?  Ex: Most Wednesdays at 6:30pm. Minimum 10 people or $500'); $(this).css('color','#aaa') }">When are you typically available? Any limitations?  Ex: Most Wednesdays at 6:30pm. Minimum 10 people or $500</textarea>
+	</div>
+	
+	
+</div>
+
+
+
+
+<div style="clear:both; height:15px"></div>
+<div class="CreateDivider">&nbsp;</div>
+<div class="HighlightedTitle" style="margin-bottom:10px;font-size:20px">How much?</div>
+
+<input type="hidden" id="plan_published" name="plan[published]" value="0">
+
+<div style="font-size:16px">
+<%=render :partial=>"ticket_settings", :locals=>{:source=>"new"}%>
+</div>
+	<div style="clear:both; height:15px"></div>
+	<div class="CreateDivider">&nbsp;</div>
+	
+	<div class="newGrayButton" style="margin-top:5px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:29px; width:120px; font-size:16px;"  onclick="submitDrafttoCreate(this);">Save Draft</div>
+	
+
+	<div  class="newGrayButton GreenB" style="margin-top:5px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:27px; width:120px; font-size:16px;" onclick="$('#plan_published').val(1); submitPlantoCreate(this);">Publish</div>
+	
+
+
+
+</div>
+</form>
+<script>
+$(document).ready(function() {
+	$('.resize').autoResize({
+	    // On resize:
+	    onResize : function() {
+	        $(this).css({opacity:0.8});
+	    },
+	    // After resize:
+	    animateCallback : function() {
+	        $(this).css({opacity:1});
+	    },
+	    // Quite slow animation:
+	    animateDuration : 300,
+	    // More extra space:
+	    extraSpace : 1
+	});
+	
+	$('#plan_application_deadline').datepicker({
+	   onClose: function(dateText, inst) { 
+	 	}
+	});
+	
+	
+});
+</script>

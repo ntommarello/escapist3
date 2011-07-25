@@ -11,6 +11,10 @@ class UserObserver < ActiveRecord::Observer
     @checkdigest = DigestEmail.find_by_email(user.email)
     if @checkdigest
       @checkdigest.joined = true
+      if @checkdigest.edition == 88 and @checkdigest.approved = true
+        user.mod_level = 2
+        user.save
+      end
       @checkdigest.save
     end
     

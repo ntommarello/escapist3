@@ -85,10 +85,11 @@ match '/auth/:provider/callback' =>'authentications#create'
   resources :dislikes
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
   resources :plans
+  resources :escapes, :controller => "plans"
    match '/edit_plan_date', :controller => 'plans', :action => 'edit_plan_date'
   
   
-  
+  match 'my_escapes' => 'plans#my_escapes', :as => :my_escapes
   
   match "plans/:id", :controller => 'plans', :action => 'show', :via => [:get, :post]
   resources :digest_emails

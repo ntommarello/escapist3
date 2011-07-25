@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :hosts
   has_many :plans_authored, :through => :hosts, :source => :plan
   
+ 
 
   has_many :plans, :dependent => :destroy
   has_many :subscribed_plans, :dependent => :destroy
@@ -55,6 +56,7 @@ class User < ActiveRecord::Base
   
   scope :sort_photos_first, :select=> "users.*, users.avatar_file_name IS NULL AS isnull", :order => "isnull ASC"
   
+  scope :limiteight, :limit=>"8"
   
   define_index do
       # fields

@@ -732,7 +732,7 @@ $.ajax({
 
 function uploadPlanPhoto(id,source) {
 	
-	txt = '<form id="ChallengeUpload" name="ChallengeUpload" action="/plans/'+id+'" method="post" enctype="multipart/form-data"><input id="_method" name="_method" value="PUT" type="hidden"><p class="HighlightedTitle" style="text-align:center">Upload Photo</p><div class="SubTitle" style="font-weight:normal; padding-bottom:10px">Show off your adventure!  Attach a pic of someone doing it... and looking like they are having fun!</div> <input autocomplete="off" class="UploadBox" id="plan_image" name="plan[image]" onchange="$.prompt.goToState(\'state1\'); $(\'#ChallengeUpload\').submit();" style="cursor:pointer;" type="file" />'
+	txt = '<form id="ChallengeUpload" name="ChallengeUpload" action="/escapes/'+id+'" method="post" enctype="multipart/form-data"><input id="_method" name="_method" value="PUT" type="hidden"><p class="HighlightedTitle" style="text-align:center">Upload Photo</p><div class="SubTitle" style="font-weight:normal; padding-bottom:10px">Show off your adventure!  Attach a pic of someone doing it... and looking like they are having fun!</div> <input autocomplete="off" class="UploadBox" id="plan_image" name="plan[image]" onchange="$.prompt.goToState(\'state1\'); $(\'#ChallengeUpload\').submit();" style="cursor:pointer;" type="file" />'
 	txt = txt+'</form>'
 	
 	//$.prompt(txt, {focus:1, persistent:false, callback: photoUploaded,  buttons: {  Cancel: 'Cancel', Upload: 'Upload' }});
@@ -1296,6 +1296,31 @@ function GeoCode_Plan(location, plan_id) {
 			$("#GoogleMap").show();
 			
 			$("#GoogleLink").attr("href", link_url);
+			$("#plan_lat").val(lat)
+			$("#plan_lat").val(lng)
+		}
+	});
+	
+}
+
+
+function GeoCode_PlanNew(location, plan_id) {
+
+	$.post("/geocode_plan", { location: location, plan_id:plan_id}, 
+	function(data){
+		eval(data);
+		if (lat == 0 ) {
+			$('#error').html('Could not convert address to GPS coordinates.')
+		} else {
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=125x125&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			document.getElementById('GoogleMap').src = mapURL;
+			$("#GoogleMap").show();
+			$("#GoogleLink").attr("href", link_url);
+			$("#plan_url_name").css("width","265px")
+			$("#plan_location").css("width","265px")
+			$("#plan_url_link").css("width","231px")
+			$("#plan_lat").val(lat)
+			$("#plan_lat").val(lng)
 		}
 	});
 	
@@ -2662,8 +2687,8 @@ function closeRegister() {
 	
 			setTimeout("$('#BlackModal').hide();",150);
 
-			$.cookie('showAttendPop', null, { path: '/plans/'});
-			$.cookie('watchPlan', null, { path: '/plans/'});
+			$.cookie('showAttendPop', null, { path: '/escapes/'});
+			$.cookie('watchPlan', null, { path: '/escapes/'});
 			$("#RegisterModal").hide();
 			$("#RegisterModal").css('opacity',0)
 			setTimeout("$('#EditDateLayer').hide();",150);
@@ -3530,24 +3555,25 @@ function loadInfo(index) {
 	
 	
 	//start_time = new Date(current_plan.start_time);
+	if (current_plan.start_time) {
+		str=current_plan.start_time.split('-');
+		var start_time=new Date();
+		start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
+		start_time.setUTCHours(0, 0, 0, 0);
 	
-	str=current_plan.start_time.split('-');
-	var start_time=new Date();
-	start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
-	start_time.setUTCHours(0, 0, 0, 0);
+		month_index = start_time.getUTCMonth()+1;
+		month = getShortMonth(month_index);
+		day = start_time.getUTCDate()
+		year  = str[0];
+		 currentTime = new Date()
+		 thisYear = currentTime.getFullYear();
+		$('#plan_startdate_month').html(month);
 	
-	month_index = start_time.getUTCMonth()+1;
-	month = getShortMonth(month_index);
-	day = start_time.getUTCDate()
-	year  = str[0];
-	 currentTime = new Date()
-	 thisYear = currentTime.getFullYear();
-	$('#plan_startdate_month').html(month);
-	
-	if (year > thisYear ) {
-		$('#plan_startdate_day').html(year);
-	} else {
-		$('#plan_startdate_day').html(day);
+		if (year > thisYear ) {
+			$('#plan_startdate_day').html(year);
+		} else {
+			$('#plan_startdate_day').html(day);
+		}
 	}
 
 	if (plans.length-1 > plan_index) {
@@ -3555,17 +3581,17 @@ function loadInfo(index) {
 		$('#next_arrow').show();
 		//new_start_time = new Date(next_plan.start_time);
 		
-		str=next_plan.start_time.split('-');
-		var new_start_time=new Date();
-		new_start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
-		new_start_time.setUTCHours(0, 0, 0, 0);
-		
-		
-		new_month_index = new_start_time.getUTCMonth()+1;
-		new_month = getShortMonth(new_month_index).toLowerCase();
-		new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
-		new_day = new_start_time.getUTCDate()
-		$('#next_plan_link').html(next_plan.title+' on '+new_month+' '+new_day);
+		if (next_plan.start_time) {
+			str=next_plan.start_time.split('-');
+			var new_start_time=new Date();
+			new_start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
+			new_start_time.setUTCHours(0, 0, 0, 0);
+			new_month_index = new_start_time.getUTCMonth()+1;
+			new_month = getShortMonth(new_month_index).toLowerCase();
+			new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
+			new_day = new_start_time.getUTCDate()
+			$('#next_plan_link').html(next_plan.title+' on '+new_month+' '+new_day);
+		}
 	} else {
 		
 		if (loggedIn == 0) {
@@ -3927,9 +3953,32 @@ displaySavingInProgress();
 }
 
 
-function displayEditDate() {
 
+function displayDatesNew() {
+	enableDateFields();
+	$('#AddDateLayer').show();
+}
+
+function RequestLayer(box) {
+	if ($(box).is(':checked')) {
+		$("#RequestLayer").show();
+	} else{
+		$("#RequestLayer").hide();
+	}
+}
+
+function displayEditDate() {
+	enableDateFields();
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#EditDateLayer')); $('#EditDateLayer').css('top','35px');  $('#EditDateLayer').show();  $('#EditDateLayer').animate({ opacity: 1,}, 250 );",50);
+}
+
+function enableDateFields() {
 		$('#end_time_date').datepicker({
+			minDate: "-0D", 
+			maxDate: "+2Y",
 		   onClose: function(dateText, inst) { 
 
 			var startDate = new Date($("#start_time_date").val());
@@ -3945,10 +3994,16 @@ function displayEditDate() {
 		
 		
 			$('#start_time_date').datepicker({
+						minDate: "-0D", 
+						maxDate: "+2Y",
 			   onClose: function(dateText, inst) { 
 				
 				var startDate = new Date($("#start_time_date").val());
 				var endDate = new Date($("#end_time_date").val());
+			
+				if (endDate = "") {
+					$("#end_time_date").val(dateText)
+				}
 			
 				if (startDate > endDate) {
 				
@@ -3956,12 +4011,16 @@ function displayEditDate() {
 				}
 			 	}
 			});
-		
-	$("#BlackModal").show();
-	$("#BlackModal").animate({opacity: .4,}, 100 );
-	$("#BlackModal").height($(document).height())
-	setTimeout("centerBox($('#EditDateLayer')); $('#EditDateLayer').css('top','35px');  $('#EditDateLayer').show();  $('#EditDateLayer').animate({ opacity: 1,}, 250 );",50);
 }
+
+
+
+
+
+
+
+
+
 
 function editLink(plan_id) {
 //	$("#MapLink").attr("href", $("#url_link").val());
@@ -3972,7 +4031,7 @@ function editLink(plan_id) {
 	
 	$.ajax({
         type: "POST",
-        url: "/plans/"+plan_id,
+        url: "/escapes/"+plan_id,
         data: "_method=PUT&plan[url_link]=" + escape($("#url_link").val()) + "&plan[url_name]="+escape($("#url_name").val()),
         success: function(msg){
 			displaySaved();
@@ -4070,8 +4129,8 @@ function saveSettings(plan_id) {
 	slideSettings()
 	$.ajax({
         type: "POST",
-        url: "/plans/"+plan_id,
-        data: "_method=PUT&plan[price]=" + price + "&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing,
+        url: "/escapes/"+plan_id,
+        data: "_method=PUT&plan[price]=" + price + "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing,
         success: function(msg){
 			displaySaved();
 			window.location.reload();
@@ -4085,35 +4144,6 @@ function saveSettings(plan_id) {
 
 
 
-function unpublishPlan(plan_id) {
-	displaySavingInProgress();
-	$("#UnpublishLink").hide()
-	$.ajax({
-        type: "POST",
-        url: "/plans/"+plan_id,
-        data: "_method=PUT&plan[published]=0",
-        success: function(msg){
-			displaySaved();
-			$("#PublishLink").show()
-			$("#DraftLayer").show()
-        }
-     });
-}
-function publishPlan(plan_id) {
-	displaySavingInProgress();
-		$("#PublishLink").hide()
-	
-	$.ajax({
-        type: "POST",
-        url: "/plans/"+plan_id,
-        data: "_method=PUT&plan[published]=1",
-        success: function(msg){
-			displaySaved();
-			$("#UnpublishLink").show()
-				$("#DraftLayer").hide()
-        }
-     });
-}
 
 
 
@@ -4169,7 +4199,7 @@ function planEditToggle() {
 		editable = false;
 		$("#LockLinkIcon").addClass("LionHighlight")
 		$("#EditLinkIcon").removeClass("LionHighlight")
-		$.cookie('disable_edit', 'yes', { path: '/plans/', expires: 1});
+		$.cookie('disable_edit', 'yes', { path: '/escapes/', expires: 1});
 					$(".EditBox").each( function(i,n) {
 						$(this).addClass("EditBoxHide").removeClass("EditBox");
 					} );
@@ -4184,7 +4214,7 @@ function planEditToggle() {
 		editable = true;
 		$("#LockLinkIcon").removeClass("LionHighlight")
 		$("#EditLinkIcon").addClass("LionHighlight")
-		$.cookie('disable_edit', null, { path: '/plans/'});
+		$.cookie('disable_edit', null, { path: '/escapes/'});
 		window.location.reload();
 	}
 }
@@ -4194,12 +4224,242 @@ function planEditToggle() {
 function destroyPlan(id) {
 	closeRegister();
 	showWarningMessage("Deleting")
-	$.post("/plans/"+id, { id:id, _method:'delete'}, function(theResponse){
+	$.post("/escapes/"+id, { id:id, _method:'delete'}, function(theResponse){
 		window.location.href="/"
 	});
 	
 }
 
+function destroyPlan2(id,layer) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/escapes/"+id, { id:id, _method:'delete'}, function(theResponse){
+		$(layer).hide();
+		$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+		$("#StatusBar").html("Deleted");
+		setTimeout("animateStatusBarUp()",500)
+	});
+	
+}
+
+
+
+
+
+function submitDrafttoCreate(button) {
+	$(button).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+		$('#EscapeForm').submit();
+	
+}
+
+function submitPlantoCreate(button) {
+	$(button).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+	validatePublish("new",button,0)
+	
+}
+
+function validatePublish(source,button,plan_id) {
+
+	if (source == "new") {
+		title = $("#plan_title").val();
+		short_desc = $("#plan_short_desc").val();
+		note = $("#plan_note").val();
+		short_location = $("#plan_url_name").val();
+		location2 = $("#plan_location").val();
+	} else {
+		title = $("#title").html();
+		short_desc = $("#short_desc").html();
+		note = $("#note").html();
+		short_location = $("#short_location").html();
+		location2 = $("#location").html();
+		
+	}
+	
+	attendance_cap = $("#plan_attendance_cap").val();	
+	image = $("#plan_image").val();
+	lat = $("#plan_lat").val();
+	error = 0;
+	
+
+	
+	if (attendance_cap == "" || attendance_cap == 0 || attendance_cap == "0") {
+		showWarningMessage("Error:  Quantity required");
+		if (source =="edit") {
+			slideSettings()
+		}
+		$("#plan_attendance_cap").focus();
+		error = 1;
+	}
+	
+	//TODO:  Don't always require dates
+	
+	if ($("#start_time_date").val() == "" || $("#end_time_date").val() == "") {
+		showWarningMessage("Error:  Start and End Time Required");
+		displayDatesNew();
+		
+		if (source =="edit") {
+			displayEditDate();
+		}
+		
+		
+		if ($("#start_time_date").val() == "") {
+			$("#start_time_date").focus();
+		} else {
+			$("#end_time_date").focus();
+		}
+		error = 1;
+	}
+
+	
+	
+	
+	if ($('input[name=application]:checked').val() == 2) {	
+		if ($("#plan_application_deadline").val() == "") {
+			showWarningMessage("Error:  Application Deadline Required");
+			if (source =="edit") {
+				slideSettings()
+			}
+			$("#plan_application_deadline").focus();
+			error = 1;
+		}
+	}
+	
+	
+	if (lat == "" || lat == 0 || lat == "0") {
+		showWarningMessage("Error:  Google could not determine location.");
+		if (source =="edit") {
+	  		$("#location").focus();
+		} else {
+			$("#plan_location").focus();
+		}
+		error = 1;
+	}
+	
+	
+	if (location2 == "" || location2 == "Type anything Google Maps can figure out") {
+	  showWarningMessage("Error:  Full address required");
+		if (source =="edit") {
+	  		$("#location").focus();
+		} else {
+			$("#plan_location").focus();
+		}
+	 	error = 1;
+	}
+
+	
+	if (short_location == "" || short_location == "Place, business, or landmark") {
+		showWarningMessage("Error:  Venue required");
+		if (source =="edit") {
+			$("#short_location").focus();
+		} else {
+			$("#plan_url_name").focus();
+		}
+		error = 1;
+	}
+	
+	if (note == "" || note == "Why is this fun? What can people expect?") {
+		showWarningMessage("Error:  Summary Required");
+		if (source =="edit") {
+			$("#note").focus();
+		} else {
+			$("#plan_note").focus();
+		}
+		error = 1;
+	}
+	
+	if (image == "" || image == null ) {
+	
+		showWarningMessage("Error:  Photo Required")
+		if (source =="edit") {
+			uploadPlanPhoto(plan_id,'show')
+		} else {
+			$("#plan_image").focus();
+		}
+		error = 1;
+	} else {
+		if (source =="new") {
+			test = image.split('.').pop().toLowerCase(); 
+			var allow = new Array('gif','png','jpg','jpeg'); 
+			if(jQuery.inArray(test, allow) == -1) {
+				showWarningMessage("Error:  Photo must be 'gif','png','jpg', or 'jpeg'")
+				$("#plan_image").focus();
+				error = 1;
+			}
+		}
+	} 
+	
+	if (short_desc == "" || short_desc == "Type up a tweetable one-liner.  Sell it!") {
+		showWarningMessage("Error:  Tagline Required")
+		if (source =="edit") {
+			$("#short_desc").focus();
+		} else {
+			$("#plan_short_desc").focus();
+		}
+		error = 1;
+	}
+	
+	if (title == "" || title == "Give it a cool name. Try using a verb.") {
+		showWarningMessage("Error:  Title Required");
+		if (source =="edit") {
+			$("#title").focus();
+		} else {
+			$("#plan_title").focus();
+		}
+		error = 1;
+	}
+
+	
+	
+	
+	
+	
+	if (error == 1) {
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+	
+	
+	if (source == "new") {
+		$('#EscapeForm').submit();
+	} else {
+		displaySavingInProgress();
+			$("#PublishLink").hide()
+
+		$.ajax({
+	        type: "POST",
+	        url: "/escapes/"+plan_id,
+	        data: "_method=PUT&plan[published]=1",
+	        success: function(msg){
+				displaySaved();
+				$("#UnpublishLink").show()
+					$("#DraftLayer").hide()
+	        }
+	     });
+	}
+	
+}
+
+
+
+
+function unpublishPlan(plan_id) {
+	displaySavingInProgress();
+	$("#UnpublishLink").hide()
+	$.ajax({
+        type: "POST",
+        url: "/escapes/"+plan_id,
+        data: "_method=PUT&plan[published]=0",
+        success: function(msg){
+			displaySaved();
+			$("#PublishLink").show()
+			$("#DraftLayer").show()
+        }
+     });
+}
+function publishPlan(plan_id) {
+
+}
 
 
 

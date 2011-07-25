@@ -13,7 +13,14 @@ class Plan < ActiveRecord::Base
   
   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
   scope :published, :conditions => ["published = ?",true]
-  
+   scope :sort_group, :select=>"start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"group_id DESC, published ASC, isnull ASC, after desc, start_time ASC"
+
+   
+   named_scope :filter_group, lambda { |my_id|
+   { :conditions => ["group_id = ?", my_id] }
+   }
+   
+   
   acts_as_mappable
   
   def has_signedup?(user)

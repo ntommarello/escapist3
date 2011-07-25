@@ -40,7 +40,7 @@
 		<div class="Lionbuttons" >
 		
 			
-			<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="publishPlan(<%=@plan.id%>)">Publish</a>
+			<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="validatePublish('edit',this,<%=@plan.id%>)">Publish</a>
 			<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
 		
 				<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
@@ -96,6 +96,12 @@
 			
 			<%if @editable%>
 				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
+				
+				<%unless @plan.image_file_name%>
+					<div style="position:absolute; text-align:Center; margin-top:-60px; width:400px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="uploadPlanPhoto(<%=@plan.id%>,'show')">Upload Photo</div>
+				<%end%>
+				
+				<input type="hidden" id="plan_image" value="<%=@plan.image_file_name%>">
 			<%else%>
 				<%= image_tag @plan.image.url(:thumb_400), :style=>"width:400px; height:256px; cursor:default", :class=>""%>
 			<%end%>
@@ -105,7 +111,7 @@
 	<%end%>
 	<%end%>
 		<div style="float:left;  margin-top:11px; margin-left:29px; text-align:center">
-			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/plans/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Watching<%else%>Watch<%end%></button>
+			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Watching<%else%>Watch<%end%></button>
 			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
 		</div>
 		
@@ -264,6 +270,9 @@
 								<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
 											<img  id="GoogleMap" width="270" height="125" alt="map error" style=" cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=14&size=270x125&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
 								</div>
+								
+								<input type="hidden" id="plan_lat" value="<%=@plan.lat%>">
+								<input type="hidden" id="plan_lng" value="<%=@plan.lng%>">
 
 								<div style="float:left; margin-left:7px; max-width:210px; min-width:110px;">
 

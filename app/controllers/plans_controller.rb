@@ -115,22 +115,80 @@ class PlansController < ApplicationController
   
   def create
     
-    #mobile bug
-    if params[:version] == "1.0"
-      if params[:maybe]
-        @maybe = params[:maybe]
-      else
-        @maybe = 0
+    if current_user
+      
+      if params[:plan][:application_deadline] != ""
+       date_and_time = '%m/%d/%Y'
+       params[:plan][:application_deadline] = DateTime.strptime("#{params[:plan][:application_deadline]}", date_and_time)
+      end 
+      
+      if params[:plan][:url_link] != ""
+        params[:plan][:url_link] = "http://#{params[:plan][:url_link]}"
       end
+       
+      @plan = Plan.new(params[:plan])
+    
+      if params[:plan_price_radio].to_i == 1
+        @plan.price = 0
+      end
+    
+      @plan.featured = 1
+      @plan.privacy = 1
+    
+      if @group
+        @plan.group_id = @group.id
+      end
+     
+      @plan.city_id = 99
+      @plan.short_location = params[:plan][:url_name]
+      
+      if params[:plan][:url_name] == "Place, business, or landmark"
+        @plan.url_name = nil
+      end
+    
+      @plan.enable_comments = 1
+      @plan.enable_sharing = 1
+      @plan.enable_signups = 1
+      
+      if params[:plan][:enable_discount] == "on"
+        @plan.enable_discount = true
+      end
+      
 
-       check = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],current_user.id)
-       if check
-         check.maybe = @maybe
-         check.save!
-       else
-         SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :maybe=>@maybe)
+      
+      if params[:application] == "2"
+        @plan.application_required = true
+      end
+    
+
+    
+       combine_times
+     
+    
+       if @plan.location != "Type anything Google Maps can figure out"
+         loc = MultiGeocoder.geocode(@plan.location)
+         if loc.success
+           calc_closest_city(loc)
+           @plan.city_id = @returned_city_id
+           @plan.lat = loc.lat
+           @plan.lng = loc.lng
+         end
+
        end
+       
+    
+    
+    
+      @plan.save!
+      
+      Host.create(:user_id => current_user.id, :plan_id => @plan.id, :admin=>true)
+      
+    
+      redirect_to "/escapes/#{@plan.id}"
+      
     end
+    
+    
   end
   
   
@@ -246,7 +304,7 @@ class PlansController < ApplicationController
     @plan.save
     
  
-    redirect_to "/plans/#{@plan.id}"
+    redirect_to "/escapes/#{@plan.id}"
     
     
 
@@ -299,6 +357,10 @@ class PlansController < ApplicationController
     t = Time.zone.now
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
      
+     
+     
+     
+     
     if session[:dropdown_city_value].to_i == 1  #boston
       @origin = [42.358431,-71.059773]
     end
@@ -349,6 +411,11 @@ class PlansController < ApplicationController
   
   def new
     
+    
+    if !current_user
+      redirect_to "/"
+    end
+    
   end
   
   
@@ -357,24 +424,9 @@ class PlansController < ApplicationController
     
     @plan = Plan.find(params[:plan_id])
     
-    @start_hour = params[:start_time_hour]
-    @end_hour = params[:end_time_hour]
-    if params[:start_time_ampm] == "pm"
-      @start_hour = @start_hour + 12
-    end
-    if params[:end_time_ampm] == "pm"
-      @end_hour = @end_hour + 12
-    end
     
+    combine_times
     
-    date_and_time = '%m/%d/%Y %H:%M %p'
-  
-
-    
-    
-    
-    @plan.start_time = DateTime.strptime("#{params[:start_time_date]} #{params[:start_time_hour]}:#{params[:start_time_minute]} #{params[:start_time_ampm].upcase()}", date_and_time)
-    @plan.end_time = DateTime.strptime("#{params[:end_time_date]} #{params[:end_time_hour]}:#{params[:end_time_minute]} #{params[:end_time_ampm].upcase()}", date_and_time)
     @plan.save
     
     @editable = true
@@ -384,6 +436,47 @@ class PlansController < ApplicationController
     
   end
   
+  
+  def combine_times
+    
+    if params[:start_time_date] != ""
+      @start_hour = params[:start_time_hour]
+      @end_hour = params[:end_time_hour]
+      if params[:start_time_ampm] == "pm"
+        @start_hour = @start_hour + 12
+      end
+      if params[:end_time_ampm] == "pm"
+        @end_hour = @end_hour + 12
+      end
+    
+    
+      date_and_time = '%m/%d/%Y %H:%M %p'
+  
+
+    
+    
+    
+      @plan.start_time = DateTime.strptime("#{params[:start_time_date]} #{params[:start_time_hour]}:#{params[:start_time_minute]} #{params[:start_time_ampm].upcase()}", date_and_time)
+      @plan.end_time = DateTime.strptime("#{params[:end_time_date]} #{params[:end_time_hour]}:#{params[:end_time_minute]} #{params[:end_time_ampm].upcase()}", date_and_time)
+    end
+  end
+  
+  
+  def my_escapes
+    
+    if !current_user
+      redirect_to "/"
+      return
+    end
+    
+    if @group
+      @my_plans = current_user.plans_authored.sort_group.filter_group(@group.id)
+    else
+      @my_plans = current_user.plans_authored.sort_group
+    end
+    
+    
+  end
   
   
 end

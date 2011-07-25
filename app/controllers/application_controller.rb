@@ -27,8 +27,8 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     
-    #group = Group.find(3)
-    #@group = group
+    #group = Group.find(6)
+
     for group in groups
       if @domain.include? group.url
         @group = group

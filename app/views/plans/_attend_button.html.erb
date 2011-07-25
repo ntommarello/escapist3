@@ -1,20 +1,24 @@
-<%@over = false%>
-<%t = Time.zone.now%>
-<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
-<%if rounded_t >= @plan.start_time%>
-	<%@over = true%>
+<%if @plan.start_time%>
+	<%@over = false%>
+	<%t = Time.zone.now%>
+	<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
+	<%if rounded_t >= @plan.start_time%>
+		<%@over = true%>
+	<%end%>
 <%end%>
+<%if @plan.attendance_cap%>
+	<%plural = ""%>
+	<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
 
-<%plural = ""%>
-<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
-
-<%if @plan.seats_remaining < 7%>
-			<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
-<%else%>
-		<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
+	<%if @plan.seats_remaining < 7%>
+				<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
+	<%else%>
+			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
 		
+	<%end%>
+<%else%>
+<%@tickets_remaining = ""%>
 <%end%>
-
 
 <%if current_user && @plan.has_signedup?(current_user)%>
 	<%@signedup = TRUE%>
@@ -35,7 +39,7 @@
 			<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
 		<%end%>
 	<%else%>
-			<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'});"%>
+			<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'});"%>
 	<%end%>
 <%end%>
 
@@ -51,7 +55,7 @@
 			<%if @signedup%>
 				<%@subtitle = "You are attending!"%>	
 			<%else%>
-				<%if @plan.seats_remaining < 10%>
+				<%if @plan.attendance_cap and (@plan.seats_remaining < 10 and @plan.seats_remaining > 0) %>
 					<%@subtitle = @tickets_remaining%>	
 				<%else%>
 					<%@subtitle = "per ticket"%>
@@ -85,7 +89,8 @@
 
 
 
-
+<%if @plan.attendance_cap%>
 <script>
 seats_remaining = <%=@plan.seats_remaining%>
 </script>
+<%end%>

@@ -1,6 +1,8 @@
-<div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
+<%source = "" unless defined?(source)%>
+
+<div id="card<%=plan.id%>" class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
 	<div class="BrowseBorder"  >
-		<A class="browselink" href="/plans/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
+		<A class="browselink" href="/escapes/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
 			<div class="BrowseExpandImage" 
 			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
 			<%else%>
@@ -14,12 +16,15 @@
 		
 				<div class="BrowseInfoContainer">
 					<div class="BrowseDate"><div style="margin-top:3px">
-					<%=plan.start_time.to_date.strftime('%b').upcase()%><br>
+						
+					<%if plan.start_time%>
+						<%=plan.start_time.to_date.strftime('%b').upcase()%><br>
 					
-					<%if Date.today.strftime('%Y') == plan.start_time.to_date.strftime('%Y')%>
-						<%= plan.start_time.to_date.strftime('%e').strip()%>
-					<%else%>
-						<%= plan.start_time.to_date.strftime('%Y').strip()%>
+						<%if Date.today.strftime('%Y') == plan.start_time.to_date.strftime('%Y')%>
+							<%= plan.start_time.to_date.strftime('%e').strip()%>
+						<%else%>
+							<%= plan.start_time.to_date.strftime('%Y').strip()%>
+						<%end%>
 					<%end%>
 					</div></div>
 					<div class="BrowseTitle">
@@ -49,9 +54,27 @@
 		</script>
 		
 		
-		<div style="height:82px; margin:5px;">
+		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:82px;<%end%> margin:5px;">
 			
-		
+			<%if source == "my_escapes"%>
+			
+				<div style="font-size:15px; width:150px; margin-top:10px; margin-left:5px; float:left">
+					<%if plan.attendance_cap%>
+						<%if plan.application_required%>
+							<b><%=plan.subscribed_plans.length%></b> application<%if plan.subscribed_plans.length !=1%>s<%end%>
+						<%else%>
+							<b><%=plan.subscribed_plans.length%></b> / <b><%=plan.attendance_cap%></b> signups
+						<%end%>
+					<%end%>
+				</div>
+				
+				<div style="float:right; width:80px; color:#ccc; margin-top:10px; text-align:right; margin-right:-5px">
+					[ <a class="BlueLink" href="/escapes/<%=plan.id%>" onclick="$.cookie('disable_edit', null, { path: '/escapes/'}); ">edit</a> ] [ <span class="BlueLink" onclick="deleteThisPlanID = <%=plan.id%>; OpenDeletePlan()">delete</span> ]
+				</div>
+				<div style="clear:both"></div>
+				
+			
+			<%else%>
 			<div>
 			<%if plan.organizers%>
 			<div style="position:absolute; height:80px;">
@@ -74,7 +97,7 @@
 			</div>
 			
 			
-			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/plans/'}); window.location.href='/plans/<%=plan.id%>'">
+			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/<%=plan.id%>'">
 				<%if !plan.application_required%>
 				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
 				<%end%>
@@ -90,6 +113,7 @@
 					<%end%>
 				</div>
 			</div>
+		<%end%>
 		</div>
 	</div>
 </div>
