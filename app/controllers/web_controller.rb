@@ -52,7 +52,14 @@ class WebController < ApplicationController
      
      #add in ones user is author for
      if current_user
-       for plan in current_user.plans_authored
+       
+       if @group
+         my_plans = current_user.plans_authored.filter_group(@group.id)
+       else
+         my_plans = current_user.plans_authored
+       end
+       
+       for plan in 
         if plan.published == false 
           @add_plan = Plan.find(:all, :conditions=>["id=?",plan.id])
           @plan = @plan + @add_plan
