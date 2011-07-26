@@ -681,6 +681,13 @@ body {
   font-size: 22px;
   line-height: 26px; }
 
+.WhiteHighlightedTitle {
+  font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.8);
+  font-size: 36px;
+  line-height: 38px; }
+
 .TopButtons {
   position: absolute;
   width: 62px;
@@ -1713,7 +1720,6 @@ a:hover {
   margin-left: 3px;
   height: 45px;
   width: 50px;
-  color: #5691C3;
   border: 1px solid #DADADA;
   margin-top: 15px;
   font-size: 24px;
@@ -4658,3 +4664,72 @@ a.Lionright {
   width: 14px;
   height: 18px;
   background-position: 0px -150px; }
+
+.HostTopBox {
+  height: 300px;
+  padding-top: 25px;
+  width: 100%;
+  margin-top: -25px;
+  margin-left: -25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #2963a4, #6495cd);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6495cd), to(#2963a4)); }
+
+.BetaBox {
+  position: absolute;
+  opacity: .9;
+  width: 218px;
+  height: 95px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px 8px 8px 8px;
+  -webkit-background-clip: padding-box;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #02a304, #2ed019);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2ed019), to(#02a304));
+  border: 1px solid #7BDF84; }
+
+.HostExamples {
+  position: absolute;
+  background: #ccc;
+  opacity: .1;
+  width: 408px;
+  height: 270px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px 8px 8px 8px;
+  -webkit-background-clip: padding-box;
+  border: 1px solid #000066; }
+
+.HostExampleContent {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 5px;
+  cursor: pointer; }
+
+.HostExampleContent:hover {
+  opacity: .9; }
+
+.HostSubTitle {
+  margin-top: 5px;
+  color: #EAF2F8;
+  font-size: 16px;
+  line-height: 22px; }
+
+.checkmark {
+  float: left;
+  opacity: .9;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background: url(/images/checkmark.png); }
+
+.CreateScreenshot {
+  margin-top: 1px;
+  margin-left: 1px;
+  height: 240px;
+  width: 415px;
+  border: 0; }
+
+.CreateScreenshot:hover {
+  opacity: .9; }

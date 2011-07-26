@@ -2859,8 +2859,16 @@ function joinCreateDigest(edition) {
 		$("#digest_email").focus()
 	} else {
 		$("#JoinDigest").html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+		edition1 = edition;
 		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
-			$("#invite").html("<b>Thanks!  We'll be in touch.</b>")
+			
+			if (edition1 == 88) {
+				$("#Thanks").html("Thank you!")
+				$("#Shortly").html("You'll hear from us shortly.")
+				$("#BetaAccess").hide();
+			} else {
+				$("#invite").html("<b>Thanks!  We'll be in touch.</b>")
+			}
 			
 		});
 	}

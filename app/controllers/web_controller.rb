@@ -174,7 +174,7 @@ class WebController < ApplicationController
  end
  
  
- def adventure_guide
+ def host_an_adventure
    
    
    

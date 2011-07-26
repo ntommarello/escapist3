@@ -787,6 +787,13 @@ cursor:pointer;
 	line-height:26px;
 }
 
+.WhiteHighlightedTitle {
+	font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
+	color:#fff; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+	font-size:36px;
+	line-height:38px;
+}
+
 
 .TopButtons {
 	position:absolute;
@@ -1677,7 +1684,7 @@ color:$default-link-color;
 	@include roundedCorners(5px);
 	float:left;
 	margin-left:3px;
-	height:45px; width:50px; color:#5691C3; border:1px solid #DADADA; margin-top:15px;  font-size:24px; text-align:center; padding-top:5px;
+	height:45px; width:50px;  border:1px solid #DADADA; margin-top:15px;  font-size:24px; text-align:center; padding-top:5px;
 }
 #LogoutMenu {
 	display:none; position:absolute; padding:0px; line-height:23px;  z-index:1000; border:1px solid  $top-border-color; margin-top:40px;  background-color:white;
@@ -4400,4 +4407,51 @@ a.Lionright {
 	height:18px;
 	background-position:0px -150px;
 }
+.HostTopBox {
+	height:300px; padding-top:25px; width:100%; margin-top:-25px; margin-left:-25px; padding-right:25px; padding-left:25px;
+	@include lineargradient(#2963A4, #6495CD);
+}
 
+.BetaBox {
+	position:absolute;
+opacity:.9; width:218px; height:95px;
+		@include rounded_corners(8px);
+		
+		@include lineargradient(#02A304, #2ED019);
+		border:1px solid #7BDF84;
+}
+
+.HostExamples {
+	position:absolute;
+	background:#ccc; opacity:.1; width:408px; height:270px;
+		@include rounded_corners(8px);
+		border:1px solid #000066;
+}
+.HostExampleContent {
+	position:absolute; margin-top:5px; margin-left:5px; cursor:pointer;
+}
+.HostExampleContent:hover {
+	opacity:.9;
+}
+.HostSubTitle {
+	margin-top:5px;
+	color:#EAF2F8;
+	font-size:16px;
+	line-height:22px;
+}
+
+.checkmark {
+	float:left;
+	opacity:.9;
+	width:20px;
+	height:20px;
+	margin-right:10px;
+	background:url(/images/checkmark.png);
+}
+
+.CreateScreenshot {
+	margin-top:1px; margin-left:1px;height:240px; width:415px; border:0
+}
+.CreateScreenshot:hover {
+	opacity:.9;
+}

@@ -130,7 +130,7 @@ match '/auth/:provider/callback' =>'authentications#create'
   
   
   match 'create', :controller => 'web', :action => 'apply'
-  match 'adventure_guide', :controller => 'web', :action => 'adventure_guide'
+  match 'host_an_adventure', :controller => 'web', :action => 'host_an_adventure'
  
   
   match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'
