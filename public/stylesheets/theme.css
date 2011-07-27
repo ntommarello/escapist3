@@ -4685,6 +4685,7 @@ a.Lionright {
   -webkit-border-radius: 8px;
   border-radius: 8px 8px 8px 8px;
   -webkit-background-clip: padding-box;
+  background: #02A304;
   background-image: -moz-linear-gradient(100% 100% 90deg, #02a304, #2ed019);
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2ed019), to(#02a304));
   border: 1px solid #7BDF84; }
@@ -4726,10 +4727,62 @@ a.Lionright {
 
 .CreateScreenshot {
   margin-top: 1px;
-  margin-left: 1px;
-  height: 240px;
-  width: 415px;
+  margin-left: 50px;
+  height: 275px;
+  width: 471px;
   border: 0; }
 
 .CreateScreenshot:hover {
   opacity: .9; }
+
+.HostQuote {
+  width: 100%;
+  margin-left: -25px;
+  padding: 25px;
+  height: 50px;
+  background: #EBEBEB;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #d2d2d2, #ebebeb);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ebebeb), to(#d2d2d2));
+  border-bottom: 1px solid #fff; }
+
+.HostQuoteText {
+  float: left;
+  color: #676767;
+  font-weight: bold;
+  font-size: 16px;
+  text-shadow: rgba(255, 255, 255, 0.8) 0px 1px 0;
+  line-height: 20px; }
+
+.noise {
+  position: absolute;
+  height: 325px;
+  width: 100%;
+  margin-left: -25px;
+  margin-top: -25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  background: url(/images/noise.png) repeat; }
+
+.noisecontent {
+  position: absolute;
+  height: 325px;
+  width: 100%;
+  margin-left: -25px;
+  margin-right: -25px; }
+
+.FadeToWhite {
+  width: 100%;
+  margin-left: -25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  background: transparent;
+  height: 40px;
+  background-image: -moz-linear-gradient(100% 100% 90deg, white, #efefef);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#efefef), to(white)); }
+
+.HostDotted {
+  width: 100%;
+  height: 1px;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  background: url(/images/hostdivider.png) repeat-x; }

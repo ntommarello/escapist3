@@ -59,7 +59,7 @@ class WebController < ApplicationController
          my_plans = current_user.plans_authored
        end
        
-       for plan in 
+       for plan in my_plans
         if plan.published == false 
           @add_plan = Plan.find(:all, :conditions=>["id=?",plan.id])
           @plan = @plan + @add_plan

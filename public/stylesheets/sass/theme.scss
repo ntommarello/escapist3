@@ -4416,7 +4416,7 @@ a.Lionright {
 	position:absolute;
 opacity:.9; width:218px; height:95px;
 		@include rounded_corners(8px);
-		
+		background:#02A304;
 		@include lineargradient(#02A304, #2ED019);
 		border:1px solid #7BDF84;
 }
@@ -4450,8 +4450,60 @@ opacity:.9; width:218px; height:95px;
 }
 
 .CreateScreenshot {
-	margin-top:1px; margin-left:1px;height:240px; width:415px; border:0
+	margin-top:1px; margin-left:50px;height:275px; width:471px; border:0
 }
 .CreateScreenshot:hover {
 	opacity:.9;
+}
+
+.HostQuote {
+	width:100%;
+	margin-left:-25px;
+	padding:25px;
+	height:50px;
+	background:#EBEBEB;
+	@include lineargradient(#D2D2D2, #EBEBEB);
+	border-bottom:1px solid #fff;
+}
+
+.HostQuoteText {
+	float:left; color:#676767; font-weight:bold; font-size:16px; 
+	text-shadow: rgba(255, 255, 255, .8) 0px 1px 0;
+	line-height:20px;
+}
+.noise {
+	position:absolute;
+	height:325px;
+	width:100%;
+	margin-left:-25px;
+	margin-top:-25px;
+	padding-right:25px;
+	padding-left:25px;
+	background:url(/images/noise.png) repeat;
+}
+
+.noisecontent {
+	position:absolute;
+	height:325px;
+	width:100%;
+	margin-left:-25px;
+	margin-right:-25px;
+}
+.FadeToWhite {
+	width:100%;
+	margin-left:-25px;
+	padding-right:25px;
+	padding-left:25px;
+	background:transparent;
+	height:40px;
+		@include lineargradient(#fff, #EFEFEF);
+	
+}
+
+.HostDotted {
+	width:100%;
+	height:1px;
+	margin-bottom:30px;
+	margin-top:30px;
+	background:url(/images/hostdivider.png) repeat-x;
 }
