@@ -4685,6 +4685,20 @@ a.Lionright {
   -webkit-border-radius: 8px;
   border-radius: 8px 8px 8px 8px;
   -webkit-background-clip: padding-box;
+  background: #BA0202;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #ba0202, #f52021);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f52021), to(#ba0202));
+  border: 2px solid #fff; }
+
+.BetaBox2 {
+  position: absolute;
+  opacity: 1;
+  width: 300px;
+  height: 198px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px 8px 8px 8px;
+  -webkit-background-clip: padding-box;
   background: #02A304;
   background-image: -moz-linear-gradient(100% 100% 90deg, #02a304, #2ed019);
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2ed019), to(#02a304));
@@ -4714,8 +4728,8 @@ a.Lionright {
 .HostSubTitle {
   margin-top: 5px;
   color: #EAF2F8;
-  font-size: 16px;
-  line-height: 22px; }
+  font-size: 18px;
+  line-height: 28px; }
 
 .checkmark {
   float: left;
@@ -4783,6 +4797,6 @@ a.Lionright {
 .HostDotted {
   width: 100%;
   height: 1px;
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin-bottom: 40px;
+  margin-top: 20px;
   background: url(/images/hostdivider.png) repeat-x; }

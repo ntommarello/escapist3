@@ -2863,9 +2863,9 @@ function joinCreateDigest(edition) {
 		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
 			
 			if (edition1 == 88) {
-				$("#Thanks").html("Thank you!")
-				$("#Shortly").html("You'll hear from us shortly.")
-				$("#BetaAccess").hide();
+				$(".Thanks").html("Thank you!")
+				$(".Shortly").html("You'll hear from us shortly.")
+				$(".BetaAccess").hide();
 			} else {
 				$("#invite").html("<b>Thanks!  We'll be in touch.</b>")
 			}
@@ -4474,7 +4474,7 @@ function advanceUse() {
 	if (Use == 2) {
 		
 		$('#UseHeading').html("Use #2: Community Events")
-		$('#UseSubHeading').html("<A class='BlueLink' target='_blank' href='http://escapist.me?id=19'>Startup Pirate Yacht</a> knows how to throw a party.  No better way to get the startup community together!")
+		$('#UseSubHeading').html("<A class='BlueLink' target='_blank' href='http://escapist.me?id=19'>Startup Pirate Yacht</a> knows how to throw a party.  <br>Har har har!  1000 pirates in a boat.")
 		$("#UseImage").attr("src","/images/use_3.png")
 	}
 	
@@ -4483,7 +4483,7 @@ function advanceUse() {
 		$('#UseHeading').html("Use #3: Meet New Friends")
 		$('#UseSubHeading').html("You've never really bonded with someone until you've been flying together in a vertical wind tunnel!")
 		$("#UseImage").attr("src","/images/use_2.png")
-		$("#UseNextLink").hide();
+		$("#UseNextLink").css("opacity","0");
 	}
 }
 
