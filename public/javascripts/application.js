@@ -4469,6 +4469,15 @@ function publishPlan(plan_id) {
 
 }
 
+function advanceUse() {
+	Use = Use+1;
+	if (Use == 2) {
+		
+		$('#UseHeading').html("Use #2: Meet New Friends")
+		$('#UseHeading').html("Use #2: Meet New Friends")
+		
+	}
+}
 
 
 
