@@ -71,7 +71,7 @@
 			<div style="margin-left:250px; margin-top:8px; color:#777777">- Joe Smith, totally fake person</div>
 		</div>
 		
-		<div style="float:right; width:380px;">
+		<div style="float:right; width:380px; margin-right:20px">
 			<a style="float:left" href="http://startupworkaway.com" target="_blank"><img class="TransparentOpposite" src="/images/host_logo1.png"></a>
 			<a style="float:right; margin-top:-8px;" href="http://connectorcampfire.com" target="_blank"><img class="TransparentOpposite" src="/images/host_logo2.png"></a>
 			<div style="clear:both">
@@ -98,56 +98,66 @@
 	
 	<div style="float:left; width:300px;">
 		
-		<img src="/images/use_1.png" style="border:1px solid #d4d4d4">
+		<img id="UseImage" src="/images/use_1.png" style="border:1px solid #d4d4d4">
 		
-			<div style="color:#3F3F38; margin-top:5px;font-weight:bold; font-size:20px; margin-bottom:10px" id="UseHeading">Use #1: Cheap Group Travel</div>The <a class="BlueLink" target="_blank" href="http://tropicaljobhunt.com/">Tropical Job Hunt</a> folks are staying in a multi-million dollar mansion with a private chef. For free.
+			<div style="color:#3F3F38; margin-top:5px;font-weight:bold; font-size:20px; margin-bottom:10px" id="UseHeading">Use #1: Cheap Group Travel</div>
+			<div id ="UseSubHeading">The <a class="BlueLink" target="_blank" href="http://tropicaljobhunt.com/">Tropical Job Hunt</a> folks are staying in a multi-million dollar mansion with a private chef. For free.</div>
 			<script>Use = 1</script>
-			<div style="width:100%; text-align:right; margin-top:5px;"><span onclick="advanceUse()" class="BlueLink">Next &#187;</span></div>	
+			<div id="UseNextLink" style="width:100%; text-align:right; margin-top:5px;"><span onclick="advanceUse()" class="BlueLink">Next &#187;</span></div>	
+	</div>
+	
+	<div style="display:none">
+		<img src="/images/use_2.png" >
+		<img src="/images/use_3.png">
 	</div>
 	
 	
-	<div style="float:right; width:595px; margin-top:-15px">
+	<div style="float:right; width:560px; margin-top:-15px">
 		
 	
 		<div class="CreateScoreBox" style=""><img src="/images/icon_easy.png"></div>
-		<div style="float:left; margin-left:10px; width:220px; padding-top:11px; ">
+		<div style="float:left; margin-left:10px; width:210px; padding-top:11px; ">
 			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Your own web site. In a click.</div>
-			<div style="margin-top:-3px">Set up your own domain name, or use ours. Quick & easy to use.</div>
+			<div style="margin-top:-3px">Set up your own domain name, or<br> use ours. Quick & easy to use.</div>
 		</div>
 	
-		<div class="CreateScoreBox" style="margin-left:25px"><img style="margin-top:-4px"  src="/images/icon_cash.png"></div>
-		<div style="float:left; margin-left:10px; width:220px; padding-top:11px; margin-top:0px">
+		<div class="CreateScoreBox" style="margin-left:10px"><img style="margin-top:-4px"  src="/images/icon_cash.png"></div>
+		<div style="float:left; margin-left:10px; width:210px; padding-top:11px; margin-top:0px">
 			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Seamless Payment. You control.</div>
-			<div style="margin-top:-3px">Get paid with Paypal, Google Checkout, or WePay. Funds are under your control.</div>
+			<div style="margin-top:-3px">Get paid with Paypal, Google, or WePay. Funds are under your control.</div>
 		</div>
 		
 		<div style="clear:both; height:10px;"></div>
 		<div class="CreateScoreBox" ><img style="margin-top:-2px" src="/images/icon_brush.png"></div>
-			<div style="float:left; margin-left:10px; width:220px; padding-top:11px; ">
-			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Customize with gorgeous themes</div>
+			<div style="float:left; margin-left:10px; width:210px; padding-top:11px; ">
+			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Customize gorgeous themes</div>
 			<div style="margin-top:-3px">Make your web site look awesome!<br>Tinker with it until it's perfect.</div>
 		</div>
 		
-		<div class="CreateScoreBox" style="margin-left:25px"><img src="/images/icon_app.png"></div>
-		<div style="float:left; margin-left:10px; width:220px; padding-top:11px;">
+		<div class="CreateScoreBox" style="margin-left:10px"><img src="/images/icon_app.png"></div>
+		<div style="float:left; margin-left:10px; width:210px; padding-top:11px;">
 			<div class="HighlightedTitle" style="font-size:14px; margin-top:2px;">Integrate apps & widgets</div>
 			<div style="margin-top:-3px">Choose from widgets like MailChimp, Woopra, Wufoo, Twitter, & Tumblr.</div>
 		</div>
 			<div style="clear:both; height:10px;"></div>
 		
 		<div class="CreateScoreBox" style=""><img style="margin-top:4px;" src="/images/icon_chat.png"></div>
-		<div style="float:left; margin-left:10px; width:220px; padding-top:11px;  margin-top:0px">
+		<div style="float:left; margin-left:10px; width:210px; padding-top:11px;  margin-top:0px">
 			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Social Sharing</div>
-			<div style="margin-top:-3px">We got all that social media stuff down!  Your customers will spread the word.</div>
+			<div style="margin-top:-3px">All the social media you love.  Your customers will spread the word.</div>
 		</div>
 		
-		<div class="CreateScoreBox"  style="margin-left:25px"><img src="/images/icon_chart.png"></div>
-			<div style="float:left; margin-left:10px; width:220px; padding-top:11px;">
+		<div class="CreateScoreBox"  style="margin-left:10px"><img src="/images/icon_chart.png"></div>
+			<div style="float:left; margin-left:10px; width:210px; padding-top:11px;">
 			<div class="HighlightedTitle" style="font-size:14px;  margin-top:2px;">Promoted on Escapist</div>
 			<div style="margin-top:-3px">Get more traffic! Your experiences are cross-posted in the Escapist directory.</div>
 		</div>
 		
+
+		
 	</div>
+	
+
 	
 	<div style="clear:both"></div>
 	

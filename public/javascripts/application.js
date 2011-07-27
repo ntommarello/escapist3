@@ -4473,9 +4473,17 @@ function advanceUse() {
 	Use = Use+1;
 	if (Use == 2) {
 		
-		$('#UseHeading').html("Use #2: Meet New Friends")
-		$('#UseHeading').html("Use #2: Meet New Friends")
+		$('#UseHeading').html("Use #2: Community Events")
+		$('#UseSubHeading').html("<A class='BlueLink' target='_blank' href='http://escapist.me?id=19'>Startup Pirate Yacht</a> knows how to throw a party.  No better way to get the startup community together!")
+		$("#UseImage").attr("src","/images/use_3.png")
+	}
+	
+	if (Use == 3) {
 		
+		$('#UseHeading').html("Use #3: Meet New Friends")
+		$('#UseSubHeading').html("You've never really bonded with someone until you've been flying together in a vertical wind tunnel!")
+		$("#UseImage").attr("src","/images/use_2.png")
+		$("#UseNextLink").hide();
 	}
 }
 
