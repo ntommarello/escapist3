@@ -60,7 +60,7 @@ class WebController < ApplicationController
        end
        
        for plan in my_plans
-        if plan.publish == false 
+        if plan.published == false 
           @add_plan = Plan.find(:all, :conditions=>["id=?",plan.id])
           @plan = @plan + @add_plan
         end
