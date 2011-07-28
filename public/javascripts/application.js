@@ -4473,16 +4473,16 @@ function advanceUse() {
 	Use = Use+1;
 	if (Use == 2) {
 		
-		$('#UseHeading').html("Use #2: Community Events")
+		$('#UseHeading').html("Use #5: Local Community Events")
 		$('#UseSubHeading').html("<A class='BlueLink' target='_blank' href='http://escapist.me?id=19'>Startup Pirate Yacht</a> knows how to throw a party.  <br>Har har har!  1000 pirates in a boat.")
-		$("#UseImage").attr("src","/images/use_3.png")
+		$("#UseImage").attr("src","/images/use_2.png")
 	}
 	
 	if (Use == 3) {
 		
 		$('#UseHeading').html("Use #3: Meet New Friends")
 		$('#UseSubHeading').html("You've never really bonded with someone until you've been flying together in a vertical wind tunnel!")
-		$("#UseImage").attr("src","/images/use_2.png")
+		$("#UseImage").attr("src","/images/use_3.png")
 		$("#UseNextLink").css("opacity","0");
 	}
 }

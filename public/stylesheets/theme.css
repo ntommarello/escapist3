@@ -4666,7 +4666,7 @@ a.Lionright {
   background-position: 0px -150px; }
 
 .HostTopBox {
-  height: 300px;
+  height: 260px;
   padding-top: 25px;
   width: 100%;
   margin-top: -25px;
@@ -4741,9 +4741,8 @@ a.Lionright {
 
 .CreateScreenshot {
   margin-top: 1px;
-  margin-left: 50px;
-  height: 275px;
-  width: 471px;
+  height: 250px;
+  width: 429px;
   border: 0; }
 
 .CreateScreenshot:hover {
@@ -4769,7 +4768,7 @@ a.Lionright {
 
 .noise {
   position: absolute;
-  height: 325px;
+  height: 285px;
   width: 100%;
   margin-left: -25px;
   margin-top: -25px;
