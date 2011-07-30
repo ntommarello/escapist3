@@ -790,8 +790,8 @@ cursor:pointer;
 .WhiteHighlightedTitle {
 	font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
 	color:#fff; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
-	font-size:36px;
-	line-height:38px;
+	font-size:38px;
+	line-height:42px;
 }
 
 
@@ -4408,13 +4408,13 @@ a.Lionright {
 	background-position:0px -150px;
 }
 .HostTopBox {
-	height:260px; padding-top:25px; width:100%; margin-top:-25px; margin-left:-25px; padding-right:25px; padding-left:25px;
+	height:300px; padding-top:25px; width:100%; margin-top:-25px; margin-left:-25px; padding-right:25px; padding-left:25px;
 	@include lineargradient(#2963A4, #6495CD);
 }
 
 .BetaBox {
 	position:absolute;
-opacity:.9; width:218px; height:95px;
+opacity:.9; width:270px; height:75px;
 		@include rounded_corners(8px);
 		background:#BA0202;
 		@include lineargradient(#BA0202, #F52021);
@@ -4444,7 +4444,7 @@ opacity:1; width:300px; height:198px;
 .HostSubTitle {
 	margin-top:5px;
 	color:#EAF2F8;
-	font-size:18px;
+	font-size:20px;
 	line-height:28px;
 }
 
@@ -4458,7 +4458,7 @@ opacity:1; width:300px; height:198px;
 }
 
 .CreateScreenshot {
-	margin-top:1px; height:250px; width:429px; border:0
+	margin-top:1px; height:278px; width:636px; border:0
 }
 .CreateScreenshot:hover {
 	opacity:.9;
@@ -4481,7 +4481,7 @@ opacity:1; width:300px; height:198px;
 }
 .noise {
 	position:absolute;
-	height:285px;
+	height:325px;
 	width:100%;
 	margin-left:-25px;
 	margin-top:-25px;

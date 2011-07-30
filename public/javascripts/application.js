@@ -2863,7 +2863,8 @@ function joinCreateDigest(edition) {
 		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
 			
 			if (edition1 == 88) {
-				$(".Thanks").html("Thank you!")
+				$(".Thanks").html("Thanks! You'll hear from us soon.")
+				$(".Thanks2").html("Thank you!")
 				$(".Shortly").html("You'll hear from us shortly.")
 				$(".BetaAccess").hide();
 			} else {
