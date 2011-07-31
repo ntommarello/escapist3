@@ -4704,6 +4704,14 @@ a.Lionright {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2ed019), to(#02a304));
   border: 1px solid #7BDF84; }
 
+.BetaBoxHover:hover {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #a20c13, #f52021);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f52021), to(#a20c13)); }
+
+.BetaBoxHover:active {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #f52021, #a20c13);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a20c13), to(#f52021)); }
+
 .HostExamples {
   position: absolute;
   background: #ccc;
@@ -4746,7 +4754,7 @@ a.Lionright {
   border: 0; }
 
 .CreateScreenshot:hover {
-  opacity: .9; }
+  opacity: .96; }
 
 .HostQuote {
   width: 100%;

@@ -4421,12 +4421,20 @@ opacity:.9; width:270px; height:75px;
 		border:2px solid #fff;
 }
 .BetaBox2 {
-	position:absolute;
-opacity:1; width:300px; height:198px;
+		position:absolute;
+		opacity:1; width:300px; height:198px;
 		@include rounded_corners(8px);
 		background:#02A304;
 		@include lineargradient(#02A304, #2ED019);
 		border:1px solid #7BDF84;
+}
+
+.BetaBoxHover:hover {
+	@include lineargradient(#A20C13, #F52021);
+}
+
+.BetaBoxHover:active {
+	@include lineargradient(#F52021, #A20C13);
 }
 
 .HostExamples {
@@ -4461,7 +4469,7 @@ opacity:1; width:300px; height:198px;
 	margin-top:1px; height:278px; width:636px; border:0
 }
 .CreateScreenshot:hover {
-	opacity:.9;
+	opacity:.96;
 }
 
 .HostQuote {

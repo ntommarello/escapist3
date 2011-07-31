@@ -113,8 +113,8 @@
 						<div style="float:left;  margin-top:17px;">
 							<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" 
 						
-							<%if current_user and current_user.mod_level > 1%>
-								href="/my_escapes" >My Events</a>
+							<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>
+								href="/my_escapes" >My Escapes</a>
 							<%else%>
 								href="/host_an_adventure" >Host an Adventure</a>
 							<%end%>
