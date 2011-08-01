@@ -103,9 +103,18 @@ function newUser(button) {
  	window.location.href='/register'
 }
 
+
+function setActive(link) {
+	$("#CreateLink").css("background","transparent")
+	$("#AdventuresLink").css("background","transparent")
+	$(link).css("background","rgba(93, 148, 197, .2)")
+}
+
 function switchMenuBar(link, active) {
 
-	
+	$(link).css("background","rgba(93, 148, 197, .2)")
+
+
 
 	if (active == 0) {
 		//jQuery("#HoverMenuBar").css('margin-left',posX+'px')
@@ -117,7 +126,7 @@ function switchMenuBar(link, active) {
 		
 	} else {
 
-		spotWidth = Math.round($(link).width()) -8;
+	/*	spotWidth = Math.round($(link).width()) -8;
 	    LeftOfLink=$(link).offset().left; 
 		CenterTop=$("#TheCenter").offset().left; 
 		LeftOfLink = LeftOfLink - CenterTop
@@ -134,7 +143,7 @@ function switchMenuBar(link, active) {
 		
 	//	jQuery(link).css('background','#fff');
 		switchMenuBar(link, 0);
-		setTimeout("$('#ActiveBar').css('opacity',1)",10);
+		setTimeout("$('#ActiveBar').css('opacity',1)",10); */
 	}
 }
 

@@ -1707,7 +1707,7 @@ color:$default-link-color;
 }
 .TopDivider {
 	opacity:.5;
-	float:right; margin-right:20px; border-left:1px solid #1A3661; width:1px; background-color:#586972; height:50px;
+	float:left; border-left:1px solid #1A3661; width:1px; background-color:#586972; height:50px;
 }
 
 
@@ -4487,6 +4487,25 @@ opacity:.9; width:270px; height:75px;
 	text-shadow: rgba(255, 255, 255, .8) 0px 1px 0;
 	line-height:20px;
 }
+
+.NewTopTab {
+float:left; width:160px; height:49px;
+text-decoration:none;
+font-size:15px;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+color:#fff;
+text-shadow:#000 0 1px 0;
+line-height:49px; text-align:center;
+}
+
+.NewTopTab:hover {
+	background:rgba(93, 148, 197, .5);
+}
+.NewTopTab:active {
+	background:rgba(93, 148, 197, .2);
+}
+
+
 .noise {
 	position:absolute;
 	height:325px;

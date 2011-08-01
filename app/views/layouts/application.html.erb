@@ -48,18 +48,10 @@
 	
 	<div class="template_topnav">
 		<div id="TheCenter">
-			<div id="TheTab" class="TheActiveTab">	
-				<div class="lc"></div>
-				<div class="stretch"></div>
-				<div class="rc"></div>
-			</div>
-			<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
-				<div class="lc"></div>
-				<div class="stretch"></div>
-				<div class="rc"></div>
-			</div>
 		
+			
 			<%if @group and @group.logo%>
+			<div style="float:left">
 				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
@@ -70,61 +62,54 @@
 				<a href="http://<%=APP_URL%>">
 						<div class="powered"><img src="/images/powered-by.png"></div>
 				</a>
+				</div>
 			<%else%>
+			<div style="float:left; width:120px;">&nbsp;	</div>
 				<a href="/">
 					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
 					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 					
 				</a>
+				
 			<%end%>
+		
 	
+
 	
 			<%unless @group%>
-				<div style="position:absolute; margin-left:150px;">
+				<div style="float:left; margin-left:25px; margin-right:25px">
 					<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
 						<div class="LocIcon"></div>
 						<div id="CityLabel" style="top:19px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
 					</button>
 				</div>
 			<%end%>
-				<div style="position:absolute; left:	<%if @group%>370<%else%>280<%end%>px; z-index:10; width:400px;">
-					<%unless @group%>
-					<div class="TopDivider" style="float:left; margin-left:25px; margin-right:31px"> </div>
+			
+
+
+				<div class="TopDivider"></div>
+			<%unless @group%>
+				<a href="/schedule">
+					<div id="AdventuresLink"  class="NewTopTab" onclick="setActive(this)">
 					
-					<div style="float:left; margin-top:17px;">
-						<a id="AdventuresLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/schedule" >Schedule</a>
+						Schedule
 					</div>
-						<div class="TopDivider" style="float:left; margin-left:31px; margin-right:15px"> </div>
-					<%end%>
-					
-					
-					
-					
-					
-					<%if @group%>
-						<%if (current_user and current_user.id == @group.user_id) or (current_user and current_user.mod_level == 5)%>
-							<div class="TopDivider" style="float:left; margin-left:31px; margin-right:15px;opacity:.5"> </div>
-							<div style="float:left;   margin-top:17px;">
-								<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/my_escapes" >My Events</a>
-							</div>
-							<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px;opacity:.5"> </div>
-						<%end%>
-					<%else%>
-						<div style="float:left;  margin-top:17px;">
-							<a id="CreateLink"  onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"  onclick="moveTab(this,1)"  class="MainMenuLink2" 
-						
-							<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>
-								href="/my_escapes" >My Escapes</a>
-							<%else%>
-								href="/host_an_adventure" >Host an Adventure</a>
-							<%end%>
-						</div>
-						<div class="TopDivider" style="float:left; margin-left:15px; margin-right:15px; opacity:.5"> </div>
-					<%end%>
-					
-					
+				</a>
+			<%end%>
+			
+			<div class="TopDivider"></div>
+			
+			<%if !@group or ((current_user and current_user.id == @group.user_id) or (current_user and current_user.mod_level == 5))%>		
+			<a href="<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>/my_escapes<%else%>/host_an_adventure<%end%>">
+				<div id="CreateLink"  class="NewTopTab" onclick="setActive(this)">
+					<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>My Escapes<%else%>Host an Adventure<%end%>
 				</div>
-		
+			</a>
+			<%end%>
+					
+			<div class="TopDivider"></div>	
+				
+					
 		
 			<Script>
 			$('.MainMenuLink2').live('touchend', function(e) {

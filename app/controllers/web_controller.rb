@@ -176,7 +176,9 @@ class WebController < ApplicationController
  
  def host_an_adventure
    
-   
+  if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0
+    redirect_to "/my_escapes"   
+  end
    
  end
   

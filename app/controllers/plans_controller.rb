@@ -465,7 +465,7 @@ class PlansController < ApplicationController
   def my_escapes
     
     if !current_user
-      redirect_to "/"
+      redirect_to "/host_an_adventure"
       return
     end
     

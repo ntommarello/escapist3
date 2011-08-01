@@ -1756,8 +1756,7 @@ a:hover {
 
 .TopDivider {
   opacity: .5;
-  float: right;
-  margin-right: 20px;
+  float: left;
   border-left: 1px solid #1A3661;
   width: 1px;
   background-color: #586972;
@@ -4773,6 +4772,24 @@ a.Lionright {
   font-size: 16px;
   text-shadow: rgba(255, 255, 255, 0.8) 0px 1px 0;
   line-height: 20px; }
+
+.NewTopTab {
+  float: left;
+  width: 160px;
+  height: 49px;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #fff;
+  text-shadow: #000 0 1px 0;
+  line-height: 49px;
+  text-align: center; }
+
+.NewTopTab:hover {
+  background: rgba(93, 148, 197, 0.5); }
+
+.NewTopTab:active {
+  background: rgba(93, 148, 197, 0.2); }
 
 .noise {
   position: absolute;
