@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
     for user in @attendees
       if user.messaging_bucket_comment
         if user.id != current_user.id
-          if user.id != @subscribed.user.id
+          if user.id != @subscribed.organizers[0].id
              Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
                                        user.email, params[:comments][:comment], 
                                         user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
