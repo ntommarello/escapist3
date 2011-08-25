@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @subscribed = Plan.find(params[:comments][:plan_id])
     @challenge_url = "#{@subscribed.id}-#{@subscribed.title.parameterize}"
       
-    if if @subscribed.organizers[0]
+    if  @subscribed.organizers[0]
       if @subscribed.organizers[0].messaging_bucket_comment
         if @subscribed.organizers[0].id != current_user.id
 
