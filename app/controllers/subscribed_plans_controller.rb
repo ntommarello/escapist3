@@ -21,8 +21,8 @@ class SubscribedPlansController < ApplicationController
        
        @challenge_url = "#{@plan.id}-#{@plan.title.parameterize}"
        Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-                             @plan.hosts[0].email, "", 
-                             @plan.hosts[0].authentication_token, @plan.title,@challenge_url,"joined").deliver
+                             @plan.organizers[0].email, "", 
+                             @plan.organizers[0].authentication_token, @plan.title,@challenge_url,"joined").deliver
        
        
        
