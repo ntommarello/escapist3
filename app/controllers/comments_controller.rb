@@ -9,12 +9,14 @@ class CommentsController < ApplicationController
     @subscribed = Plan.find(params[:comments][:plan_id])
     @challenge_url = "#{@subscribed.id}-#{@subscribed.title.parameterize}"
       
-    if @subscribed.user.messaging_bucket_comment
-      if @subscribed.user.id != current_user.id
+    if if @subscribed.organizers[0]
+      if @subscribed.organizers[0].messaging_bucket_comment
+        if @subscribed.organizers[0].id != current_user.id
 
-        Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-                              @subscribed.user.email, params[:comments][:comment], 
-                              @subscribed.user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+          Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
+                                @subscribed.organizers[0].email, params[:comments][:comment], 
+                                @subscribed.organizers[0].authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+        end
       end
     end
     
