@@ -80,7 +80,39 @@ class WebController < ApplicationController
        end
      end
 
-     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :application_required])
+     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :privacy, :application_required])
+
+
+
+
+   	#short term hack to determine if password should show. Only works with one event on @group	
+   	@bypass_password = 0;
+   	
+   	
+   	 if @plan[0]
+   	    if @plan[0].privacy == 3
+   	      @bypass_password = 1;
+   	   
+     	    if current_user
+            for host in @plan[0].hosts
+             if host.user_id == current_user.id
+                @bypass_password = 0;
+              end
+            end
+            if current_user.mod_level == 5
+              @bypass_password = 0;
+            end
+          end
+   	
+   	      if cookies[:password]
+            if cookies[:password].downcase == @plan[0].password.downcase
+              @bypass_password = 0;
+            end
+          end
+       end
+    end
+
+
 
      if !@skip
        render 

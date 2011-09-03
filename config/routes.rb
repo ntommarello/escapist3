@@ -84,6 +84,10 @@ match '/auth/:provider/callback' =>'authentications#create'
   resources :likes
   resources :dislikes
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
+  
+  
+  
+  
   resources :plans
   resources :escapes, :controller => "plans"
   match '/edit_plan_date', :controller => 'plans', :action => 'edit_plan_date'
@@ -126,6 +130,9 @@ match '/auth/:provider/callback' =>'authentications#create'
   match 'wepay_callback', :controller => 'plans', :action => 'wepay_callback'
    match 'paypal_ipn', :controller => 'plans', :action => 'paypal_ipn'
   match 'schedule', :controller => 'plans', :action => 'schedule'
+  match 'check_plan_password', :controller => 'plans', :action => 'check_plan_password'
+  
+  
   
   
   match 'create', :controller => 'web', :action => 'apply'

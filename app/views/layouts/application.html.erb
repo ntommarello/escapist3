@@ -51,7 +51,7 @@
 		
 			
 			<%if @group and @group.logo%>
-			<div style="float:left">
+			<div style="float:left; margin-right:20px;">
 				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
@@ -87,8 +87,10 @@
 			
 
 
-				<div class="TopDivider"></div>
+			<%@tabs = 0%>
 			<%unless @group%>
+				<%@tabs = @tabs+1%>
+				<div class="TopDivider"></div>
 				<a href="/schedule">
 					<div id="AdventuresLink"  class="NewTopTab" onclick="setActive(this)">
 					
@@ -97,18 +99,21 @@
 				</a>
 			<%end%>
 			
-			<div class="TopDivider"></div>
+			
 			
 			<%if !@group or ((current_user and current_user.id == @group.user_id) or (current_user and current_user.mod_level == 5))%>		
-			<a href="<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>/my_escapes<%else%>/host_an_adventure<%end%>">
-				<div id="CreateLink"  class="NewTopTab" onclick="setActive(this)">
-					<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>My Escapes<%else%>Host an Adventure<%end%>
-				</div>
-			</a>
+				<%@tabs = @tabs+1%>
+				<div class="TopDivider"></div>
+				<a href="<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>/my_escapes<%else%>/host_an_adventure<%end%>">
+					<div id="CreateLink"  class="NewTopTab" onclick="setActive(this)">
+						<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>My Escapes<%else%>Host an Adventure<%end%>
+					</div>
+				</a>
 			<%end%>
-					
-			<div class="TopDivider"></div>	
-				
+			
+			<%if @tabs >0%>		
+				<div class="TopDivider"></div>	
+			<%end%>	
 					
 		
 			<Script>

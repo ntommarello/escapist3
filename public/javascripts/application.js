@@ -3593,6 +3593,18 @@ function loadInfo(index) {
 			$('#plan_startdate_day').html(day);
 		}
 	}
+	
+	
+	
+	if (current_plan.privacy == 3) {
+		if (bypass_password == 1) {
+			$('.home_description').html('<p style="font-size:18px">This event is by invitation only.<br>Please enter the password to view.</p><input type="textfield" style="float:left" id="plan_password" class="ShadowedTextBox"> <div class="home_password_button" onclick="checkPlanPassword(this,'+ current_plan.id+')">Go</div><div style="clear:both"></div><div id="password_incorrect"></div>')
+			setTimeout("$('#plan_password').focus();",500);
+		}
+	}
+	
+	
+	
 
 	if (plans.length-1 > plan_index) {
 		$('#next_plan_link').show();
@@ -4498,6 +4510,32 @@ function advanceUse() {
 }
 
 
+function checkPlanPassword(button,plan_id) {
+	
+	if ($('#plan_password').val() == '') {
+		$('#plan_password').focus();
+		return;
+	}
+	$(".home_password_button").html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">')
+	$("#password_incorrect").html('')
+	
+	$.ajax({
+        type: "POST",
+        url: "/check_plan_password",
+        data: "_method=PUT&plan[password]="+$('#plan_password').val()+"&plan[id]="+plan_id,
+        success: function(id){
 
+			if (id == 0) {  //failed
+				$("#password_incorrect").html('Incorrect Password')
+				$(".home_password_button").html('Go')
+			} else {
+				window.location.href="/plans/"+id
+			}
+        }
+     });
+	
+	
+	
+}
 
 

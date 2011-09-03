@@ -261,6 +261,28 @@ class PlansController < ApplicationController
     end
     
     
+    #redirect if password protected?
+    if @plan.privacy == 3
+      
+      if cookies[:password] and (cookies[:password].downcase == @plan.password.downcase)
+        redirect = false
+      else
+        redirect = true
+      end
+    else
+      redirect = false
+    end
+    
+    if @admin
+      redirect = false
+    end
+    if @editable
+      redirect = false
+    end
+    if redirect
+      redirect_to "/?id=#{@plan.id}"
+    end
+    
     
   end
   
@@ -477,6 +499,26 @@ class PlansController < ApplicationController
     
     
   end
+  
+  
+  def check_plan_password
+    @plan = Plan.find(params[:plan][:id])
+    
+    if params[:plan][:password].downcase == @plan.password.downcase
+      @id=@plan.id
+      
+      cookies[:password] =  @plan.password
+      
+      
+    else
+      @id=0
+    end
+    
+    render :layout=>false 
+    
+    
+  end
+  
   
   
 end
