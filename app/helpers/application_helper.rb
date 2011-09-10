@@ -26,9 +26,23 @@ module ApplicationHelper
     
     day_one = start_time.to_datetime.strftime('%j').strip().to_i
     day_two = end_time.to_datetime.strftime('%j').strip().to_i
+    month_one = start_time.to_datetime.strftime('%b').strip()
+    month_two = end_time.to_datetime.strftime('%b').strip()
+    year_one = start_time.to_datetime.strftime('%Y').strip().to_i
+    year_two = Date.today.strftime('%Y').to_i
     
     if (day_two != day_one) 
-       @time_string = "until #{end_time.to_datetime.strftime('%b %e')}"
+        
+        if (year_two != year_one) 
+          if (month_two == month_one) 
+            @time_string = "#{start_time.to_datetime.strftime('%b %e')}-#{end_time.to_datetime.strftime('%e')}"
+          else
+            @time_string = "#{start_time.to_datetime.strftime('%b %e')}-#{end_time.to_datetime.strftime('%b %e')}"
+          end
+        else
+          @time_string = "until #{end_time.to_datetime.strftime('%b %e')}"
+        end
+        @time_string = "#{@time_string}<br><span style='font-size:11px'>(10 days)</span>"
     else 
     
       @start = start_time.to_datetime.strftime('%l').strip()

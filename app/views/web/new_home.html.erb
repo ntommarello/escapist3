@@ -24,54 +24,61 @@
 	<div id="DraftLayer"><img src="/images/draft.png"></div>
 	
 	
-	<%if @plan.length > 0%>
-	<div id="home_info_container" style="margin-top:274px" >
-		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
-		<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
-		<div style="clear:both"></div>
-		<div class="home_slogan"><%=raw @slogan%></div>
-		<div class="home_description">
+	<%#if current_user%>
 	
-			<div id="plan_note" class="multiline" style="width:100%; height:48px; width:425px; overflow:hidden; font-size:17px; line-height:24px;"></div>	
-			<div style="float:left; margin-top:8px;">
-				<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
-				<div id="plan_attendees" style="float:left; min-width:250px;"></div>
-				<div id="MoreAttendees" onclick="window.location.href='/escapes/'+plan_id" class="Transparent"></div>
-			</div>
-				
-			<div style="float:right;margin-top:3px;">
-				<div class="home_info_button" onclick="clearButton($(this)); window.location.href='/escapes/'+plan_id">
-					<div class="DetailIcon"></div>
-					
-					<div style="position:absolute; margin-left:50px;">Details</div>
+		<%if @plan.length > 0%>
+		<div id="home_info_container" style="margin-top:274px; " >
+			<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
+			<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
+			<div style="clear:both"></div>
+			<div class="home_slogan"><%=raw @slogan%></div>
+			<div class="home_description">
+	
+				<div id="plan_note" class="multiline" style="width:100%; height:48px; width:425px; overflow:hidden; font-size:17px; line-height:24px;"></div>	
+				<div style="float:left; margin-top:8px;">
+					<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
+					<div id="plan_attendees" style="float:left; min-width:250px;"></div>
+					<div id="MoreAttendees" onclick="window.location.href='/escapes/'+plan_id" class="Transparent"></div>
 				</div>
-					
-				<div class="home_buy_button" onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/'+plan_id">
-					
-				</div>
-			</div>
 				
-			</div>
+				<div style="float:right;margin-top:3px;">
+					<div class="home_info_button" onclick="clearButton($(this)); window.location.href='/escapes/'+plan_id">
+						<div class="DetailIcon"></div>
+					
+						<div style="position:absolute; margin-left:50px;">Details</div>
+					</div>
+					
+					<div class="home_buy_button" onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/'+plan_id">
+					
+					</div>
+				</div>
+				
+				</div>
 			
 
-			<div class="home_info_next" style="font-size:17px;">
-				<div style="float:right" onmouseover="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#2EA42E')" onmouseout="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#3366CC')">
-					<div id="next_arrow" onclick="nextPlan(1)" class="home_NextArrowButton" ></div>
-					<div id="next_plan_link" onclick="nextPlan(1)" style="float:right; margin-right:5px; margin-left:5px;" class="home_link"></div>
-				</div>
-				<div id="prevarrow" onclick="nextPlan(-1)" class="home_BackArrowButton" ></div>
-				<a href="/schedule">
-					<div style="float:left; " onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
-						<div id="viewall1" class="ScheduleIconButton" ></div>
-						<div id="viewall2" style="float:left; margin-left:5px" class="home_link">All Events</div>
+				<div class="home_info_next" style="font-size:17px;">
+					<div style="float:right" onmouseover="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#2EA42E')" onmouseout="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#3366CC')">
+						<div id="next_arrow" onclick="nextPlan(1)" class="home_NextArrowButton" ></div>
+						<div id="next_plan_link" onclick="nextPlan(1)" style="float:right; margin-right:5px; margin-left:5px;" class="home_link"></div>
 					</div>
-				</a>
+					<div id="prevarrow" onclick="nextPlan(-1)" class="home_BackArrowButton" ></div>
+					<a href="/schedule">
+						<div style="float:left; " onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
+							<div id="viewall1" class="ScheduleIconButton" ></div>
+							<div id="viewall2" style="float:left; margin-left:5px" class="home_link">All Events</div>
+						</div>
+					</a>
+				</div>
 			</div>
-		</div>
 		
-		<%else%>
-		<div class="coming_soon">Coming Soon</div>
-		<%end%>
+			<%else%>
+			<div class="coming_soon">Coming Soon</div>
+			<%end%>
+			</div>
+		<%#else%>
+		
+		
+		<%#end%>
 
 <%if !@group%>
 		<div id="Home_Footer">

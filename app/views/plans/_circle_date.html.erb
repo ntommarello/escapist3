@@ -6,11 +6,9 @@
 			<%= @plan.start_time.to_date.strftime('%e').strip()%>
 		<%else%>
 
-			<span style="font-size:16px; line-height:20px; margin-top:-2px;">
-				<%= @plan.start_time.to_date.strftime('%b').upcase()%>
-				<%= @plan.start_time.to_date.strftime('%e').strip()%><br>
+			<div style="font-size:20px; line-height:20px; margin-top:10px;">
 				<%= @plan.start_time.to_date.strftime('%Y').strip()%>
-			</span>
+			</div>
 		<%end%>
 	<%end%>
 	</div>
@@ -18,6 +16,6 @@
 	<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%end%>" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; " <%if @editable%>onclick="displayEditDate()<%end%>">
 		<%if @plan.start_time%>
 			<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
-			<div style="line-height:18px;"><%=@timestring%></div>
+			<div style="line-height:18px;"><%=raw @timestring%></div>
 		<%end%>
 	</div>

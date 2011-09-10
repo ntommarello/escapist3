@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :browser_detect
   
   before_filter :locate_user
-
+#before_filter :find_active_cities
   
 
   def check_group  
@@ -115,7 +115,6 @@ class ApplicationController < ActionController::Base
     calc_closest_city(location)
     session[:dropdown_city] = @returned_city_name 
     session[:dropdown_city_value] =  @returned_city_id 
-    
   end
   
 
@@ -126,31 +125,38 @@ class ApplicationController < ActionController::Base
     san_fran = loc.distance_to([37.77493,-122.419416])
 
     @returned_city_id = "99"
-    @returned_city_name = "Luxury"
+    @returned_city_name = "World Travel"
+    
     if boston < 200
        if boston < new_york
          @returned_city_id = "1"
          @returned_city_name = "Boston"
        end
     end
+    
 
-    if new_york < 200
-       if new_york < boston
-         @returned_city_id = "3"
-         @returned_city_name = "New York City"
-       end
-    end
+    
+    
+    #TODO:  Make Dynamic Based on if Content in City
 
-    if san_fran < 200
-       @returned_city_id = "2"
-       @returned_city_name = "San Francisco"
-    end
+    #if new_york < 200
+    #   if new_york < boston
+    #     @returned_city_id = "3"
+     #    @returned_city_name = "New York City"
+     #  end
+    #end
+
+    #if san_fran < 200
+    #   @returned_city_id = "2"
+    #   @returned_city_name = "San Francisco"
+    #end
     
   end
 
 
 
   def locate_user
+   
 		if current_user 
 		  if session[:location_city].nil?
 		    session[:lat] = current_user.lat
@@ -161,19 +167,21 @@ class ApplicationController < ActionController::Base
   		  set_city_dropdown(current_user)
   		end
 	  else
+
 	    if session[:location_city].nil?
 	  	  location = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
+
         if location.lat
           session[:location_city] = "#{location.city} #{location.state}"
           session[:lat] = location.lat
           session[:lng] = location.lng
           set_city_dropdown(location)
         else
-          session[:location_city] = "Boston MA"
-          session[:lat] = 42.3584
-          session[:lng] = -71.0598
-          session[:dropdown_city] = "Boston"
-          session[:dropdown_city_value] = "1"
+          session[:location_city] = "Unknown"
+          session[:lat] = 0
+          session[:lng] = 0
+          session[:dropdown_city] = "World Travel"
+          session[:dropdown_city_value] = "99"
         end
       end
     end
@@ -232,6 +240,33 @@ class ApplicationController < ActionController::Base
        return text
    end
    
+  
+  
+  def find_active_cities
+    
+    t = Time.zone.now
+    rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
+    
+    @ny_active = false
+    ny_plans = Plan.find(:first, :conditions=>["city_id=3 and start_time >= ?",rounded_t])
+    if ny_plans
+      @ny_active = true
+    end
+    
+    @boston_active = false
+    boston_plans = Plan.find(:first, :conditions=>["city_id=1 and start_time >= ?",rounded_t])
+    if boston_plans
+      @boston_active = true
+    end
+    
+    @sf_active = false
+    sf_plans = Plan.find(:first, :conditions=>["city_id=2 and start_time >= ?",rounded_t])
+    if sf_plans
+      @sf_active = true
+    end
+
+  end
+  
   
   
 end

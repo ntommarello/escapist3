@@ -3422,9 +3422,6 @@ function adjustLoginLayer() {
 
 function adjustWindowSize() {
 	
-	
-	
-	
 	if ($(window).height() > 600) {
 		margt = $(window).height()-51-40-330+24;
 		$("#home_info_container").css("margin-top",margt)
@@ -3620,7 +3617,15 @@ function loadInfo(index) {
 			new_month = getShortMonth(new_month_index).toLowerCase();
 			new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
 			new_day = new_start_time.getUTCDate()
-			$('#next_plan_link').html(next_plan.title+' on '+new_month+' '+new_day);
+			
+			shortText = next_plan.title
+			if (next_plan.title.length > 25) {
+			 	shortText = next_plan.title.trim().substring(0, 25)
+			    .split(" ").slice(0, -1).join(" ") + "...";
+			}
+			
+			
+			$('#next_plan_link').html(shortText+' on '+new_month+' '+new_day);
 		}
 	} else {
 		
@@ -3750,7 +3755,7 @@ function loadInfo(index) {
 		$('.home_info_next').show();
 	}
 	
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+current_plan.image_file_name
+	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/original_"+current_plan.image_file_name
 	switchPhoto(image_url);
 	
 	
@@ -3847,7 +3852,7 @@ function preloadImage() {
 	preload_image_index = preload_image_index +1;
 	preload_plan = plans[preload_image_index].plan;
 	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/original_"+preload_plan.image_file_name
 	
 	var img = new Image();
 	$(img).load(function(){
