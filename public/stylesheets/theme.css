@@ -3520,12 +3520,12 @@ span.continued {
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#30d31a), to(#067803)); }
 
 .HomeFooterLink {
-  color: white;
-  margin-left: 5px;
-  margin-right: 5px; }
+  color: #999;
+  margin-left: 10px;
+  margin-right: 10px; }
 
 .HomeFooterLink:hover {
-  color: #EDE9CD; }
+  color: #fff; }
 
 .home_info_next {
   -webkit-border-bottom-right-radius: 9px;
@@ -3549,11 +3549,12 @@ span.continued {
   top: 0px;
   z-index: 3;
   left: 0px;
-  height: 25px;
-  line-height: 25px;
-  padding-left: 10px;
-  background-color: rgba(53, 64, 90, 0.8);
-  padding-right: 10px; }
+  height: 24px;
+  line-height: 24px;
+  width: 100%;
+  color: #999;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-top: 1px solid #333; }
 
 .home_link {
   color: #3366CC;
@@ -4859,3 +4860,28 @@ a.Lionright {
   margin-bottom: 40px;
   margin-top: 20px;
   background: url(/images/hostdivider.png) repeat-x; }
+
+.home_login {
+  display: none;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(31, 42, 65, 0.9);
+  width: 500px;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 22px;
+  color: #fff;
+  height: 380px; }
+
+.fb_login_small {
+  cursor: pointer;
+  width: 150px;
+  height: 22px;
+  background: url(/images/fb_sprite.png);
+  background-position: 0px 0px; }
+
+.fb_login_small:hover {
+  background-position: 0px -24px; }
+
+.fb_login_small:active {
+  background-position: 0px -48px; }

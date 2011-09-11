@@ -3423,7 +3423,7 @@ function adjustLoginLayer() {
 function adjustWindowSize() {
 	
 	if ($(window).height() > 600) {
-		margt = $(window).height()-51-40-330+24;
+		margt = $(window).height()-51-40-330;
 		$("#home_info_container").css("margin-top",margt)
 	}
 	
@@ -3463,7 +3463,27 @@ function getUrlVars()
 }
 function nextPlan(offset) {
 	
+	
+	
 	plan_index = plan_index+offset;
+	
+	
+	if (plan_index == -1) {
+		plan_index = 0;
+		displayDefaultPanel = 1;
+		$("#discover").html('<div style="float:left; margin-left:20px; " align="center">Discover</div><img style="float:left; margin-left:10px; margin-top:9px; width:26px; height:23px;" src="/images/next_arrow.png">')
+	
+		History.pushState({id:0}, null, "");
+		
+		$('#big_image_background').animate({
+			opacity: .2,
+		}, 200, function() {
+			loadInfo(plan_index);
+		
+			//$('#big_image_background').animate({opacity: 1}, 250);
+		} );
+		return;
+	}
 	
 
 	if (plan_index + 1> plans.length || !plans.length) {
@@ -3510,16 +3530,60 @@ function nextPlan(offset) {
 
 
 function loadInfo(index) {
-	$("#MoreAttendees").hide();
 	
 	start = 0;
-	if (plan_index == 0) {
-		$("#prevarrow").hide();
+
+
+
+
+	
+	
+	if (displayDefaultPanel == 0) {
+		$("#description_not_logged_in").hide();
+		$("#description_logged_in").show();
+		$("#plan_startdate").show();
+		$(".home_title").css("width","340px")
+		if (plan_index >0) {
+			$(".home_slogan").hide();
+		}
+	} else {
+		$("#description_not_logged_in").show();
+		$("#description_logged_in").hide();
+		$("#plan_startdate").hide();
+		$(".home_title").css("width","430px")
+		$("#plan_title").html("Create amazing memories")
+		$("#plan_url_name").html("Life is short. Enjoy it while you can!")
 		$(".home_slogan").show();
+		image_url = 'http://assets.stomp.io/images/14/original_original_16.jpg'
+		switchPhoto(image_url);
+		
+		
+		return;
+	}
+	
+
+	if (plan_index == 0) {
+		
+		if (redisplayDefault == 0) {
+			$("#prevarrow").hide();
+		}
+			
+		if (displayDefaultPanel != 0) {
+			$(".home_slogan").show();
+		}
 	} else {
 		$("#prevarrow").show();
 		$(".home_slogan").hide();
 	}
+	
+	
+	$("#MoreAttendees").hide();
+	
+	
+	
+	
+	
+
 	
 	if (plans.plan != null) {
 		current_plan = plans.plan
@@ -3559,7 +3623,7 @@ function loadInfo(index) {
 		html = '<div class="BuyIcon"></div>'
 		html = html +'<div id="plan_price" style="position:absolute; margin-left:50px;"></div>'
 	}
-	$(".home_buy_button").html(html)
+	$("#homeGroupBuy").html(html)
 	if (current_plan.price) {
 		string_price = ''+current_plan.price+''
 		string_price = string_price.replace('.0','');

@@ -52,11 +52,12 @@ class WebController < ApplicationController
      
      
      #add in world travel ones at end.  Should be refactored into one query.
-     if @city_id != 99
-       @world_plans =  Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id=99", rounded_t],:order=>"start_time asc")
-       @plan = @plan + @world_plans
+     if !@group
+       if @city_id != 99
+         @world_plans =  Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id=99", rounded_t],:order=>"start_time asc")
+         @plan = @plan + @world_plans
+       end
      end
-     
      
      #add in ones user is author for
      if current_user

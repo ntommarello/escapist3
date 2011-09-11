@@ -403,8 +403,12 @@ class PlansController < ApplicationController
          @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
           @ids = @plans.collect(&:id).to_s.sub('[','(')
            @ids = @ids.sub(']',')')
-           @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
-        
+           if @plans.length > 0
+             @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and plans.id not in #{@ids}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+          else
+                @other_plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+            
+          end
        end
        
       #@plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
