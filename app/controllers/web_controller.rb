@@ -53,9 +53,12 @@ class WebController < ApplicationController
      
      #add in world travel ones at end.  Should be refactored into one query.
      if !@group
-       if @city_id != 99
+       if @city_id.to_i != 99
          @world_plans =  Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id=99", rounded_t],:order=>"start_time asc")
          @plan = @plan + @world_plans
+       else
+         @other_plans =  Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and city_id!=99", rounded_t],:order=>"start_time asc")
+         @plan = @plan + @other_plans
        end
      end
      

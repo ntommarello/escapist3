@@ -2887,7 +2887,7 @@ function joinCreateDigest(edition) {
 	
 function watchMouseDown(button) {
 	label = $(button).html()
-	if (label == "Watch") {
+	if (label == "Follow") {
 		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
 	} else {
 		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
@@ -2897,10 +2897,10 @@ function watchMouseDown(button) {
 function watchMouseUp(button) {
 
 	label = $(button).html()
-	if (label == "Watching") {
+	if (label == "Following") {
 		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
 	}
-	if (label == "Watch") {
+	if (label == "Follow") {
 		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
 	}
 }
@@ -2912,15 +2912,15 @@ function watchPlan(button,plan_id) {
 	$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
 	
 	
-	if (label == "Watch") {
+	if (label == "Follow") {
 		$.post("/watched_plans", { plan_id:plan_id}, function(theResponse){		
 			
-			$(button).html("Watching");
+			$(button).html("Following");
 		});
 	} else {
 		$.post("/watched_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
 			
-			$(button).html("Watch");
+			$(button).html("Follow");
 		});
 	}
 }

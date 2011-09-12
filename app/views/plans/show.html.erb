@@ -111,7 +111,7 @@
 	<%end%>
 	<%end%>
 		<div style="float:left;  margin-top:11px; margin-left:29px; text-align:center">
-			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Watching<%else%>Watch<%end%></button>
+			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
 			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
 		</div>
 		
