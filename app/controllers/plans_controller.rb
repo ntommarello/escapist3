@@ -369,7 +369,7 @@ class PlansController < ApplicationController
   end
   
   
-  def schedule
+  def discover
     
     if params[:dropdown_city_value]
       session[:dropdown_city_value] = params[:dropdown_city_value] || "Boston"

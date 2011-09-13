@@ -88,14 +88,16 @@
 			</div>
 			
 			
-			<div style="height:53px; float:left; overflow:hidden; width:85%">
+			<div style="height:52px; float:left; overflow:hidden; width:85%">
 			
+			<% i = 0%>
 			<%if plan.organizers%>
+			<% i = i+1%>
 				<%for organizer in plan.organizers%>
-						<div style="float:left; margin-left:2px; ">
+						<div style="float:left;  ">
 							<a href="/<%=organizer.username%>">
 
-							<%= image_tag(organizer.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:1px;") %>
+							<%= image_tag(organizer.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:2px;") %>
 
 							</a>
 
@@ -103,14 +105,14 @@
 					<%end%>
 				<%end%>
 			
-				<% i = 0%>
+				
 				<%for signup in plan.users%>
 					<% i = i+1%>
-					<%if i < 6%>
-						<div style="float:left; margin-left:2px; ">
+					<%if i < 7%>
+						<div style="float:left;  ">
 							<a href="/<%=signup.username%>">
 
-							<%= image_tag(signup.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:1px;") %>
+							<%= image_tag(signup.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:2px;") %>
 
 							</a>
 
