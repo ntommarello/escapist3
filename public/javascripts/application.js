@@ -3624,7 +3624,7 @@ function loadInfo(index) {
 		html = html +'<div id="plan_price" style="position:absolute; margin-left:50px;"></div>'
 	}
 	$("#homeGroupBuy").html(html)
-	if (current_plan.price) {
+	if (current_plan.price & current_plan.price > 0) {
 		string_price = ''+current_plan.price+''
 		string_price = string_price.replace('.0','');
 		$('#plan_price').html('$'+string_price);
