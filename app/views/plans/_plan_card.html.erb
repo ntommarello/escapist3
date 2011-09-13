@@ -54,7 +54,7 @@
 		</script>
 		
 		
-		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:82px;<%end%> margin:5px;">
+		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:92px;<%end%> margin:5px;">
 			
 			<%if source == "my_escapes"%>
 			
@@ -76,19 +76,10 @@
 			
 			<%else%>
 			<div>
-			<%if plan.organizers%>
-			<div style="position:absolute; height:80px;">
-				<a href="/<%=plan.organizers[0].username%>">
-				
-				<%= image_tag(plan.organizers[0].avatar.url(:rounded_90), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{plan.organizers[0].first_name}", :style=>"width:80px; height:80px; cursor:pointer; float:left; margin-right:1px;") %>
 			
-				</a>
-				
-			</div>
-			<%end%>
 		
 	
-					<div style="height:45px; margin-left:90px;   overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
+					<div style="height:32px; line-height:16px; font-size:13px; overflow:hidden; margin-bottom:7px; color:#666;" class="auto multiline">
 						
 						<%if plan.short_desc%>
 							<%=sanitize plan.short_desc.gsub("<br>","").gsub("&nbsp;","")%>
@@ -97,13 +88,48 @@
 			</div>
 			
 			
-			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:-4px; margin-left:0px;width:83px; height:30px; margin-right:-12px; line-height:30px;"onclick="clearButton($(this)); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/<%=plan.id%>'">
-				<%if !plan.application_required%>
-				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
+			<div style="height:53px; float:left; overflow:hidden; width:85%">
+			
+			<%if plan.organizers%>
+				<%for organizer in plan.organizers%>
+						<div style="float:left; margin-left:2px; ">
+							<a href="/<%=organizer.username%>">
+
+							<%= image_tag(organizer.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:1px;") %>
+
+							</a>
+
+						</div>
+					<%end%>
 				<%end%>
-				<div id="plan_price" style="position:absolute; <%if !plan.application_required%>margin-left:30px; width:50px;<%else%>width:83px;<%end%>  text-align:center; font-size:12px;" >
+			
+				<% i = 0%>
+				<%for signup in plan.users%>
+					<% i = i+1%>
+					<%if i < 6%>
+						<div style="float:left; margin-left:2px; ">
+							<a href="/<%=signup.username%>">
+
+							<%= image_tag(signup.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:1px;") %>
+
+							</a>
+
+						</div>
+					<%end%>
+				<%end%>
+			</div>				
+								
+			
+			
+			
+			
+			
+			
+			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:20px; margin-left:0px;width:83px; height:30px; margin-right:-12px; width:50px; text-align:Center; font-size:12px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/escapes/<%=plan.id%>'">
+				
+		
 					<%if plan.application_required%>
-						Apply Now
+						Apply
 					<%else%>
 						<%if plan.price and plan.price > 0%>
 							$<%=plan.price.to_s.sub( ".0", "") %>
@@ -111,7 +137,7 @@
 							FREE
 						<%end%>
 					<%end%>
-				</div>
+		
 			</div>
 		<%end%>
 		</div>
