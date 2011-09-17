@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
  include ValidBrowser
  
  
- before_filter :check_group
+  before_filter :check_group
   before_filter :browser_detect
   
   before_filter :locate_user

@@ -42,7 +42,10 @@ module ApplicationHelper
         else
           @time_string = "until #{end_time.to_datetime.strftime('%b %e')}"
         end
-        @time_string = "#{@time_string}<br><span style='font-size:11px'>(10 days)</span>"
+  
+        
+        number_of_days = (end_time.to_datetime - start_time.to_datetime).to_i
+        @time_string = "#{@time_string}<br><span style='font-size:11px'>(#{number_of_days} days)</span>"
     else 
     
       @start = start_time.to_datetime.strftime('%l').strip()
