@@ -3707,9 +3707,11 @@ function loadInfo(index) {
 
 	
 	
+	num_hosts = current_plan.organizers.length
+
 	
-	$("#plan_signup_count").html(current_plan.users.length+1);
-	if (current_plan.users.length+1 == 1) {
+	$("#plan_signup_count").html(current_plan.users.length+num_hosts);
+	if (current_plan.users.length+num_hosts == 1) {
 		$("#plan_signup_words").html("sign-up");
 	} else {
 		$("#plan_signup_words").html("sign-ups");
