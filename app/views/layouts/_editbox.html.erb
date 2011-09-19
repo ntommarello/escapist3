@@ -111,7 +111,14 @@
 		
 		<%if allow_return%>
 			var s = new Sanitize({ 
-			    elements:   ['br','ul','li','b','div','a']
+			    elements:   ['br','ul','li','b','div','a'],
+				attributes: { 
+				        a: ['href', 'target'], 
+				        div: ['class'] 
+				    },
+					protocols:  { 
+					        a: { href: ['http', 'https', 'mailto'] }
+					    }
 			});
 		<%else%>
 			var s = new Sanitize();
