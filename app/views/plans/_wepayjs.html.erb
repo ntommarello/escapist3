@@ -219,6 +219,8 @@ $(document).ready(function() {
 	     });
 	}
 
+
+
 	<%if cookies[:showAttendPop] == 'true'%>
 		 $(document).ready(function() {
 			<%if @plan.application_required%>
@@ -229,6 +231,8 @@ $(document).ready(function() {
 		 });
 	<%end%>
 	
+
+
 	<%if cookies[:watchPlan] == 'true'%>
 		 $(document).ready(function() {
 			setTimeout('watchMouseDown($("#WatchButton"))',100);

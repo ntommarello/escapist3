@@ -20,13 +20,7 @@
 <%@tickets_remaining = ""%>
 <%end%>
 
-<%if current_user && @plan.has_signedup?(current_user)%>
-	<%@signedup = TRUE%>
-	<%@signup_color = "Red"%>
-<%else%>
-	<%@signedup = FALSE%>
-	<%@signup_color = "Green"%>
-<%end%>
+
 
 
 <%if @plan.application_required%>
@@ -65,7 +59,7 @@
 			<%if @signedup%>
 				<%@title = "I'm coming"%>
 			<%else%>
-				<%@title = "Sign Up: FREE"%>
+				<%@title = "Sign Me Up!"%>
 			<%end%>
 	
 			<%@subtitle = @tickets_remaining%>

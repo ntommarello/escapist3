@@ -2,7 +2,6 @@ class AchievementsController < ApplicationController
   require 'titlecase'
   
   def index
-
     @achievements = Achievement.paginate(:all,  :per_page=>14, :page => params[:page] || 1, :order=>"created_at desc")
     
     render :layout=>false

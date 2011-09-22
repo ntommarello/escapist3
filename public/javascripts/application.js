@@ -2930,7 +2930,7 @@ function signupPlan(button,render,plan_id) {
 		id = plan_id;
 		$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
 	
-		if (label == "Sign Up: FREE") {
+		if (label == "Sign Me Up!") {
 			
 			
 				$.post("/subscribed_plans", { plan_id:plan_id, maybe:0}, function(theResponse){
@@ -2939,27 +2939,44 @@ function signupPlan(button,render,plan_id) {
 
 						$("#seat_remain").html(seats_remaining)
 						
-					$(button).addClass("RedB").removeClass("GreenB").removeClass("LightGrayButton")
-					$(button).html("I'm coming!");
+						//$(button).addClass("RedB").removeClass("GreenB").removeClass("LightGrayButton")
+						//$(button).html("I'm coming!");
+						$(button).html("Sign Me Up!");
 						$('#RenderPlan').html(theResponse)
+
+						$('#SignUpButtons').hide();
+						$('#SignedUp').show();
+
 				});
 	
 			
-		} else {
-			
-	
-			
-			$.post("/subscribed_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
+		} 
+}
+
+
+function unsubscribePlan(button,render,plan_id) {
+
+	$('#RemoveSignUpLink').html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+
+	$.post("/subscribed_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
 				
 					seats_remaining = seats_remaining + 1;
 					$("#seat_remain").html(seats_remaining)
 					
-					$(button).addClass("GreenB").removeClass("RedB")
-				$(button).html("Sign Up: FREE");
+					$('#attend').addClass("GreenB").removeClass("RedB")
+					$('#attend').html("Sign Me Up!");
 					$('#RenderPlan').html(theResponse)
+
+					$('#SignUpButtons').show();
+					$('#SignedUp').hide();
+
+					$('#RemoveSignUpLink').html('cancel')
+					
+
+
 			});
-		}
 }
+
 
 function signUpFree(plan_id) {
 	$.post("/subscribed_plans", { plan_id:plan_id, maybe:0}, function(theResponse){

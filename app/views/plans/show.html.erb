@@ -32,7 +32,7 @@
 
 
 <div >
-<div  style="margin-left:auto; margin-right:auto; margin-top:10px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+<div  style="margin-left:auto; margin-right:auto; margin-top:10px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px;  padding:20px; <%end%>">
 
 <%if @real_edit_for_toggle%>
 	<div id="EditPlanMenu" style="float:right; margin-right:-20px; margin-top:-55px;">
@@ -110,6 +110,8 @@
 		</div>
 	<%end%>
 	<%end%>
+
+	<div id="SignUpButtons" style="<%if @signedup or @author%>display:none<%end%>">
 		<div style="float:left;  margin-top:11px; margin-left:29px; text-align:center">
 			<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
 			<div style="margin-top:5px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
@@ -119,12 +121,19 @@
 			<img src="/images/or.png" style="width:12px; height:56px;">
 		</div>
 		
-		<div style="float:left;  margin-top:11px; margin-left:30px;">
-		<%= render :partial=>"plans/attend_button"%>
+		<div style="float:left;  margin-top:11px; margin-left:30px; ">
+			<%= render :partial=>"plans/attend_button"%>
 		</div>
+	</div>
+
 		
-		
-		
+
+	<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:10px; margin-left:3px; border:1px solid #ccc; width:390px; padding:5px; background:#FFFFCC; height:30px;">
+		<div style="width:34px; float:left'"><img src="/images/greencheck.png"></div>
+		<div class="HighlightedTitle"  style=" float:left; font-size:22px; margin-top:2px;">You are <%if @author%>hosting<%else%>attending<%end%> this event!</div>
+		<div style="float:left; color:#999; margin-left:10px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
+		<div style="clear:both"></div>
+	</div>
 
 
 
@@ -134,7 +143,7 @@
 		
 		<%if @plan.enable_sharing%>
 			<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
-				<div class="HighlightedTitle" style="margin-top:-2px; font-size:16px; ">Share with your friends!</div>
+				<div class="HighlightedTitle" style="margin-top:-2px;  font-size:16px; ">Share with your friends!</div>
 			
 				<%if @plan.price and @plan.price > 0 and !@plan.application_required and @plan.enable_discount%>
 				Send them discount code: JOINME42. They'll save $5.
