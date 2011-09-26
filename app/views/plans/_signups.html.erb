@@ -29,6 +29,35 @@
 
 <%end%>
 
+
+
+
+<%if @plan.id == 27%>
+<div style="clear:both"></div>
+
+	<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Judges</div>
+
+	<%judges = User.find(:all, :conditions=>"id=1316 || id=1318 || id=1319 || id=1320")%>
+
+	<%for host in judges%>
+		<div style="float:left; margin-bottom:5px">
+			<a href="/<%=host.username%>">
+				<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:90px; height:90px; cursor:pointer") %>
+			</a>
+		</div>
+		<div style='float:left; margin-left:10px; padding-top:5px;margin-bottom:5px'>
+			<a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
+			<div style="padding-top:5px; color:black; width:290px"><%=raw host.short_bio%></div>
+		</div>
+		<div style="clear:both"></div>
+	<%end%>
+
+
+<%end%>
+
+
+
+
 <%if @plan.enable_signups%>
 <div style="clear:both"></div>
 
