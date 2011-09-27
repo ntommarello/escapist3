@@ -1,0 +1,11 @@
+<div style="float:left; margin-bottom:5px">
+	<a href="/<%=user.username%>">
+		<%= image_tag(user.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:65px; height:65px; cursor:pointer") %>
+	</a>
+</div>
+
+<div style='float:left; margin-left:10px; padding-top:2px;margin-bottom:5px'>
+	<a CLASS="BlueLink" href="/<%=user.username%>"><%=user.first_name%> <%=user.last_name%></a>
+	<div class="SubtleShortBio"><%=raw user.short_bio%></div>
+</div>
+<div style="clear:both"></div>

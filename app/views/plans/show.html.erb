@@ -1,4 +1,67 @@
 
+<%if current_user %>
+		<div id="SignedUpModal" > 
+			<div class="closeRegister" onclick="closeRegister()"></div>
+			
+			<div style="margin-top:3px; margin-left:3px; border:1px solid #ccc; width:95%; margin-left:auto; margin-right:auto; padding:5px; background:#FFFFCC;  text-align:center;">
+					<div class="HighlightedTitle"  style="font-size:22px; margin-top:2px;">You signed up for <%=@plan.title%>!</div>
+			</div>
+
+			<div style="float:left; width:50%; margin-top:25px;">
+
+			<%if current_user.avatar_file_name.nil? || current_user.short_bio.nil? || current_user.short_bio == ""%>
+				<div class="HighlightedTitle" style="font-size:16px; margin-top:-2px">Your Information</div>
+				<div style="color:#777">What should other attendees know about you?</div>
+				<%if current_user.avatar_file_name.nil?%>
+					<form id="AvatarUpload" name="AvatarUpload" action="/users/1" method="post" enctype="multipart/form-data">
+						<input id="_method" name="_method" value="PUT" type="hidden">
+
+						<div style="font-weight:bold; margin-top:15px">Photo:</div>
+						<input autocomplete="off" class="UploadBox" id="user_avatar" name="user[avatar]" onchange="$('#AvatarUpload').submit();" style="cursor:pointer;" type="file" /> 
+						<div id="UploadButton" class="SignInConfirm" style="display:none" onclick="$(\'#ProfileEdit\').submit();">upload</div></form>
+				<%end%>
+
+				<%if current_user.short_bio.nil?  || current_user.short_bio == ""%>
+					<div style="font-weight:bold; margin-top:15px">Short Bio / Headline:</div>
+						<div id="showShortBio" style="display:none">
+							<div id="short_bio" style="margin-top:3px; font-size:16px; line-height:20px">
+								
+							</div>
+						</div>
+
+
+					<div id="showShortBioBox">
+					
+					
+					<div class="BioCounter" style="position:absolute; font-size:12px; margin-top:-15px; margin-left:265px">100</div>
+					<div style="clear:both"></div>
+						<textarea id="short_bio2" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox resize" style="float:left; color:#666; height:40px; margin-left:0px; line-height:20px; float:left; margin-top:2px; width:280px; " onkeyup="bioCounter(this)" onfocus="$('#tweet_bio_button').show();" onblur="if ($(this).val() == '') { $('#tweet_bio_button').hide(); }"></textarea>
+					<div style="clear:both"></div>
+					<BUTTON id="tweet_bio_button" style="display:none" onclick="updateUser(<%=current_user.id%>, 'short_bio', $('#short_bio2').val())">submit</button>
+					</div>
+				<%end%>
+
+				<div style="margin-top:20px; font-style:italic; color:#777">
+					edit the rest of your profile at:<br> <a class="BlueLink" href="http://<%=@source %>/<%=current_user.username%>"><%=@source %>/<%=current_user.username%></a>
+				</div>
+
+			<%else%>
+				<div style="margin-left:10px">
+				<%= render :partial=>"plans/usercard", :locals=>{:user=>current_user}%>
+				</div>
+			<%end%>
+		</div>
+
+		<div style="float:right; width:40%">
+		
+			<%= render :partial=>"plans/new_sharing"%>
+
+		</div>
+
+
+		<DIV STYLE="CLEAR:BOTH"></DIV>
+		</div>
+	<%end%>
 
 
 <% content_for :page_title do %>
@@ -141,54 +204,7 @@
 		<div style="clear:both"></div>
 		
 		
-		<%if @plan.enable_sharing%>
-			<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
-				<div class="HighlightedTitle" style="margin-top:-2px;  font-size:16px; ">Share with your friends!</div>
-			
-				<%if @plan.price and @plan.price > 0 and !@plan.application_required and @plan.enable_discount%>
-				Send them discount code: JOINME42. They'll save $5.
-				<%end%>
-			</div>
-		
-		
-			<div style="float:left; margin-left:3px; margin-top:5px">
-			
-			
-				<%@twitter_user = TWITTER_NAME%>
-				<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-				<%if  (@plan.price and @plan.price < 1) or @plan.application_required or !@plan.enable_discount%>
-					<%@twitter_text = "#{@twitter_text}!"%>
-				<%else%>
-					<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
-				<%end%>
-			
-				<%@data_url = "http://#{APP_URL}/?id=#{@plan.id}" %>
-
-			
-				<%if @plan.group%>
-					<%if @plan.group.custom_twitter_text%>
-						<%@twitter_text = @plan.group.custom_twitter_text%>
-					<%end%>
-					<%if @plan.group.twitter_name%>
-						<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
-					<%end%>
-					<%if @plan.group.url%>
-						<%if current_user%>
-							<%@data_url = "http://#{@plan.group.url}/"%>
-						<%else%>
-							<%@data_url = "http://#{@plan.group.url}/"%>
-						<%end%>
-					<%end%>
-				<%end%>
-			
-			
-		   			<a href="http://twitter.com/share"  class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@data_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
-		   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-		     </div>
-		<div style="float:left; margin-left:-3px;margin-top:5px"><fb:like href="<%=@data_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like></div>
-
-		<div style="clear:both"></div>
-	<%end%>
+		<%= render :partial=>"plans/new_sharing"%>
 	
 	
 
@@ -511,6 +527,12 @@
 		<%end%>
 	</div>
 <%end%>
+
+	
+
+
+
+
 
 
 <%if params[:confirm]%>

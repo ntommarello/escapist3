@@ -97,7 +97,7 @@
 		<div style=" float:left; width:390px; font-size:16px; line-height:22px;">
 			
 			<%unless @user.short_bio and @user.short_bio != ""%><div id="showShortBio" style="display:none"><%end%>
-					<div id="BioCounter" style="float:right; font-size:12px; display:none; margin-top:-25px; margin-right:15px">100</div>
+					<div class="BioCounter2" style="float:right; font-size:12px; display:none; margin-top:-25px; margin-right:15px">100</div>
 				<div style="margin-top:-3px; font-size:18px">
 			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_bio", :full_editor=>true, :content=>@user.short_bio, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
 			</div>
@@ -109,7 +109,7 @@
 			<div id="showShortBioBox">
 				<div style="margin-top:10px; float:left; font-size:12px; font-weight:bold">Headline</div>
 				
-				<div id="BioCounter" style="float:right; font-size:12px; display:none; margin-top:10px; margin-right:15px">100</div>
+				<div class="BioCounter" style="float:right; font-size:12px; display:none; margin-top:10px; margin-right:15px">100</div>
 				<div style="clear:both"></div>
 					<textarea id="short_bio2" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox resize" style="float:left; color:#666; height:20px; margin-left:0px; line-height:20px; float:left; margin-top:2px; width:380px; " onkeyup="bioCounter(this)" onfocus="$('#tweet_bio_button').show();" onblur="if ($(this).val() == '') { $('#tweet_bio_button').hide(); }"></textarea>
 				

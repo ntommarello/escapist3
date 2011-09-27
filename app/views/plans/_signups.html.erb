@@ -40,16 +40,7 @@
 	<%judges = User.find(:all, :conditions=>"id=1316 || id=1318 || id=1321 || id=1319 || id=1320")%>
 
 	<%for host in judges%>
-		<div style="float:left; margin-bottom:5px">
-			<a href="/<%=host.username%>">
-				<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:65px; height:65px; cursor:pointer") %>
-			</a>
-		</div>
-		<div style='float:left; margin-left:10px; padding-top:2px;margin-bottom:5px'>
-			<a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
-			<div  class="SubtleShortBio"><%=raw host.short_bio%></div>
-		</div>
-		<div style="clear:both"></div>
+		<%= render :partial=>"plans/usercard", :locals=>{:user=>host}%>
 	<%end%>
 
 
@@ -64,17 +55,8 @@
 <%if attendees.length > 1%>
 	<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Who's coming? <span style="color:#666">(<%=attendees.length + hosts.length%>)</span></div>
 	
-	<%for host in attendees%>
-			<div style="float:left; margin-bottom:5px">
-			<a href="/<%=host.username%>">
-				<%= image_tag(host.avatar.url(:rounded_90), :class=>"Transparent rounded3d", :style=>"width:65px; height:65px; cursor:pointer") %>
-			</a>
-		</div>
-		<div style='float:left; margin-left:10px; padding-top:2px;margin-bottom:5px'>
-			<a CLASS="BlueLink" href="/<%=host.username%>"><%=host.first_name%> <%=host.last_name%></a>
-			<div class="SubtleShortBio"><%=raw host.short_bio%></div>
-		</div>
-		<div style="clear:both"></div>
+	<%for user in attendees%>
+			<%= render :partial=>"plans/usercard", :locals=>{:user=>user}%>
 	<%end%>
 <%end%>
 

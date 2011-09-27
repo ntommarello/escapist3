@@ -140,11 +140,13 @@
 		
 		<%#end%>
 
-<%if !@group%>
+  
 		<div id="Home_Footer">
+		  <%if !@group%>
 			<div style="float:left; height:24px;">
 			<a class="HomeFooterLink" href="/about">About</a>  <a class="HomeFooterLink" href="/jobs">Jobs</a>  <a class="HomeFooterLink" href="/tos">Terms</a>  <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
 			</div>
+				<%end%>		
 			<div style="float:right; height:24px;">
 				<img style="margin-top:2px; float:right; cursor:pointer; margin-right:20px; height:20px; width:20px;" src="/images/fb_follow.png">
 				<a href="http://twitter.com/#!/escapist_me" target="_blank"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:5px; height:20px; width:20px;" src="/images/twitter_follow.png"></a>
@@ -152,7 +154,8 @@
 			</div>
 			<div style="clear:both"></div>
 		</div>
-	<%end%>		
+	
+
 	
 	
 

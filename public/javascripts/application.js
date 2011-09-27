@@ -2683,6 +2683,15 @@ function openRegister(title) {
 	setTimeout("centerBox($('#RegisterModal')); $('#RegisterModal').show();  $('#RegisterModal').animate({ opacity: 1,}, 250 );",50);
 }
 
+function openSignedUp() {
+		$(".registerTitle").html(title)
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#SignedUpModal')); $('#SignedUpModal').show();  $('#SignedUpModal').animate({ opacity: 1,}, 250 ); $('#SignedUpModal').css('top',30);",50);
+}
+
+
 function closeRegister() {
 	
 
@@ -2712,7 +2721,9 @@ function closeRegister() {
 			$("#DeletePlanLayer").css('opacity',0)
 		
 		
-		
+					setTimeout("$('#SignedUpModal').hide();",150);
+			$("#SignedUpModal").hide();
+			$("#SignedUpModal").css('opacity',0)
 		
 		
 			$("#RenderAchievements").hide();
@@ -2947,6 +2958,9 @@ function signupPlan(button,render,plan_id) {
 						$('#SignUpButtons').hide();
 						$('#SignedUp').show();
 
+
+						openSignedUp();
+
 				});
 	
 			
@@ -3125,15 +3139,20 @@ function bioCounter(input) {
 	
 	chars_left = 100 - value;
 	if (chars_left < 100) {
-		$("#BioCounter").show();
-		$("#BioCounter").html(chars_left);
+		$(".BioCounter").show();
+		$(".BioCounter").html(chars_left);
+
+		$(".BioCounter2").show();
+		$(".BioCounter2").html(chars_left);
+		
 	} else {
-		$("#BioCounter").hide();
+		$(".BioCounter").hide();
 	}
 	
 	if (chars_left < 0) {
 		$(input).val($(input).val().slice(0,100))
-		$("#BioCounter").html("0");
+		$(".BioCounter").html("0");
+		$(".BioCounter2").html("0");
 	}
 	
 }

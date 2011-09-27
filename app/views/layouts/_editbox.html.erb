@@ -76,15 +76,15 @@
 
 			chars_left = 100 - value;
 			if (chars_left < 100) {
-				$("#BioCounter").show();
-				$("#BioCounter").html(chars_left);
+				$(".BioCounter2").show();
+				$(".BioCounter2").html(chars_left);
 			} else {
-				$("#BioCounter").hide();
+				$(".BioCounter2").hide();
 			}
 
 			if (chars_left < 0) {
 				$(this).html($(this).html().slice(0,100))
-				$("#BioCounter").html("0");
+				$(".BioCounter2").html("0");
 			}
 			
 		 });

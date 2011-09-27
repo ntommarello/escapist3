@@ -14,7 +14,16 @@ class SubscribedPlansController < ApplicationController
          check.maybe = @maybe
          check.save!
        else
-         SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :maybe=>@maybe)
+          SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :maybe=>@maybe)
+
+          @plan = Plan.find(params[:plan_id])
+          if @plan.group
+              if @plan.group.mailchimp_key and @plan.group.mailchimp_list
+                h = Hominid::API.new(@plan.group.mailchimp_key)
+                h.list_subscribe(@plan.group.mailchimp_list, current_user.email, {'FNAME' => current_user.first_name, 'LNAME' => current_user.last_name}, 'html', false, true, true, false)
+              end
+          end
+
        end
         
        @plan = Plan.find(params[:plan_id]) 
@@ -28,8 +37,6 @@ class SubscribedPlansController < ApplicationController
        
        @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",params[:plan_id]])
        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}
-       
-     
        	
    end
    
@@ -37,13 +44,22 @@ class SubscribedPlansController < ApplicationController
 
 
    def destroy
+    
        @splan = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],current_user.id)
        @splan.destroy
        @plan = Plan.find(params[:plan_id])
+
+       if @plan.group
+         if @plan.group.mailchimp_key
+          h = Hominid::API.new(@plan.group.mailchimp_key)
+          h.list_unsubscribe(@plan.group.mailchimp_list, current_user.email, true, false, false)
+        end
+       end
+
        @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =? ",params[:plan_id]])
        
-      render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}
-        
+       render :partial=>"plans/signups", :locals=>{:attendees=>@attendees, :hosts=>@plan.organizers}
+
     end
 
 

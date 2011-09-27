@@ -67,7 +67,7 @@ class UsersController < ApplicationController
 
 
 
-      if location.include? "plans/"
+      if location.include? "escapes/"
         redirect_to :back
       else
         redirect_to "/#{@user.username}"
