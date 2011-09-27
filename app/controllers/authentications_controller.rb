@@ -101,7 +101,8 @@ class AuthenticationsController < ApplicationController
            end
            redirect_to settings_path
       else
-        redirect_to user_path(current_user)
+         redirect_to request.env['omniauth.origin'] || '/'
+        #redirect_to user_path(current_user)
       end
     else
       if omniauth['provider'] == "facebook"
@@ -131,7 +132,17 @@ class AuthenticationsController < ApplicationController
         
         current_user.save
         current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
-        redirect_to user_path(current_user)
+        
+
+
+        #HERE
+          location = request.env['omniauth.origin']  || root_path
+
+          #if location.include? "escapes/"
+            redirect_to location
+          #else
+          #  redirect_to "/#{current_user.username}"
+          #end
         
       else
         
@@ -169,7 +180,7 @@ class AuthenticationsController < ApplicationController
           
           location = request.env['omniauth.origin']  || root_path
 
-          if location.include? "plans/"
+          if location.include? "escapes/"
             redirect_to location
           else
             redirect_to "/#{current_user.username}"
