@@ -224,8 +224,9 @@ $(document).ready(function() {
 
 	<%if cookies[:showAttendPop] == 'true'%>
 		 $(document).ready(function() {
+		 	$.cookie('showAttendPop', null, { path: '/escapes/'});
 			<%if @plan.application_required%>
-				$.cookie('showAttendPop', null, { path: '/escapes/'});
+				
 			<%end%>
 		  	setTimeout('$("#attend").click();',1000);
 		
