@@ -1,0 +1,61 @@
+	<div id="SignedUpModal" > 
+		<div class="closeRegister" onclick="closeRegister()"></div>
+		
+		<div style="margin-top:3px; margin-left:3px; border:1px solid #ccc; width:95%; margin-left:auto; margin-right:auto; padding:5px; background:#FFFFCC;  text-align:center;">
+				<div class="HighlightedTitle"  style="font-size:22px; margin-top:2px;">You signed up for <%=@plan.title%>!</div>
+		</div>
+
+		<div style="float:left; width:50%; margin-top:25px;">
+
+		<%if current_user.avatar_file_name.nil? || current_user.short_bio.nil? || current_user.short_bio == ""%>
+			<div class="HighlightedTitle" style="font-size:16px; margin-top:-2px">Your Information</div>
+			<div style="color:#777">What should other attendees know about you?</div>
+			<%if current_user.avatar_file_name.nil?%>
+				<form id="AvatarUpload" name="AvatarUpload" action="/users/1" method="post" enctype="multipart/form-data">
+					<input id="_method" name="_method" value="PUT" type="hidden">
+
+					<div style="font-weight:bold; margin-top:15px">Photo:</div>
+					<input autocomplete="off" class="UploadBox" id="user_avatar" name="user[avatar]" onchange="$('#AvatarUpload').submit();" style="cursor:pointer;" type="file" /> 
+					<div id="UploadButton" class="SignInConfirm" style="display:none" onclick="$(\'#ProfileEdit\').submit();">upload</div></form>
+			<%end%>
+
+			<%if current_user.short_bio.nil?  || current_user.short_bio == ""%>
+				<div style="font-weight:bold; margin-top:15px">Short Bio / Headline:</div>
+					<div id="showShortBio" style="display:none">
+						<div id="short_bio" style="margin-top:3px; font-size:16px; line-height:20px">
+							
+						</div>
+					</div>
+
+
+				<div id="showShortBioBox">
+				
+				
+				<div class="BioCounter" style="position:absolute; font-size:12px; margin-top:-15px; margin-left:265px">100</div>
+				<div style="clear:both"></div>
+					<textarea id="short_bio2" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox resize" style="float:left; color:#666; height:40px; margin-left:0px; line-height:20px; float:left; margin-top:2px; width:280px; " onkeyup="bioCounter(this)" onfocus="$('#tweet_bio_button').show();" onblur="if ($(this).val() == '') { $('#tweet_bio_button').hide(); }"></textarea>
+				<div style="clear:both"></div>
+				<BUTTON id="tweet_bio_button" style="display:none" onclick="updateUser(<%=current_user.id%>, 'short_bio', $('#short_bio2').val())">submit</button>
+				</div>
+			<%end%>
+
+			<div style="margin-top:20px; font-style:italic; color:#777">
+				edit the rest of your profile at:<br> <a class="BlueLink" href="http://<%=@source %>/<%=current_user.username%>"><%=@source %>/<%=current_user.username%></a>
+			</div>
+
+		<%else%>
+			<div style="margin-left:10px">
+				<%=render :partial=>"users/user_card", :locals=>{:user=>current_user}%>
+			</div>
+		<%end%>
+	</div>
+
+	<div style="float:right; width:40%">
+	
+		<%= render :partial=>"plans/new_sharing",:locals=>{:showlabel=>true}%>
+
+	</div>
+
+
+	<DIV STYLE="CLEAR:BOTH"></DIV>
+	</div>

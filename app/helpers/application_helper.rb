@@ -35,12 +35,12 @@ module ApplicationHelper
         
         if (year_two != year_one) 
           if (month_two == month_one) 
-            @time_string = "#{start_time.to_datetime.strftime('%b %e')}-#{end_time.to_datetime.strftime('%e')}"
+            @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%e')}"
           else
-            @time_string = "#{start_time.to_datetime.strftime('%b %e')}-#{end_time.to_datetime.strftime('%b %e')}"
+            @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%b %e')}"
           end
         else
-          @time_string = "until #{end_time.to_datetime.strftime('%b %e')}"
+          @time_string = "until #{end_time.to_datetime.strftime('%B %e')}"
         end
   
         
@@ -64,9 +64,9 @@ module ApplicationHelper
       e_am = end_time.to_datetime.strftime('%p').downcase()
     
       if s_am == e_am
-        @time_string = "#{@start}#{s_am}-#{@end}#{e_am}"
+        @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')}<br><div style='margin-top:4px;font-size:15px'>#{@start}#{s_am}-#{@end}#{e_am}</div>"
       else
-        @time_string = "#{@start}#{s_am}-#{@end}#{e_am}"
+        @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')}<br><div style='margin-top:4px; font-size:15px'>#{@start}#{s_am}-#{@end}#{e_am}</div>"
       end
     end
     

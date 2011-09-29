@@ -2953,7 +2953,8 @@ function signupPlan(button,render,plan_id) {
 						//$(button).addClass("RedB").removeClass("GreenB").removeClass("LightGrayButton")
 						//$(button).html("I'm coming!");
 						$(button).html("Sign Me Up!");
-						$('#RenderPlan').html(theResponse)
+		
+						$('#RenderPlan2').html(theResponse)
 
 						$('#SignUpButtons').hide();
 						$('#SignedUp').show();
@@ -2979,7 +2980,7 @@ function unsubscribePlan(button,render,plan_id) {
 					
 					$('#attend').addClass("GreenB").removeClass("RedB")
 					$('#attend').html("Sign Me Up!");
-					$('#RenderPlan').html(theResponse)
+					$('#RenderPlan2').html(theResponse)
 
 					$('#SignUpButtons').show();
 					$('#SignedUp').hide();

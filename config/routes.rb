@@ -132,7 +132,7 @@ match '/auth/:provider/callback' =>'authentications#create'
   match 'discover', :controller => 'plans', :action => 'discover'
   match 'check_plan_password', :controller => 'plans', :action => 'check_plan_password'
   
-  
+  match 'new_plan', :controller => 'plans', :action => 'new_plan' 
   
   
   match 'create', :controller => 'web', :action => 'apply'

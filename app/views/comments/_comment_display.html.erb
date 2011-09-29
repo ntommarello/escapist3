@@ -1,14 +1,14 @@
-<div style="width:470px">
+<div style="width:590px">
 <%if plan.comments%>
 	<%for comment in plan.comments.reverse! %>
 		<div class="commentBox" style="background-color:<%if  current_user and current_user.id == comment.user.id%>#CBD5C2<%end%>;">
 			<div style="float:left">
 				<a href="/<%=comment.user.username%>">
-					<%= image_tag(comment.user.avatar.url(:rounded_50), :class=>"Transparent rounded50", :style=>"width:50px; height:50px;  cursor:pointer") %>
+					<%= image_tag(comment.user.avatar.url(:rounded_90), :class=>"Transparent rounded50", :style=>"width:90px; height:90px;  cursor:pointer") %>
 				</a>
 			</div>
 
-			<div style="float:left; margin-left:10px; padding-right:5px;width:395px;line-height:14px; padding-top:5px;">
+			<div style="float:left; margin-left:10px; padding-right:5px;width:475px; padding-top:5px;">
 				<a class="BlueLink" href="/<%=comment.user.username%>"><%=comment.user.first_name%></a> <%=comment.comment%></span><div class="SubtleFont" style="margin-top:2px" ><%=time_ago_in_words(comment.created_at)%> ago</div>
 			</div>
 			<div style="clear:both"></div>

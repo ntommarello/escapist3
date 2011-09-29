@@ -2908,7 +2908,8 @@ span.continued {
 .commentBox {
   background-color: #F6F6F6;
   padding-top: 3px;
-  font-size: 12px;
+  font-size: 15px;
+  line-height: 18px;
   padding-left: 3px;
   padding-right: 3px;
   margin-top: 3px; }
@@ -4904,3 +4905,115 @@ a.Lionright {
   color: #777;
   width: 250px;
   font-style: italic; }
+
+.PlanBigPhotoBorder {
+  margin-top: 20px;
+  height: 404px;
+  padding-top: 4px;
+  padding-left: 4px;
+  width: 604px;
+  border: 1px solid #ddd;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px 7px 7px 7px;
+  -webkit-background-clip: padding-box;
+  box-shadow: 5px 5px 1px 1px #eeeeee, -5px -5px 1px 1px #eeeeee, -5px 5px 1px 1px #eeeeee, 5px -5px 1px 1px #eeeeee;
+  background: rgba(0, 51, 255, 0.03); }
+
+.UserCard {
+  float: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 330px;
+  height: 121px;
+  padding: 0px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px 7px 7px 7px;
+  -webkit-background-clip: padding-box;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 3px #ddd;
+  background: #fff;
+  cursor: pointer;
+  color: #999; }
+
+.UserCard:hover {
+  background: #0066ff;
+  color: #E6ECFF; }
+
+.UserCardPhoto {
+  position: absolute;
+  margin-top: 1px;
+  width: 120px;
+  border-right: 1px solid #eee;
+  height: 120px;
+  cursor: pointer;
+  -webkit-border-top-left-radius: 6px;
+  -moz-border-radius-topleft: 6px;
+  border-top-left-radius: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomleft: 6px;
+  border-bottom-left-radius: 6px; }
+
+.TopCardShadow {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.8);
+  position: absolute;
+  width: 330px;
+  -webkit-border-top-right-radius: 7px;
+  -moz-border-radius-topright: 7px;
+  border-top-right-radius: 7px;
+  -webkit-border-top-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  background: #ccc;
+  border-top: 1px solid #fff;
+  height: 24px;
+  background: #fff;
+  background-image: -moz-linear-gradient(100% 100% 90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.08));
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.08)), to(rgba(0, 0, 0, 0)));
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0)); }
+
+.TopPhotoShadow {
+  position: absolute;
+  width: 120px;
+  -webkit-border-top-left-radius: 7px;
+  -moz-border-radius-topleft: 7px;
+  border-top-left-radius: 7px;
+  height: 25px;
+  background-image: -moz-linear-gradient(100% 100% 90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35));
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 0, 0, 0.35)), to(rgba(0, 0, 0, 0)));
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0)); }
+
+.UserCardBio {
+  position: absolute;
+  margin-left: 128px;
+  width: 180px;
+  font-size: 13px;
+  height: 120px;
+  overflow: hidden; }
+
+.UserCardName {
+  color: #21547E;
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 20px; }
+
+.organizerLabel {
+  position: absolute;
+  width: 79px;
+  height: 78px;
+  background-image: url(/images/organizerLabel.png); }
+
+.judgeLabel {
+  position: absolute;
+  width: 79px;
+  height: 78px;
+  background-image: url(/images/judgeLabel.png); }
+
+.SignUpBox {
+  width: 343px;
+  float: right;
+  padding-top: 8px;
+  padding-left: 18px;
+  height: 221px;
+  background: url(/images/paper.png); }

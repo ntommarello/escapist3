@@ -85,9 +85,6 @@ class PlansController < ApplicationController
   
   def wepay_callback
     
-    
-    
-    
     #if event == "Received Money"
       
     #  o = OAuth::Consumer.new( WePay::CONSUMER_KEY, WePay::SHARED_SECRET, {
@@ -529,6 +526,89 @@ end
     
     render :layout=>false 
     
+    
+  end
+  
+  def new_plan
+    
+     @plan = Plan.find(28)
+
+      if !@plan
+        redirect_to "/"
+        return
+      end
+
+
+      if @plan.location
+        @cleaned_location = @plan.location.gsub(%r{</?[^>]+?>}, ' ').gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<br>/,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ')
+      end
+
+
+      @watched = false
+      if current_user
+        if current_user.has_watched?(@plan)
+          @watched = true
+        end
+      end
+
+
+      @real_edit_for_toggle = false
+
+
+      if current_user && @plan
+        for host in @plan.hosts
+         if host.user_id == current_user.id
+            @author=true
+            @real_edit_for_toggle = true
+            @editable = true
+            @extra_visibility = true
+          end
+        end
+        if current_user.mod_level == 5
+          @admin = true
+          @editable = true
+          @real_edit_for_toggle = true
+          #@extra_visibility = false
+        end
+      end
+
+
+      if cookies[:disable_edit]
+        @editable = false
+      end
+
+
+      #redirect if password protected?
+      if @plan.privacy == 3
+
+        if cookies[:password] and (cookies[:password].downcase == @plan.password.downcase)
+          redirect = false
+        else
+          redirect = true
+        end
+      else
+        redirect = false
+      end
+
+      if @admin
+        redirect = false
+      end
+      if @editable
+        redirect = false
+      end
+      if redirect
+        redirect_to "/?id=#{@plan.id}"
+      end
+
+
+  if current_user && @plan.has_signedup?(current_user)
+    @signedup = TRUE
+    @signup_color = "Red"
+  else
+    @signedup = FALSE
+    @signup_color = "Green"
+  end
+  
     
   end
   

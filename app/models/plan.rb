@@ -31,9 +31,6 @@ class Plan < ActiveRecord::Base
     subscribed_plans.find(:first, :conditions=>["user_id=? and maybe = 1",user.id])
   end
   
-
-  
-  
   def has_soldout
     seats_remaining <= 0
   end
@@ -44,8 +41,8 @@ class Plan < ActiveRecord::Base
 
   has_attached_file :image, attachment_attrs(
     :default_url => "/images/no_pic_b.png",
-    :styles => { :thumb_50 => ["50x50#", :jpg], :thumb_180 => ["180x50#", :jpg] , :thumb_400=> ["400x256#", :jpg] , :thumb_1250=>["1250x1250>", :jpg]  },
-    :convert_options => { :thumb_50 => '-quality 80', :thumb_180 => '-quality 80', :thumb_50 => '-quality 70', :thumb_1250 => '-quality 50' }
+    :styles => { :thumb_50 => ["50x50#", :jpg], :thumb_180 => ["180x50#", :jpg] , :thumb_400=> ["400x256#", :jpg],:thumb_600=> ["600x400#", :jpg], :thumb_1250=>["1250x1250>", :jpg]  },
+    :convert_options => { :thumb_50 => '-quality 80', :thumb_180 => '-quality 80', :thumb_50 => '-quality 70',:thumb_600 => '-quality 80', :thumb_1250 => '-quality 50' }
     )
 
   def to_param

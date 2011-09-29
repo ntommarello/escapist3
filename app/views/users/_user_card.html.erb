@@ -1,0 +1,28 @@
+<%label = "" unless defined?(label)%>
+
+	<a href="/<%=user.username%>">
+	<div class="UserCard" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#fff')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
+		
+		
+		
+		<div class="TopCardShadow"></div>
+
+		
+				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
+		
+
+		<div class="TopPhotoShadow"></div>
+		<%if label == "Organizer"%>
+			<div class="organizerLabel"></div>
+		<%end%>
+		<%if label == "Judge"%>
+			<div class="judgeLabel"></div>
+		<%end%>
+	
+		<div class="UserCardBio">
+			<div class="UserCardName"><%=user.first_name%> <%=user.last_name%></div>
+			<div style=" margin-top:2px; line-height:16px; font-style:italic; font-family:'georgia'"><%=raw user.short_bio%></div>
+		</div>
+	
+	</div>
+	</a>
