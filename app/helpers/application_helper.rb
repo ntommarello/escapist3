@@ -40,12 +40,20 @@ module ApplicationHelper
             @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%b %e')}"
           end
         else
-          @time_string = "until #{end_time.to_datetime.strftime('%B %e')}"
+          
+          number_of_days = (end_time.to_datetime - start_time.to_datetime).to_i + 1
+          if (number_of_days > 1)
+            @time_string = "until #{end_time.to_datetime.strftime('%B %e')}"
+            @time_string = "#{@time_string}<br><span style='font-size:11px'>(#{number_of_days} days)</span>"
+          else
+             @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')} <div style='font-size:12px'>#{start_time.to_datetime.strftime('%l:%M%p')} until the next day at #{end_time.to_datetime.strftime('%l:%M%p')}</div>"
+          end
+          
+         
         end
   
         
-        number_of_days = (end_time.to_datetime - start_time.to_datetime).to_i
-        @time_string = "#{@time_string}<br><span style='font-size:11px'>(#{number_of_days} days)</span>"
+
     else 
     
       @start = start_time.to_datetime.strftime('%l').strip()

@@ -6,6 +6,7 @@
 <%border = false unless defined?(border)%>
 <%full_editor = false unless defined?(full_editor)%>
 <%append = "" unless defined?(append)%>
+<%sideIcon = "Right" unless defined?(sideIcon)%>
 
 <%if @editable%>
 
@@ -13,7 +14,7 @@
 <%if full_editor%>
 
 	<%if extra_visibility%>
-	<div style="float:right;  margin-right:2px;">
+	<div style="<%if sideIcon == "Left"%> float:left;  margin-left:-23px;<%else%>float:right;  margin-right:2px;<%end%>">
 		<div style="position:absolute; " id="ShowEdit"  onclick="$('#<%=field_name%>').focus();">
 			<img  class="EditIcon" src="/images/ok_pen1.png"   >
 		</div>

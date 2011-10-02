@@ -49,4 +49,14 @@ class Plan < ActiveRecord::Base
     "#{id}-#{title.parameterize}"
   end
   
+  def custom_comment
+    read_attribute(:custom_comment) ||  "Ask a Question"
+  end
+  
+  def map_zoom
+    read_attribute(:map_zoom) ||  14
+  end
+  
+  
+  
 end

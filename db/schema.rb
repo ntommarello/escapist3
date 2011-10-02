@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110725042346) do
+ActiveRecord::Schema.define(:version => 20111002054337) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20110725042346) do
     t.string   "wepay_token"
     t.string   "wepay_group_id"
     t.string   "paypal_email"
+    t.string   "fb_link"
   end
 
   create_table "hosts", :force => true do |t|
@@ -258,6 +259,8 @@ ActiveRecord::Schema.define(:version => 20110725042346) do
     t.text     "availability"
     t.boolean  "enable_date_requests"
     t.boolean  "enable_date_poll"
+    t.string   "custom_comment"
+    t.integer  "map_zoom"
   end
 
   create_table "subscribed_achievements", :force => true do |t|

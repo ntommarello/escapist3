@@ -4937,9 +4937,14 @@ a.Lionright {
   cursor: pointer;
   color: #999; }
 
-.UserCard:hover {
-  background: #0066ff;
-  color: #E6ECFF; }
+.UserCard2:hover {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #cccccc, #e0e0e0);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e0e0e0), to(#cccccc));
+  color: #666; }
+
+.UserCard2:active {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #e0e0e0, #cccccc);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#cccccc), to(#e0e0e0)); }
 
 .UserCardPhoto {
   position: absolute;
@@ -5002,7 +5007,7 @@ a.Lionright {
   position: absolute;
   width: 79px;
   height: 78px;
-  background-image: url(/images/organizerLabel.png); }
+  background-image: url(/images/organizerLabel2.png); }
 
 .judgeLabel {
   position: absolute;

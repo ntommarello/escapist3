@@ -1,7 +1,7 @@
 <%label = "" unless defined?(label)%>
 
 	<a href="/<%=user.username%>">
-	<div class="UserCard" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#fff')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
+	<div class="UserCard <%unless @user_agent.mobile?%>UserCard2<%end%>" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#000')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
 		
 		
 		

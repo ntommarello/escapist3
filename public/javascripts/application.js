@@ -1288,6 +1288,8 @@ function GeoCode_Challenge(location, challenge_id) {
 }
 function GeoCode_Plan(location, plan_id) {
 
+	
+
 	$.post("/geocode_plan", { location: location, plan_id:plan_id}, 
 	function(data){
 		eval(data);
@@ -1295,7 +1297,7 @@ function GeoCode_Plan(location, plan_id) {
 			$('#error').html('Could not convert address to GPS coordinates.')
 		} else {
 	
-			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=270x125&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom='+map_zoom+'&size=590x200&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
 			
 			//mapURL = 'http://maps.google.com/staticmap?center='+Lat+','+Lng+'&zoom=14&size=90x90&maptype=roadmap&markers='+Lat+','+Lng+'&sensor=false&key=ABQIAAAAd5t8h7gf8hlpFfM_zmOU7hT39yqx9PTFa5e5gPxu0g05YTxiBBQVciAICRx_q0y51mk2-CbIMukdNA';
 			//jQuery('#GeoCodeMap').html('<img style="border:1px solid #ccc" src="'+mapURL+'">');
@@ -1307,6 +1309,20 @@ function GeoCode_Plan(location, plan_id) {
 			$("#GoogleLink").attr("href", link_url);
 			$("#plan_lat").val(lat)
 			$("#plan_lat").val(lng)
+			
+			$.ajax({
+		        type: "POST",
+		        url: "/plans/"+plan_id,
+		        data: "_method=PUT&plan[map_zoom]=" + map_zoom,
+		        success: function(msg){
+					//animateFlashMessage();
+				
+					displaySaved();
+				
+		        }
+		     });
+			
+			
 		}
 	});
 	
@@ -2684,7 +2700,7 @@ function openRegister(title) {
 }
 
 function openSignedUp() {
-		$(".registerTitle").html(title)
+		
 	$("#BlackModal").show();
 	$("#BlackModal").animate({opacity: .4,}, 100 );
 	$("#BlackModal").height($(document).height())

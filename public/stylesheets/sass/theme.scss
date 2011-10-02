@@ -4640,9 +4640,13 @@ line-height:49px; text-align:center;
 	color:#999;
 }
 
-.UserCard:hover {
-	background:$default-link-color;
-	color:#E6ECFF;
+.UserCard2:hover {
+	@include lineargradient(#ccc,#E0E0E0);
+	color:#666;
+}
+
+.UserCard2:active {
+	@include lineargradient(#E0E0E0,#ccc);
 }
 
 
@@ -4704,7 +4708,7 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	width:79px;
 	height:78px;
 
-	background-image:url(/images/organizerLabel.png);
+	background-image:url(/images/organizerLabel2.png);
 }
 .judgeLabel {
 	position:absolute;

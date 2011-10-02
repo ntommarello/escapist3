@@ -102,7 +102,7 @@
 							
 						<%else%>
 						
-						<div id="homeGroupBuy" class="home_buy_button" style="float:right; margin-left:7px; " onclick="clearButton($(this)); window.location.href='/escapes/'+plan_id">
+						<div id="homeGroupBuy" class="home_buy_button" style="float:right; margin-left:7px; " onclick="clearButton($(this));   $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/'+plan_id">
 							
 						</div>
 						
@@ -146,10 +146,23 @@
 			<div style="float:left; height:24px;">
 			<a class="HomeFooterLink" href="/about">About</a>  <a class="HomeFooterLink" href="/jobs">Jobs</a>  <a class="HomeFooterLink" href="/tos">Terms</a>  <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
 			</div>
-				<%end%>		
+			<%end%>		
+			
+			<%if @group and @group.twitter_name != nil%>
+				<%@twitter_link =  @group.twitter_name%>
+			<%else%>
+				<%@twitter_link =  "escapist_me"%>
+			<%end%>
+			<%if @group and @group.fb_link != nil%>
+				<%@fb_link =  @group.fb_link%>
+			<%else%>
+				<%@fb_link =  "#"%>
+			<%end%>
+			
+			
 			<div style="float:right; height:24px;">
-				<img style="margin-top:2px; float:right; cursor:pointer; margin-right:20px; height:20px; width:20px;" src="/images/fb_follow.png">
-				<a href="http://twitter.com/#!/escapist_me" target="_blank"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:5px; height:20px; width:20px;" src="/images/twitter_follow.png"></a>
+				<a target="_blank" href="<%=@fb_link%>"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:20px; height:20px; width:20px;" src="/images/fb_follow.png"></a>
+				<a href="http://twitter.com/#!/<%=@twitter_link%>" target="_blank"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:5px; height:20px; width:20px;" src="/images/twitter_follow.png"></a>
 				<div style="float:right; font-size:11px; color:#fff; margin-right:10px">FOLLOW US</div>
 			</div>
 			<div style="clear:both"></div>

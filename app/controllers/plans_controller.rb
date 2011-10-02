@@ -464,7 +464,7 @@ end
     @editable = true
     
     
-    render :partial=>"plans/circle_date"
+    render :partial=>"plans/circle_date_small"
     
   end
   

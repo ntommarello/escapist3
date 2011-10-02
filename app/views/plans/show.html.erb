@@ -30,12 +30,46 @@
 
 <div style="<%if @user_agent.mobile?%>width:950px;<%else%>min-width:1000px;max-width:1030px; <%end%> margin-left:auto; margin-right:auto; font-size:16px;">
 
+	<%if @real_edit_for_toggle%>
+		<div id="EditPlanMenu" style="float:right; margin-right:6px;">
+
+			<div class="Lionbuttons" >
+
+
+				<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="validatePublish('edit',this,<%=@plan.id%>)">Publish</a>
+				<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
+
+					<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
+
+				<a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
+
+				<a href="#" id="LockLinkIcon" class="Lionbutton Lionleft <%unless @editable%>LionHighlight<%end%>" onclick="planEditToggle()"><div class="LockIcon"></div>Lock</a><a href="#" id="EditLinkIcon" class="Lionbutton Lionright  <%if @editable%>LionHighlight<%end%>"style="margin-right:0px;" onclick="planEditToggle()" ><div class="EditPlanIcon"></div>Edit</a>
+
+				<script>
+				editable=<%=@editable%>;
+				</script>
+
+			</div>
+		</div>
+		<script>
+		$(document).ready(function() {
+
+
+			$(".tl").tooltip();
+
+		});
+		</script>
+	<%end%>
+	
+
+
+
 		<div class="HighlightedTitle" style="padding-bottom:4px; font-size:24px; width:600px; line-height:28px; ">
-			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
 		</div>
 		
-		<div style="float:left; font-size:16px;color:#808598; width:380px;">			
-		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :full_editor=>true, :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+		<div style="float:left; font-size:16px;color:#808598; width:370px;">			
+		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :sideIcon=>"Left", :full_editor=>true, :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 		</div>
 	
 		<div style="position:absolute; margin-left:375px; margin-top:-4px;">
@@ -75,7 +109,7 @@
 		
 		<div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;">Meeting Place</div>
 		
-		<div id="MeetingPlace" style="<%if !@plan.transportation or @plan.transportation == ""%>display:none; <%end%>">
+		<div id="MeetingPlace" style="line-height:18px; <%if !@plan.transportation or @plan.transportation == ""%>display:none; <%end%>">
 		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>false, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%>
 		</div>
 
@@ -88,14 +122,16 @@
 		
 		<div style="margin-top:15px;">
 			<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
-						<img  id="GoogleMap" width="<%=@picwidth-10%>" height="200" alt="map error" style=" cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=14&size=<%=@picwidth-10%>x200&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
+						<img  id="GoogleMap" width="<%=@picwidth-10%>" height="200" alt="map error" style=" cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=<%=@plan.map_zoom%>&size=<%=@picwidth-10%>x200&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
 		
 		</div>
 		
 		<input type="hidden" id="plan_lat" value="<%=@plan.lat%>">
 		<input type="hidden" id="plan_lng" value="<%=@plan.lng%>">
+		<script>map_zoom = <%=@plan.map_zoom%>;</script>
 		
-				<div style="float:left; font-size:14px; margin-top:10px; ">
+		<div style="background:#eee; border:1px solid #ccc; padding:10px; width:<%=@picwidth-30%>px">
+				<div style="float:left; font-size:14px; margin-top:10px; line-height:18px;">
 
 					<%if @plan.url_name and @plan.url_link %>
 						<a id="MapLink" class="BlueLink <%if @editable%> EditBoxHide<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
@@ -105,26 +141,40 @@
 								<a class="BlueLink" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
 							<%end%>
 						<%end%>
+						<div>
 							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
+</div>
+
+							
+					</div>
+					
+					<%if @editable%>
+						<div style="float:right; margin-top:10px; font-size:12px">
+							<select onchange="map_zoom = $(this).val(); GeoCode_Plan($('#location').html(),<%=@plan.id%>);">
+								<option value="16" <%if @plan.map_zoom == 16%>selected<%end%>>Street</option>
+								<option value="14" <%if @plan.map_zoom == 14%>selected<%end%>>Neighborhood</option>
+								<option value="12" <%if @plan.map_zoom == 12%>selected<%end%>>City</option>
+								<option value="9" <%if @plan.map_zoom == 9%>selected<%end%>>State</option>
+								<option value="4" <%if @plan.map_zoom == 4%>selected<%end%>>Country</option>
+							</select>
+						</div>
+					<%end%>
+					<div style="clear:both; "></div>
+					</div>
+
+
 
 
 							
-					
-
-					</div>
-					
-
-
-
-
-
-
-							<div style="clear:both; "></div>
 							<div style="border-top:1px dotted #DEDFE5; margin-top:30px;">&nbsp;</div>
 		
 							<%if @plan.enable_comments%>
 
-<div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;">Comments, Questions, & War Stories</div>
+<div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;line-height:28px;">
+		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"custom_comment", :content=>@plan.custom_comment, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>""}%>	
+	
+	
+</div>
 
 
 
@@ -182,7 +232,7 @@
 				<%= render :partial=>"plans/circle_date_small"%>
 			</div>		
 			
-			<div style="padding-top:10px; padding-bottom:10px; width:320px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
+			<div style="padding-top:10px; padding-left:3px;  padding-bottom:10px; width:310px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
 				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 			</div>
 			
@@ -296,6 +346,9 @@
 			<div class="HighlightedTitle" style="font-size:30px; line-height:40px; ">Special Thanks to our Sponsors!</div>
 
 		<img src="/images/sponsors2.png">
+		<div style="margin-top:10px">
+		Would you like to sponsor?  <a href="mailto:nick@tommarello.com" class="BlueLink">Email us</a>!
+		</div>
 		</div>
 	<%end%>
 
