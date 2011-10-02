@@ -57,6 +57,7 @@
         background: url(ad_next.png);
         width: 30px;
         height: 30px;
+		display:block;
         right: 0;
         left: auto;
       }
@@ -66,6 +67,7 @@
       top: 0;
       left: 0;
       z-index: 9;
+	
     }
       .ad-gallery .ad-image-wrapper .ad-image a img {
         border: 0;
@@ -78,8 +80,12 @@
         text-align: left;
         width: 100%;
         z-index: 2;
-        background: url(opa75.png);
-        color: #000;
+font-weight:normal;
+font-size:14px;
+font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background: rgba(66,66,66,.70);
+		text-shadow:rgba(85,85,85) 0px -1px 0px;
+        color: #eee;
       }
       * html .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
         background: none;
@@ -151,30 +157,31 @@ background: url(ad_scroll_forward.png) 0px 22px no-repeat;
     .ad-gallery .ad-nav .ad-thumbs {
       overflow: hidden;
       width: 100%;
+margin-top:-4px;
     }
       .ad-gallery .ad-thumbs .ad-thumb-list {
         float: left;
         width: 9000px;
         list-style: none;
+
       }
         .ad-gallery .ad-thumbs li {
 
           float: left;
           padding-right: 0px;
 padding-left:0px;
+
         }
           .ad-gallery .ad-thumbs li a {
             display: block;
-padding-left:1px;
-padding-right:1px;
           }
        	        .ad-gallery .ad-thumbs li a img {
-	              border: 1px solid #666;
+	              border-top: 4px solid #fff;
 	              display: block;
 
 	            }
 	            .ad-gallery .ad-thumbs li a.ad-active img {
-	              border: 1px solid #000; 
+	              border-top: 4px solid #0EC00E; 
 	            }
 	
 

@@ -24,6 +24,7 @@
 <%if @editable%>
 	<%=render :partial=>"plans/edit_date"%>
 	<%=render :partial=>"plans/edit_settings"%>
+	<%=render :partial=>"plans/edit_photos"%>
 <%end%>
 
 
@@ -83,21 +84,43 @@
 	
 	<div style="float:left; <%if @user_agent.mobile?%>width:545px;<%else%>width:595px<%end%>">
 		
-		<div class="PlanBigPhotoBorder" style="<%if @user_agent.mobile?%>width:<%=@picwidth+4%>px; height:<%=@picheight+4%>px<%end%>">
-			<div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
 		
-			<%if @editable%>
-				<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px;", :class=>" Transparent", :onclick=>"uploadPlanPhoto(#{@plan.id},'show')" %>
+			<%if @photos.length > 0%><%extra_height = 70+4%><%else%><%extra_height = 4%><%end%>
+		
+			<div class="PlanBigPhotoBorder" style="width:<%=@picwidth+4%>px; height:<%=@picheight+extra_height%>px">
+					
+			<div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
+								
 			
-				<%unless @plan.image_file_name%>
-					<div style="position:absolute; text-align:Center; margin-top:-60px; width:600px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="uploadPlanPhoto(<%=@plan.id%>,'show')">Upload Photo</div>
+		
+			
+		<%if @photos.length > 0%>
+
+			<%= render :partial=>"plans/gallery", :locals=>{:photos=>@photos}%>
+
+		<%else%>
+		
+	
+	
+		
+				<%if @editable%>
+					<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px;", :class=>" Transparent", :onclick=>"displayEditPhoto()" %>
+			
+					<%unless @plan.image_file_name%>
+						<div style="position:absolute; text-align:Center; margin-top:-60px; width:600px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="displayEditPhoto()">Upload Photo</div>
+					<%end%>
+					<input type="hidden" id="plan_image" value="<%=@plan.image_file_name%>">
+				<%else%>
+					<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px; cursor:default", :class=>""%>
 				<%end%>
-				<input type="hidden" id="plan_image" value="<%=@plan.image_file_name%>">
-			<%else%>
-				<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px; cursor:default", :class=>""%>
-			<%end%>
+			
+		<%end%>
 		</div>
 		
+		<%if @editable%>
+			<div onclick="displayEditPhoto()" style="float:right; margin-top:10px; font-size:13px" class="BlueLink">Manage Photos</div>
+			<div style="clear:both"></div>
+		<%end%>
 		
 		
 			<div style="font-size:16px; line-height:20px; margin-top:15px; ">
@@ -120,9 +143,9 @@
 		<%end%>
 		
 		
-		<div style="margin-top:15px;">
+		<div style="margin-top:15px;" >
 			<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
-						<img  id="GoogleMap" width="<%=@picwidth-10%>" height="200" alt="map error" style=" cursor:pointer; border:1px solid #ccc; float:left" class="Transparent" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=<%=@plan.map_zoom%>&size=<%=@picwidth-10%>x200&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
+						<img  id="GoogleMap" width="<%=@picwidth-10%>" height="300" alt="map error" style=" cursor:pointer; float:left" class="Transparent subtleShadow" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=<%=@plan.map_zoom%>&size=<%=@picwidth-10%>x300&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
 		
 		</div>
 		
@@ -130,19 +153,22 @@
 		<input type="hidden" id="plan_lng" value="<%=@plan.lng%>">
 		<script>map_zoom = <%=@plan.map_zoom%>;</script>
 		
-		<div style="background:#eee; border:1px solid #ccc; padding:10px; width:<%=@picwidth-30%>px">
-				<div style="float:left; font-size:14px; margin-top:10px; line-height:18px;">
+	
+		
+		
+		<div id="directions" class="subtleShadow2" style="position:absolute;  color:#eee; margin-top:240px; background:rgba(33, 33,33, .8);  padding:10px; width:<%=@picwidth-28%>px">
+				<div style="float:left; font-size:14px; line-height:18px;">
 
 					<%if @plan.url_name and @plan.url_link %>
-						<a id="MapLink" class="BlueLink <%if @editable%> EditBoxHide<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
+						<a id="MapLink" style="color:white; font-size:15px;" class="BlueLink <%if @editable%> EditBoxDark<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
 
 					<%else%>
 							<%if @editable%>
-								<a class="BlueLink" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
+								<a class="BlueLink" style="color:white;" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
 							<%end%>
 						<%end%>
-						<div>
-							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>" GeoCode_Plan(newValue,#{@plan.id});"}%>	
+						<div  style="font-size:13px; line-height:16px; ">
+							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :darkHover=>true, :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"adjustMapLabel(); GeoCode_Plan(newValue,#{@plan.id});"}%>	
 </div>
 
 							
@@ -162,7 +188,9 @@
 					<div style="clear:both; "></div>
 					</div>
 
-
+<script>
+adjustMapLabel();
+</script>
 
 
 							
@@ -204,6 +232,8 @@
 	
 		<div class="SignUpBox">
 			
+		
+			
 			<div style="position:absolute; margin-top:130px">
 			<div id="SignUpButtons" style="<%if @signedup or @author%>display:none<%end%>">
 				<div style="float:left;  margin-top:11px; margin-left:2px;  text-align:center">
@@ -228,12 +258,18 @@
 			</div>
 			</div>
 			
-			<div id="RenderDate">
+			<div style="position:absolute; width:265px; margin-left:63px; margin-top:69px; border-top:1px dashed #ccc"></div>
+			
+			<div id="RenderDate" style="position:absolute">
 				<%= render :partial=>"plans/circle_date_small"%>
 			</div>		
 			
-			<div style="padding-top:10px; padding-left:3px;  padding-bottom:10px; width:310px;  color:#555; font-size:16px; line-height:20px; font-style:italic; ">
+			<div style="height:70px;"></div>
+			
+			<div style=" padding-left:3px; padding-bottom:10px; width:310px;  color:#555; font-size:15px; line-height:20px; font-style:italic; display: table; font-family:'georgia'">
+				<div style="display: table-cell; vertical-align: middle; height:75px; ">
 				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+				</div>
 			</div>
 			
 
@@ -401,7 +437,7 @@
 
 
 	<%if @plan.application_required%>
-	<div id="ApplicationLayer" style="margin-left:auto; margin-right:auto; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+	<div id="ApplicationLayer" style="margin-left:auto; margin-right:auto; font-size:13px; <%if @user_agent.mobile?%>width:940px;<%else%>width:960px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
 
 		<div style="float:left">
 			<h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>

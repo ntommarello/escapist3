@@ -859,6 +859,17 @@ function sendMessage(button) {
 }
 
 
+function destroyMedia(id,row) {
+	$(row).parent().parent().hide()
+	
+	$.post("/medias/"+id, { _method:'delete'}, function(theResponse){
+	
+	
+	});
+	
+}
+
+
 function deleteMessage(row,user_id,unread) {
 	if (unread == 1) {
 		oldcount = $('#top_unread_count1').html()
@@ -1286,6 +1297,13 @@ function GeoCode_Challenge(location, challenge_id) {
 		}
 	});
 }
+
+function adjustMapLabel() {
+	offset = 300-$('#directions').height();
+	$('#directions').css('margin-top',offset);
+}
+
+
 function GeoCode_Plan(location, plan_id) {
 
 	
@@ -1297,7 +1315,7 @@ function GeoCode_Plan(location, plan_id) {
 			$('#error').html('Could not convert address to GPS coordinates.')
 		} else {
 	
-			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom='+map_zoom+'&size=590x200&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom='+map_zoom+'&size=590x300&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
 			
 			//mapURL = 'http://maps.google.com/staticmap?center='+Lat+','+Lng+'&zoom=14&size=90x90&maptype=roadmap&markers='+Lat+','+Lng+'&sensor=false&key=ABQIAAAAd5t8h7gf8hlpFfM_zmOU7hT39yqx9PTFa5e5gPxu0g05YTxiBBQVciAICRx_q0y51mk2-CbIMukdNA';
 			//jQuery('#GeoCodeMap').html('<img style="border:1px solid #ccc" src="'+mapURL+'">');
@@ -2728,6 +2746,13 @@ function closeRegister() {
 			setTimeout("$('#EditDateLayer').hide();",150);
 			$("#EditDateLayer").hide();
 			$("#EditDateLayer").css('opacity',0)
+			
+			
+			setTimeout("$('#EditPhotos').hide();",150);
+			$("#EditPhotos").hide();
+			$("#EditPhotos").css('opacity',0)
+			
+			
 			setTimeout("$('#EditLinkLayer').hide();",150);
 			$("#EditLinkLayer").hide();
 			$("#EditLinkLayer").css('opacity',0)
@@ -4120,6 +4145,16 @@ function RequestLayer(box) {
 		$("#RequestLayer").hide();
 	}
 }
+
+
+
+function displayEditPhoto() {
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#EditPhotos')); $('#EditPhotos').css('top','35px');  $('#EditPhotos').show();  $('#EditPhotos').animate({ opacity: 1,}, 250 );",50);
+}
+
 
 function displayEditDate() {
 	enableDateFields();

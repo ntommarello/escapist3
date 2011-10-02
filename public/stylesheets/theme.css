@@ -1818,6 +1818,14 @@ a:hover {
 .AppLink:hover {
   text-decoration: underline; }
 
+.EditBoxDark {
+  cursor: pointer;
+  border: 1px dotted transparent; }
+
+.EditBoxDark:hover {
+  background-color: #000;
+  border: 1px dotted #fff; }
+
 .EditBox {
   cursor: pointer;
   border: 1px dotted transparent; }
@@ -1834,6 +1842,12 @@ a:hover {
 
 .transparent_border {
   border: 1px solid transparent; }
+
+.EditBoxDarkHide:hover {
+  background-color: #000; }
+
+.EditBoxDarkHide:focused {
+  background-color: #000; }
 
 .EditBoxHide:hover {
   background-color: #FFFFCC; }
@@ -4936,6 +4950,14 @@ a.Lionright {
   background: #fff;
   cursor: pointer;
   color: #999; }
+
+.subtleShadow {
+  border: 1px solid #ddd;
+  box-shadow: 0 0 3px #ddd; }
+
+.subtleShadow {
+  border: 1px solid #666;
+  box-shadow: 0 0 3px #666; }
 
 .UserCard2:hover {
   background-image: -moz-linear-gradient(100% 100% 90deg, #cccccc, #e0e0e0);

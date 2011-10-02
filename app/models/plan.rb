@@ -9,7 +9,7 @@ class Plan < ActiveRecord::Base
   has_many :organizers, :through => :hosts, :source => :user
   
   has_many :watched_plans
-  
+  has_many :medias
   
   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
   scope :published, :conditions => ["published = ?",true]

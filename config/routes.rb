@@ -1,4 +1,10 @@
 Trek::Application.routes.draw do
+  get "medias/create"
+
+  get "medias/destroy"
+
+  get "medias/update"
+
   get "digest_emails/create"
 
   get "watched_plans/create"
@@ -32,7 +38,7 @@ Trek::Application.routes.draw do
   get "subscribed_challenges/destroy"
 
 
-match '/auth/:provider/callback' =>'authentications#create'
+  match '/auth/:provider/callback' =>'authentications#create'
 
 
   devise_for :users, :as => '', :path_names => { :sign_in => "login", :password => "reset_password" }, :controllers => { :sessions => 'sessions' } do
@@ -49,11 +55,7 @@ match '/auth/:provider/callback' =>'authentications#create'
   resources :users
   match 'confirm_email/:id' => 'users#confirm_email', :as => :confirm_email
 
-
-  
-  
-
-   
+  resources :medias
   resources :challenges
   resources :admin
   resources :adventures, :controller => "challenges"

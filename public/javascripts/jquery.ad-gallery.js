@@ -382,7 +382,11 @@
         }
       ).mouseout(
         function(e) {
-          $(this).find('div').hide();
+          $(this).find('div').css('opacity', 0.7);
+        }
+	).mouseover(
+        function(e) {
+          $(this).find('div').css('opacity', 1);
         }
       ).click(
         function() {

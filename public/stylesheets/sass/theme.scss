@@ -1764,6 +1764,21 @@ color:$default-link-color;
 .AppLink:hover {
 	text-decoration:underline;
 }
+
+.EditBoxDark {
+	cursor:pointer;
+	border:1px dotted transparent;
+}
+
+.EditBoxDark:hover {
+	background-color:#000;
+	border:1px dotted #fff;
+}
+
+
+
+
+
 .EditBox {
 	cursor:pointer;
 	border:1px dotted transparent;
@@ -1775,9 +1790,10 @@ color:$default-link-color;
 	background-color:#FFFFCC;
 	border:1px dotted #ccc;
 }
+
+
 .EditBox:focused {
 	background-color:#FFFFCC;
-
 }
 
 .EditBoxHide {
@@ -1787,6 +1803,15 @@ color:$default-link-color;
 .transparent_border {
 	border: 1px solid transparent
 }
+
+
+.EditBoxDarkHide:hover {
+	background-color:#000;
+}
+.EditBoxDarkHide:focused {
+	background-color:#000;
+}
+
 
 
 .EditBoxHide:hover {
@@ -4639,6 +4664,16 @@ line-height:49px; text-align:center;
 	cursor:pointer;
 	color:#999;
 }
+
+.subtleShadow {
+	border:1px solid #ddd;
+	box-shadow: 0 0 3px #ddd;
+}
+.subtleShadow {
+	border:1px solid #666;
+	box-shadow: 0 0 3px #666;
+}
+
 
 .UserCard2:hover {
 	@include lineargradient(#ccc,#E0E0E0);

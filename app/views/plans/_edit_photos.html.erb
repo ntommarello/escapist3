@@ -1,0 +1,62 @@
+<div id="EditPhotos" style="position:absolute; width:550px; background-color:#fff; border:1px solid #666; z-index:1000; margin-left:auto; margin-right:auto; padding:15px; display:none; opacity:0">
+	
+	
+	<div id="uploadphotocontainer">
+	
+		<form id="MainPhotoUpload" name="ChallengeUpload" action="/escapes/<%=@plan.id%>" method="post" enctype="multipart/form-data">
+			<input id="_method" name="_method" value="PUT" type="hidden">
+		
+
+		
+				<p class="HighlightedTitle" style="text-align:center">Main Photo</p>
+			
+				<div style="float:left; width:110px;">
+					<%= image_tag @plan.image.url(:thumb_400), :style=>"width:100px; height:67px;", :class=>"" %>
+				</div>
+			
+				<div style="float:left; width:400px;">
+				<div class="SubTitle" style="font-weight:normal; padding-bottom:5px">
+					Show off your adventure!  Attach a pic of someone doing it... and looking like they are having fun!
+				</div> 
+				<input autocomplete="off" class="UploadBox" id="plan_image" name="plan[image]" onchange="$('#uploadphotocontainer').hide(); $('#uploadprogress').show();  $('#MainPhotoUpload').submit();" style="cursor:pointer;" type="file" />
+			</div>
+			<div style="clear:both"></div>
+		</form>
+	
+	
+		<p class="HighlightedTitle" style="text-align:center; padding:10px;">Interior Photo Gallery</p>
+	
+	
+		<b>Add new Image</b>
+		<form id="MediaUpload" name="MediaUpload" action="/medias?plan_id=<%=@plan.id%>" method="post" enctype="multipart/form-data">
+			<input autocomplete="off" class="UploadBox" id="media_photo" name="media[photo]" onchange=" $('#uploadphotocontainer').hide(); $('#uploadprogress').show(); $('#MediaUpload').submit();" style="cursor:pointer;" type="file" />
+		<div style="clear:both; height:10px;"></div>
+			</form>
+	
+		<%for photo in @photos%>
+			<div>
+				<div style="float:left; width:110px;">
+					<%= image_tag photo.photo.url(:thumb_100), :style=>"width:100px; height:67px;", :class=>"" %>
+				</div>
+				<div style="float:left">
+				<span class="blueSpanTrash" onclick="event.stopPropagation(); destroyMedia(<%=photo.id%>,this)"><img id="trash" style="opacity:.3" src="/images/trash.gif"> trash</span>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+		<%end%>
+	
+
+	
+	
+	
+	
+	</div>
+	
+	
+	
+	<DIV id="uploadprogress" STYLE="display:none">
+		<p class="HighlightedTitle" style="text-align:center">Uploading!  Please wait.</p>
+		<div style="padding-top:5px" align="center"><img src="/images/ajax-loader-bar.gif"></div>
+	</div>
+	
+</div>

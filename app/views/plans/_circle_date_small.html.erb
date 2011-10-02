@@ -1,4 +1,4 @@
-<div class="DateCircle_Small <%if @editable%>EditBoxHide<%end%>" <%if @editable%>onclick="displayEditDate()<%end%>" style=" float:left;">
+<div class="DateCircle_Small <%if @editable%>EditBoxHide<%end%>" <%if @editable%>onclick="displayEditDate()<%end%>" style=" float:left; margin-left:5px; margin-top:3px;">
 
 <%if @plan.start_time%>
 	<%if Date.today.strftime('%Y') == @plan.start_time.to_date.strftime('%Y')%>
@@ -13,7 +13,7 @@
 <%end%>
 </div>
 	<%if @editable%>
-<div style="position:absolute;  margin-left:310px; margin-top:13px">
+<div style="position:absolute;  margin-left:310px; margin-top:17px">
 
 	<div style="position:absolute; " id="ShowEdit"  onclick="displayEditDate();">
 		<img  class="EditIcon" src="/images/ok_pen1.png"   >
@@ -21,7 +21,7 @@
 
 </div>
 	<%end%>
-<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%end%>" style="font-size:18px; float:left; margin-top:13px; margin-left:10px;" <%if @editable%>onclick="displayEditDate()<%end%>">
+<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%end%>" style="font-size:18px; float:left; margin-top:17px; margin-left:10px;" <%if @editable%>onclick="displayEditDate()<%end%>">
 	<%if @plan.start_time%>
 		<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
 		<div style="line-height:18px;"><%=raw @timestring%></div>

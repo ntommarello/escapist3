@@ -1,0 +1,38 @@
+<div id="gallery" class="ad-gallery" style="margin-bottom:10px; height:325px">
+  <div class="ad-image-wrapper"></div>
+  <div class="ad-controls" style="display:none"></div>
+  <div class="ad-nav">
+    <div class="ad-thumbs">
+      <ul class="ad-thumb-list">
+	
+		<%for photo in photos%>
+     	<li>
+         <a href="<%=photo.photo.url(:thumb_600)%>">
+			<%= image_tag photo.photo.url(:thumb_100), :style=>"", :alt=>"", :title=>"#{photo.caption}", :class=>"Transparent" %>
+         </a>
+       </li>
+		
+		<%end%>
+		         
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript" src="/javascripts/jquery.ad-gallery.js"></script>
+
+<script type="text/javascript">
+  $(function() {
+    var galleries = $('.ad-gallery').adGallery({
+	width: <%=@picwidth%>,
+	height: <%=@picheight%>,
+	thumb_opacity: 0.9
+	}	
+	);
+   });
+</script>
+
+<div style="clear:both"></div>

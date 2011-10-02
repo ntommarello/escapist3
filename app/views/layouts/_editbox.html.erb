@@ -7,6 +7,8 @@
 <%full_editor = false unless defined?(full_editor)%>
 <%append = "" unless defined?(append)%>
 <%sideIcon = "Right" unless defined?(sideIcon)%>
+<%darkHover = false unless defined?(darkHover)%>
+
 
 <%if @editable%>
 
@@ -21,14 +23,14 @@
 	</div>
 	<%end%>
 
-		<div  id="<%=field_name%><%=append%>" class="transparent_border <%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%> <%if !allow_return%>disallowReturn<%end%>"  onmouseover="$(this).css('background','#FFFFCC')" onmouseout="if (<%=field_name%>Focused == 0) { $(this).css('background','transparent') }" contenteditable="true" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>><%=raw render_string_with_breaks(content)%></div>
+		<div  id="<%=field_name%><%=append%>" class="transparent_border <%if extra_visibility%>EditBox<%if darkHover%>Dark<%end%><%else%>EditBox<%if darkHover%>Dark<%end%>Hide<%end%> <%if !allow_return%>disallowReturn<%end%>"  onmouseover="$(this).css('background','<%if !darkHover%>#FFFFCC<%else%>#000<%end%>')" onmouseout="if (<%=field_name%>Focused == 0) { $(this).css('background','transparent') }" contenteditable="true" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>><%=raw render_string_with_breaks(content)%></div>
 
 
 
 
 <%else%>
 
-	<span class="<%if extra_visibility%>EditBox<%else%>EditBoxHide<%end%>" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>>
+	<span class="<%if extra_visibility%>EditBox<%if darkHover%>Dark<%end%><%else%>EditBox<%if darkHover%>Dark<%end%>Hide<%end%>" <%if border%>style="border:1px dotted #ccc; padding:2px"<%end%>>
   
 			<div style="display: inline"><span id="<%=field_name%><%=append%>" <%if !allow_return%>class="disallowReturn"<%end%> contenteditable="true"><%=raw render_string_with_breaks(content)%></span></div>
 	
@@ -67,7 +69,7 @@
 		$('#<%=field_name%><%=append%>').focus(function(){ 
 			oldValue = $(this).html();
 			<%=field_name%>Focused = 1;
-			$(this).css("background","#FFFFCC");
+			$(this).css("background","<%if !darkHover%>#FFFFCC<%else%>#000<%end%>");
 	});
 	
 	<%if field_name == "short_bio"%>

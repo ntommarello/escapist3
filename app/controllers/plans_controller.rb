@@ -213,6 +213,9 @@ class PlansController < ApplicationController
     
     @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
     
+    
+    @photos = Media.find(:all, :conditions=>["plan_id=? and media_type = ?",@plan.id,0], :order=>:sort_order)
+    
     if !@plan
       redirect_to "/"
       return
@@ -279,6 +282,7 @@ class PlansController < ApplicationController
     if redirect
       redirect_to "/?id=#{@plan.id}"
     end
+    
     
     
 if current_user && @plan.has_signedup?(current_user)

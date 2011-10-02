@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111002054337) do
+ActiveRecord::Schema.define(:version => 20111002204005) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -207,6 +207,18 @@ ActiveRecord::Schema.define(:version => 20111002054337) do
   add_index "likes", ["id"], :name => "index_likes_on_id"
   add_index "likes", ["subscribed_challenge_id"], :name => "index_likes_on_subscribed_challenge_id"
   add_index "likes", ["user_id"], :name => "index_likes_on_user_id"
+
+  create_table "medias", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.integer  "sort_order"
+    t.text     "caption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "media_type"
+  end
 
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
