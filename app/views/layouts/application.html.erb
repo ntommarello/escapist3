@@ -8,7 +8,18 @@
 	<%= yield_for(:head, '')%>
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-	<title><%if @group%><%if @group.subtitle%><%sanitizedTitle = sanitize @group.subtitle%><%sanitizedTitle = sanitizedTitle.gsub("<div>","")%><%sanitizedTitle = sanitizedTitle.gsub("/<div>","")%><%else%><%sanitizedTitle = 'Social Adventure Travel'%><%end%><%=@group.name%> | <%= yield_for(:page_title, sanitizedTitle)%><%else%><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%><%end%></title>
+	<title>
+		<%if @group%>
+			<%if @group.subtitle%>
+				<%sanitizedTitle = sanitize @group.subtitle%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<div>","")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("</div>","")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<br>","")%>
+			<%else%>
+				<%sanitizedTitle = 'Social Adventure Travel'%>
+			<%end%>
+			<%=@group.name%> | <%= yield_for(:page_title, sanitizedTitle)%><%else%><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%><%end%></title>
+	
 		
 		
 	<%if @group and  @group.favicon%>

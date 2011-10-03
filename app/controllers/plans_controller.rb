@@ -213,13 +213,14 @@ class PlansController < ApplicationController
     
     @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
     
-    
+     if !@plan
+        redirect_to "/"
+        return
+      end
+      
     @photos = Media.find(:all, :conditions=>["plan_id=? and media_type = ?",@plan.id,0], :order=>"sort_order asc")
     
-    if !@plan
-      redirect_to "/"
-      return
-    end
+   
     
     
     if @plan.location
