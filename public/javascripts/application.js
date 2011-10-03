@@ -3457,6 +3457,11 @@ function ApplyReward(value) {
 		return;
 	}
 	
+	if (value=='2.009') {
+		ReducePriceBy(10,2)
+		return;
+	}
+	
 	if (value=='mongoose') {
 		ReducePriceBy(20,2)
 		return;
@@ -3471,6 +3476,7 @@ function ApplyReward(value) {
 }
 
 function ReducePriceBy(amount,type) {
+
 	if (type == 1) { //percent
 		newprice = $('#unit_price').val() * amount;
 		original_price = original_price * amount;

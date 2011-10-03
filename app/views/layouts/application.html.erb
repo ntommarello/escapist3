@@ -14,7 +14,7 @@
 				<%sanitizedTitle = sanitize @group.subtitle%>
 				<%sanitizedTitle = sanitizedTitle.gsub("<div>","")%>
 				<%sanitizedTitle = sanitizedTitle.gsub("</div>","")%>
-				<%sanitizedTitle = sanitizedTitle.gsub("<br>","")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<br>"," ")%>
 			<%else%>
 				<%sanitizedTitle = 'Social Adventure Travel'%>
 			<%end%>

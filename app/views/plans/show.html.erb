@@ -249,6 +249,7 @@ adjustMapLabel();
 					<%= render :partial=>"plans/attend_button"%>
 				</div>
 			</div>
+			
 
 			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:300px; padding:5px; background:#FFFFCC; height:30px;">
 				<div style="width:34px; float:left'"><img src="/images/greencheck.png"></div>
@@ -307,7 +308,7 @@ adjustMapLabel();
 </div>
 
 
-
+<input type="hidden" id="unit_price" value="<%=@plan.price%>">
 
 
 
