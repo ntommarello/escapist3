@@ -30,14 +30,18 @@ class ApplicationController < ActionController::Base
     #group = Group.find(7)
 
     for group in groups
-       if @domain.include? group.url
-        @group = group
-        @fb_id = group.fb_id
-        @fb_secret = group.fb_secret
-        @source = group.url
-        if @group.paypal_email
-          @paypal_email = @group.paypal_email
-        end 
+       if group.domain == true
+         if group.url != ""
+           if @domain.include? group.url
+            @group = group
+            @fb_id = group.fb_id
+            @fb_secret = group.fb_secret
+            @source = group.url
+            if @group.paypal_email
+              @paypal_email = @group.paypal_email
+            end 
+          end
+        end
       end
     end
   end

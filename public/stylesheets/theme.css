@@ -5037,6 +5037,12 @@ a.Lionright {
   height: 78px;
   background-image: url(/images/judgeLabel.png); }
 
+.sponsorLabel {
+  position: absolute;
+  width: 79px;
+  height: 78px;
+  background-image: url(/images/sponsorLabel.png); }
+
 .SignUpBox {
   width: 343px;
   float: right;

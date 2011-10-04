@@ -3506,7 +3506,7 @@ function adjustLoginLayer() {
 
 function adjustWindowSize() {
 	
-	if ($(window).height() > 600) {
+	if ($(window).height() > 420) {
 		margt = $(window).height()-51-40-330;
 		$("#home_info_container").css("margin-top",margt)
 	}
