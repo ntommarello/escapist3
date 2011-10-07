@@ -4,7 +4,7 @@
 	<div class="BrowseBorder"  >
 		<A class="browselink" href="/escapes/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
 			<div class="BrowseExpandImage" 
-			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
+			<%if plan.image_file_name%> 		style="background:url(<%=plan.image.url(:thumb_400)%>)"
 			<%else%>
 	style="background:url(/images/no_pic_b.png)"
 			<%end%>
