@@ -54,7 +54,7 @@
 		</script>
 		
 		
-		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:92px;<%end%> margin:5px;">
+		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:115px;<%end%> margin:5px;">
 			
 			<%if source == "my_escapes"%>
 			
@@ -63,7 +63,7 @@
 						<%if plan.application_required%>
 							<b><%=plan.subscribed_plans.length%></b> application<%if plan.subscribed_plans.length !=1%>s<%end%>
 						<%else%>
-							<b><%=plan.subscribed_plans.length%></b> / <b><%=plan.attendance_cap%></b> signups
+							<b><%=plan.signups%></b> / <b><%=plan.attendance_cap%></b> signups
 						<%end%>
 					<%end%>
 				</div>
@@ -79,25 +79,35 @@
 			
 		
 	
-					<div style="height:32px; line-height:16px; font-size:13px; overflow:hidden; margin-bottom:7px; color:#666;" class="auto multiline">
+					<div style="height:36px; line-height:18px; color:#666; font-size:14px; line-height:20px; font-style:italic; font-family:'georgia; overflow:hidden; margin-bottom:7px; " class="auto multiline">
 						
 						<%if plan.short_desc%>
-							<%=sanitize plan.short_desc.gsub("<br>","").gsub("&nbsp;","")%>
+							<%= raw plan.strip_short_desc%>
 						<%end%>
 					</div>
 			</div>
 			
-			
+			<div style="margin-top:10px; margin-bottom:2px; font-size:11px;">
+				<%if plan.subscribed_plans.length < 1 ||  plan.enable_signups == false%>
+					Hosted by
+				<%else%>
+					<b><%=plan.signups%></b> signup<%if plan.signups>1%>s<%end%>
+				<%end%>
+			</div>
 			<div style="height:52px; float:left; overflow:hidden; width:85%">
+			
+			
 			
 			<% i = 0%>
 			<%if plan.organizers%>
-			<% i = i+1%>
+			
 				<%for organizer in plan.organizers%>
+				<% i = i+1%>
 						<div style="float:left;  ">
 							<a href="/<%=organizer.username%>">
 
-							<%= image_tag(organizer.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:2px;") %>
+								<%if i==1%><%@css = "margin-left:0px"%><%else%><%@css = ""%><%end%>
+							<%= image_tag(organizer.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; #{@css}") %>
 
 							</a>
 
@@ -105,18 +115,19 @@
 					<%end%>
 				<%end%>
 			
-				
-				<%for signup in plan.users%>
-					<% i = i+1%>
-					<%if i < 7%>
-						<div style="float:left;  ">
-							<a href="/<%=signup.username%>">
+				<%if plan.enable_signups%>
+					<%for signup in plan.users.sort_photos_first%>
+						<% i = i+1%>
+						<%if i < 7%>
+							<div style="float:left;  ">
+								<a href="/<%=signup.username%>">
 
-							<%= image_tag(signup.avatar.url(:rounded_50), :class=>"Transparent tl rounded3d", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; margin-right:2px;") %>
+								<%= image_tag(signup.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; ") %>
 
-							</a>
+								</a>
 
-						</div>
+							</div>
+						<%end%>
 					<%end%>
 				<%end%>
 			</div>				

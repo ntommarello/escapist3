@@ -92,7 +92,7 @@
 			<div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
 								
 			
-		
+			<input type="hidden" id="plan_image2" value="<%=@plan.image_file_name%>">
 			
 		<%if @photos.length > 0%>
 
@@ -109,7 +109,7 @@
 					<%unless @plan.image_file_name%>
 						<div style="position:absolute; text-align:Center; margin-top:-60px; width:600px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="displayEditPhoto()">Upload Photo</div>
 					<%end%>
-					<input type="hidden" id="plan_image" value="<%=@plan.image_file_name%>">
+				
 				<%else%>
 					<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px; cursor:default", :class=>""%>
 				<%end%>
@@ -490,6 +490,38 @@ adjustMapLabel();
 </div>
 
 
+<script type='text/javascript'>
+
+
+$(document).ready(function() {
+	  <%if @plan.start_time%>
+	  	start_date = Date.parse("<%=@plan.start_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
+	  <%end%>
+	<%if @plan.end_time%>
+	  end_date = Date.parse("<%=@plan.end_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
+	<%end%>
+  $('.addtocal').AddToCal({
+    icalEnabled:true,
+    vcalEnabled:false,
+
+    getEventDetails: function( element ) {
+
+      return { 
+        webcalurl: null,
+        icalurl: "http://<%=APP_URL%>/escapes/<%=@plan.id%>.ics",
+        vcalurl: null, 
+        start: start_date, 
+        end: end_date, 
+        title: "<%= strip_html(@plan.title)%>", 
+        details: "<%= strip_html(@plan.short_desc)%> - <%= @plan.grab_url %>", 
+        location: "<%= strip_html(@plan.location)%>", 
+        url: "<%= @plan.grab_url %>"
+        };
+    },
+  });
+
+});
+</script>
 
 
 

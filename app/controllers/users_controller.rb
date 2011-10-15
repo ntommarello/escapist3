@@ -284,9 +284,7 @@ class UsersController < ApplicationController
    
    def scan_addressbook
 
-    @names = JSON.parse(params[:emails_json])
-
-
+     @names = JSON.parse(params[:emails_json])
 
      @follow = Array.new
      @invite = Array.new

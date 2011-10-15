@@ -1172,13 +1172,8 @@ function addBucket(button,challenge_id) {
 			    $("#RenderLog").html(theResponse)
 			});
 		
-		});
-		
+		});	
 	}
-	
-
-	
-	
 }
 
 
@@ -1900,7 +1895,7 @@ function chooseCity(city,city_id,page) {
 	}
 	
 	
-	if (page == "/schedule" ) {
+	if (page == "/discover" ) {
 		
 			$('.spinner2').show();
 			$('#OpacityContent').animate({
@@ -1908,7 +1903,7 @@ function chooseCity(city,city_id,page) {
 			}, 200, function() {} );
 
 
-				$.post("/schedule", { dropdown_city_value:city_id, dropdown_city:$(city).html() }, function(theResponse){
+				$.post("/discover", { dropdown_city_value:city_id, dropdown_city:$(city).html() }, function(theResponse){
 					$("#RenderContent").html(theResponse)
 					$('.spinner2').hide();
 					$('#OpacityContent').animate({opacity: 1}, 250);
@@ -4455,25 +4450,27 @@ function submitPlantoCreate(button) {
 
 function validatePublish(source,button,plan_id) {
 
+	error = 0;
+	
 	if (source == "new") {
 		title = $("#plan_title").val();
 		short_desc = $("#plan_short_desc").val();
 		note = $("#plan_note").val();
 		short_location = $("#plan_url_name").val();
 		location2 = $("#plan_location").val();
+		image = $("#plan_image").val();
 	} else {
 		title = $("#title").html();
 		short_desc = $("#short_desc").html();
 		note = $("#note").html();
 		short_location = $("#short_location").html();
 		location2 = $("#location").html();
-		
+		image = $("#plan_image2").val();
 	}
 	
 	attendance_cap = $("#plan_attendance_cap").val();	
-	image = $("#plan_image").val();
 	lat = $("#plan_lat").val();
-	error = 0;
+
 	
 
 	
@@ -4484,6 +4481,9 @@ function validatePublish(source,button,plan_id) {
 		}
 		$("#plan_attendance_cap").focus();
 		error = 1;
+			$(button).html('Publish');
+			setTimeout("animateStatusBarUp()",3000)
+			return;
 	}
 	
 	//TODO:  Don't always require dates
@@ -4503,6 +4503,9 @@ function validatePublish(source,button,plan_id) {
 			$("#end_time_date").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
 
 	
@@ -4516,6 +4519,9 @@ function validatePublish(source,button,plan_id) {
 			}
 			$("#plan_application_deadline").focus();
 			error = 1;
+			$(button).html('Publish');
+			setTimeout("animateStatusBarUp()",3000)
+			return;
 		}
 	}
 	
@@ -4528,6 +4534,9 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_location").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
 	
 	
@@ -4539,6 +4548,9 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_location").focus();
 		}
 	 	error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
 
 	
@@ -4550,6 +4562,9 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_url_name").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
 	
 	if (note == "" || note == "Why is this fun? What can people expect?") {
@@ -4560,8 +4575,11 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_note").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
-	
+
 	if (image == "" || image == null ) {
 	
 		showWarningMessage("Error:  Photo Required")
@@ -4571,6 +4589,9 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_image").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	} else {
 		if (source =="new") {
 			test = image.split('.').pop().toLowerCase(); 
@@ -4579,6 +4600,9 @@ function validatePublish(source,button,plan_id) {
 				showWarningMessage("Error:  Photo must be 'gif','png','jpg', or 'jpeg'")
 				$("#plan_image").focus();
 				error = 1;
+				$(button).html('Publish');
+				setTimeout("animateStatusBarUp()",3000)
+				return;
 			}
 		}
 	} 
@@ -4591,6 +4615,9 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_short_desc").focus();
 		}
 		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
 	}
 	
 	if (title == "" || title == "Give it a cool name. Try using a verb.") {
@@ -4601,36 +4628,36 @@ function validatePublish(source,button,plan_id) {
 			$("#plan_title").focus();
 		}
 		error = 1;
-	}
-
-	
-	
-	
-	
-	
-	if (error == 1) {
 		$(button).html('Publish');
 		setTimeout("animateStatusBarUp()",3000)
 		return;
 	}
+
 	
 	
-	if (source == "new") {
-		$('#EscapeForm').submit();
-	} else {
-		displaySavingInProgress();
+	
+	
+	
+	if (error == 0) {
+	
+	
+		if (source == "new") {
+			$('#EscapeForm').submit();
+		} else {
+			displaySavingInProgress();
 			$("#PublishLink").hide()
 
-		$.ajax({
-	        type: "POST",
-	        url: "/escapes/"+plan_id,
-	        data: "_method=PUT&plan[published]=1",
-	        success: function(msg){
-				displaySaved();
-				$("#UnpublishLink").show()
-					$("#DraftLayer").hide()
-	        }
-	     });
+			$.ajax({
+		        type: "POST",
+		        url: "/escapes/"+plan_id,
+		        data: "_method=PUT&plan[published]=1",
+		        success: function(msg){
+					displaySaved();
+					$("#UnpublishLink").show()
+						$("#DraftLayer").hide()
+		        }
+		     });
+		}
 	}
 	
 }

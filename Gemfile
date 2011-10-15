@@ -32,6 +32,7 @@ gem "rake", "0.9.2"
 gem "sass"
 gem "hominid"
 gem "active_merchant"
+gem "ri_cal"
 #gem "aws-ses", "~> 0.3.2", :require => 'aws/ses'
 
 # To use debugger

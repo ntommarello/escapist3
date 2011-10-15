@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR  
+PRODID:-//AddToCal Example//EN  
+VERSION:2.0  
+METHOD:PUBLISH  
+BEGIN:VEVENT  
+DTSTART:<%= @plan.start_time.to_datetime.strftime("%Y%m%dT%H%M%SZ") %>  
+DTEND:<%= @plan.end_time.to_datetime.strftime("%Y%m%dT%H%M%SZ")  %>  
+LOCATION:<%= strip_html(@plan.location) %>  
+SEQUENCE:0  
+UID:  
+DTSTAMP:<%= Time.zone.now.to_datetime.strftime("%Y%m%dT%H%M%SZ")  %>  
+DESCRIPTION:<%= strip_html(@plan.title) %>  
+SUMMARY:<%= strip_html@plan.short_desc %>\n<%= @plan.grab_url %>
+PRIORITY:5  
+CLASS:PUBLIC  
+END:VEVENT  
+END:VCALENDAR

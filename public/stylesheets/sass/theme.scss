@@ -4104,10 +4104,20 @@ webkit-box-shadow: 1px 1px 0px 0px #eee, -1px -1px 0px 0px #eee, -1px 1px 0px 0p
 
 }
 
+.PlanThumbs {
+	border:1px solid #999;
+	margin-left:-1px;
+
+}
+
+
 .rounded3d:active {
 	margin-top:1px;
 	box-shadow: 0px 0px 0px #E1E1E1;
 }
+
+
+
 .rounded50 {
 	border:1px solid #E1E1E1;
 	@include rounded_corners(7px);

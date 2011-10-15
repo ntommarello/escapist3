@@ -29,7 +29,6 @@ class User < ActiveRecord::Base
   
  
 
-  has_many :plans, :dependent => :destroy
   has_many :subscribed_plans, :dependent => :destroy
   
   has_many :blocks, :dependent => :destroy

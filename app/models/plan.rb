@@ -38,6 +38,11 @@ class Plan < ActiveRecord::Base
   def seats_remaining
     attendance_cap - 1 -subscribed_plans.count(:conditions => [" plan_id=?", self.id])
   end
+  
+  def signups
+    subscribed_plans.count(:conditions => [" plan_id=?", self.id]) + self.hosts.length
+  end
+  
 
   has_attached_file :image, attachment_attrs(
     :default_url => "/images/no_pic_b.png",
@@ -57,6 +62,43 @@ class Plan < ActiveRecord::Base
     read_attribute(:map_zoom) ||  14
   end
   
+  def grab_url
+    
+    url = "http://#{APP_URL}/?id=#{self.id}"
+    if self.group
+      if self.group.url and self.group.url != ""
+        url = "http://#{self.group.url}/"
+      end
+    end
+      
+    return url
+    
+  end
   
   
+  def strip_title
+    if self.title
+      return self.title.gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<\s*br\s*\/?>/i,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ').gsub("<div>"," ").gsub("</div>"," ")
+    else
+      return ""
+    end
+  end
+  def strip_location
+    if self.title
+      return self.location.gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<\s*br\s*\/?>/i,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ').gsub("<div>"," ").gsub("</div>"," ")
+    else
+      return ""
+    end
+  end
+  def strip_short_desc
+    if self.title
+      return self.short_desc.gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<\s*br\s*\/?>/i,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ').gsub("<div>"," ").gsub("</div>"," ")
+    else
+      return ""
+    end
+  end
+  
+  
+  
+
 end

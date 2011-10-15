@@ -46,7 +46,7 @@ module ApplicationHelper
             @time_string = "until #{end_time.to_datetime.strftime('%B %e')}"
             @time_string = "#{@time_string}<br><span style='font-size:11px'>(#{number_of_days} days)</span>"
           else
-             @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')} <div style='font-size:12px'>#{start_time.to_datetime.strftime('%l:%M%p')} until the next day at #{end_time.to_datetime.strftime('%l:%M%p')}</div>"
+             @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')} <div style='font-size:12px; margin-top:3px;'>#{start_time.to_datetime.strftime('%l:%M%p')} until the next day at #{end_time.to_datetime.strftime('%l:%M%p')}</div>"
           end
           
          
@@ -117,6 +117,20 @@ module ApplicationHelper
     end
     
   end
+  
+  def strip_html(string)
+    
+    if string
+      
+
+      
+      return string.gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<\s*br\s*\/?>/i,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ').gsub("<div>"," ").gsub("</div>"," ")
+      
+      #return string
+    end
+    
+  end
+  
   
   
 end

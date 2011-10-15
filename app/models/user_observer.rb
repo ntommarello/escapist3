@@ -19,8 +19,14 @@ class UserObserver < ActiveRecord::Observer
     end
     
     
+    begin
+  
+      Postoffice.newmember(user.email, user.authentication_token).deliver
 
-    Postoffice.newmember(user.email, user.authentication_token).deliver
+    rescue Exception => exc
+
+    end
+
 
     Message.create(:user => User.first, 
                    :receiver => user, 
