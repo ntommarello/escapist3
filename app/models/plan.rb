@@ -36,7 +36,7 @@ class Plan < ActiveRecord::Base
   end
 
   def seats_remaining
-    attendance_cap - 1 -subscribed_plans.count(:conditions => [" plan_id=?", self.id])
+    attendance_cap -  self.hosts.length - subscribed_plans.count(:conditions => [" plan_id=?", self.id])
   end
   
   def signups
