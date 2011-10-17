@@ -4639,8 +4639,7 @@ function validatePublish(source,button,plan_id) {
 	
 	
 	if (error == 0) {
-	
-	
+		
 		if (source == "new") {
 			$('#EscapeForm').submit();
 		} else {

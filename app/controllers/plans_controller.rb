@@ -286,13 +286,13 @@ class PlansController < ApplicationController
     
     
     
-if current_user && @plan.has_signedup?(current_user)
-  @signedup = TRUE
-  @signup_color = "Red"
-else
-  @signedup = FALSE
-  @signup_color = "Green"
-end
+  if current_user && @plan.has_signedup?(current_user)
+    @signedup = TRUE
+    @signup_color = "Red"
+  else
+    @signedup = FALSE
+    @signup_color = "Green"
+  end
 
 
 
