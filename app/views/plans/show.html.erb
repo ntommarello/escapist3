@@ -268,7 +268,7 @@ adjustMapLabel();
 
 
 
-								<textarea id="TempPassword" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:510px; " onfocus="if ($(this).val()=='What\'s up?') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('What\'s up?');  $(this).css('color','#ccc')}">What's up?</textarea>
+								<textarea id="commentTextBox" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:510px; " onfocus="if ($(this).val()=='What\'s up?') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('What\'s up?');  $(this).css('color','#ccc')}">What's up?</textarea>
 
 								<div  class="WhiteActiveBorder"  >
 									<div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for <%=APP_NAME%> to comment')<%end%>">
@@ -280,7 +280,7 @@ adjustMapLabel();
 
 								<div style="clear:both; height:10px;"></div>
 
-								<div id="CommentsArea<%=@plan.id%>" style="padding-top:6px">
+								<div id="CommentsArea" style="padding-top:6px">
 									<%=render :partial=>"comments/comment_display", :locals=>{:plan=>@plan}%>
 								</div>
 

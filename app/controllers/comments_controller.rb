@@ -9,6 +9,8 @@ class CommentsController < ApplicationController
     @subscribed = Plan.find(params[:comments][:plan_id])
     @challenge_url = "#{@subscribed.id}-#{@subscribed.title.parameterize}"
       
+      
+      
     if  @subscribed.organizers[0]
       if @subscribed.organizers[0].messaging_bucket_comment
         if @subscribed.organizers[0].id != current_user.id
@@ -21,34 +23,35 @@ class CommentsController < ApplicationController
     end
     
     
-    #find all people who signed up, and all people who have commented.  Distinct.
-    @attendees = User.find_by_sql [
-                                "SELECT DISTINCT users.*
-                                FROM users 
-                                INNER JOIN subscribed_plans ON subscribed_plans.user_id = users.id 
-                                WHERE subscribed_plans.plan_id= ?
+    if @subscribed.id != 1
+      #find all people who signed up, and all people who have commented.  Distinct.
+      @attendees = User.find_by_sql [
+                                  "SELECT DISTINCT users.*
+                                  FROM users 
+                                  INNER JOIN subscribed_plans ON subscribed_plans.user_id = users.id 
+                                  WHERE subscribed_plans.plan_id= ?
                                 
-                                UNION
+                                  UNION
                                 
-                                SELECT DISTINCT users.*
-                                FROM users
-                                INNER JOIN comments ON comments.user_id = users.id 
-                                WHERE comments.plan_id= ?",
-                                params[:comments][:plan_id], params[:comments][:plan_id]
-                              ]
+                                  SELECT DISTINCT users.*
+                                  FROM users
+                                  INNER JOIN comments ON comments.user_id = users.id 
+                                  WHERE comments.plan_id= ?",
+                                  params[:comments][:plan_id], params[:comments][:plan_id]
+                                ]
 
-    for user in @attendees
-      if user.messaging_bucket_comment
-        if user.id != current_user.id
-          if user.id != @subscribed.organizers[0].id
-             Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-                                       user.email, params[:comments][:comment], 
-                                        user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+      for user in @attendees
+        if user.messaging_bucket_comment
+          if user.id != current_user.id
+            if user.id != @subscribed.organizers[0].id
+               Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
+                                         user.email, params[:comments][:comment], 
+                                          user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+            end
           end
         end
       end
     end
-
       
 
     @challenge=  @subscribed

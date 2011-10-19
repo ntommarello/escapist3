@@ -2482,22 +2482,19 @@ function addNote(box,id,source) {
 
 function postComment(box,plan_id) {
 
-	parent=$(box).parent().parent();
-	
-	value = $('.resize', parent).val();
+	value = $('#commentTextBox').val();
 	
 	if (value == 'comment') {
-		$('.resize', parent).focus();
+		$('#commentTextBox').focus();
 		return;
 	}
 	
 	$('.InnerLightGrayBorder',box).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
 	theBox = $('.InnerLightGrayBorder',box)
-	$('.resize', parent).val('comment');
-	$('.resize', parent).css('color','#ccc')
-	$('.resize', parent).css('height','20px')
+	$('#commentTextBox').val('What\'s up?');
+	$('#commentTextBox').css('color','#ccc')
+	$('#commentTextBox').css('height','20px')
 	stopClose=1;
-	id=plan_id;
 	
 	
 	
@@ -2508,8 +2505,7 @@ function postComment(box,plan_id) {
         success: function(msg){
 			stopClose=0;
 			$(theBox).html('Post')
-			$('#CommentsArea'+id).html(msg)
-		
+			$('#CommentsArea').html(msg)
         }
      });
 
@@ -2579,7 +2575,7 @@ function togglePrivacy(box,id) {
 
 
 
-function submitPostOnEnter(myfield,id)
+function submitPostOnEnter(myfield,plan_id)
 {
 var keycode;
 if (window.event) keycode = window.event.keyCode;
@@ -2593,8 +2589,8 @@ if (keycode == 13)
 	
 	
 	button = $('.WhiteActiveBorder', parent)
-button2 = $('.LightGrayButton', button)
-	postComment(button2,id)
+	button2 = $('.LightGrayButton', button)
+	postComment(button2,plan_id)
 	$(myfield).blur();
    return false;
    }
