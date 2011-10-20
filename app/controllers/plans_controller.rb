@@ -282,6 +282,7 @@ class PlansController < ApplicationController
     end
     if redirect
       redirect_to "/?id=#{@plan.id}"
+      return
     end
     
     

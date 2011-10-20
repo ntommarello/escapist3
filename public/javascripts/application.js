@@ -2489,8 +2489,16 @@ function postComment(box,plan_id) {
 		return;
 	}
 	
+	
+	theBox = $('.InnerLightGrayBorder',box);
+	if ($(theBox).html() != "Post") {
+		return;
+	}
+	
+	
 	$('.InnerLightGrayBorder',box).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
-	theBox = $('.InnerLightGrayBorder',box)
+	
+	
 	$('#commentTextBox').val('What\'s up?');
 	$('#commentTextBox').css('color','#ccc')
 	$('#commentTextBox').css('height','20px')

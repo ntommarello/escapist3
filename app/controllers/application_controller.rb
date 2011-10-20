@@ -172,19 +172,28 @@ class ApplicationController < ActionController::Base
 	  else
 
 	    if session[:location_city].nil?
-	  	  location = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
+	      if request.remote_ip
+	  	    location = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
 
-        if location.lat
-          session[:location_city] = "#{location.city} #{location.state}"
-          session[:lat] = location.lat
-          session[:lng] = location.lng
-          set_city_dropdown(location)
+          if location.lat
+            session[:location_city] = "#{location.city} #{location.state}"
+            session[:lat] = location.lat
+            session[:lng] = location.lng
+            set_city_dropdown(location)
+          else
+            session[:location_city] = "Unknown"
+            session[:lat] = 0
+            session[:lng] = 0
+            session[:dropdown_city] = "World Travel"
+            session[:dropdown_city_value] = "99"
+          end
         else
           session[:location_city] = "Unknown"
           session[:lat] = 0
           session[:lng] = 0
           session[:dropdown_city] = "World Travel"
           session[:dropdown_city_value] = "99"
+          
         end
       end
     end
