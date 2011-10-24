@@ -1,5 +1,5 @@
 <% content_for :head do %>
-	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan[0]}%>
+	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan[@start_id]}%>
 <%end%>
 
 
