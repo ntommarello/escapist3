@@ -17,9 +17,9 @@
 		<meta property="og:site_name" content="<%=APP_NAME%>" /> 
 		<meta property="og:title" content="<%=strip_tags plan.title%> | <%=APP_NAME%>" /> 
 		<%if params[:refer_id]%>
-			<meta property="og:url" content="http://<%=APP_URL%>/escapes/<%=plan.id%>&refer_id=<%=params[:refer_id]%>" /> 
+			<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>&refer_id=<%=params[:refer_id]%>" /> 
 		<%else%>
-			<meta property="og:url" content="http://<%=APP_URL%>/escapes/<%=plan.id%>" /> 
+			<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>" /> 
 		<%end%>
 	<%end%>
 	
