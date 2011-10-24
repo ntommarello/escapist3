@@ -25,7 +25,7 @@
 		
 	
 		<div class="UserCardBio">
-			<div class="UserCardName"><%=user.first_name%> <%=user.last_name%></div>
+			<div class="UserCardName"><%=raw user.first_name%> <%=raw user.last_name%></div>
 			<div style=" margin-top:2px; line-height:16px; font-style:italic; font-family:'georgia'"><%=raw user.short_bio%></div>
 		</div>
 	

@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     
-    #group = Group.find(7)
+    group = Group.find(7)
 
     for group in groups
        if group.domain == true

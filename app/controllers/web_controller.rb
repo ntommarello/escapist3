@@ -51,6 +51,13 @@ class WebController < ApplicationController
      
      
      
+     #add in past event if no events
+     if @group
+       if @plan.length == 0
+           @plan = Plan.published.find(:all, :conditions=>["plans.featured=1  #{conditions}"],:order=>"start_time desc")
+        end
+     end
+     
      #add in world travel ones at end.  Should be refactored into one query.
      if !@group
        if @city_id.to_i != 99
