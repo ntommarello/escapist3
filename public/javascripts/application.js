@@ -2484,7 +2484,7 @@ function postComment(box,plan_id) {
 
 	value = $('#commentTextBox').val();
 	
-	if (value == 'comment') {
+	if (value == 'What\'s up?') {
 		$('#commentTextBox').focus();
 		return;
 	}

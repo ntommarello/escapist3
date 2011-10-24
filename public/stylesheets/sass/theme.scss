@@ -104,6 +104,21 @@ $top-link-color:#6090B4;
 }
 
 
+.roundBottomLeft {
+	-webkit-border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomleft:7px;
+	border-bottom-left-radius:7px;
+}
+.roundBottomRight {
+	-webkit-border-bottom-right-radius: 7px;
+	-moz-border-radius-bottomright:7px;
+	border-bottom-right-radius:7px;
+}
+
+
+
+
+
 .roundRight {
 	-webkit-border-top-right-radius: 7px;
 	-moz-border-radius-topright:7px;
@@ -1910,10 +1925,10 @@ color:$default-link-color;
 	border-top:1px solid #ddd;
 	@include roundBottom(5px);
 	height:27px;
-	width:190px;
+	width:100%;
 	background-color:#F8F8F8;
 	@include lineargradient(#F2F2F2, #F8F8F8);
-	margin-left:-4px;
+
 	font-size:10px;
 	color:#929191;
 	text-shadow:#FFFFFF 0 1px 0;
@@ -2715,6 +2730,8 @@ span.continued{
 	border-bottom:1px solid #ddd;
 	@include roundBottom(4px);
 }
+
+
 
 .ChallengeRateBox {
 	@include noselect();
@@ -3663,7 +3680,7 @@ box-shadow: inset 3px 3px 1px 1px #fff, inset -3px -3px 1px 1px #fff, inset -3px
 .BrowseBorder {
 	max-width:510px;
 	min-width:280px;
-	padding-right:12px;
+
 	border:1px solid #ddd;
 	@include rounded_corners(7px);
 	box-shadow: 5px 5px 1px 1px #eee, -5px -5px 1px 1px #eee, -5px 5px 1px 1px #eee, 5px -5px 1px 1px #eee;

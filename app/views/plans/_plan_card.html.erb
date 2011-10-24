@@ -2,6 +2,7 @@
 
 <div id="card<%=plan.id%>" class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
 	<div class="BrowseBorder"  >
+		<div style="padding-right:12px">
 		<A class="browselink" href="/escapes/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
 			<div class="BrowseExpandImage" 
 			<%if plan.image_file_name%> 		style="background:url(<%=plan.image.url(:thumb_400)%>)"
@@ -44,7 +45,7 @@
 		
 			</div>
 		</a>
-		
+	
 		<Script>
 		$('.browselink').live('touchend', function(e) {
 		    var el = $(this);
@@ -54,7 +55,7 @@
 		</script>
 		
 		
-		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:115px;<%end%> margin:5px;">
+		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:110px;<%end%> margin:5px;">
 			
 			<%if source == "my_escapes"%>
 			
@@ -79,7 +80,7 @@
 			
 		
 	
-					<div style="height:36px; line-height:18px; color:#666; font-size:14px; line-height:20px; font-style:italic; font-family:'georgia; overflow:hidden; margin-bottom:7px; " class="auto multiline">
+					<div style="height:40px; color:#666; font-size:14px; line-height:20px; font-style:italic; font-family:'georgia'; overflow:hidden; margin-bottom:11px; " class="auto multiline">
 						
 						<%if plan.short_desc%>
 							<%= raw plan.strip_short_desc%>
@@ -87,14 +88,8 @@
 					</div>
 			</div>
 			
-			<div style="margin-top:10px; margin-bottom:2px; font-size:11px;">
-				<%if plan.subscribed_plans.length < 1 ||  plan.enable_signups == false%>
-					Hosted by
-				<%else%>
-					<b><%=plan.signups%></b> signup<%if plan.signups>1%>s<%end%>
-				<%end%>
-			</div>
-			<div style="height:52px; float:left; overflow:hidden; width:85%">
+		
+			<div style="height:52px; float:left; overflow:hidden; width:99%">
 			
 			
 			
@@ -107,7 +102,7 @@
 							<a href="/<%=organizer.username%>">
 
 								<%if i==1%><%@css = "margin-left:0px"%><%else%><%@css = ""%><%end%>
-							<%= image_tag(organizer.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; #{@css}") %>
+							<%= image_tag(organizer.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px;border:1px solid #ddd; height:50px; cursor:pointer; float:left; #{@css}") %>
 
 							</a>
 
@@ -122,7 +117,7 @@
 							<div style="float:left;  ">
 								<a href="/<%=signup.username%>">
 
-								<%= image_tag(signup.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; cursor:pointer; float:left; ") %>
+								<%= image_tag(signup.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
 
 								</a>
 
@@ -138,21 +133,41 @@
 			
 			
 			
-			<div class="home_buy_button" style="float:right; <%if !plan.application_required%>text-align:center;<%end%> margin-top:20px; margin-left:0px;width:83px; height:30px; margin-right:-12px; width:50px; text-align:Center; font-size:12px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/escapes/<%=plan.id%>'">
-				
 		
-					<%if plan.application_required%>
-						Apply
-					<%else%>
-						<%if plan.price and plan.price > 0%>
-							$<%=plan.price.to_s.sub( ".0", "") %>
-						<%else%>
-							FREE
-						<%end%>
-					<%end%>
-		
-			</div>
 		<%end%>
 		</div>
+		
+			</div>
+		<div class="ChallengeBottom UnSelected" style="cursor:pointer" onclick="window.location.href='/escapes/<%=plan.id%>'">
+	
+			<img src="/images/crowdIcon.png" style="margin-top:5px; float:left; margin-left:5px; height:16px; width:21px;">
+			<div style="float:left; margin-left:8px; margin-top:6px;"><%=plan.signups%></div>
+
+			<div style="float:left; margin-left:13px;  color:#ddd; font-size:15px; margin-top:5px;">|</div>
+
+
+			<div style="float:left; margin-left:13px;  margin-top:6px;">
+				<b><%if plan.price and plan.price > 0%>
+					$<%=plan.price.to_s.sub( ".0", "") %>
+				<%else%>
+					FREE
+				<%end%></b>
+				
+				<%if plan.application_required%>
+					- Application Required
+				<%end%>
+				
+			</div>
+	
+				
+
+		</div>
+		
+		
 	</div>
+	
+	
+		
+		
+		
 </div>

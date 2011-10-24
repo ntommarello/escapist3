@@ -22,6 +22,16 @@
   -moz-border-radius-topright: 7px;
   border-top-right-radius: 7px; }
 
+.roundBottomLeft {
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-bottom-left-radius: 7px; }
+
+.roundBottomRight {
+  -webkit-border-bottom-right-radius: 7px;
+  -moz-border-radius-bottomright: 7px;
+  border-bottom-right-radius: 7px; }
+
 .roundRight {
   -webkit-border-top-right-radius: 7px;
   -moz-border-radius-topright: 7px;
@@ -1949,11 +1959,10 @@ a:hover {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   height: 27px;
-  width: 190px;
+  width: 100%;
   background-color: #F8F8F8;
   background-image: -moz-linear-gradient(100% 100% 90deg, #f2f2f2, #f8f8f8);
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#f2f2f2));
-  margin-left: -4px;
   font-size: 10px;
   color: #929191;
   text-shadow: #FFFFFF 0 1px 0;
@@ -3929,7 +3938,6 @@ span.continued {
 .BrowseBorder {
   max-width: 510px;
   min-width: 280px;
-  padding-right: 12px;
   border: 1px solid #ddd;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;

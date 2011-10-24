@@ -66,14 +66,15 @@ class UsersController < ApplicationController
       #if only one plan on a custom domain, auto sign up for only plan
       if @group
         t = Time.zone.now
-         rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
-        @group_plans = Plan.published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
+        rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
+        @group_plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
         if @group_plans.length == 1
-          params[:plan_id] = @group_plans[0].id
-          sign_up_plan
+          if @group_plans[0].price < 1 and @group_plans[0].application_required == false
+            params[:plan_id] = @group_plans[0].id
+            sign_up_plan
+          end
         end
       end
-
 
       if location.include? "escapes/"
         redirect_to :back

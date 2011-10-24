@@ -337,13 +337,21 @@ adjustMapLabel();
 		
 			
 		</div>
+				<%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc")%>
 		
-		
-			<div style="clear:both"></div>
+			<div style="clear:both;  "></div>
+			<div style="margin-top:30px;"></div>
 			
+
+			
+			<div style="float:right; width:330px; margin-top:20px; margin-right:13px">
 				
-					
-			<div style="float:right; width:330px; margin-top:50px; margin-right:13px">
+				<%if @attendees.length > 0 and @plan.enable_signups%>
+					<div>
+						<img style="margin-top:3px; margin-right:0px; margin-bottom:3px;float:left; width:26px; height:19px" src="/images/crowdIcon.png" title="# Attendees" class="tl Transparent">
+						<div style="margin-top:5px; color:#ABABAC; font-weight:bold; font-size:12px;float:left"><%= @plan.signups%></div>
+					</div>
+				<%end%>
 				
 				<%for host in @plan.organizers%>
 					<%=render :partial=>"users/user_card", :locals=>{:user=>host, :label=>"Organizer"}%>
@@ -357,7 +365,7 @@ adjustMapLabel();
 					<%end%>
 				<%end%>
 				
-					<%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc")%>
+			
 
 				<div id="RenderPlan2">
 					<%=render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}%>
