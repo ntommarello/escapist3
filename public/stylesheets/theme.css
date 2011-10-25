@@ -5062,3 +5062,56 @@ a.Lionright {
   padding-left: 18px;
   height: 221px;
   background: url(/images/paper.png); }
+
+.BigFBIcon {
+  width: 300px;
+  height: 38px;
+  text-align: center;
+  line-height: 38px;
+  border-top: 1px solid #A5B4D1;
+  border-left: 1px solid #9AAACA;
+  border-right: 1px solid #9AAACA;
+  border-bottom: 1px solid #8D9EC3;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #425f9b, #6981b1);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6981b1), to(#425f9b));
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px 5px 5px 5px;
+  -webkit-background-clip: padding-box;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px 0px #3b5998, -1px -1px 0px 0px #3b5998, -1px 1px 0px 0px #3b5998, 1px -1px 0px 0px #3b5998;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none; }
+
+.FBfont {
+  text-shadow: rgba(0, 0, 0, 0.3) 0px 2px 0;
+  font-family: arial;
+  float: left;
+  letter-spacing: 1px;
+  font-size: 20px;
+  color: #fff;
+  border-left: 1px solid #A3B2CF;
+  height: 38px;
+  padding-left: 7px; }
+
+.BigFBIcon:hover {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #425f9b, #7a97d2);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7a97d2), to(#425f9b)); }
+
+.BigFBIcon:active {
+  background-image: -moz-linear-gradient(100% 100% 90deg, #6981b1, #425f9b);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#425f9b), to(#6981b1)); }
+
+.FBIcon {
+  float: left;
+  margin-left: 13px;
+  height: 38px;
+  padding-right: 13px;
+  border-right: 1px solid #3B5998; }
+
+.FBIconImage {
+  width: 13px;
+  height: 26px;
+  margin-top: 6px; }

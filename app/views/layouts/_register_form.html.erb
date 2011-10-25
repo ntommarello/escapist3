@@ -10,7 +10,7 @@
 <div class="registerRight">
 	<div class="registerBorder">
 		<div class="RegisterLabel2 registerFB">- OR - sign up without Facebook </div>
-		<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
+		<% form_for @user, :html => { :id => "RegisterForm#{num}" }  do |form| %>
 			<div class="RegisterLabel2">full name</div>
 			<div style="float:left; width:150px;">
 				<input id="name" name="name" type="textfield" class="ShadowedTextBox RegisterBox" size="30">
@@ -23,14 +23,14 @@
 			<div style="clear:both; position:relative; height:10px; "></div>
 			<div class="RegisterLabel2">password</div>
 			<div style="float:left; width:220px;">
-				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitOnEnter($(this).parent(),event,2)"   %>
+				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitRegOnEnter($('#RegisterForm#{num}'),event,$('#SignIn#{num}'))"   %>
 			</div>
 			<div id="Error" class="Error" style=" color:red; font-weight:bold">	
 				<%= flash[:notice] || flash[:error] %>
 			</div>
 			<div style="clear:both; position:relative; height:2px; "></div>
 		
-			<div id="SignIn"  class="WhiteActiveBorder" onclick="validateRegister(this)" style="margin-left:80px; width:120px">
+			<div id="SignIn<%=num%>"  class="WhiteActiveBorder" onclick="validateRegister(this, $('#RegisterForm<%=num%>'))" style="margin-left:80px; width:120px">
 				<div unselectable="on" class="LightGrayGreenButton" >
 					<div id="registerbutton" class="InnerLightGrayGreenBorder">
 						Join <%=APP_NAME%>
@@ -46,7 +46,12 @@
 
 <div style="float:left; width:310px; margin-left:2px; margin-top:23px;">
 	<div>
-		<img src="/images/facebookconnect.png" width="300px" height="46px" class="Transparent" onclick="fblogin()">
+		
+		
+		<div class="BigFBIcon" onclick="FBLogin3(this)">
+			<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>
+		</div>
+	
 		<br><b>Privacy:</b>
 		We won’t share your data with Facebook, or post anything to your wall, without your explicit permission.
 	</div>

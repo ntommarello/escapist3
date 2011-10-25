@@ -4796,3 +4796,35 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	height:221px;
 	background:url(/images/paper.png); 
 }
+
+
+.BigFBIcon {
+	width:300px;
+	height:38px;
+	text-align:center;
+	line-height:38px;
+	border-top:1px solid #A5B4D1;
+	border-left:1px solid #9AAACA;
+	border-right:1px solid #9AAACA;
+	border-bottom:1px solid #8D9EC3;
+	@include lineargradient(#425F9B,#6981B1);
+	@include rounded_corners(5px);
+	cursor:pointer;
+	box-shadow: 1px 1px 0px 0px #3B5998, -1px -1px 0px 0px #3B5998, -1px 1px 0px 0px #3B5998, 1px -1px 0px 0px #3B5998;
+	@include noselect();
+}
+.FBfont {
+	text-shadow: rgba(0, 0, 0, .3) 0px 2px 0;
+	font-family:arial;
+	float:left; letter-spacing:1px; font-size:20px; color:#fff; border-left:1px solid #A3B2CF; height:38px; padding-left:7px;
+}
+.BigFBIcon:hover {
+	@include lineargradient(#425F9B,#7A97D2);
+}
+.BigFBIcon:active {
+	@include lineargradient(#6981B1,#425F9B);
+
+}
+.FBIcon {float:left; margin-left:13px; height:38px; padding-right:13px; border-right:1px solid #3B5998}
+
+.FBIconImage {width:13px; height:26px; margin-top:6px;}

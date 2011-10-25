@@ -331,7 +331,7 @@ if (keycode == 13)
 		}
 	}
 	if (type == 2) {
-		validateRegister(myfield);
+		validateRegister(myfield,myfield);
 	}
 	if (type == 3) {
 		if ($('#searchfield').val() != '' && $('#searchfield').val() != 'search nearby') {
@@ -364,7 +364,24 @@ else
    return true;
 }
 
+function submitRegOnEnter(myfield,e,type)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
 
+if (keycode == 13)
+   {
+
+		validateRegister(type,myfield);
+
+	
+   return false;
+   }
+else
+   return true;
+}
 
 
 function uploadPhoto() {
@@ -409,10 +426,12 @@ function uploadPhoto() {
 }
 
 
-function validateRegister(field) {
+function validateRegister(field,form) {
 	
 	
-	parent = $(field).parent();
+	//parent = $(field).parent();
+	
+	parent = form;
 	
 	$('.Error',parent).html('')
 	$('.Error',parent).hide()
@@ -4733,4 +4752,13 @@ function checkPlanPassword(button,plan_id) {
 	
 }
 
+
+function FBLogin3(button) {
+	
+	if ($(button).html() == '<img style="margin-top:10px;" src="/images/ajax-loader_f.gif">') {
+		return;
+	}
+	$(button).html('<img style="margin-top:10px;" src="/images/ajax-loader_f.gif">')
+	fblogin()
+}
 

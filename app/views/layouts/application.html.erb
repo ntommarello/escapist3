@@ -198,7 +198,7 @@
 	<%if !current_user %>
 		<div id="RegisterModal"> 
 			<div class="closeRegister" onclick="closeRegister()"></div>
-			<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}!", :font_size=>"35"}%>
+			<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}!", :font_size=>"35", :num=>"1"}%>
 		</div>
 	<%end%>
 
@@ -250,14 +250,27 @@ $(document).ready(function() {
     }
   });
 
-  function fblogin() {
-    FB.login(function(response) {
-		if(response.session)
-		          {
-		              window.location = '/auth/facebook';
-		          }
-     }, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
-   }
+
+
+
+
+
+ function fblogin() {
+FB.login(function(response) {
+  if (response.session) {
+    if (response.perms) {
+      	window.location = '/auth/facebook';
+    } else {
+      $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
+    }
+  } else {
+    $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
+  }
+}, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
+
+}
+
+
 
 	function fblogin2() {
     FB.login(function(response) {
