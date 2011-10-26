@@ -2,7 +2,7 @@
  
 class PlansController < ApplicationController
   
-  include ActiveMerchant::Billing::Integrations
+  #include ActiveMerchant::Billing::Integrations
   
   
   include GeoKit::Geocoders
@@ -13,30 +13,7 @@ class PlansController < ApplicationController
   end
   
   
-  def confirmation
-      #ugly temp hack. to be replaced by callback. Need to figre out QTY.
-      check = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],params[:user_id])
-      if check
-        
-      else
-        SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>params[:user_id])
-        
-        @user =  User.find(params[:user_id])
 
-        @plan = Plan.find(params[:plan_id])
-        
-        if @plan.price and @plan.price > 0
-          if @user.discount_active == true
-            @user.discount_active = false
-            @user.save
-          end 
-        end
-        
-        Postoffice.deliver_confirmation(@user,@plan)
-        
-        
-      end
-  end
   
   
   def paypal_ipn

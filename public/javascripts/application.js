@@ -35,6 +35,31 @@ $(document).ready(function() {
 	
 	
 	
+	Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+
+    function stripeResponseHandler(status, response) {
+        if (response.error) {
+            // re-enable the submit button
+            $('.submit-button').removeAttr("disabled");
+            // show the errors on the form
+            $(".payment-errors").html(response.error.message);
+        } else {
+            var form$ = $("#payment-form");
+            // token contains id, last4, and card type
+            var token = response['id'];
+            // insert the token into the form so it gets submitted to the server
+            form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
+            // and submit
+            form$.get(0).submit();
+        }
+       }
+
+	        
+	          
+	
+	
+	
+	
 	
  });
 
@@ -2744,6 +2769,104 @@ function openSignedUp() {
 }
 
 
+function openPayment() {
+		
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#PaymentModal')); $('#PaymentModal').show();  $('#PaymentModal').animate({ opacity: 1,}, 250 ); $('#PaymentModal').css('top',30);",50);
+
+	setTimeout("$('.card-number').focus();",200);
+}
+
+
+function validatePayment(button) {
+	
+	$.cookie('showAttendPop', null, { path: '/escapes/'});
+	
+	if ($('#paymentbutton').html() == '<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">') {
+		return;
+	}
+	
+	
+	if ($('.card-number').val().length < 14) {
+		$('#payment_warning').html('Enter valid card number')
+		$('.card-number').focus();
+		return
+	}
+	if ($('.card-cvc').val().length < 2) {
+		$('#payment_warning').html('Enter security code (~3 digits on back of card)')
+		$('.card-cvc').focus();
+		return
+	}
+	if ($('.card-expiry-month').val() == "MM") {
+		$('#payment_warning').html('Choose expiration month')
+		return
+	}
+	if ($('.card-expiry-year').val() == "YYYY") {
+		$('#payment_warning').html('Choose expiration year')
+		return
+	}
+	$('#payment_warning').html('');
+	$('#paymentbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+
+
+	var amount = price * 100; //amount you want to charge in cents
+	    Stripe.createToken({
+	        number: $('.card-number').val(),
+	        cvc: $('.card-cvc').val(),
+	        exp_month: $('.card-expiry-month').val(),
+	        exp_year: $('.card-expiry-year').val()
+	    }, amount, stripeResponseHandler);
+	
+}
+
+
+
+function stripeResponseHandler(status, response) {
+    if (response.error) {
+		$('#paymentbutton').html('Submit Payment');
+        //show the errors on the form
+        $("#payment_warning").html(response.error.message);
+    } else {
+	
+	
+	
+	
+        /*var form$ = $("#payment-form");
+        var token = response['id'];
+		var amount = response['amount'];
+        form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+		form$.append("<input type='hidden' name='amount' value='" + token + "'/>");
+        form$.get(0).submit();*/
+
+
+		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:$('#qty').val() }, function(theResponse){
+			$('#paymentbutton').html('Submit Payment');
+			closeRegister()	
+				
+			seats_remaining = seats_remaining - 1;
+
+			$("#seat_remain").html(seats_remaining)
+
+			$('#RenderPlan2').html(theResponse)
+
+			$('#SignUpButtons').hide();
+			$('#SignedUp').show();
+
+			setTimeout("openSignedUp();",200);
+
+		});
+		
+		
+
+    }
+}
+
+
+
+
+
 function closeRegister() {
 	
 
@@ -2784,7 +2907,11 @@ function closeRegister() {
 			$("#SignedUpModal").hide();
 			$("#SignedUpModal").css('opacity',0)
 		
-		
+					setTimeout("$('#PaymentModal').hide();",150);
+			$("#PaymentModal").hide();
+			$("#PaymentModal").css('opacity',0)
+			
+			
 			$("#RenderAchievements").hide();
 		}
 		

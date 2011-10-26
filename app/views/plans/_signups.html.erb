@@ -1,3 +1,21 @@
+<%if @attendees.length > 0 and @plan.enable_signups%>
+	<div>
+		<img style="margin-top:3px; margin-right:0px; margin-bottom:3px;float:left; width:26px; height:19px" src="/images/crowdIcon.png" title="# Attendees" class="tl Transparent">
+		<div style="margin-top:5px; color:#ABABAC; font-weight:bold; font-size:12px;float:left"><%= @plan.signups%></div>
+	</div>
+<%end%>
+
+<%for host in @plan.organizers%>
+	<%=render :partial=>"users/user_card", :locals=>{:user=>host, :label=>"Organizer"}%>
+<%end%>
+
+
+<%if @plan.id == 27%>
+	<%judges = User.find(:all, :conditions=>"id=1316 || id=1318 || id=1321 || id=1319 || id=1320")%>
+	<%for judge in judges%>
+		<%=render :partial=>"users/user_card", :locals=>{:user=>judge, :label=>"Judge"}%>
+	<%end%>
+<%end%>
 
 <%if @plan.enable_signups%>
 		<%for user in attendees%>

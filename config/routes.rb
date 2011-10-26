@@ -135,7 +135,7 @@ Trek::Application.routes.draw do
   match 'check_plan_password', :controller => 'plans', :action => 'check_plan_password'
   
   match 'new_plan', :controller => 'plans', :action => 'new_plan' 
-  
+  match 'payment', :controller => 'subscribed_plans', :action => 'payment' 
   
   match 'create', :controller => 'web', :action => 'apply'
   match 'host_an_adventure', :controller => 'web', :action => 'host_an_adventure'

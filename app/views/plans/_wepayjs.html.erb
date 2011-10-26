@@ -1,40 +1,4 @@
-<div id="Payment" style="display:none">
-	<p class="HighlightedTitle" style="text-align:center">Purchase Tickets</p>
-	<div class="price_display" style="float:left; width:100px; font-weight:bold; color:black; font-size:22px;">$<%=plan.price%></div>
 
-	<div class="SubTitle" style="float:left; width:270px;margin-left: 10px; font-weight:normal; padding-bottom:10px"><%=raw plan.title%></div>
-	<div style="clear:both"></div>
-	<select id="qty" class="qty" onchange="qty=$(this).val(); price=$('#unit_price').val()*qty; $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); $('.qty').val($(this).val()); ">
-		<option value="1">1 ticket</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		
-	</select>
-	
-
-	
-	<div style="clear:both; height:15px;"></div>
-	<span class="SubTitle" style="font-weight:normal; font-size:12px;"><b>Refund Policy</b>:  100% refund if requested, for any reason.</span>
-	
-	<%if current_user and current_user.discount_active%>
-		<div style="float:left">
-			<div style="font-weight:normal; float:left; " onclick="$(this).parent().hide(); ReducePriceBy(5,2)"><a href="#"  class="BlueLink">Apply $5 Discount</a></div>
-			<div style="float:left; font-weight:normal; margin-right:10px; margin-left:10px">|</div>
-		</div>
-	<%end%>
-	
-	<div class="rewardlink" style="font-weight:normal; float:left;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Have a reward code?</a></div>
-	<div class="RewardDiv" style="display:none">
-		<div style="font-size:11px; color:#666; font-weight:normal">Mech E Capstone</div>
-		<input class="RewardCode" type="textfield" style="font-size:12px;">
-		<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
-	</div>
-	<div style="clear:both"></div>
-
-	
-	
-</div>
 
 
 

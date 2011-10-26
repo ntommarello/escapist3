@@ -1,4 +1,8 @@
 class SubscribedPlansController < ApplicationController
+  
+  
+  
+  
   before_filter :login_from_token
   
   def create
@@ -8,6 +12,41 @@ class SubscribedPlansController < ApplicationController
    end
    
    
+   def payment
+
+
+     sign_up_plan
+
+
+     #token = params[:stripeToken]
+     #Stripe.api_key = "AwkVJfIN1Ju9ruvzZTM5A1xiTuSDdMxW"
+     #customer = Stripe::Customer.create(:card => token, :description => "payinguser@example.com" )
+     #Stripe::Charge.create(
+    #     :amount => params[:amount].to_i, # in cents
+    #     :currency => "usd",
+     #    :customer => customer.id
+     #)
+     #save_stripe_customer_id(current_user, customer.id)
+
+
+
+
+
+       if @plan.price and @plan.price > 0
+         if current_user.discount_active == true
+           current_user.discount_active = false
+           current_user.save
+         end 
+       end
+
+       Postoffice.deliver_confirmation(current_user,@plan)
+
+       render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
+
+   end
+
+
+
 
 
    def destroy
