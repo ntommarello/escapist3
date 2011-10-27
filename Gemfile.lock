@@ -93,7 +93,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     metaclass (0.0.1)
-    mime-types (1.17.1)
+    mime-types (1.17.2)
     mocha (0.10.0)
       metaclass (~> 0.0.1)
     multi_json (1.0.3)
@@ -201,7 +201,7 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.7.0)
-    rubber (1.14.1)
+    rubber (1.15.0)
       amazon-ec2 (>= 0.9.17)
       aws-s3
       capistrano (>= 2.4.0)
@@ -272,7 +272,7 @@ DEPENDENCIES
   riddle
   rspec (~> 2.0)
   rspec-rails (~> 2.0)
-  rubber (= 1.14.1)
+  rubber (= 1.15.0)
   samsouder-titlecase
   sass
   shoulda

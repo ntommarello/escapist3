@@ -56,4 +56,4 @@ group :test do
   gem 'mocha'
 end
 
-gem "rubber", "1.14.1"
+gem "rubber", "1.15.0"
