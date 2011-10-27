@@ -15,9 +15,9 @@ class CommentsController < ApplicationController
       if @subscribed.organizers[0].messaging_bucket_comment
         if @subscribed.organizers[0].id != current_user.id
 
-          #Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-          #                      @subscribed.organizers[0].email, params[:comments][:comment], 
-          #                      @subscribed.organizers[0].authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+          Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
+                                @subscribed.organizers[0].email, params[:comments][:comment], 
+                                @subscribed.organizers[0].authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
         end
       end
     end
@@ -44,9 +44,9 @@ class CommentsController < ApplicationController
         if user.messaging_bucket_comment
           if user.id != current_user.id
             if user.id != @subscribed.organizers[0].id
-               #Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-                #                         user.email, params[:comments][:comment], 
-                #                          user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+               Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
+                                         user.email, params[:comments][:comment], 
+                                          user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
             end
           end
         end

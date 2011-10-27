@@ -293,7 +293,13 @@ class ApplicationController < ActionController::Base
            check.maybe = @maybe
            check.save!
          else
-            SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :maybe=>@maybe)
+            
+            @subscribed = SubscribedPlan.new
+            @subscribed.plan_id = params[:plan_id]
+            @subscribed.user_id = current_user.id
+             @subscribed.save!
+             
+            #SubscribedPlan.create(:plan_id => params[:plan_id], :user_id=>current_user.id, :maybe=>@maybe)
 
             @plan = Plan.find(params[:plan_id])
             if @plan.group

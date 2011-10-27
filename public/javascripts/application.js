@@ -35,24 +35,9 @@ $(document).ready(function() {
 	
 	
 	
-	Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+	
 
-    function stripeResponseHandler(status, response) {
-        if (response.error) {
-            // re-enable the submit button
-            $('.submit-button').removeAttr("disabled");
-            // show the errors on the form
-            $(".payment-errors").html(response.error.message);
-        } else {
-            var form$ = $("#payment-form");
-            // token contains id, last4, and card type
-            var token = response['id'];
-            // insert the token into the form so it gets submitted to the server
-            form$.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
-            // and submit
-            form$.get(0).submit();
-        }
-       }
+  
 
 	        
 	          
@@ -2810,8 +2795,8 @@ function validatePayment(button) {
 	$('#payment_warning').html('');
 	$('#paymentbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
 
-
 	var amount = price * 100; //amount you want to charge in cents
+	
 	    Stripe.createToken({
 	        number: $('.card-number').val(),
 	        cvc: $('.card-cvc').val(),
@@ -2853,6 +2838,8 @@ function stripeResponseHandler(status, response) {
 
 			$('#SignUpButtons').hide();
 			$('#SignedUp').show();
+
+$("#CancelPlan").hide();
 
 			setTimeout("openSignedUp();",200);
 
@@ -3145,8 +3132,8 @@ function signupPlan(button,render,plan_id) {
 						$('#SignUpButtons').hide();
 						$('#SignedUp').show();
 
-
-						openSignedUp();
+						closeRegister();
+						setTimeout("openSignedUp();",150);
 
 				});
 	
@@ -3626,16 +3613,28 @@ function ReducePriceBy(amount,type) {
 		newprice = $('#unit_price').val() * amount;
 		original_price = original_price * amount;
 	} else { //dollar amount
+		
 		newprice = $('#unit_price').val() - amount;	
 		original_price = original_price - amount;
 	}
 	
+	if (newprice < 0) {
+		newprice = 0;
+	}
+	
+	
 	$('#unit_price').val(newprice);
-	price = newprice * qty;
-	$('.price_display').html('$'+roundNumber($('#unit_price').val()*qty,2))
+	price = newprice * quantity;
+	
+	$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
 	$(".RewardDiv").html('Discount Applied')
 	
 	$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
+	
+	if (price < 1) {
+		$("#PaymentBox").hide();
+		$("#FreeSignup").show();
+	}
 	
 }
 

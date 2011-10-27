@@ -21,7 +21,7 @@
 
 </div>
 	<%end%>
-<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%else%>addtocal<%end%>" style="font-size:18px; float:left; margin-top:17px; margin-left:10px;" <%if @editable%>onclick="displayEditDate()<%end%>">
+<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%else%>addtocal<%end%>" style="font-size:18px; float:left; width:240px; margin-top:17px; margin-left:10px;" <%if @editable%>onclick="displayEditDate()<%end%>">
 	<%if @plan.start_time%>
 		<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
 		<div style="line-height:18px;"><%=raw @timestring%></div>

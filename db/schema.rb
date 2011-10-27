@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111004051528) do
+ActiveRecord::Schema.define(:version => 20111027171559) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -319,6 +319,7 @@ ActiveRecord::Schema.define(:version => 20111004051528) do
     t.datetime "updated_at"
     t.boolean  "maybe"
     t.string   "label"
+    t.integer  "amount"
   end
 
   create_table "users", :force => true do |t|
@@ -381,6 +382,7 @@ ActiveRecord::Schema.define(:version => 20111004051528) do
     t.text     "short_bio"
     t.integer  "referred_by"
     t.boolean  "discount_active"
+    t.string   "stripe_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"

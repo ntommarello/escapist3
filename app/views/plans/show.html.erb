@@ -1,3 +1,6 @@
+
+
+
 <% content_for :page_title do %>
   <%=raw @plan.title%>
 <% end %>
@@ -11,6 +14,10 @@
 <%end%>
 
 <Script>
+
+Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+
+
 	var share = {
    method: 'stream.share',
    u: '<%= plan_url(@plan) %>'
@@ -293,9 +300,7 @@ adjustMapLabel();
 	
 		<div class="SignUpBox">
 			
-		
-			
-			<div style="position:absolute; margin-top:130px">
+			<div style="position:absolute; margin-top:130px; width:343px">
 			<div id="SignUpButtons" style="<%if @signedup or @author%>display:none<%end%>">
 				<div style="float:left;  margin-top:11px; margin-left:2px;  text-align:center">
 					<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
@@ -315,14 +320,20 @@ adjustMapLabel();
 			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:300px; padding:5px; background:#FFFFCC; height:30px;">
 				<div style="width:34px; float:left'"><img src="/images/greencheck.png"></div>
 				<div class="HighlightedTitle"  style=" float:left; font-size:20px; margin-top:2px;">You are <%if @author%>hosting<%else%>attending<%end%>!</div>
-				<div style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
+				<%if @plan.price < 1%>
+				<div id="CancelPlan" style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
+				
+				<%else%>
+				<div style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>openPayment();<%end%>" >buy more</span> ]</div>
+				
+				<%end%>
 				<div style="clear:both"></div>
 			</div>
 			</div>
 			
 			<div style="position:absolute; width:265px; margin-left:63px; margin-top:69px; border-top:1px dashed #ccc"></div>
 			
-			<div id="RenderDate" style="position:absolute">
+			<div id="RenderDate" style="position:absolute; width:343px;">
 				<%= render :partial=>"plans/circle_date_small"%>
 			</div>		
 			

@@ -15,13 +15,22 @@
 			</div>
 		
 	
-					<select id="qty" style="margin-top:10px" class="qty" onchange="qty=$(this).val(); price=$('#unit_price').val()*qty; $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); $('.qty').val($(this).val()); ">
+					<select id="qty" style="margin-top:10px" class="qty" onchange="quantity=$(this).val(); $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); price = roundNumber($('#unit_price').val()*$(this).val(),2);  ">
 						<option value="1">1 ticket</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
 						<option value="4">4</option>
 
 					</select>
+					
+					<div>
+						
+					<img src="/images/creditInfo2.png" style="width:87px; height:80px; margin-top:25px">	
+						
+						
+					<img src="/images/geotrust.gif" style="margin-top:75px; opacity:.7; width:87px; height:47px">
+					</div>
+					
 			</div>	
 					
 
@@ -29,15 +38,18 @@
 		<div class="SubTitle" style="font-weight:bold;"><%=raw @plan.title%></div>
 			
 			
-				<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:10px; float:left;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
-					<div class="RewardDiv" style="display:none">
+				<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:14px; float:left;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
+					<div class="RewardDiv" style="display:none; margin-top:10px">
 						<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
 						<input class="RewardCode" type="textfield" style="font-size:12px;">
 						<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
 					</div>
 				<div style="clear:both"></div>
 				
-				<div class="registerBorder" style="font-size:12px; margin-top:15px; padding:15px; font-weight:normal;">
+				
+				
+				
+				<div id="PaymentBox" class="registerBorder" style="font-size:12px;  padding:15px; margin-top:30px; font-weight:normal;">
 					
 					    <div class="form-row">
 					        <label style="text-align:right; margin-top:9px; margin-right:5px; width:80px;float:left">Card Number:</label>
@@ -115,8 +127,17 @@
 				
 			
 					</form>
+					
+					
+					
+					
 			
 			</div>
+			
+			
+					<button id="FreeSignup" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; display:none" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>);">Sign Me Up!</button>	
+			
+			
 		<div style="clear:both"></div>
 	
 
@@ -130,7 +151,7 @@
 	
 
 		<%if current_user and current_user.discount_active%>
-			<div style="float:left">
+			<div style="float:left" style="display:none">
 				<div style="font-weight:normal; float:left; " onclick="$(this).parent().hide(); ReducePriceBy(5,2)"><a href="#"  class="BlueLink">Apply $5 Discount</a></div>
 				<div style="float:left; font-weight:normal; margin-right:10px; margin-left:10px">|</div>
 			</div>
@@ -141,6 +162,7 @@
 
 
 	</div>
+	
 	
 	
 </div>
