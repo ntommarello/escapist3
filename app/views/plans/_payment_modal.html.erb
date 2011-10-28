@@ -17,9 +17,9 @@
 	
 					<select id="qty" style="margin-top:10px" class="qty" onchange="quantity=$(this).val(); $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); price = roundNumber($('#unit_price').val()*$(this).val(),2);  ">
 						<option value="1">1 ticket</option>
-						<%if @plan.seats_remaining > 1%><option value="2">2</option><%end%>
-						<%if @plan.seats_remaining > 2%><option value="3">3</option><%end%>
-						<%if @plan.seats_remaining > 3%><option value="4">4</option><%end%>
+						<%if @plan.seats_remaining.to_i > 1%><option value="2">2</option><%end%>
+						<%if @plan.seats_remaining.to_i > 2%><option value="3">3</option><%end%>
+						<%if @plan.seats_remaining.to_i > 3%><option value="4">4</option><%end%>
 
 					</select>
 					
