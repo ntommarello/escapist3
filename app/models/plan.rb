@@ -41,7 +41,7 @@ class Plan < ActiveRecord::Base
     if sum_guests[0]
       counter = counter - sum_guests[0].guests.to_i
     end
-  
+    counter.to_i
   
   end
   
@@ -51,6 +51,7 @@ class Plan < ActiveRecord::Base
     if sum_guests[0]
       counter = counter +sum_guests[0].guests.to_i
     end
+    counter.to_i
   end
   
 

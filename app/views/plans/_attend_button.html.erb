@@ -10,7 +10,7 @@
 	<%plural = ""%>
 	<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
 
-	<%if @plan.seats_remaining < 7%>
+	<%if @plan.seats_remaining.to_i < 7%>
 				<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
 	<%else%>
 			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
