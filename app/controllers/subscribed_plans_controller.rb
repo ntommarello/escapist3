@@ -47,10 +47,12 @@ class SubscribedPlansController < ApplicationController
            :currency => "usd",
           :customer => customer.id
        )
+       current_user.stripe_id = customer.id
+       current_user.save!
+       
     end
       
-     current_user.stripe_id = params[:token]
-     current_user.save!
+
      
     
 
