@@ -16,7 +16,7 @@
 <Script>
 
 <%if @plan.group and @plan.group.stripe_public%>
-  Stripe.api_key = <%=@plan.group.stripe_public%>
+	Stripe.setPublishableKey('<%=@plan.group.stripe_public%>');
 <%else%>
   Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
 <%end%>
