@@ -32,14 +32,23 @@ class SubscribedPlansController < ApplicationController
       end
 
      token = params[:token]
-     Stripe.api_key = "AwkVJfIN1Ju9ruvzZTM5A1xiTuSDdMxW"
-     customer = Stripe::Customer.create(:card => token, :description => "#{current_user.id} | #{current_user.first_name} #{current_user.last_name} | #{current_user.email}" )
-     Stripe::Charge.create(
-         :amount => params[:amount].to_i, # in cents
-         :currency => "usd",
-        :customer => customer.id
-     )
-
+     
+     if Rails.env == "production"
+       
+       if @plan.group and @plan.group.stripe_private
+         Stripe.api_key = @plan.group.stripe_private
+       else
+         Stripe.api_key = "v5iEXYC6gDJ849q648HgP20UJ5HbVOU5"
+       end
+       
+       customer = Stripe::Customer.create(:card => token, :description => "#{current_user.id} | #{current_user.first_name} #{current_user.last_name} | #{current_user.email} | plan: #{@plan.id}" )
+       Stripe::Charge.create(
+           :amount => params[:amount].to_i, # in cents
+           :currency => "usd",
+          :customer => customer.id
+       )
+    end
+      
      current_user.stripe_id = params[:token]
      current_user.save!
      

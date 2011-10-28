@@ -4709,7 +4709,7 @@ line-height:49px; text-align:center;
 
 
 .UserCard2:hover {
-	@include lineargradient(#ccc,#E0E0E0);
+	@include lineargradient(#E0E0E0,#F5F5F5);
 	color:#666;
 }
 
@@ -4834,3 +4834,18 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 .FBIcon {float:left; margin-left:13px; height:38px; padding-right:13px; border-right:1px solid #3B5998}
 
 .FBIconImage {width:13px; height:26px; margin-top:6px;}
+
+
+.NumGuests {
+	position:absolute;
+	margin-left:306px;
+	margin-top:2px;
+	background:#21547E;
+	height:22px;
+	width:22px;
+	font-size:12px;
+	color:#fff;
+	text-align:center;
+	line-height:22px;
+	@include rounded_corners(10px);
+}

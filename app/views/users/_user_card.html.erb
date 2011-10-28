@@ -28,6 +28,12 @@
 			<div class="UserCardName"><%=raw user.first_name%> <%=raw user.last_name%></div>
 			<div style=" margin-top:2px; line-height:16px; font-style:italic; font-family:'georgia'"><%=raw user.short_bio%></div>
 		</div>
-	
+		
+		
+		<%guest = SubscribedPlan.find(:first,:conditions=>"plan_id=#{@plan.id} and user_id=#{user.id}")%>
+		<%if guest and guest.num_guests.to_i > 0%>
+			<div class="NumGuests"><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px">+</div><div style="float:left"><%=guest.num_guests%></div></div>
+		<%end%>
+
 	</div>
 	</a>

@@ -20,7 +20,7 @@
 		<%if cookies[:digestJoined] != 'true'%>
 <%i = i+1 %>
 			<div id="SignUpCard" class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
-				<div class="SignUpBorder" style="height:325px">
+				<div class="SignUpBorder" style="height:380px">
 					<div style="margin-top:35px; font-size:30px; padding:20px; text-align:center; line-height:35px" >Sign up</div>
 				
 					<div  style="text-align:center; line-height:25px; margin-left:10px;">Learn when we add new <br>adventures <%unless @group%>in <%=session[:dropdown_city]%><%end%>

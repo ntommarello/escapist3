@@ -4985,8 +4985,8 @@ a.Lionright {
   box-shadow: 0 0 3px #666; }
 
 .UserCard2:hover {
-  background-image: -moz-linear-gradient(100% 100% 90deg, #cccccc, #e0e0e0);
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e0e0e0), to(#cccccc));
+  background-image: -moz-linear-gradient(100% 100% 90deg, #e0e0e0, #f5f5f5);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#e0e0e0));
   color: #666; }
 
 .UserCard2:active {
@@ -5128,3 +5128,19 @@ a.Lionright {
   width: 13px;
   height: 26px;
   margin-top: 6px; }
+
+.NumGuests {
+  position: absolute;
+  margin-left: 306px;
+  margin-top: 2px;
+  background: #21547E;
+  height: 22px;
+  width: 22px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 22px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-background-clip: padding-box; }

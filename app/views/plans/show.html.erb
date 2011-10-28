@@ -7,7 +7,7 @@
 
 <% content_for :head do %>
 	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
-
+	<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 	<%if @plan.privacy > 1%>
 		<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 	<%end%>
@@ -15,7 +15,13 @@
 
 <Script>
 
-Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+<%if @plan.group and @plan.group.stripe_public%>
+  Stripe.api_key = <%=@plan.group.stripe_public%>
+<%else%>
+  Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+<%end%>
+
+
 
 
 	var share = {
@@ -349,7 +355,7 @@ adjustMapLabel();
 		
 			
 		</div>
-				<%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc")%>
+				<%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label, subscribed_plans.num_guests", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc")%>
 		
 			<div style="clear:both;  "></div>
 			<div style="margin-top:30px;"></div>
