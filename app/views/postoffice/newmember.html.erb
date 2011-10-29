@@ -2,11 +2,212 @@
 
 <head>
 
+<style type="text/css">
 
+a {
+	text-decoration:none;
+}
+body {
+	background:#EFEFEF;
+}
+
+.BlueLink {
+	text-decoration:none;
+	color:#0066FF;
+	cursor:pointer;
+	
+}
+.BlueLink:hover {
+	text-decoration:underline;
+	color:#0066FF;
+}
+.BlueLink:active {
+color:#0066FF;
+}
+.BlueLink:visited {
+color:#0066FF;
+}
+
+.UserCard {
+	float:left;
+	margin-top:10px;
+	margin-bottom:10px;
+	width:330px;
+	height:121px;
+	padding:0px;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+	border-radius:7px;
+	border:1px solid #ddd;
+	box-shadow: 0 0 3px #ddd;
+	background:#fff;
+	cursor:pointer;
+	color:#999;
+}
+
+.subtleShadow {
+	border:1px solid #ddd;
+	box-shadow: 0 0 3px #ddd;
+}
+.subtleShadow {
+	border:1px solid #666;
+	box-shadow: 0 0 3px #666;
+}
+
+
+
+
+
+.UserCardPhoto {
+position:absolute;
+	margin-top:1px;
+width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
+		-webkit-border-top-left-radius: 6px;
+		-moz-border-radius-topleft:6px;
+		border-top-left-radius:6px;
+		-webkit-border-bottom-left-radius: 6px;
+		-moz-border-radius-bottomleft:6px;
+		border-bottom-left-radius:6px;
+}
+
+.TopCardShadow {
+	text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+		position:absolute;
+		width:330px;
+	-webkit-border-top-right-radius: 7px;
+	-moz-border-radius-topright:7px;
+	border-top-right-radius:7px;
+	-webkit-border-top-left-radius: 7px;
+	-moz-border-radius-topleft:7px;
+	border-top-left-radius:7px;
+	background:#ccc;
+	border-top:1px solid #fff;
+	height:24px;
+	background:#fff;
+	background-image: -moz-linear-gradient(100% 100% 90deg,  rgba(0,0,0,0.0), rgba(0,0,0,0.08));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0,0,0,0.08)), to(rgba(0,0,0,0.0)));
+	background-image: -o-linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.0));
+}
+
+.TopPhotoShadow {
+	position:absolute;
+	width:120px;
+	-webkit-border-top-left-radius: 7px;
+	-moz-border-radius-topleft:7px;
+	border-top-left-radius:7px;
+	height:25px;
+	background-image: -moz-linear-gradient(100% 100% 90deg,  rgba(0,0,0,0.0), rgba(0,0,0,0.35));
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0,0,0,0.35)), to(rgba(0,0,0,0.0)));
+	background-image: -o-linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.0));
+}
+
+
+.UserCardBio {
+	position:absolute; margin-left:128px; width:180px;  font-size:13px; 
+	height:120px;
+	overflow:hidden;
+}
+.UserCardName {
+	color:#21547E;  margin-top:4px; font-size:15px; line-height:20px;
+}
+
+.organizerLabel {
+	position:absolute;
+	width:79px;
+	height:78px;
+
+	background-image:url(/images/organizerLabel2.png);
+}
+
+.judgeLabel {
+	position:absolute;
+	width:79px;
+	height:78px;
+
+	background-image:url(/images/judgeLabel.png);
+}
+
+.sponsorLabel {
+	position:absolute;
+	width:79px;
+	height:78px;
+
+	background-image:url(/images/sponsorLabel.png);
+}
+.Transparent {
+	cursor:pointer;
+}
+.Transparent:hover {
+	opacity:.8;
+}
+.template_topnav {
+	background:#35507C url(http://<%=APP_URL%>/images/topbar-bg3.png) repeat-x;
+	border-top:none; 
+	@include noselect();
+	height:51px;
+	margin-top:25px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-moz-border-radius-topright:7px;
+	-moz-border-radius-topleft:7px;
+	border-top-right-radius:7px;
+	border-top-left-radius:7px;
+	
+}
+
+.template_logo {
+  background:url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;
+  background-position:-150px 0px;
+	position:absolute;
+	margin-top:9px; 
+	margin-left:15px;
+	width:131px;
+	height:35px;
+	cursor:pointer;
+}
+
+.template_logo_h {
+  background:url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;
+  background-position:0px -175px;
+	position:absolute; 
+	margin-top:9px; 
+	margin-left:15px;
+	width:131px;
+	height:35px;
+	cursor:pointer;
+}
+
+.whiteMain {
+	padding:25px; background:#fff;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomright:7px;
+	-moz-border-radius-bottomleft:7px;
+	border-bottom-right-radius:7px;
+	border-bottom-left-radius:7px;
+}
+.powered {
+	float:left; margin-left:10px; margin-top:10px; opacity:.8;
+	
+}
+.NumGuests {
+	position:absolute;
+	margin-left:306px;
+	margin-top:2px;
+	background:#21547E;
+	height:22px;
+	width:22px;
+	font-size:12px;
+	color:#fff;
+	text-align:center;
+	line-height:22px;
+	@include rounded_corners(10px);
+}
+</style>
 
 </head>
 
-<body style="background: #EFEFEF;">
+<body>
 	
 	
 	
@@ -16,34 +217,34 @@
 	
 	
 	
-	<div class="template_topnav" style="width: 100%;background: #35507C url(http://<%=APP_URL%>/images/topbar-bg3.png) repeat-x;border-top: none;@include noselect(): ;height: 51px;margin-top: 25px;-webkit-border-top-right-radius: 7px;-webkit-border-top-left-radius: 7px;-moz-border-radius-topright: 7px;-moz-border-radius-topleft: 7px;border-top-right-radius: 7px;border-top-left-radius: 7px;">
+	<div class="template_topnav" style="width:100%;">
 
 			<div style="float:left; width:120px;">&nbsp;	</div>
-				<a href="http://<%=APP_URL%>/" style="text-decoration: none;">
-					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()" style="background: url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;background-position: 0px -175px;position: absolute;margin-top: 9px;margin-left: 15px;width: 131px;height: 35px;cursor: pointer;"></div>
-					<div class="template_logo" onmouseover="logoHover()" onmouseout="logoUnhover()" style="background: url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;background-position: -150px 0px;position: absolute;margin-top: 9px;margin-left: 15px;width: 131px;height: 35px;cursor: pointer;"></div>
+				<a href="http://<%=APP_URL%>/">
+					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
+					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 				</a>
 				<%@url = APP_URL%>
 		
 		
 	</div>
 	
-	<div class="whiteMain" style="padding: 25px;background: #fff;-webkit-border-bottom-right-radius: 7px;-webkit-border-bottom-left-radius: 7px;-moz-border-radius-bottomright: 7px;-moz-border-radius-bottomleft: 7px;border-bottom-right-radius: 7px;border-bottom-left-radius: 7px;">
+	<div class="whiteMain">
 	
 	    <%if @group%>
-	Hi <%=@user.first_name%>,
+	<p>Hi <%=@user.first_name%>,</p>
 	
 	<p>Thanks for signing up!</p>
-			<p><b><a class="BlueLink" href="http://<%=@group.url%>/" style="text-decoration: none;color: #0066FF;cursor: pointer;"><%=@group.name%></a></b> is powered by <b><a class="BlueLink" href="http://<%=APP_URL%>/" style="text-decoration: none;color: #0066FF;cursor: pointer;"><%=APP_NAME%></a></b>.  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
+			<p><b><a class="BlueLink" href="http://<%=@group.url%>/"><%=@group.name%></a></b> is powered by <b><a class="BlueLink" href="http://<%=APP_URL%>/"><%=APP_NAME%></a></b>.  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
 		<%else%>
-		Hi <%=@user.first_name%>,
+		<p>Hi <%=@user.first_name%>,</p>
 	
 		<p>Thanks for trying out <%=APP_NAME%>!  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
 		
 		<%end%>
 	
 
-		<p>Please verify your e-mail address by clicking here:  <a class="BlueLink" href="http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%>" style="text-decoration: none;color: #0066FF;cursor: pointer;">http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%></a></p>
+		<p>Please verify your e-mail address by clicking here:  <a class="BlueLink" href="http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%>">http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%></a></p>
 
 		<p>Feel free to reach out to me with any ideas or suggestions. I'd love to hear from you!</p>
 		
