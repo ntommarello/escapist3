@@ -80,11 +80,16 @@ class MessagesController < ApplicationController
         
         
     if params[:type] and params[:type] == "comment"   
-      flash[:message] = "#{APP_NAME} will no longer CC comments to your e-mail."
+      flash[:message] = "#{APP_NAME} will no longer email comment notifications."
       @user.messaging_bucket_comment = 0
     else 
-      flash[:message] = "#{APP_NAME} will no longer CC messages to your e-mail."
-      @user.privacy_cc_email = 0
+      if params[:type] and params[:type] == "signup"
+        flash[:message] = "#{APP_NAME} will no longer email signup notifications."
+        @user.privacy_cc_signups = 0
+      else
+        flash[:message] = "#{APP_NAME} will no longer CC messages to your e-mail."
+        @user.privacy_cc_email = 0
+      end
     end
     
      @user.save!

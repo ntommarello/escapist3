@@ -314,7 +314,9 @@ class ApplicationController < ActionController::Base
          @plan = Plan.find(params[:plan_id]) 
 
          for organizer in @plan.organizers
-           Postoffice.notify_signup(current_user, @plan, organizer).deliver
+           if organizer.privacy_cc_signups
+             Postoffice.notify_signup(current_user, @plan, organizer).deliver
+           end
          end
 
 

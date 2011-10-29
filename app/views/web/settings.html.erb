@@ -171,9 +171,12 @@
 
 					<%=check_box("user", "privacy_cc_email", {:checked => @user.privacy_cc_email},  true, false)%>Someone messages me<br><br>
 					
-						<%=check_box("user", "messaging_bucket_comment", {:checked => @user.messaging_bucket_comment},  true, false)%>Someone comments on my plans<br><br>
+						<%=check_box("user", "messaging_bucket_comment", {:checked => @user.messaging_bucket_comment},  true, false)%>Someone comments on an event I joined<br><br>
+						
+							<%=check_box("user", "privacy_cc_signups", {:checked => @user.privacy_cc_signups},  true, false)%>Someone signs up for my event<br><br>
+							
 					
-					<%=check_box("user", "messaging_weekly_email", {:checked => @user.messaging_weekly_email},  true, false)%>New adventures are added (max once per week)
+					<%=check_box("user", "messaging_weekly_email", {:checked => @user.messaging_weekly_email},  true, false)%>New events are added (max once per week)
 						
 					  
 					

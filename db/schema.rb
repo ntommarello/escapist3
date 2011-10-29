@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028183745) do
+ActiveRecord::Schema.define(:version => 20111029071027) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -385,6 +385,7 @@ ActiveRecord::Schema.define(:version => 20111028183745) do
     t.integer  "referred_by"
     t.boolean  "discount_active"
     t.string   "stripe_id"
+    t.boolean  "privacy_cc_signups",                         :default => true
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"
