@@ -214,7 +214,7 @@ class WebController < ApplicationController
   def test
     
     @user = User.find(1)
-    @plan = Plan.find(33)
+    @group = nil
     render :layout=>false
   
  end

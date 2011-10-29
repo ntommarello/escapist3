@@ -2,9 +2,11 @@ class Postoffice < ActionMailer::Base
   default :from => "Escapist <noreply@escapist.me>"
   default_url_options[:host] = "escapist.me"
     
-  def newmember(to_email, user_id)
-    @user_id = user_id
-    mail(:to      => to_email,
+  def newmember(user, group)
+    @user = user
+    @group = group
+    mail(:to      => "\"#{user.first_name} #{user.last_name}\" <#{user.email}>" ,
+         :from => "\"Nick @ Escapist\" <nick@tommarello.com>" ,
          :subject => "Confirm your #{APP_NAME} account")
   end
    

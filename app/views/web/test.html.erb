@@ -218,52 +218,55 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	
 	
 	<div class="template_topnav" style="width:100%;">
-			<%if @plan.group and @plan.group.logo%>
-			<div style="float:left; margin-right:20px;">
-				<a href="http://<%=@plan.group.url%>">
-					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
-						
-						<%=raw @plan.group.logo%>
-					
-					</div>
-				</a>
-				<a target="_blank" href="http://<%=APP_URL%>/">
-						<div class="powered"><img src="http://<%=APP_URL%>/images/powered-by.png"></div>
-				</a>
-				</div>
-			<%else%>
+
 			<div style="float:left; width:120px;">&nbsp;	</div>
 				<a href="http://<%=APP_URL%>/">
 					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
 					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 				</a>
-				
-			<%end%>
+				<%@url = APP_URL%>
+		
 		
 	</div>
 	
 	<div class="whiteMain">
 	
-		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@user.username%>"><%=@user.first_name%></a> joined <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@challenge_url%>"><%=@plan.title%></a>.
+	    <%if @group%>
+	Hi <%=@user.first_name%>,
+	
+	<p>Thanks for signing up!</p>
+			<p><b><a class="BlueLink" href="http://<%=@group.url%>/"><%=@group.name%></a></b> is powered by <b><a class="BlueLink" href="http://<%=APP_URL%>/"><%=APP_NAME%></a></b>.  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
+		<%else%>
+		Hi <%=@user.first_name%>,
+	
+		<p>Thanks for trying out <%=APP_NAME%>!  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
+		
+		<%end%>
+	
+
+		<p>Please verify your e-mail address by clicking here:  <a class="BlueLink" href="http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%>">http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%></a></p>
+
+		<p>Feel free to reach out to me with any ideas or suggestions. I'd love to hear from you!</p>
+		
+		<p>Thanks again,</p>
+		
+		<p>Nick</p>
+		
+	
+			<div style="width:100%;  margin-top:20px; height:15px;border-top:1px dotted #333"> </div>
+			
+			<%@user = User.find(1)%>
+			<%=render :partial=>"users/user_card", :locals=>{:user=>User.find(1), :fullpath=>true, :url=>"escapist.me"}%>
+			<div style="clear:both"></div>
+
+	
+
+
+
+
+
 	</div>
-	
-	<div style="width:340px; margin-left:auto; margin-right:auto; border:0px">
-	<%=render :partial=>"users/user_card", :locals=>{:user=>@user, :fullpath=>true}%>
-	</div>
-	
 
-<div style="clear:both"></div>
-	
-	<div style="width:100%;  margin-top:20px; border-top:1px dotted #ccc"> </div>
-
-
-
-
-	</div>
-	<div style="font-size:12px; margin-left:7px; margin-top:10px">Your notification settings copy all signups to your e-mail. <a class="BlueLink" href="http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@autotoken%>&type=signup">To turn off, click here</a>.</div>
-	
-	
 </div>
 
 </body>
