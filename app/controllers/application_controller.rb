@@ -27,11 +27,11 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     
-    group = Group.find(7)
+    group = Group.find(9)
 
     for group in groups
        if group.domain == true
-         if group.url != ""
+        if group.url != ""
            if @domain.include? group.url
             @group = group
             @fb_id = group.fb_id
@@ -314,9 +314,9 @@ class ApplicationController < ActionController::Base
          @plan = Plan.find(params[:plan_id]) 
 
          @challenge_url = "#{@plan.id}-#{@plan.title.parameterize}"
-         Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-                               @plan.organizers[0].email, "", 
-                               @plan.organizers[0].authentication_token, @plan.title,@challenge_url,"joined").deliver
+         #Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
+        #                       @plan.organizers[0].email, "", 
+        #                       @plan.organizers[0].authentication_token, @plan.title,@challenge_url,"joined").deliver
 
 
 

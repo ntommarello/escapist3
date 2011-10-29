@@ -3852,11 +3852,14 @@ function loadInfo(index) {
 		html = html +'<div id="plan_price" style="position:absolute; margin-left:50px;"></div>'
 	}
 	$("#homeGroupBuy").html(html)
-	if (current_plan.price & current_plan.price > 0) {
+
+	if ( parseInt(current_plan.price) > 0) {
+	
 		string_price = ''+current_plan.price+''
-		string_price = string_price.replace('.0','');
+		string_price = string_price.replace('.0','.00');
 		$('#plan_price').html('$'+string_price);
     } else {
+
 		$('#plan_price').html('FREE');
 	}
 	
@@ -4049,7 +4052,8 @@ function loadInfo(index) {
 		$('.home_info_next').show();
 	}
 	
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/original_"+current_plan.image_file_name
+
+	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/original_"+escape(current_plan.image_file_name)
 	switchPhoto(image_url);
 	
 	
@@ -4146,7 +4150,7 @@ function preloadImage() {
 	preload_image_index = preload_image_index +1;
 	preload_plan = plans[preload_image_index].plan;
 	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/original_"+preload_plan.image_file_name
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/original_"+escape(preload_plan.image_file_name)
 	
 	var img = new Image();
 	$(img).load(function(){

@@ -211,7 +211,10 @@ class WebController < ApplicationController
   
  
   
-  def apply
+  def test
+    
+    @comment = Comment.find(139)
+    render :layout=>false
   
  end
  

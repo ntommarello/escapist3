@@ -37,7 +37,13 @@ class Plan < ActiveRecord::Base
 
   def seats_remaining
     sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.id")
-    counter = attendance_cap -  self.hosts.length - subscribed_plans.count(:conditions => [" plan_id=?", self.id])
+    
+    if !self.attendance_cap
+      cap = 999
+    else
+      cap = self.attendance_cap
+    end
+    counter = cap - self.hosts.length - subscribed_plans.count(:conditions => [" plan_id=?", self.id])
     if sum_guests[0]
       counter = counter - sum_guests[0].guests.to_i
     end

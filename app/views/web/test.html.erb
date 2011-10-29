@@ -105,12 +105,12 @@ color:$default-link-color;
 	
 	
 	<div class="template_topnav" style="width:100%;">
-			<%if @plan.group and @plan.group.logo%>
+			<%if @group and @group.logo%>
 			<div style="float:left; margin-right:20px;">
-				<a href="http://<%=@plan.group.domain%>">
+				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-						<%=raw @plan.group.logo%>
+						<%=raw @group.logo%>
 					
 					</div>
 				</a>
@@ -120,7 +120,7 @@ color:$default-link-color;
 				</div>
 			<%else%>
 			<div style="float:left; width:120px;">&nbsp;	</div>
-				<a href="http://<%=APP_URL%>/">
+				<a href="/">
 					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
 					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 				</a>
@@ -132,7 +132,7 @@ color:$default-link-color;
 	<div class="whiteMain">
 	
 		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="http://<%=APP_URL%>/<%=@challenge_url%>"><%=@plan.title%></a>.
+		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="#">Vampire Hackathon</a>.
 	</div>
 	<div class="commentBox">
 		<div style="float:left;">

@@ -22,13 +22,16 @@ class Postoffice < ActionMailer::Base
   
   
   
-  def cc_comment(from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
+  def cc_comment(comment, group, plan, from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
+    @comment = comment
+    @group = group
+    @plan = plan
     @first_name = from_first    
     @last_name = from_last   
     @message = message 
     @autotoken = autotoken 
     @message_id = from_id
-    @plan = challenge_title
+    @title = challenge_title
     @challenge_url = url
     @type = type
      

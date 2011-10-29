@@ -404,7 +404,13 @@ class PlansController < ApplicationController
       @origin = [40.7144,-74.006]
     end
     if session[:dropdown_city_value].to_i == 99  #globe
-       @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+    
+      if @group
+        @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+      else
+        @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+      end
+      
     else
  
  

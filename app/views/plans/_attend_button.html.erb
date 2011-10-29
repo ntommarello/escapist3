@@ -51,7 +51,7 @@
 		<%@subtitle = "Deadline: #{@plan.application_deadline.to_date.strftime('%b').titlecase()} #{@plan.application_deadline.to_date.strftime('%e').strip()}"%>
 	<%else%>
 		<%if @plan.price and @plan.price > 0%>
-			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@plan.price.to_s.sub( ".0", "")}</div>"%>
+			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@plan.price.to_s.sub( ".0", ".00")}</div>"%>
 
 
 			<%if @signedup%>

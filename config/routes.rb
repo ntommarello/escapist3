@@ -140,7 +140,7 @@ Trek::Application.routes.draw do
   match 'create', :controller => 'web', :action => 'apply'
   match 'host_an_adventure', :controller => 'web', :action => 'host_an_adventure'
  
-  
+  match 'test', :controller => 'web', :action => 'test'
   match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'
   match ':username', :controller => 'users', :action => 'show'
   

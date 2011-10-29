@@ -104,7 +104,19 @@
 
 
 			<%@tabs = 0%>
-			<%unless @group%>
+			
+			<%show = false%>
+			<%if @group%>
+				<%t = Time.zone.now%>
+				<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
+				<%@check = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")%>
+				<%if @check.length > 1%>
+					<%show = true%>
+				<%end%>
+			<%else%>
+				<%show = true%>
+			<%end%>
+			<%if show %>
 				<%@tabs = @tabs+1%>
 				<div class="TopDivider"></div>
 				<a href="/discover">
