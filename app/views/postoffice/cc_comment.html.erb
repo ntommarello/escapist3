@@ -89,6 +89,10 @@ color:$default-link-color;
 	border-bottom-right-radius:7px;
 	border-bottom-left-radius:7px;
 }
+.powered {
+	float:left; margin-left:10px; margin-top:10px; opacity:.8;
+	
+}
 
 </style>
 
@@ -107,7 +111,7 @@ color:$default-link-color;
 	<div class="template_topnav" style="width:100%;">
 			<%if @plan.group and @plan.group.logo%>
 			<div style="float:left; margin-right:20px;">
-				<a href="http://<%=@plan.group.domain%>">
+				<a href="http://<%=@plan.group.url%>">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
 						<%=raw @plan.group.logo%>
@@ -115,7 +119,7 @@ color:$default-link-color;
 					</div>
 				</a>
 				<a target="_blank" href="http://<%=APP_URL%>/">
-						<div class="powered"><img src="/images/powered-by.png"></div>
+						<div class="powered"><img src="http://<%=APP_URL%>/images/powered-by.png"></div>
 				</a>
 				</div>
 			<%else%>
@@ -132,7 +136,7 @@ color:$default-link-color;
 	<div class="whiteMain">
 	
 		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="http://<%=APP_URL%>/<%=@challenge_url%>"><%=@plan.title%></a>.
+		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@challenge_url%>"><%=@plan.title%></a>.
 	</div>
 	<div class="commentBox">
 		<div style="float:left;">
