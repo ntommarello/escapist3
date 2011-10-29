@@ -2,39 +2,43 @@
 <%url = "" unless defined?(url)%>
 <%fullpath = false unless defined?(fullpath)%>
 
-	<a href="<%if fullpath%>http://<%=url%><%end%>/<%=user.username%>">
-	<div class="UserCard <%if !fullpath%><%unless @user_agent.mobile?%>UserCard2<%end%><%end%>" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#000')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
+	<a href="<%if fullpath%>http://<%=url%><%end%>/<%=user.username%>" style="text-decoration: none;">
+	<div class="UserCard <%if !fullpath%><%unless @user_agent.mobile?%>UserCard2<%end%><%end%>" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#000')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')" <%if fullpath%>style="float: left;margin-top: 10px;margin-bottom: 10px;width: 330px;height: 121px;padding: 0px;-moz-border-radius: 7px;-webkit-border-radius: 7px;border-radius: 7px;border: 1px solid #ddd;box-shadow: 0 0 3px #ddd;background: #fff;cursor: pointer;color: #999;"<%end%>>
 		
 		
 		
-		<div class="TopCardShadow"></div>
+		<div class="TopCardShadow" <%if fullpath%>  style="text-shadow: 0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);position: absolute;width: 330px;-webkit-border-top-right-radius: 7px;-moz-border-radius-topright: 7px;border-top-right-radius: 7px;-webkit-border-top-left-radius: 7px;-moz-border-radius-topleft: 7px;border-top-left-radius: 7px;background: #fff;border-top: 1px solid #fff;height: 24px;background-image: -o-linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.0));"<%end%>></div>
 
-		
-				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
-		
+		<%if fullpath%>
+				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"position: absolute;margin-top: 1px;width: 120px;border-right: 1px solid #eee;height: 120px;cursor: pointer;-webkit-border-top-left-radius: 6px;-moz-border-radius-topleft: 6px;border-top-left-radius: 6px;-webkit-border-bottom-left-radius: 6px;-moz-border-radius-bottomleft: 6px;border-bottom-left-radius: 6px;") %>
+		<%else%>
+				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto") %>
+		<%end%>
 
-		<div class="TopPhotoShadow"></div>
-		<%if label == "Organizer"%>
-			<div class="organizerLabel"></div>
-		<%end%>
-		<%if label == "Judge"%>
-			<div class="judgeLabel"></div>
-		<%end%>
+		<div class="TopPhotoShadow" <%if fullpath%>style="position: absolute;width: 120px;-webkit-border-top-left-radius: 7px;-moz-border-radius-topleft: 7px;border-top-left-radius: 7px;height: 25px;background-image: -o-linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.0));" <%end%>></div>
 		
-		<%if user.id == 44%>
-			<div class="sponsorLabel"></div>
-		<%end%>
+		<%if !fullpath%>
+			<%if label == "Organizer"%>
+				<div class="organizerLabel"></div>
+			<%end%>
+			<%if label == "Judge"%>
+				<div class="judgeLabel"></div>
+			<%end%>
 		
+			<%if user.id == 44%>
+				<div class="sponsorLabel"></div>
+			<%end%>
+		<%end%>
 	
-		<div class="UserCardBio">
-			<div class="UserCardName"><%=raw user.first_name%> <%=raw user.last_name%></div>
+		<div class="UserCardBio" <%if fullpath%> style="position: absolute;margin-left: 128px;width: 180px;font-size: 13px;height: 120px;overflow: hidden;"<%end%>>
+			<div class="UserCardName" <%if fullpath%> style="color: #21547E;margin-top: 4px;font-size: 15px;line-height: 20px;"<%end%>><%=raw user.first_name%> <%=raw user.last_name%></div>
 			<div style=" margin-top:2px; line-height:16px; font-style:italic; font-family:'georgia'"><%=raw user.short_bio%></div>
 		</div>
 		
 		<%if @plan%>
 			<%guest = SubscribedPlan.find(:first,:conditions=>"plan_id=#{@plan.id} and user_id=#{user.id}")%>
 			<%if guest and guest.num_guests.to_i > 0%>
-				<div class="NumGuests"><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px">+</div><div style="float:left"><%=guest.num_guests%></div></div>
+				<div class="NumGuests" <%if fullpath%> <%end%>><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px">+</div><div style="float:left"><%=guest.num_guests%></div></div>
 			<%end%>
 		<%end%>
 
