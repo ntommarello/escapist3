@@ -143,7 +143,7 @@ color:$default-link-color;
 			<a href="http://<%=APP_URL%>/<%=@comment.user.username%>">
 				<%= image_tag(@comment.user.avatar.url(:rounded_90), :class=>"Transparent rounded50", :style=>"width:90px; float:left; margin-right:10px; height:90px;  cursor:pointer") %>
 			</a>
-			 <%=@comment.comment%></span><div class="SubtleFont" style="margin-top:2px" ><%=time_ago_in_words(@comment.created_at)%> ago</div>
+			 <%=@comment.comment%><div class="SubtleFont" style="margin-top:2px; width:300px;" ><%=time_ago_in_words(@comment.created_at)%> ago</div>
 		</div>
 
 		<div style="float:left; margin-left:10px; padding-right:5px;min-width:75px; padding-top:5px;">
