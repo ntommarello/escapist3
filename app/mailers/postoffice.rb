@@ -18,6 +18,7 @@ class Postoffice < ActionMailer::Base
      
     mail(:to      => "\"#{reciever.first_name} #{reciever.last_name}\" <#{to_email}>" ,
          :subject => "#{from_first} #{from_last} sent you a message on #{APP_NAME}!")
+         
   end
   
   

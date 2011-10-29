@@ -122,13 +122,14 @@ color:#0066FF;
 						<div class="powered"><img src="http://<%=APP_URL%>/images/powered-by.png"></div>
 				</a>
 				</div>
+				<%@url = @plan.group.url%>
 			<%else%>
 			<div style="float:left; width:120px;">&nbsp;	</div>
 				<a href="http://<%=APP_URL%>/">
 					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
 					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 				</a>
-				
+				<%@url =APP_URL%>
 			<%end%>
 		
 	</div>
@@ -136,11 +137,11 @@ color:#0066FF;
 	<div class="whiteMain">
 	
 		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@challenge_url%>"><%=@plan.title%></a>.
+		<a class="BlueLink" href="http://<%=@url%>/<%=@comment.user.username%>"><%=@comment.user.first_name%></a> commented on <a class="BlueLink" href="http://<%=@url%>/escapes/<%=@challenge_url%>"><%=raw @plan.title%></a>.
 	</div>
 	<div class="commentBox">
 		<div style="float:left;">
-			<a href="http://<%=APP_URL%>/<%=@comment.user.username%>">
+			<a href="http://<%=@url%>/<%=@comment.user.username%>">
 				<%= image_tag(@comment.user.avatar.url(:rounded_90), :class=>"Transparent rounded50", :style=>"width:90px; float:left; margin-right:10px; height:90px;  cursor:pointer") %>
 			</a>
 			 <%=@comment.comment%><div class="SubtleFont" style="margin-top:2px; width:300px;" ><%=time_ago_in_words(@comment.created_at)%> ago</div>

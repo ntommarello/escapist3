@@ -231,25 +231,25 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 						<div class="powered"><img src="http://<%=APP_URL%>/images/powered-by.png"></div>
 				</a>
 				</div>
+				<%@url = @plan.group.url%>
 			<%else%>
 			<div style="float:left; width:120px;">&nbsp;	</div>
 				<a href="http://<%=APP_URL%>/">
 					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
 					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
 				</a>
-				
+				<%@url = APP_URL%>
 			<%end%>
 		
 	</div>
 	
 	<div class="whiteMain">
-	
 		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@user.username%>"><%=@user.first_name%></a> joined <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@plan.id%>"><%=@plan.title%></a>.
+		<a class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%></a> joined <a class="BlueLink" href="http://<%=@url%>/escapes/<%=@plan.id%>"><%=raw @plan.title%></a>.
 	</div>
 	
 	<div style="width:340px; margin-left:auto; margin-right:auto; border:0px">
-	<%=render :partial=>"users/user_card", :locals=>{:user=>@user, :fullpath=>true}%>
+	<%=render :partial=>"users/user_card", :locals=>{:user=>@user, :fullpath=>true, :url=>@url}%>
 	</div>
 	
 
