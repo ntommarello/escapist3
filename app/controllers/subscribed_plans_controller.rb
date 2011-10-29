@@ -8,7 +8,10 @@ class SubscribedPlansController < ApplicationController
   def create
     
     sign_up_plan
+    Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
+    
        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
+       
    end
    
    
@@ -64,7 +67,7 @@ class SubscribedPlansController < ApplicationController
          end 
        end
 
-       Postoffice.deliver_confirmation(current_user,@plan)
+       Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
 
        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
 

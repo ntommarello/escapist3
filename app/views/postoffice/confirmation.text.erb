@@ -1,9 +1,28 @@
-Hi <%=@first%>,
+Order Confirmation:  <%=raw @plan.title%>
 
-This is a confirmation that you've signed up to attend <%=strip_tags raw @title%> on <%=@date%>.  
+http://<%=@url%>/escapes/<%=@plan.id%>
 
-<%=@link%>
+<%if @date%><%=raw @date%><%end%>
 
-We're looking forward to seeing you there!
+<%=raw @plan.location%>
 
-The <%=APP_NAME%> Team
+
+Receipt:
+
+	<%amount = (@subscribed.amount.to_f / 100).to_f%>
+	<%if @subscribed.num_guests%>
+		<%qty = @subscribed.num_guests + 1%>
+	<%else%>
+	  <%qty = + 1%>
+	<%end%>
+$<%= number_with_precision amount, :precision => 2 %></div>
+
+<%=@user.first_name%> <%=@user.last_name%>
+<%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each)<%end%>
+	
+	
+Host<%if @plan.organizers.length > 1%>s<%end%>:
+
+			<%for organizer in @plan.organizers%>
+<%=organizer.first_name%> <%=organizer.last_name%>
+			<%end%>

@@ -213,8 +213,9 @@ class WebController < ApplicationController
   
   def test
     
-    @user = User.find(1)
-    @group = nil
+    @user = User.find(1420)
+    @plan = Plan.find(33)
+    @subscribed =  SubscribedPlan.find(657)
     render :layout=>false
   
  end

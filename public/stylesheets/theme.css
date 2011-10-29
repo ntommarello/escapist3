@@ -1750,7 +1750,8 @@ a:hover {
   -webkit-user-select: none;
   -o-user-select: none;
   user-select: none;
-  z-index: 900; }
+  z-index: 900;
+  min-width: 80px; }
 
 .smallTip {
   font-size: 10px;

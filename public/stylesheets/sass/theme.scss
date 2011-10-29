@@ -1706,6 +1706,7 @@ color:$default-link-color;
     background-color:#fff;
 	@include noselect();
 	z-index:900;
+	min-width:80px;
 
 }
 .smallTip {
