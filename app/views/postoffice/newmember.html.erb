@@ -229,15 +229,11 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 		
 	</div>
 	
-	<div class="whiteMain">
-	
-	    <%if @group%>
-	<p>Hi <%=@user.first_name%>,</p>
+	<div class="whiteMain"><%if @group%><p>Hi <%=@user.first_name%>,</p>
 	
 	<p>Thanks for signing up!</p>
 			<p><b><a class="BlueLink" href="http://<%=@group.url%>/"><%=@group.name%></a></b> is powered by <b><a class="BlueLink" href="http://<%=APP_URL%>/"><%=APP_NAME%></a></b>.  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
-		<%else%>
-		<p>Hi <%=@user.first_name%>,</p>
+		<%else%><p>Hi <%=@user.first_name%>,</p>
 	
 		<p>Thanks for trying out <%=APP_NAME%>!  We help you discover kick-ass adventures... or create a <i>beautiful</i> web site to host your awesome event.</p>
 		
