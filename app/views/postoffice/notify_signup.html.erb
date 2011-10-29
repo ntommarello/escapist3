@@ -245,7 +245,7 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	<div class="whiteMain">
 	
 		<div style="font-size:18px; padding-bottom:20px">
-		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@user.username%>"><%=@user.first_name%></a> joined <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@challenge_url%>"><%=@plan.title%></a>.
+		<a class="BlueLink" href="http://<%=APP_URL%>/<%=@user.username%>"><%=@user.first_name%></a> joined <a class="BlueLink" href="http://<%=APP_URL%>/escapes/<%=@plan.id%>"><%=@plan.title%></a>.
 	</div>
 	
 	<div style="width:340px; margin-left:auto; margin-right:auto; border:0px">
@@ -261,7 +261,7 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 
 
 	</div>
-	<div style="font-size:12px; margin-left:7px; margin-top:10px">Your notification settings copy all signups to your e-mail. <a class="BlueLink" href="http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@autotoken%>&type=signup">To turn off, click here</a>.</div>
+	<div style="font-size:12px; margin-left:7px; margin-top:10px">Your notification settings copy all signups to your e-mail. <a class="BlueLink" href="http://<%=APP_URL%>/no_cc.html?user_credentials=<%=@organizer.authentication_token%>&type=signup">To turn off, click here</a>.</div>
 	
 	
 </div>

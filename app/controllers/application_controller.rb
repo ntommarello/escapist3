@@ -313,11 +313,9 @@ class ApplicationController < ActionController::Base
 
          @plan = Plan.find(params[:plan_id]) 
 
-         @challenge_url = "#{@plan.id}-#{@plan.title.parameterize}"
-         #Postoffice.cc_comment(current_user.first_name, current_user.last_name, current_user.id, 
-        #                       @plan.organizers[0].email, "", 
-        #                       @plan.organizers[0].authentication_token, @plan.title,@challenge_url,"joined").deliver
-
+         for organizer in @plan.organizers
+           Postoffice.notify_signup(current_user, @plan, organizer).deliver
+         end
 
 
          @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",params[:plan_id]])

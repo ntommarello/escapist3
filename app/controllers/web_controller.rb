@@ -213,7 +213,8 @@ class WebController < ApplicationController
   
   def test
     
-    @comment = Comment.find(139)
+    @user = User.find(1)
+    @plan = Plan.find(33)
     render :layout=>false
   
  end

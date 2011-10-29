@@ -10,14 +10,14 @@ class CommentsController < ApplicationController
     @challenge_url = "#{@subscribed.id}-#{@subscribed.title.parameterize}"
       
       
-      
-    if  @subscribed.organizers[0]
-      if @subscribed.organizers[0].messaging_bucket_comment
-        if @subscribed.organizers[0].id != current_user.id
-
-          Postoffice.cc_comment(@comment, @group, @subscribed, current_user.first_name, current_user.last_name, current_user.id, 
-                                @subscribed.organizers[0].email, params[:comments][:comment], 
-                                @subscribed.organizers[0].authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+    for organizer in @subscribed.organizers
+      if organizer
+        if organizer.messaging_bucket_comment
+          if organizer.id != current_user.id
+            Postoffice.cc_comment(organizer,@comment, @group, @subscribed, current_user.first_name, current_user.last_name, current_user.id, 
+                                  organizer.email, params[:comments][:comment], 
+                                  organizer.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
+          end
         end
       end
     end
@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
         if user.messaging_bucket_comment
           if user.id != current_user.id
             if user.id != @subscribed.organizers[0].id
-               Postoffice.cc_comment(@comment, @group, @subscribed, current_user.first_name, current_user.last_name, current_user.id, 
+               Postoffice.cc_comment(user,@comment, @group, @subscribed, current_user.first_name, current_user.last_name, current_user.id, 
                                          user.email, params[:comments][:comment], 
                                           user.authentication_token, @subscribed.title,@challenge_url,"commented on").deliver
             end

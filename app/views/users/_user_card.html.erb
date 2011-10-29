@@ -1,7 +1,8 @@
 <%label = "" unless defined?(label)%>
+<%fullpath = false unless defined?(fullpath)%>
 
-	<a href="/<%=user.username%>">
-	<div class="UserCard <%unless @user_agent.mobile?%>UserCard2<%end%>" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#000')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
+	<a href="<%if fullpath%>http://<%=APP_URL%><%end%>/<%=user.username%>">
+	<div class="UserCard <%if !fullpath%><%unless @user_agent.mobile?%>UserCard2<%end%><%end%>" onmouseover="$('.TopCardShadow',this).hide(); $('.UserCardName',this).css('color','#000')" onmouseout="$('.TopCardShadow',this).show(); $('.UserCardName',this).css('color','#21547E')">
 		
 		
 		

@@ -21,8 +21,19 @@ class Postoffice < ActionMailer::Base
   end
   
   
+  def notify_signup(user,plan,organizer)
+    @plan = plan
+    @user = user
+    @organizer = organizer
   
-  def cc_comment(comment, group, plan, from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
+    mail(:to      => "\"#{organizer.first_name} #{organizer.last_name}\" <#{organizer.email}>" ,
+         :subject => "#{user.first_name} #{user.last_name} signed up for #{plan.title}")
+  end
+  
+  
+  
+  
+  def cc_comment(organizer, comment, group, plan, from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
     @comment = comment
     @group = group
     @plan = plan
@@ -35,7 +46,7 @@ class Postoffice < ActionMailer::Base
     @challenge_url = url
     @type = type
      
-    mail(:to      => to_email,
+    mail(:to      => "\"#{organizer.first_name} #{organizer.last_name}\" <#{organizer.email}>" ,
          :subject => "#{from_first} #{from_last} #{type} #{challenge_title}")
   end
   
