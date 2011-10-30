@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111029071027) do
+ActiveRecord::Schema.define(:version => 20111030043409) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -247,7 +247,7 @@ ActiveRecord::Schema.define(:version => 20111029071027) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.decimal  "price",                :precision => 10, :scale => 2
+    t.decimal  "price",                     :precision => 10, :scale => 2
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
@@ -275,6 +275,9 @@ ActiveRecord::Schema.define(:version => 20111029071027) do
     t.boolean  "enable_date_poll"
     t.string   "custom_comment"
     t.integer  "map_zoom"
+    t.boolean  "enable_donations"
+    t.text     "donation_text"
+    t.decimal  "donation_suggested_amount", :precision => 10, :scale => 0
   end
 
   create_table "subscribed_achievements", :force => true do |t|
@@ -322,6 +325,7 @@ ActiveRecord::Schema.define(:version => 20111029071027) do
     t.boolean  "maybe"
     t.string   "label"
     t.integer  "amount"
+    t.string   "charge_id"
   end
 
   create_table "users", :force => true do |t|
@@ -386,6 +390,7 @@ ActiveRecord::Schema.define(:version => 20111029071027) do
     t.boolean  "discount_active"
     t.string   "stripe_id"
     t.boolean  "privacy_cc_signups",                         :default => true
+    t.string   "active_card"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"

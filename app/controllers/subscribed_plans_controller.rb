@@ -20,6 +20,12 @@ class SubscribedPlansController < ApplicationController
      check = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],current_user.id)
       #users can buy more tickets
       if check
+        if !check.num_guests
+          check.num_guests = 0
+        end
+        if !check.amount
+          check.amount = 0
+        end
         check.num_guests = check.num_guests + params[:qty].to_i 
         check.amount = check.amount + params[:amount].to_i
         check.save!
@@ -45,13 +51,17 @@ class SubscribedPlansController < ApplicationController
        end
        
        customer = Stripe::Customer.create(:card => token, :description => "#{current_user.id} | #{current_user.first_name} #{current_user.last_name} | #{current_user.email} | plan: #{@plan.id}" )
-       Stripe::Charge.create(
+       charge = Stripe::Charge.create(
            :amount => params[:amount].to_i, # in cents
            :currency => "usd",
           :customer => customer.id
        )
        current_user.stripe_id = customer.id
+       current_user.active_card = "#{charge.card.type} ending in #{charge.card.last4} (#{charge.card.exp_month}/#{charge.card.exp_year})"
        current_user.save!
+       
+       @subscribed.charge_id = charge.id
+       @subscribed.save!
        
     end
       

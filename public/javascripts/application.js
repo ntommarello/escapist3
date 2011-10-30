@@ -2765,7 +2765,7 @@ function openPayment() {
 }
 
 
-function validatePayment(button) {
+function validatePayment(button,type) {
 	
 	$.cookie('showAttendPop', null, { path: '/escapes/'});
 	
@@ -2795,17 +2795,50 @@ function validatePayment(button) {
 	$('#payment_warning').html('');
 	$('#paymentbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
 
-	var amount = price * 100; //amount you want to charge in cents
-	
-	    Stripe.createToken({
-	        number: $('.card-number').val(),
-	        cvc: $('.card-cvc').val(),
-	        exp_month: $('.card-expiry-month').val(),
-	        exp_year: $('.card-expiry-year').val()
-	    }, amount, stripeResponseHandler);
+
+    if (type == 1) {
+			var amount = price * 100; //amount you want to charge in cents
+		
+		    Stripe.createToken({
+		        number: $('.card-number').val(),
+		        cvc: $('.card-cvc').val(),
+		        exp_month: $('.card-expiry-month').val(),
+		        exp_year: $('.card-expiry-year').val()
+		    }, amount, stripeResponseHandler);
+	} else {
+		
+		var amount = parseFloat($('#plan_donation_suggested_amount2').val()) * 100; //amount you want to charge in cents
+		
+		    Stripe.createToken({
+		        number: $('.card-number').val(),
+		        cvc: $('.card-cvc').val(),
+		        exp_month: $('.card-expiry-month').val(),
+		        exp_year: $('.card-expiry-year').val()
+		    }, amount, stripeResponseHandler2);
+		
+		
+	}
 	
 }
 
+function stripeResponseHandler2(status, response) {
+    if (response.error) {
+		$('#paymentbutton').html('Submit Payment');
+        //show the errors on the form
+        $("#payment_warning").html(response.error.message);
+    } else {
+
+
+		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:0 }, function(theResponse){
+		
+			$('#donationtext').html('<div style="text-align:center; font-size:18px;" class="HighlightedTitle">Thanks!  You Rock!</div>')
+
+		});
+		
+		
+
+    }
+}
 
 
 function stripeResponseHandler(status, response) {
@@ -2827,6 +2860,8 @@ function stripeResponseHandler(status, response) {
 
 
 		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:$('#qty').val() }, function(theResponse){
+			
+			$('.card-number').val('');
 			$('#paymentbutton').html('Submit Payment');
 			closeRegister()	
 				
@@ -4458,6 +4493,10 @@ function saveSettings(plan_id) {
 	if ($('#enable_signups').is(':checked')) {
 		enable_signups = 1;
 	}
+	enable_donations = 0;
+	if ($('#enable_donations').is(':checked')) {
+		enable_donations = 1;
+	}
 	enable_discount = 0;
 	if ($('#enable_discount').is(':checked')) {
 		enable_discount = 1;
@@ -4467,13 +4506,15 @@ function saveSettings(plan_id) {
 		application_required = 1;
 	}
 	
-
+	donation_text = $('#plan_donation_text').val();
+	donation_suggested_amount = $('#plan_donation_suggested_amount').val();
+	
 	displaySavingInProgress();
 	slideSettings()
 	$.ajax({
         type: "POST",
         url: "/escapes/"+plan_id,
-        data: "_method=PUT&plan[price]=" + price + "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing,
+        data: "_method=PUT&plan[price]=" + price + "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing+"&plan[enable_donations]="+enable_donations+"&plan[donation_suggested_amount]="+donation_suggested_amount+"&plan[donation_text]="+donation_text,
         success: function(msg){
 			displaySaved();
 			window.location.reload();
@@ -4892,3 +4933,18 @@ function FBLogin3(button) {
 	fblogin()
 }
 
+
+
+function AddDonation(field) {
+	value = $(field).val();
+
+	
+	parsedVal = parseInt(value)
+	
+	if (parsedVal) {
+			$(field).val('')
+			price = parseInt(price) + parsedVal
+			$('.price_display').html('$'+roundNumber(price,2))
+	}
+	
+}

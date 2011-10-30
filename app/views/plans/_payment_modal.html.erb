@@ -24,117 +24,60 @@
 					
 					</select>
 					
-					<div>
-						
-					<img src="/images/creditInfo2.png" style="width:87px; height:80px; margin-top:25px">	
-						
-						
-					<img src="/images/geotrust.gif" style="margin-top:75px; opacity:.7; width:87px; height:47px">
-					</div>
+
 					
 			</div>	
 					
 
 		<div style="float:left; width:360px;margin-left: 10px;  padding-bottom:10px;">
-		<div class="SubTitle" style="font-weight:bold;"><%=raw @plan.title%></div>
+		<div class="HighlightedTitle" style="font-size:18px;"><%=raw @plan.title%></div>
 			
 			
-				<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:14px; float:left;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
-					<div class="RewardDiv" style="display:none; margin-top:10px">
-						<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
-						<input class="RewardCode" type="textfield" style="font-size:12px;">
-						<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
+			<%if @plan.enable_donations%>
+			<div style="margin-top:10px; margin-bottom:10px">
+				<div style="margin-top:10px; font-size:12px">
+					<span class="BlueLink" onclick="$(this).hide(); $('#AddDonateLayer').show(); $('#plan_donation_suggested_amount2').focus() ">Add Donation</span><div id="AddDonateLayer" style="margin-top:5px; margin-bottom:7px; display:none">
+					<div id="dollar3" style="position:absolute; margin-left:6px; margin-top:6px; font-size:13px; <%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%>color:#333<%else%>color:#aaa<%end%>" >$</div><input class="ShadowedTextBox" style="width:47px; color:#333; padding-left:15px; height:10px;" type="textfield" name="plan[donation_suggested_amount2]" id="plan_donation_suggested_amount2"  value="<%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%><%= number_with_precision @plan.donation_suggested_amount, :precision => 2 %><%end%>" onfocus="$('#dollar3').css('color','#333')" onblur="if ($(this).val() == '') {$('#dollar3').css('color','#aaa') }">
+					
+							<input type="button" style="" value="Add Donation" onclick="AddDonation($('#plan_donation_suggested_amount2'))">
+							
 					</div>
-				<div style="clear:both"></div>
-				
-				
-				
-				
-				<div id="PaymentBox" class="registerBorder" style="font-size:12px;  padding:15px; margin-top:30px; font-weight:normal;">
-					
-					    <div class="form-row">
-					        <label style="text-align:right; margin-top:9px; margin-right:5px; width:80px;float:left">Card Number:</label>
-					        <input type="text" size="20" autocomplete="off" style="float:left" class="card-number ShadowedTextBox RegisterBox"/>
-							<div style="clear:both"></div>
-						</div>  
-					<div class="form-row" style="margin-top:5px">
-
-
-					        <label style="text-align:right; margin-top:9px; margin-right:5px; width:80px;float:left">CVC:</label>
-					        <input type="text" size="4"style="float:left; width:30px;"  autocomplete="off" class="card-cvc ShadowedTextBox RegisterBox" />
-						<div style="clear:both"></div>
-			   </div>
-					    <div class="form-row" style="margin-top:5px">
-					        <label style="text-align:right; margin-top:4px; margin-right:5px; width:80px;float:left">Expiration:</label>
-					        <div style="float:left">
-							<select class="card-expiry-month">
-								<option>MM</option>
-								<option>01</option>
-								<option>02</option>
-								<option>03</option>
-								<option>04</option>
-								<option>05</option>
-								<option>06</option>
-								<option>07</option>
-								<option>08</option>
-								<option>09</option>
-								<option>10</option>
-								<option>11</option>
-								<option>12</option>
-							</select>
-							<select class="card-expiry-year">
-								<option>YYYY</option>
-								<option>2011</option>
-								<option>2012</option>
-								<option>2013</option>
-								<option>2014</option>
-								<option>2015</option>
-								<option>2016</option>
-								<option>2017</option>
-								<option>2018</option>
-								<option>2019</option>
-								<option>2020</option>
-								<option>2021</option>
-
-							</select>
-							</div>
-								<div style="clear:both"></div>
-					    </div>
-					
-						<div id="payment_warning" style="margin-left:90px; margin-top:5px; color:red; font-weight:bold"></div>
-					
-						<div id="SignIn"  class="WhiteActiveBorder" onclick="validatePayment(this)" style="margin-left:85px; width:202px">
-							<div unselectable="on" class="LightGrayGreenButton" style="width:200px" >
-								<div id="paymentbutton" class="InnerLightGrayGreenBorder">
-									Submit Payment
-								</div>
-							</div>
-						</div>
-						<div style="clear:both"></div>
-							<div class="SubTitle" style="font-weight:normal; margin-top:10px; font-size:12px;"><b>Refund Policy</b>:  100% refund, for any reason.</div>
-						
-						<div style="clear:both"></div>
-				
-					</div>
-					
-				<script>
-		
-						$(document).ready(function() {
-							$('.card-number').numeric();
-							$('.card-cvc').numeric();
-						 });
-				</script>
-				
-				
 			
-					</form>
-					
-					
-					
-					
+				</div><%=@plan.donation_text%>
+				</div>
 			
+				
+			<%end%>
+			
+			
+			<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:left; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
+				<div class="RewardDiv" style="display:none; margin-top:10px">
+					<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
+					<input class="RewardCode" type="textfield" style="font-size:12px;">
+					<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
+				</div>
+			<div style="clear:both"></div>
+			
+			
+				
 			</div>
 			
+			<%=render :partial=>"payment_form", :locals=>{:source=>"payment_modal"}%>
+				
+				
+					
+		
+				
+				
+			
+				
+
+					
+					
+					
+			
+		
+				</form>
 			
 					<button id="FreeSignup" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; display:none" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>);">Sign Me Up!</button>	
 			
@@ -167,3 +110,10 @@
 	
 	
 </div>
+
+<script>
+$(document).ready(function() {
+
+	$('#plan_donation_suggested_amount2').numeric({allow:"."});
+ });
+</script>

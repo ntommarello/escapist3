@@ -47,6 +47,18 @@
 		<input id="enable_sharing" type="checkbox" <%if @plan.enable_sharing%>checked<%end%>>Show Twitter & Facebook sharing<br>
 		<input id="enable_signups" type="checkbox" <%if @plan.enable_signups%>checked<%end%>>Show attendee sign-ups<br>
 		
+		<input id="enable_donations" onchange="if ($(this).is(':checked')) { $('#donation_settings').show() } else { $('#donation_settings').hide() }" type="checkbox" <%if @plan.enable_donations%>checked<%end%>>Enable donations<br>
+		
+		
+		<div id="donation_settings" style="margin-left:30px; margin-top:5px; <%if !@plan.enable_donations%>display:none; <%end%>">
+
+			<div id="dollar2" style="position:absolute; margin-left:6px; margin-top:6px; font-size:13px; <%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%>color:#333<%else%>color:#aaa<%end%>" >$</div><input class="ShadowedTextBox" style="width:47px; color:#333; padding-left:15px; height:10px;" type="textfield" name="plan[donation_suggested_amount]" id="plan_donation_suggested_amount"  value="<%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%><%= number_with_precision @plan.donation_suggested_amount, :precision => 2 %><%end%>" onfocus="$('#dollar2').css('color','#333')" onblur="if ($(this).val() == '') {$('#dollar2').css('color','#aaa') }"> suggested
+		
+			<br>
+		
+			<input id="plan_donation_text" name="plan[donation_text]" class="ShadowedTextBox" onfocus="if ($(this).val()=='optional text') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('optional text');  $(this).css('color','#ccc')}" style="width:350px; margin-top:5px; height:12px; <%unless @plan.donation_text or @plan.donation_text == ""%>color:#ccc<%end%>" type="textfield" value="<%if @plan.donation_text and @plan.donation_text != ""%><%=@plan.donation_text%><%else%>optional text<%end%>">
+		
+		</div>
 		
 			</div>
 			
@@ -125,3 +137,9 @@
 	
 	
 		
+	<script>
+	$(document).ready(function() {
+
+		$('#plan_donation_suggested_amount').numeric({allow:"."});
+	 });
+	</script>
