@@ -280,7 +280,17 @@
 		
 		<div style="float:left;  width:100px; text-align:right; font-size:25px; font-weight:bold">$<%= number_with_precision amount, :precision => 2 %></div>
 
-		<div style="float:left; margin-left:50px; margin-top:5px"><a target="_blank" class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%> <%=@user.last_name%></a><br><%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each)<%end%></div>
+		<div style="float:left; margin-left:50px; margin-top:5px">
+			<a target="_blank" class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%> <%=@user.last_name%></a><br>
+			
+			<%donation = ((amount.to_f - (@plan.price.to_f * qty.to_i * 100))/100).to_f%>
+			
+			<%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each<%if donation > 0%> + donation<%end%>)<%end%>
+			
+			<%if @subscribed.amount and @subscribed.amount > 0 %>
+				<p><%=@user.active_card%></p>
+			<%end%>
+		</div>
 		
 		<div style="clear:both"></div>
 		

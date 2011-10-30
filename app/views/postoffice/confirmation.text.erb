@@ -19,7 +19,8 @@ $<%= number_with_precision amount, :precision => 2 %></div>
 
 <%=@user.first_name%> <%=@user.last_name%>
 <%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each)<%end%>
-	
+
+<%if @subscribed.amount and @subscribed.amount > 0 %><%=@user.active_card%></p><%end%>
 	
 Host<%if @plan.organizers.length > 1%>s<%end%>:
 

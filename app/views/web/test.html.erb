@@ -257,26 +257,8 @@
 		<div style="margin-top:15px">
 			<div class="SubTitle" style="font-weight:bold;"><a class="BlueLink" target="_blank" href="http://<%=@url%>/escapes/<%=@plan.id%>"><%=raw @plan.title%></a></div>
 			
-			<%if  @plan.start_time%>
-			  	 <%@start = @plan.start_time.to_datetime.strftime('%l').strip()%>
-			      <%min = @plan.start_time.to_datetime.strftime('%M')%>
-			      <%if min != "00"%>
-			        <%@start = "#{@start}:#{min}"%>
-			      <%end%>
-
-			     <% @end = @plan.end_time.to_datetime.strftime('%l').strip()%>
-			     <% min2 = @plan.end_time.to_datetime.strftime('%M')%>
-			      <%if min2 != "00"%>
-			        <%@end = "#{@end}:#{min2}"%>
-			      <%end%>
-		
-				<%s_am = @plan.start_time.to_datetime.strftime('%p').downcase()%>
-		      <%e_am = @plan.end_time.to_datetime.strftime('%p').downcase()%>
-
-
-		        <%@time_string = "#{@plan.start_time.to_datetime.strftime('%A, %B %e at')} #{@start}#{s_am}"%>
-
-				<div style="line-height:18px;"><%=raw @time_string%></div>
+			<%if  @date%>
+				<div style="line-height:18px;"><%=raw @date%></div>
 			<%end%>
 			
 			<div class="SubTitle" style="margin-top:20px;"><%=raw @plan.location%></div>
@@ -298,7 +280,17 @@
 		
 		<div style="float:left;  width:100px; text-align:right; font-size:25px; font-weight:bold">$<%= number_with_precision amount, :precision => 2 %></div>
 
-		<div style="float:left; margin-left:50px; margin-top:5px"><a target="_blank" class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%> <%=@user.last_name%></a><br><%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each)<%end%></div>
+		<div style="float:left; margin-left:50px; margin-top:5px">
+			<a target="_blank" class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%> <%=@user.last_name%></a><br>
+			
+			<%donation = ((amount.to_f - (@plan.price.to_f * qty.to_i * 100))/100).to_f%>
+			
+			<%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each<%if donation > 0%> + donation<%end%>)<%end%>
+			
+			<%if @subscribed.amount and @subscribed.amount > 0 %>
+				<p><%=@user.active_card%></p>
+			<%end%>
+		</div>
 		
 		<div style="clear:both"></div>
 		
