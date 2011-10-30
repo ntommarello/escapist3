@@ -64,7 +64,12 @@
 						<%if plan.application_required%>
 							<b><%=plan.subscribed_plans.length%></b> application<%if plan.subscribed_plans.length !=1%>s<%end%>
 						<%else%>
-							<b><%=plan.signups%></b> / <b><%=plan.attendance_cap%></b> signups
+						
+							<%if plan.price and plan.price > 0%>
+								<b>$<%= number_with_precision plan.total_amount_earned.to_f, :precision => 2 %></b> earned
+							<%else%>
+								<b><%=plan.signups%></b> / <b><%=plan.attendance_cap%></b> signups
+							<%end%>
 						<%end%>
 					<%end%>
 				</div>

@@ -36,7 +36,7 @@ class Plan < ActiveRecord::Base
   end
 
   def seats_remaining
-    sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.id")
+    sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.plan_id")
     
     if !self.attendance_cap
       cap = 999
@@ -52,12 +52,23 @@ class Plan < ActiveRecord::Base
   end
   
   def signups
-    sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.id")
+    sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.plan_id")
     counter = subscribed_plans.count(:conditions => [" plan_id=?", self.id]) + self.hosts.length 
     if sum_guests[0]
       counter = counter +sum_guests[0].guests.to_i
     end
     counter.to_i
+  end
+  
+  
+  def total_amount_earned
+    sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(amount) as sum_amount", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.plan_id")
+    
+    if sum_guests[0]
+      return_total = sum_guests[0].sum_amount.to_f / 100
+    else
+      return_total = 0
+    end
   end
   
 

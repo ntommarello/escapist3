@@ -1,9 +1,18 @@
-
-
-
 <% content_for :page_title do %>
   <%=raw @plan.title%>
 <% end %>
+
+
+
+
+
+<%if params[:page]%>
+
+	<%=render :partial=>"plans/vampire_hacks"%>
+	
+<%else%>
+
+
 
 <% content_for :head do %>
 	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
@@ -12,6 +21,7 @@
 		<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 	<%end%>
 <%end%>
+
 
 <Script>
 
@@ -497,7 +507,7 @@ $(document).ready(function() {
 </script>
 
 
-
+<%end%>
 
 
 

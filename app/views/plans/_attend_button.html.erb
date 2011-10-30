@@ -82,7 +82,7 @@
 		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining == 0%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
 		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
 			<%if @over == true%>
-				<span style="color:red; font-weight:bold">This plan is over</span>
+				<div style="color:red; font-size:12px;">This event is over</div>
 			<%else%>
 			<div style="font-size:12px;">	<%=raw @subtitle%></div>
 			<%end%>
