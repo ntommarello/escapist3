@@ -4850,3 +4850,20 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	line-height:22px;
 	@include rounded_corners(10px);
 }
+
+.vampUserBox {
+	background:#ddd; font-size:12px; border:1px solid #ccc; padding:5px;
+	@include lineargradient(#F4F4F4, #FEFEFE);
+	@include roundedCorners(5px);
+	min-width:100px;
+}
+
+.SubtleLink {
+	color:#333;
+}
+.SubtleLink:hover {
+	color:#333;
+	text-decoration:underline;
+}
+
+

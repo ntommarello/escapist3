@@ -5145,3 +5145,22 @@ a.Lionright {
   -webkit-border-radius: 10px;
   border-radius: 10px 10px 10px 10px;
   -webkit-background-clip: padding-box; }
+
+.vampUserBox {
+  background: #ddd;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #f4f4f4, #fefefe);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#f4f4f4));
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  min-width: 100px; }
+
+.SubtleLink {
+  color: #333; }
+
+.SubtleLink:hover {
+  color: #333;
+  text-decoration: underline; }
