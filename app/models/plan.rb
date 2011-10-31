@@ -14,7 +14,7 @@ class Plan < ActiveRecord::Base
   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
   scope :published, :conditions => ["published = ?",true]
    scope :sort_group, :select=>"start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"group_id DESC, published ASC, isnull ASC, after desc, start_time ASC"
-   scope :sort_time, :select=>"start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"published ASC, isnull ASC, after desc, start_time ASC"
+   scope :sort_time, :select=>"plans.*, start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"published ASC, isnull ASC, after desc, start_time ASC"
 
 
    
