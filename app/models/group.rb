@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   
   
   def check_admin(user)
-      @admin = SubscribedGroups.find(:first, :conditions=>["group_id= ? and user_id = ? and admin = 1",self.id, user.id])
+      @admin = SubscribedGroup.find(:first, :conditions=>["group_id= ? and user_id = ? and admin = 1",self.id, user.id])
   end
   
 end
