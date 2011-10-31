@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :likes, :dependent => :destroy
   has_many :dislikes, :dependent => :destroy
   has_many :challenges, :through => :subscribed_challenges 
-
+  has_many :subscribed_groups, :dependent => :destroy
   
   has_many :authentications
     
@@ -26,8 +26,7 @@ class User < ActiveRecord::Base
  
   has_many :hosts
   has_many :plans_authored, :through => :hosts, :source => :plan
-  
- 
+
 
   has_many :subscribed_plans, :dependent => :destroy
   

@@ -4,8 +4,8 @@ class Plan < ActiveRecord::Base
   belongs_to :user, :foreign_key => 'host_id'
   has_many :users, :through => :subscribed_plans
   has_many :subscribed_plans, :dependent => :destroy
+
   has_many :comments, :dependent => :destroy
- # has_many :organizers, :through => :hosts, :foreign_key => 'user_id'
   has_many :organizers, :through => :hosts, :source => :user
   
   has_many :watched_plans
@@ -14,11 +14,17 @@ class Plan < ActiveRecord::Base
   scope :public_published, :conditions => ["published = ? and privacy = ?",true,1]
   scope :published, :conditions => ["published = ?",true]
    scope :sort_group, :select=>"start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"group_id DESC, published ASC, isnull ASC, after desc, start_time ASC"
+   scope :sort_time, :select=>"start_time >= '#{Time.local(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 0, 0)}' AS after, start_time IS NULL AS isnull", :order=>"published ASC, isnull ASC, after desc, start_time ASC"
+
 
    
    named_scope :filter_group, lambda { |my_id|
    { :conditions => ["group_id = ?", my_id] }
    }
+   
+  
+  scope :not_grouped, :conditions => ["group_id is null"]
+   
    
    
   acts_as_mappable
@@ -34,6 +40,8 @@ class Plan < ActiveRecord::Base
   def has_soldout
     seats_remaining <= 0
   end
+
+  
 
   def seats_remaining
     sum_guests = self.subscribed_plans.find(:all, :select=>"SUM(num_guests) as guests", :conditions => [" plan_id=?", self.id], :group => "subscribed_plans.plan_id")

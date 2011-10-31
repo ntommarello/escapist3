@@ -216,6 +216,7 @@ class PlansController < ApplicationController
     @real_edit_for_toggle = false
     
     
+    #all hosts have access
     if current_user && @plan
       for host in @plan.hosts
        if host.user_id == current_user.id
@@ -225,6 +226,19 @@ class PlansController < ApplicationController
           @extra_visibility = true
         end
       end
+      
+      #all group admins have access
+      if @plan.group
+        @admin = @plan.group.check_admin(current_user)
+          if @admin
+            @author=true
+            @real_edit_for_toggle = true
+            @editable = true
+            @extra_visibility = true
+          end
+      end
+      
+      #all escapist admins have access
       if current_user.mod_level == 5
         @admin = true
         @editable = true
@@ -512,12 +526,10 @@ class PlansController < ApplicationController
       return
     end
     
-    if @group
-      @my_plans = current_user.plans_authored.sort_group.filter_group(@group.id)
-    else
-      @my_plans = current_user.plans_authored.sort_group
-    end
-    
+  
+    @escapist_plans = current_user.plans_authored.not_grouped.sort_time
+
+    @admin_groups = current_user.subscribed_groups.admins
     
   end
   

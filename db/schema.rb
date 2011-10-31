@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030043409) do
+ActiveRecord::Schema.define(:version => 20111031183446) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -315,6 +315,15 @@ ActiveRecord::Schema.define(:version => 20111030043409) do
   add_index "subscribed_challenges", ["challenge_id"], :name => "index_subscribed_challenges_on_challenge_id"
   add_index "subscribed_challenges", ["id"], :name => "index_subscribed_challenges_on_id"
   add_index "subscribed_challenges", ["user_id"], :name => "index_subscribed_challenges_on_user_id"
+
+  create_table "subscribed_groups", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.integer  "admin"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "subscribed_plans", :force => true do |t|
     t.integer  "plan_id"

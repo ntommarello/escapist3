@@ -127,16 +127,22 @@
 			<%end%>
 			
 			
-			
-			<%if !@group or ((current_user and current_user.id == @group.user_id) or (current_user and current_user.mod_level == 5))%>		
+			<%if !@group or ((current_user and @group.check_admin(current_user)) or (current_user and current_user.mod_level == 5))%>		
 				<%@tabs = @tabs+1%>
+				<%if current_user and (current_user.plans_authored.length > 0 or current_user.subscribed_groups.admins.length > 0)%>
+					<%displayHost = false%>
+				<%else%>
+					<%displayHost = true%>
+				<%end%>
+				
 				<div class="TopDivider"></div>
-				<a href="<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>/my_escapes<%else%>/host_an_adventure<%end%>">
+				<a href="<%unless displayHost%>/my_escapes<%else%>/host_an_adventure<%end%>">
 					<div id="CreateLink"  class="NewTopTab" onclick="setActive(this)">
-						<%if current_user and current_user.mod_level > 1 and current_user.plans_authored.length > 0%>My Escapes<%else%>Host an Adventure<%end%>
+						<%unless displayHost%>My Escapes<%else%>Host an Adventure<%end%>
 					</div>
 				</a>
 			<%end%>
+			
 			
 			<%if @tabs >0%>		
 				<div class="TopDivider"></div>	
