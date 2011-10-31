@@ -109,8 +109,12 @@ class PlansController < ApplicationController
       @plan.featured = 1
       @plan.privacy = 1
     
-      if @group
-        @plan.group_id = @group.id
+      #if @group
+      #  @plan.group_id = @group.id
+      #end
+      
+      if @plan.group_id == 0
+         @plan.group_id = nil
       end
      
       @plan.city_id = 99
