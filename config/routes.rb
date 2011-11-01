@@ -1,4 +1,10 @@
 Trek::Application.routes.draw do
+  get "groups/show"
+
+  get "groups/new"
+
+  get "groups/index"
+
   get "medias/create"
 
   get "medias/destroy"
@@ -58,6 +64,7 @@ Trek::Application.routes.draw do
   resources :medias
   resources :challenges
   resources :admin
+  resources :groups
   resources :adventures, :controller => "challenges"
   
   match 'refresh_challenges' => 'challenges#refresh_challenges', :as => :refresh_challenges

@@ -1,0 +1,217 @@
+
+<% content_for :head do %>
+
+<% end %>
+
+
+
+<%if flash[:message]%>
+	<div style="font-weight:bold; color:red; position:absolute; margin-left:600px"><%=flash[:message]%></div>
+<%end%>
+<div style="margin-bottom:25px;" class="HighlightedTitle"><%=@info.name%> Settings</div>
+
+
+
+
+
+
+
+
+
+
+	<div id="tabs" class="ui-tabs" style="width:750px; padding-right:0px; margin-top:10px; font-size:12px; border:1px solid #eee; display:none; border:0px;">
+		<ul class="ui-tabs-nav" >
+			<li><div style="float:left"><a href="#tabs-1">Description</a></div></li>
+			
+			<li><div style="float:left"><a href="#tabs-2">Social Networks</a></div></li>
+	
+			<li><div style="float:left"><a href="#tabs-3">Moderators</a></div></li>
+			
+			<li><div style="float:left"><a href="#tabs-4">Integrations</a></div></li>
+		</ul>
+		
+		
+		<form id="ProfileEdit" name="ProfileEdit" action="/groups/<%=@info.id%>" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="_method" value="PUT"/>
+
+
+
+							<div id="tabs-1" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:0px; margin-top:-3px">
+
+
+								 <div style="float:left; width:60px; margin-top:7px; text-align:right">Name</div>
+								 <div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_name" name="group[name]" class="ShadowedTextBox"  value="<%=@info.name%>"></div>
+							     <div style="clear:both; height:15px"></div>
+
+
+								 <div style="float:left; width:60px; margin-top:7px; text-align:right">Tagline</div>
+								 <div style="float:left; margin-left:10px"><input type="textfield" style="width:300px" id="group_subtitle" name="group[subtitle]" class="ShadowedTextBox"  value="<%=@info.subtitle%>"></div>
+							     <div style="clear:both; height:15px"></div>
+							
+								
+								 <input id="group_domain" name="group[domain]" type="checkbox" onchange="if ($(this).attr('checked')) { $('#domain').show(); } else {$('#domain').hide(); }" <%if @info.domain%>checked<%end%>>Enable custom domain (i.e, yourname.com)<br>
+							
+							
+								<div id="domain" <%if !@info.domain%>style="display:none"<%end%>>
+									<input type="textfield" style="width:300px" id="group_url" name="group[url]" class="ShadowedTextBox"  value="<%=@info.url%>">
+								</div>
+							
+							
+								<div style="clear:both"></div>
+								<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+
+
+
+							</div>
+
+
+		
+		
+		
+		
+		<div id="tabs-2" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:3px;">
+
+
+			<div style="margin-bottom:7px;"><b>Twitter</b></div>
+        
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">Name</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_twitter_name" name="group[twitter_name]" class="ShadowedTextBox"  value="<%=@info.twitter_name%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">Custom Tweet</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_custom_twitter_text" name="group[custom_twitter_text]" class="ShadowedTextBox"  value="<%=@info.custom_twitter_text%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			
+			<div style="margin-bottom:7px;"><b>Facebook</b></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">Fan Page</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_link" name="group[fb_link]" class="ShadowedTextBox"  value="<%=@info.fb_link%>"></div>
+			<div style="clear:both; height:15px"></div>
+		
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">App ID</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_id" name="group[fb_id]" class="ShadowedTextBox"  value="<%=@info.fb_id%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">App Secret</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_secret" name="group[fb_secret]" class="ShadowedTextBox"  value="<%=@info.fb_secret%>"></div>
+			<div style="clear:both; height:15px"></div>	
+
+
+				<div style="margin-bottom:7px;"><b>Other</b></div>
+
+				<div style="float:left; width:60px; margin-top:7px; text-align:right">Tumblr</div>
+				<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_tumblr" name="group[tumblr]" class="ShadowedTextBox"  value="<%=@info.tumblr%>"></div>
+				<div style="clear:both; height:15px"></div>
+
+
+			<div id="SaveButton" class="yellowButton"  style="margin-top:10px; margin-left:90px" onclick="validateSettings(); ">Save</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<div id="tabs-3" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+
+
+						
+				
+				
+			<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+		</div>
+		
+		<div id="tabs-4" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+	
+			<div style="margin-bottom:7px;"><b>Mailchimp</b></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">API Key</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_mailchimp_key" name="group[mailchimp_key]" class="ShadowedTextBox"  value="<%=@info.mailchimp_key%>"></div>
+			<div style="clear:both; height:15px"></div>
+		
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">List ID</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_mailchimp_list" name="group[mailchimp_list]" class="ShadowedTextBox"  value="<%=@info.mailchimp_list%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			
+			<div style="margin-bottom:7px;"><b>Stripe (Payment)</b></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">publishable key (live)</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_stripe_public" name="group[stripe_public]" class="ShadowedTextBox"  value="<%=@info.stripe_public%>"></div>
+			<div style="clear:both; height:15px"></div>
+		
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">secret key (live)</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_stripe_private" name="group[stripe_private]" class="ShadowedTextBox"  value="<%=@info.stripe_private%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			<div style="margin-bottom:7px;"><b>Analytics</b></div>
+			
+			<div style="float:left; width:60px; margin-top:7px; text-align:right">javascript</div>
+			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_statcounter" name="group[statcounter]" class="ShadowedTextBox"  value="<%=@info.statcounter%>"></div>
+			<div style="clear:both; height:15px"></div>
+			
+			
+				<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+			
+			
+			
+			
+			
+		</div>
+		</form>
+		
+		<div id="tabs-5" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
+			
+			
+
+			
+			
+			
+			
+				
+		</div>
+			
+	</div>	
+	
+	
+
+
+		
+		
+			
+			<script>
+			
+			
+			
+		
+			
+			$(document).ready(function() {
+			
+			
+					
+				$("#tabs").tabs({ cookie: { expires: 30 }}).addClass('ui-tabs-vertical ui-helper-clearfix');
+	
+				$("#tabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
+				$('#tabs').show();
+				
+			});
+			
+			</script>
+			
+
+
+
+				<style type="text/css"> 
+
+			/* Vertical Tabs
+			----------------------------------*/
+			.ui-tabs-vertical { width: 55em; }
+			.ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+			.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+			.ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+			.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-selected { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+			.ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+				</style>

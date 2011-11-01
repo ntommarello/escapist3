@@ -2330,8 +2330,8 @@ input.SubmitButton {
 
 .messageRow {
   width: 710px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
@@ -5164,3 +5164,23 @@ a.Lionright {
 .SubtleLink:hover {
   color: #333;
   text-decoration: underline; }
+
+.GroupBar {
+  background: #ddd;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  background-image: -moz-linear-gradient(100% 100% 90deg, #999999, #bababa);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bababa), to(#999999));
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+  font-size: 18px;
+  line-height: 26px;
+  margin-top: 50px;
+  margin-bottom: 5px;
+  color: #fff;
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-shadow: rgba(33, 33, 33, 0.6) 0px -1px 0;
+  border: 1px solid #999; }

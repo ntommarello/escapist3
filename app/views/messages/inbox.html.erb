@@ -16,7 +16,7 @@
 </div>
 
 
-<div style="float:left; margin-left:70px;  width:640px;">
+<div style="float:left; margin-left:70px;  width:640px; font-size:15px; line-height:20px">
 
 
 <% @message_list.each do |message| %>
@@ -35,12 +35,12 @@
 		</div>
 	
 		<div style="float:left; margin-left:10px; width:180px;">
-			<a href="/<%=message.username%>" class="BlueLink" onmouseover="event.stopPropagation(); $('#Action<%= message.id %>').hide();"><%=message.first_name%> <%=message.last_name%></a>
+			<a href="/<%=message.username%>" class="BlueLink" onmouseover="event.stopPropagation(); $('#Action<%= message.id %>').hide();"><%=raw message.first_name%> <%=raw message.last_name%></a>
 			<div style="font-size:11px; color:#847784; font-weight:normal"><%=message.created_at.strftime("%B %d at %I:%M%p")%></div>
 		</div>
 		<div style="float:left; margin-left:10px; width:410px; height:30px;" class="truncate">
 			<%if message.message%>
-				<%=message.message.slice(0,150)%>
+				<%=raw message.message.slice(0,170)%>
 			<%end%>
 		</div>
     <div style="float:left; margin-left:20px;">
