@@ -4548,7 +4548,7 @@ function showWarningMessage(error) {
 
 
 function slideSettings() {
-	
+
 	
 	if ( $("#SettingsLayer").is(':visible') ) {
 		

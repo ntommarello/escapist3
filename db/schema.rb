@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111031183446) do
+ActiveRecord::Schema.define(:version => 20111101152603) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -180,6 +180,12 @@ ActiveRecord::Schema.define(:version => 20111031183446) do
     t.string   "fb_link"
     t.string   "stripe_public"
     t.string   "stripe_private"
+    t.string   "favicon_file_name"
+    t.string   "favicon_content_type"
+    t.integer  "favicon_file_size"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
   end
 
   create_table "hosts", :force => true do |t|

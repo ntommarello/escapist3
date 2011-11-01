@@ -336,7 +336,7 @@ adjustMapLabel();
 			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:300px; padding:5px; background:#FFFFCC; height:30px;">
 				<div style="width:34px; float:left'"><img src="/images/greencheck.png"></div>
 				<div class="HighlightedTitle"  style=" float:left; font-size:20px; margin-top:2px;">You are <%if @author%>hosting<%else%>attending<%end%>!</div>
-				<%if @plan.price < 1%>
+				<%if @plan.price.to_i < 1%>
 				<div id="CancelPlan" style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
 				
 				<%else%>

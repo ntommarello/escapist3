@@ -21,7 +21,9 @@
 
 	<div id="tabs" class="ui-tabs" style="width:750px; padding-right:0px; margin-top:10px; font-size:12px; border:1px solid #eee; display:none; border:0px;">
 		<ul class="ui-tabs-nav" >
-			<li><div style="float:left"><a href="#tabs-1">Description</a></div></li>
+			<li><div style="float:left"><a href="#tabs-1">Info</a></div></li>
+			
+			<li><div style="float:left"><a href="#tabs-5">Domain</a></div></li>
 			
 			<li><div style="float:left"><a href="#tabs-2">Social Networks</a></div></li>
 	
@@ -49,12 +51,7 @@
 							     <div style="clear:both; height:15px"></div>
 							
 								
-								 <input id="group_domain" name="group[domain]" type="checkbox" onchange="if ($(this).attr('checked')) { $('#domain').show(); } else {$('#domain').hide(); }" <%if @info.domain%>checked<%end%>>Enable custom domain (i.e, yourname.com)<br>
-							
-							
-								<div id="domain" <%if !@info.domain%>style="display:none"<%end%>>
-									<input type="textfield" style="width:300px" id="group_url" name="group[url]" class="ShadowedTextBox"  value="<%=@info.url%>">
-								</div>
+
 							
 							
 								<div style="clear:both"></div>
@@ -65,8 +62,68 @@
 							</div>
 
 
+		<div id="tabs-5" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:3px;">
+			
+			 <input id="group_domain" name="group[domain]" type="checkbox" onchange="if ($(this).attr('checked')) { $('#domain').show(); } else {$('#domain').hide(); }" <%if @info.domain%>checked<%end%>>Enable custom domain (i.e, yourname.com)<br>
 		
 		
+			<div id="domain" <%if !@info.domain%>style="display:none"<%end%>>
+				<input type="textfield" style="width:300px" id="group_url" name="group[url]" class="ShadowedTextBox"  value="<%=@info.url%>">
+				
+				
+				<div style="margin-bottom:7px;"><b>Facebook Connect</b></div>
+
+				<div style="float:left; width:60px; margin-top:7px; text-align:right">App ID</div>
+				<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_id" name="group[fb_id]" class="ShadowedTextBox"  value="<%=@info.fb_id%>"></div>
+				<div style="clear:both; height:15px"></div>
+
+				<div style="float:left; width:60px; margin-top:7px; text-align:right">App Secret</div>
+				<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_secret" name="group[fb_secret]" class="ShadowedTextBox"  value="<%=@info.fb_secret%>"></div>
+				<div style="clear:both; height:15px"></div>
+				
+			</div>
+			
+				<div style="margin-bottom:7px;"><b>Graphics</b></div>
+
+				<div style="float:left; width:60px; margin-top:7px; text-align:right">Logo</div>
+				<div style="float:left; margin-left:10px">
+					
+					<div class="template_topnav" style="width:420px; min-width:200px; float:left">
+						<%=image_tag @info.logo.url(:header), :style=>"margin-top:3px" %>
+					</div>
+					
+					<div style="float:left">
+						<input type="file" style="width:200px" id="group_logo" name="group[logo]" class="ShadowedTextBox">
+					</div>
+				<div>
+				<div style="clear:both; height:15px"></div>
+				
+				<div style="float:left; width:60px; margin-top:7px; text-align:right">Favicon</div>
+				<div style="float:left; margin-left:10px">
+					
+					<div style="float:left">
+						<div style="background:#CFCFCF; height:16px; width:16px">
+							<%=image_tag @info.favicon.url(:original), :style=>"height:16px; width:16px;" %>
+						</div>
+					</div>
+					
+					<div style="float:left">
+					<input type="file" style="width:200px" id="group_favicon" name="group[favicon]" class="ShadowedTextBox"  value="<%=@info.favicon%>">
+					</div>
+				</div>
+				<div style="clear:both; height:15px"></div>
+	
+				
+			</div>
+			
+			
+							<div style="clear:both"></div>
+							<div id="SaveButton" class="yellowButton"  style="margin-top:20px" onclick="$('#ProfileEdit').submit()">Save</div>
+			
+			
+			
+		</div>
+		</div>
 		
 		
 		<div id="tabs-2" class="ui-tabs-hide ui-tabs-container" style="min-height:300px; padding-top:3px;">
@@ -89,13 +146,7 @@
 			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_link" name="group[fb_link]" class="ShadowedTextBox"  value="<%=@info.fb_link%>"></div>
 			<div style="clear:both; height:15px"></div>
 		
-			<div style="float:left; width:60px; margin-top:7px; text-align:right">App ID</div>
-			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_id" name="group[fb_id]" class="ShadowedTextBox"  value="<%=@info.fb_id%>"></div>
-			<div style="clear:both; height:15px"></div>
-			
-			<div style="float:left; width:60px; margin-top:7px; text-align:right">App Secret</div>
-			<div style="float:left; margin-left:10px"><input type="textfield" style="width:200px" id="group_fb_secret" name="group[fb_secret]" class="ShadowedTextBox"  value="<%=@info.fb_secret%>"></div>
-			<div style="clear:both; height:15px"></div>	
+
 
 
 				<div style="margin-bottom:7px;"><b>Other</b></div>
