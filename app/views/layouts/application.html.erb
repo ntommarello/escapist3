@@ -29,8 +29,7 @@
 		
 		
 	<%if @group and  @group.favicon%>
-	
-		<link rel="shortcut icon" type="image/png"  href="/images/<%=@group.favicon%>"/>
+		<link rel="shortcut icon" type="image/png"  href="<%=@group.favicon.url(:original)%>"/>
 	<%else%>
 		<link rel="shortcut icon" type="image/png"  href="/images/escapist.ico"/>
 	<%end%>	
@@ -72,7 +71,7 @@
 				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-						<%=raw @group.logo%>
+						<%=image_tag @group.logo.url(:header), :style=>"margin-top:3px" %>
 					
 					</div>
 				</a>

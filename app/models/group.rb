@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   has_many :subscribed_groups, :dependent => :destroy
   
   has_attached_file :logo, attachment_attrs(
-    :default_url => "/images/no_pic_b.png",
+    :default_url => "",
     :styles => { :header => ["400x44>", :png], :square => ["100x100#", :png]  }
     )
   
