@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     
-    #group = Group.find(9)
+    #group = Group.find(10)
 
     for group in groups
        if group.domain == true
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
             @fb_secret = group.fb_secret
             @source = group.url
           end
-        end
+      end
       end
     end
   end

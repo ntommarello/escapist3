@@ -102,10 +102,14 @@
 				</div>
 				
 				
-				<div style="float:left">
-					<div style="background:#CFCFCF; height:16px; width:16px">
-						<%=image_tag @info.favicon.url(:original), :style=>"height:16px; width:16px;" %>
-					</div>
+				<div style="float:left; width:250px; height:30px; background:url(/images/tab.png)">
+					<div style=" height:16px; width:16px; float:left; ">
+						<%if @info.favicon%>
+							<%=image_tag @info.favicon.url(:original), :style=>"height:16px; margin-left:18px; margin-top:9px; width:16px;" %>	
+						<%else%>
+							<img src="/images/escapist.ico" style="width:16px; height:16px;  margin-left:18px; margin-top:9px;">
+						<%end%>
+					</div><div style="float:left; margin-left:30px; margin-top:6px; font-size:11px; color:black"><%=@info.name%></div>
 				</div>
 				
 		

@@ -21,10 +21,15 @@
 				<%sanitizedTitle = sanitizedTitle.gsub("<div>"," ")%>
 				<%sanitizedTitle = sanitizedTitle.gsub("</div>"," ")%>
 				<%sanitizedTitle = sanitizedTitle.gsub("<br>"," ")%>
+				<%if sanitizedTitle.length > 1%><%sanitizedTitle = " | #{sanitizedTitle}"%><%end%>
 			<%else%>
-				<%sanitizedTitle = 'Social Adventure Travel'%>
+				<%sanitizedTitle = 'Kick-Ass Events'%>
 			<%end%>
-			<%=@group.name%> | <%= yield_for(:page_title, sanitizedTitle)%><%else%><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure Travel')%><%end%></title>
+			<%=@group.name%> <%= yield_for(:page_title, sanitizedTitle)%>
+		<%else%>
+			<%=APP_NAME%> <%= yield_for(:page_title, '| Kick-Ass Events ')%>
+		<%end%>
+	</title>
 	
 		
 		
