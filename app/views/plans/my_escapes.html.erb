@@ -24,7 +24,7 @@
 	<%for subscribed in @admin_groups%>
 		<div class="GroupBar">
 			<div style="float:left; margin-left:8px;"><%=subscribed.group.name%></div>
-			<div style="float:right">	<a href="/groups/<%=subscribed.group.id%>/edit" style="margin-right:4px" class="Lionbutton Lioncenter tl" title="Settings" onclick="$(this).html('<img style=\'margin-top:5px;\' src=\'/images/ajax-loader_f.gif\'>');"><div class="EditSettingsIcon"></div></a></div>
+			<div style="float:right" >	<a href="/groups/<%=subscribed.group.id%>/edit" style="margin-right:4px;" class="Lionbutton Lioncenter tl" title="Settings" onclick="$(this).html('<img style=\'margin-top:5px;\' src=\'/images/ajax-loader_f.gif\'>');"><div class="EditSettingsIcon" style="float:left"></div><div style="float:left; margin-left:7px;">Settings</div></a></div>
 			<div style="clear:both"></div>
 		</div>
 		<%escapist_shown=true%>

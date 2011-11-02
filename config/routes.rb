@@ -111,6 +111,8 @@ Trek::Application.routes.draw do
   
   
   match 'spotlight' => 'web#spotlight', :as => :spotlight
+  
+  
   match 'spotlight2' => 'web#spotlight2', :as => :spotlight2
   match 'new_home' => 'web#new_home', :as => :new_home
   match 'live_search' => 'web#live_search', :as => :live_search

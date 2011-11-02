@@ -114,10 +114,11 @@
 		
 		<%if allow_return%>
 			var s = new Sanitize({ 
-			    elements:   ['br','ul','li','b','div','a'],
+			    elements:   ['br','ul','li','b','div','a','iframe'],
 				attributes: { 
 				        a: ['href', 'target'], 
-				        div: ['class', 'style'] 
+				        div: ['class', 'style'],
+						iframe: ['class', 'style', 'width', 'height','type','src','frameborder'] 
 				    },
 					protocols:  { 
 					        a: { href: ['http', 'https', 'mailto'] }
