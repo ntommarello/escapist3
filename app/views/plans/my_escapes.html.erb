@@ -41,7 +41,7 @@
 
 
 
-<%if escapist_shown == true and @escapist_plans.length > 0%>
+<%if escapist_shown == true and @escapist_plans and @escapist_plans.length > 0%>
 		<div class="GroupBar">
 			<div style="float:left; margin-left:8px;">Escapist</div>
 			<div style="clear:both"></div>
@@ -50,10 +50,12 @@
 <%end%>
 
 
-<%for plan in @escapist_plans%>
-	<%i = i+1 %>
-	<%= render :partial=>"plans/plan_card", :locals=>{:plan=>plan, :i=>i, :source=>"my_escapes"}%>
-	<%if i%3==0%><div style="height:25px; clear:both"></div><%end%>
+<%if @escapist_plans%>
+	<%for plan in @escapist_plans%>
+		<%i = i+1 %>
+		<%= render :partial=>"plans/plan_card", :locals=>{:plan=>plan, :i=>i, :source=>"my_escapes"}%>
+		<%if i%3==0%><div style="height:25px; clear:both"></div><%end%>
+	<%end%>
 <%end%>
 
 

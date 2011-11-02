@@ -1270,7 +1270,25 @@ function displaySaved() {
 	$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
 	$("#StatusBar").html("Saved");
 	setTimeout("animateStatusBarUp()",1000)	
-}
+}	
+
+function displaySavedFirst() {
+
+		var scrolltop = $(window).scrollTop()
+		if (scrolltop < 50) {
+			scrolltop = 50
+		} else {
+			scrolltop = 0;
+		}
+
+		$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+		$("#StatusBar").html("Saved");
+		setTimeout("animateStatusBarUp()",3000)
+		$("#StatusBar").css("top",scrolltop+"px");
+		$("#StatusBar").show();
+		$("#StatusBar").animate({ height: "22",}, 300 );	
+	}
+
 
 function animateStatusBarUp() {
 	$("#StatusBar").animate({ height: "0",}, 300 );
@@ -4948,3 +4966,25 @@ function AddDonation(field) {
 	}
 	
 }
+
+
+function stripTags(callingObject, originalText, cursorInfo) {
+    // Get the front part of the original text (part before the new text)
+    
+alert('sad')
+var front = originalText.substring(0, cursorInfo.start);
+    // Get the back part of the original text (part after the new text)
+    var back = originalText.substring(cursorInfo.end);
+    // Get the pasted text out of the new text
+    var pasted = callingObject.val().replace(front, "").replace(back, "");
+    // Remove tags from the pasted stuff
+    pasted = pasted.replace(/(<[^<>]*>)/g, "");
+    // Remove newline characters, if we want to.
+	
+    // Put the new text into the target
+
+
+    $(callingObject).text(front + pasted + back);
+}
+
+

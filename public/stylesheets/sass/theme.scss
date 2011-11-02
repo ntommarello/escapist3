@@ -4878,3 +4878,38 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 	border:1px solid #999;
 	
 }
+
+
+
+.SettingTableLabel {
+	width:180px; text-align:right; font-size:18px; vertical-align:top; line-height:22px; padding:20px; border-top:1px solid #D7D7D7; color:#4F545A; background:#F5F5F5;
+}
+
+
+.SettingTableForms {
+	width:700px; padding:10px; padding-bottom:25px; padding-top:0px; padding-left:35px;  vertical-align:top; border-top:1px solid #D7D7D7; font-size:15px; line-height:20px;
+}
+
+.SettingLabel {
+	margin-top:20px; margin-bottom:5px;
+}
+.Integration {
+	width:280px;
+	padding:10px;
+	font-size:13px;
+	float:left;
+	margin-top:30px;
+	@include roundedCorners(10px);
+}
+
+.connectBox {
+	padding:0px; background:#E9F6FC; width:300px; font-size:12px; margin-top:15px;
+	@include roundedCorners(7px);
+}
+.connectBoxHeader {
+	padding-left:10px; padding-right:10px; padding-top:6px; padding-bottom:1px; width:280px; background:#6D83B2;
+		@include roundTop(7px);
+}
+
+
+

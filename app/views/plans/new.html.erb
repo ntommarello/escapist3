@@ -54,7 +54,12 @@
 <div style="float:left;"><input id="plan_url_name" name="plan[url_name]" type="textfield" class="ShadowedTextBox" style="width:400px; color:#aaa" value="Place, business, or landmark" onfocus="if ($(this).val() == 'Place, business, or landmark') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Place, business, or landmark'); $(this).css('color','#aaa') }"></div>
 <div style="clear:both; height:15px"></div>
 <div class="CreateLabel">Venue URL:</div>
-<div style="float:left;"><div id="http" style="position:absolute; margin-top:10px;color:#aaa; margin-left:7px; font-size:13px" onclick="$('#plan_url_link').focus()">http://</div><input id="plan_url_link" name="plan[url_link]" type="textfield" class="ShadowedTextBox" style="width:366px; padding-left:41px; color:#333" onfocus="$('#http').css('color','#333')" onblur="if ($(this).val() == '') { $('#http').css('color','#aaa') }"></div>
+
+<div style="float:left;">
+	<%=render :partial=>"layouts/url_field", :locals=>{:model=>"plan", :field=>"url_link", :prefill=>"", :width=>366, :margintop=>10}%>
+
+</div>
+
 <div style="clear:both; height:15px"></div>
 <div class="CreateLabel">Full Address:</div>
 <div style="float:left;"><input id="plan_location" name="plan[location]" type="textfield" class="ShadowedTextBox"    style="width:400px; color:#aaa" value="Type anything Google Maps can figure out" onfocus="if ($(this).val() == 'Type anything Google Maps can figure out') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val('Type anything Google Maps can figure out'); $(this).css('color','#aaa') } else { if ($(this).val() != '') { GeoCode_PlanNew($(this).val(),0)}}"></div>

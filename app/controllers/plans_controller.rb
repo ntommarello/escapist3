@@ -530,10 +530,19 @@ class PlansController < ApplicationController
       return
     end
     
-  
-    @escapist_plans = current_user.plans_authored.not_grouped.sort_time
-
-    @admin_groups = current_user.subscribed_groups.admins
+    if !@group
+      @escapist_plans = current_user.plans_authored.not_grouped.sort_time
+      @admin_groups = current_user.subscribed_groups.admins
+    else
+      if current_user.mod_level > 4
+        @admin_groups = SubscribedGroup.find(:all, :conditions=>"group_id=#{@group.id}", :group=>"group_id")
+      else
+        @admin_groups = current_user.subscribed_groups.filter_group(@group.id).admins
+      end
+    end
+    
+    
+    
     
   end
   

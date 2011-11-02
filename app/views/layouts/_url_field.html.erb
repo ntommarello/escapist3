@@ -1,0 +1,22 @@
+<div>
+	
+	<div class="http" style="position:absolute; margin-top:<%=margintop%>px;color:#<%if prefill==""%>aaa<%else%>333<%end%>; margin-left:7px; font-size:13px" onclick="$('.ShadowedTextBox',$(this).parent()).focus()">http://</div>
+	<input id="<%=model%>_<%=field%>" name="<%=model%>[<%=field%>]" type="textfield" class="ShadowedTextBox" style="width:<%=width%>px; padding-left:41px; color:#333" onfocus="$('.http',$(this).parent()).css('color','#333')" onblur="if ($(this).val() == '') { $('.http',$(this).parent()).css('color','#aaa') }" value="<%=prefill%>">
+	
+</div>
+
+
+<script>
+$('#<%=model%>_<%=field%>').bind('paste', function (e) {
+      var el = $(this);
+	        setTimeout(function() {
+	            var text = $(el).val();
+	        
+				text = text.replace("http://", "");
+	        	
+				$(el).val(text)
+				
+			}, 100);
+   });
+ 
+</script>

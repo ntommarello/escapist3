@@ -32,6 +32,8 @@ javascripts:
     - public/javascripts/rfc3339date.js
     - public/javascripts/jquery.addtocal.js
     - public/javascripts/date.js
+    - public/javascripts/jquery-textfill-0.1.js
+    
     
    
 stylesheets: 

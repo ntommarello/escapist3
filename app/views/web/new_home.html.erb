@@ -37,7 +37,7 @@
 			<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
 			<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
 			<div style="clear:both"></div>
-			<div class="home_slogan"><%=raw @slogan%></div>
+			<div class="home_slogan"><span><%=raw @slogan%></span></div>
 			<div class="home_description">
 	
 	
@@ -184,6 +184,8 @@
 	
 
 <script>
+
+
 
 height = $(window).height() - 60;
 
@@ -398,9 +400,11 @@ $(document).ready(function() {
 					}).attr("src", image_url);
 	
 
-	
+		$(document).ready(function() {
+			
+			$('.home_slogan').textfill({ maxFontPixels: 38 });
 
-
+		});
 
 
 
