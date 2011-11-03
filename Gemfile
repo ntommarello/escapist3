@@ -35,7 +35,7 @@ gem "hominid"
 #gem "active_merchant"
 gem "ri_cal"
 #gem "aws-ses", "~> 0.3.2", :require => 'aws/ses'
-
+gem 'paperclip-meta'
 
 
 # To use debugger

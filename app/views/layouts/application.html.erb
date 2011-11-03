@@ -76,7 +76,7 @@
 				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-						<%=image_tag @group.logo.url(:header), :style=>"margin-top:3px" %>
+						<%=image_tag @group.logo.url(:header), :size => @group.logo.image_size(:header), :style=>"margin-top:3px" %>
 					
 					</div>
 				</a>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111101152603) do
+ActiveRecord::Schema.define(:version => 20111103021820) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20111101152603) do
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
+    t.text     "logo_meta"
   end
 
   create_table "hosts", :force => true do |t|
