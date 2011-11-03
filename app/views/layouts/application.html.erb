@@ -71,12 +71,16 @@
 		<div id="TheCenter">
 		
 			
-			<%if @group and @group.logo%>
+			<%if @group %>
 			<div style="float:left; margin-right:20px;">
 				<a href="/">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-						<%=image_tag @group.logo.url(:header), :size => @group.logo.image_size(:header), :style=>"margin-top:3px" %>
+						<%if @group.logo_file_name and @group.logo_file_name != ""%>
+							<%=image_tag @group.logo.url(:header), :size => @group.logo.image_size(:header), :style=>"margin-top:3px" %>
+						<%else%>
+							<div class="textLogo"><%=@group.name%></div>
+						<%end%>
 					
 					</div>
 				</a>

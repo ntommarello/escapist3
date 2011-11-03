@@ -1,0 +1,105 @@
+<div style="float:left;">
+	<div style="float:left; margin-top:7px; font-size:15px; margin-right:4px;">http://</div>
+	<input id="group_username" maxlength="20" name="group[username]" <%if @info%>value="<%=@info.username%><%end%>" type="textfield" class="ShadowedTextBox" style="float:left; width:50px;  color:#333" value="" onchange="usernamechanged = true;"onfocus="if ($(this).val() == '') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val(''); $(this).css('color','#aaa') }">
+		
+	<div style="float:left; font-size:15px; margin-top:7px; margin-left:2px">.<%=APP_URL%></div>
+</div>
+
+<script>
+
+
+usernamechanged = false;
+
+function stripSpaces(field) {
+	
+	
+	if (usernamechanged) {
+		
+		
+	} else {
+		value = $(field).val();
+		value = value.toLowerCase()
+		value = value.replace( /[^a-z0-9-]*/g, '' )
+	
+		if (value.length < 20) {
+			$("#group_username").val(value)
+		}
+	}
+
+	
+	
+}
+
+$(document).ready(function() {
+	
+	
+	(function($){
+
+	    $.fn.autoGrowInput = function(o) {
+
+	        o = $.extend({
+	            maxWidth: 1000,
+	            minWidth: 0,
+	            comfortZone: 70
+	        }, o);
+
+	        this.filter('input').each(function(){
+
+	            var minWidth = o.minWidth || $(this).width(),
+	                val = '',
+	                input = $(this),
+	                testSubject = $('<tester/>').css({
+	                    position: 'absolute',
+	                    top: -9999,
+	                    left: -9999,
+	                    width: 'auto',
+	                    fontSize: input.css('fontSize'),
+	                    fontFamily: input.css('fontFamily'),
+	                    fontWeight: input.css('fontWeight'),
+	                    letterSpacing: input.css('letterSpacing'),
+	                    whiteSpace: 'nowrap'
+	                }),
+	                check = function() {
+
+	                    if (val === (val = input.val())) {return;}
+
+	                    // Enter new content into testSubject
+	                    var escaped = val.replace(/&/g, '&amp;').replace(/\s/g,'&nbsp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	                    testSubject.html(escaped);
+
+	                    // Calculate new width + whether to change
+	                    var testerWidth = testSubject.width(),
+	                        newWidth = (testerWidth + o.comfortZone) >= minWidth ? testerWidth + o.comfortZone : minWidth,
+	                        currentWidth = input.width(),
+	                        isValidWidthChange = (newWidth < currentWidth && newWidth >= minWidth)
+	                                             || (newWidth > minWidth && newWidth < o.maxWidth);
+
+	                    // Animate width
+	                    if (isValidWidthChange) {
+	                        input.width(newWidth);
+	                    }
+
+	                };
+
+	            testSubject.insertAfter(input);
+
+	            $(this).bind('keyup keydown blur update onchange', check);
+				$('#group_name').bind('keyup keydown blur update onchange', check);
+	        });
+
+	        return this;
+
+	    };
+
+	})(jQuery);
+	
+	
+  // Options are passed like this:
+	$('#group_username').autoGrowInput({
+	    comfortZone: 0,
+	    minWidth: 50,
+	    maxWidth: 200
+	});
+});
+
+</script>

@@ -4911,5 +4911,8 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 		@include roundTop(7px);
 }
 
+.textLogo {
+	line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;
+}
 
 

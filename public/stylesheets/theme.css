@@ -5244,3 +5244,10 @@ a.Lionright {
   -moz-border-radius-topleft: 7px;
   border-top-right-radius: 7px;
   border-top-left-radius: 7px; }
+
+.textLogo {
+  line-height: 44px;
+  margin-top: 3px;
+  font-size: 28px;
+  color: #fff;
+  float: left; }

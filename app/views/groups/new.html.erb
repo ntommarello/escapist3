@@ -1,2 +1,49 @@
-<h1>Groups#new</h1>
-<p>Find me in app/views/groups/new.html.erb</p>
+<%if flash[:message]%>
+<script>
+	showWarningMessage('<%=flash[:message]%>');
+</script>
+<%end%>
+
+
+
+
+<%@plan = Group.new%>
+
+<form id="EscapeForm" name="EscapeForm" action="/groups" method="post" enctype="multipart/form-data">
+
+<div style="width:900px; margin-left:auto; margin-right:auto">
+
+<div class="HighlightedTitle">Create a Web Site</div>
+
+<div class="CreateDivider">&nbsp;</div>
+
+<div class="CreateLabel">Title:</div>
+<div style="float:left;"><input id="group_name" name="group[name]" type="textfield" class="ShadowedTextBox" onkeyup="stripSpaces($(this))" onchange="stripSpaces($(this))" style="width:400px; color:#aaa" value="" onfocus="if ($(this).val() == '') { $(this).val(''); $(this).css('color','#333') }" onblur="if ($(this).val() == '') { $(this).val(''); $(this).css('color','#aaa') }"></div>
+<div style="clear:both; height:15px"></div>
+
+<div class="CreateLabel">Username:</div>
+
+<%=render :partial=>"groups/username"%>
+
+
+
+<div style="clear:both; height:15px">
+
+</div>
+
+	<div  class="newGrayButton GreenB" style="margin-top:5px; padding-top:0px;margin-left:145px; float:left; height:30px; line-height:27px; width:120px; font-size:16px;" onclick="checkUsername(this,$('#EscapeForm'),$('#group_username').val(),0);">Create</div>
+	
+</form>
+
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+	
+$("#group_name").focus();
+
+});
+
+</script>

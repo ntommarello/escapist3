@@ -42,6 +42,10 @@
 		<td class="SettingTableLabel">Domain</td>
 		<td class="SettingTableForms">
 			
+			<div style="margin-top:20px;">
+			<%=render :partial=>"groups/username"%>
+			</div>
+			<div style="clear:both"></div>
 			<div  class="SettingLabel"><input id="group_domain" name="group[domain]" type="checkbox" onchange="if ($(this).attr('checked')) { $('#domain').show(); } else {$('#domain').hide(); }" <%if @info.domain%>checked<%end%>>Use a custom domain <a target="_blank" href="/help.html#domains"><img class="TransparentOpposite" style="margin-left:5px; border:0px" src="/images/question_icon.png"></a></div>
 			
 		
@@ -89,7 +93,16 @@
 				</div>
 				
 				<div class="template_topnav" style="width:420px; padding-left:10px; min-width:200px; float:left">
-					<%=image_tag @info.logo.url(:header), :style=>"margin-top:3px" %>
+					<div style="margin-right:20px">
+					<%if @info.logo_file_name and @info.logo_file_name != ""%>
+						<%=image_tag @info.logo.url(:header), :size => @info.logo.image_size(:header), :style=>"margin-top:3px" %>
+					<%else%>
+						<div class="textLogo"><%=@info.name%></div>
+					<%end%>
+					</div>
+					<div style="float:left">
+							<div class="powered"><img src="/images/powered-by.png"></div>
+					</div>
 				</div>
 				
 			
@@ -104,12 +117,12 @@
 				
 				<div style="float:left; width:250px; height:30px; background:url(/images/tab.png)">
 					<div style=" height:16px; width:16px; float:left; ">
-						<%if @info.favicon%>
+						<%if @info.favicon_file_name and @info.favicon_file_name != ""%>
 							<%=image_tag @info.favicon.url(:original), :style=>"height:16px; margin-left:18px; margin-top:9px; width:16px;" %>	
 						<%else%>
 							<img src="/images/escapist.ico" style="width:16px; height:16px;  margin-left:18px; margin-top:9px;">
 						<%end%>
-					</div><div style="float:left; margin-left:30px; margin-top:6px; font-size:11px; color:black"><%=@info.name%></div>
+					</div><div style="float:left; margin-left:24px; margin-top:6px; font-size:11px; color:black"><%=@info.name%></div>
 				</div>
 				
 		
@@ -224,7 +237,7 @@
 
 
 
-					<button  class="newGrayButton GreenB" style="margin-top:10px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="displaySavingInProgress(); $(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>'); $('#ProfileEdit').submit()">Save</button>	
+					<button  class="newGrayButton GreenB" style="margin-top:10px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="displaySavingInProgress(); checkUsername(this,$('#ProfileEdit'),$('#group_username').val(),<%=@info.id%>);">Save</button>	
 
 
 						<button class="newGrayButton" style="margin-top:10px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:29px; width:100px; font-size:16px;"  onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>'); window.location.href='/my_escapes'">Cancel</button>
@@ -257,6 +270,12 @@ $(document).ready(function() {
 
 
 	$(".tl").tooltip();
+	
+
+
+	
+$("#group_username").blur();
+
 
 });
 </script>

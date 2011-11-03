@@ -2942,6 +2942,11 @@ function closeRegister() {
 			$("#DeletePlanLayer").hide();
 			$("#DeletePlanLayer").css('opacity',0)
 		
+			
+			setTimeout("$('#DeleteGroupLayer').hide();",150);
+			$("#DeleteGroupLayer").hide();
+			$("#DeleteGroupLayer").css('opacity',0)
+			
 		
 					setTimeout("$('#SignedUpModal').hide();",150);
 			$("#SignedUpModal").hide();
@@ -4446,6 +4451,14 @@ function OpenDeletePlan() {
 		setTimeout("centerBox($('#DeletePlanLayer')); $('#DeletePlanLayer').css('margin-top','-135px');  $('#DeletePlanLayer').show();  $('#DeletePlanLayer').animate({ opacity: 1,}, 250 );",50);
 	}
 
+	function OpenDeleteGroup(id) {
+deleteThisGroupID = id;
+			$("#BlackModal").show();
+			$("#BlackModal").animate({opacity: .4,}, 100 );
+			$("#BlackModal").height($(document).height())
+			setTimeout("centerBox($('#DeleteGroupLayer')); $('#DeleteGroupLayer').css('margin-top','-135px');  $('#DeleteGroupLayer').show();  $('#DeleteGroupLayer').animate({ opacity: 1,}, 250 );",50);
+		}
+		
 
 function openLinkEditor() {
 	
@@ -4644,7 +4657,14 @@ function destroyPlan2(id,layer) {
 	
 }
 
-
+function destroyGroup(id) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/groups/"+id, { id:id, _method:'delete'}, function(theResponse){
+		window.location.href="/my_escapes"
+	});
+	
+}
 
 
 
@@ -4987,4 +5007,47 @@ var front = originalText.substring(0, cursorInfo.start);
     $(callingObject).text(front + pasted + back);
 }
 
+
+function checkUsername(button,form,username,id) {
+	
+	oldVal = $(button).html();
+	
+	$(button).html("<img style='margin-top:3px;' src='/images/ajax-loader_f.gif'>");  
+	oldButton = $(button)
+
+	
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "/check_group_username",
+        data: "username="+username+"&id="+id,
+        success: function(error){
+
+			error = parseInt(error)
+			
+			
+			failed = false
+			if (error == 1) { 
+				failed = true
+			}
+	
+			
+			if (failed) {  
+				
+				$(oldButton).html(oldVal);
+				showWarningMessage('Username already taken.  Please try another!');
+				
+			} else {
+			
+				$(form).submit();
+			
+			}
+        }
+     });
+
+	
+	
+	
+}
 

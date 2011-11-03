@@ -21,9 +21,15 @@
 		
 		<%end%>
 		
+		<%if current_user%>
+			<div class="form-row">
+			        <label style="text-align:right; margin-top:9px; margin-right:5px; width:80px;float:left">Name:</label>
+			        <input type="text" size="20" autocomplete="off" style="float:left" class="name ShadowedTextBox RegisterBox" value="<%=current_user.first_name%> <%=current_user.last_name%>"/>
+					<div style="clear:both"></div>
+			</div>
+		<%end%>
 		
-		
-		<div class="form-row">
+		<div class="form-row" style="margin-top:5px">
 		        <label style="text-align:right; margin-top:9px; margin-right:5px; width:80px;float:left">Card Number:</label>
 		        <input type="text" size="20" autocomplete="off" style="float:left" class="card-number ShadowedTextBox RegisterBox"/>
 				<div style="clear:both"></div>
