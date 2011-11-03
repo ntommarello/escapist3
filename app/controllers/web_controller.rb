@@ -44,6 +44,12 @@ class WebController < ApplicationController
      rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
      
      if @group  #todo: eventually allow private within a group
+       
+       
+       if @group.id == 9  #temp hack for snowriders
+         conditions = "#{conditions} or id in #{@snowriders}"
+        end
+       
        @plan = Plan.published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
      else
        @plan = Plan.public_published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")

@@ -367,6 +367,8 @@ class PlansController < ApplicationController
   def geocode_plan
     #called from challenge create and challenge edit
     
+
+            
     @lat = 0
     @lng = 0
     
@@ -400,6 +402,13 @@ class PlansController < ApplicationController
   
   def discover
     
+    conditions = ""
+    if @group #temp hack for snowriders
+      if @group.id == 9  
+        conditions = "or id in #{@snowriders}"
+      end
+    end
+    
     if params[:dropdown_city_value]
       session[:dropdown_city_value] = params[:dropdown_city_value] || "Boston"
       session[:dropdown_city] = params[:dropdown_city] || "1"
@@ -424,7 +433,7 @@ class PlansController < ApplicationController
     if session[:dropdown_city_value].to_i == 99  #globe
     
       if @group
-        @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
+        @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id} #{conditions}", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
       else
         @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ?", rounded_t], :order=>"city_id desc, start_time asc", :include=>[:users])
       end
@@ -433,7 +442,10 @@ class PlansController < ApplicationController
  
  
        if @group  #todo: eventually allow private within a group
-         @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
+         
+  
+          
+         @plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id} #{conditions}", rounded_t],:order=>"start_time asc")
        else
          @plans = Plan.public_published.find(:all, :conditions=>["start_time >= ? and city_id=?", rounded_t,session[:dropdown_city_value].to_i ], :order=>"start_time asc", :include=>[:users])
           @ids = @plans.collect(&:id).to_s.sub('[','(')
@@ -538,7 +550,8 @@ class PlansController < ApplicationController
         @admin_groups = SubscribedGroup.find(:all, :conditions=>"group_id=#{@group.id}", :group=>"group_id")
       else
         @admin_groups = current_user.subscribed_groups.filter_group(@group.id).admins
-      end
+      end      
+      
     end
     
     

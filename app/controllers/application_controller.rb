@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def check_group  
     
-    
+    @snowriders = "(46)"
     
     @fb_id = FACEBOOK_APP_ID
     @fb_secret = FACEBOOK_SECRET
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     groups = Group.find(:all)  
     
     
-    #group = Group.find(10)
+    #group = Group.find(9)
 
     for group in groups
        if group.domain == true
