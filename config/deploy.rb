@@ -42,11 +42,12 @@ rubber.allow_optional_tasks(self)
 # with something like a deploy:cold which tries to run deploy:migrate but can't
 # because we filtered out the :db role
 namespace :deploy do
-  
   task :fast, :roles => :app do
-    update_code
-    symlink
+    run "cd #{current_path}; git pull origin master"
     run "/etc/init.d/apache2 restart"
+  end
+
+  task :warmup, :roles => :app do
     run "curl http://localhost:7000 &> /dev/null; exit 0"
   end
 
@@ -58,15 +59,17 @@ namespace :deploy do
   end
 end
 
-
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
+after "deploy", "deploy:warmup"
 
 after "deploy:migrations", "rubber:set_permissions"
 after "deploy:migrations", "rubber:package_assets"
+after "deploy:migrations", "deploy:warmup"
 
 after "deploy:fast", "rubber:set_permissions"
 after "deploy:fast", "rubber:package_assets"
+after "deploy:fast", "deploy:warmup"
 
 namespace :rubber do
   desc "Set permissions"
