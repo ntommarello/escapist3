@@ -48,7 +48,7 @@ namespace :deploy do
     symlink
     #done by Nap
     run "/etc/init.d/apache2 restart"
-    run "curl http://localhost:80 &> /dev/null; exit 0"
+    run "curl http://localhost:7000 &> /dev/null; exit 0"
   end
   
   
