@@ -46,12 +46,10 @@ namespace :deploy do
   task :fast, :roles => :app do
     update_code
     symlink
-    #done by Nap
     run "/etc/init.d/apache2 restart"
     run "curl http://localhost:7000 &> /dev/null; exit 0"
   end
-  
-  
+
   rubber.allow_optional_tasks(self)
   tasks.values.each do |t|
     if t.options[:roles]
@@ -63,7 +61,12 @@ end
 
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
+
+after "deploy:migrations", "rubber:set_permissions"
 after "deploy:migrations", "rubber:package_assets"
+
+after "deploy:fast", "rubber:set_permissions"
+after "deploy:fast", "rubber:package_assets"
 
 namespace :rubber do
   desc "Set permissions"
