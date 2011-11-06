@@ -42,6 +42,13 @@ rubber.allow_optional_tasks(self)
 # with something like a deploy:cold which tries to run deploy:migrate but can't
 # because we filtered out the :db role
 namespace :deploy do
+  
+  task :fast, :roles => :app do
+    update_code
+    run "cd #{current_path}; touch tmp/restart.txt"
+  end
+  
+  
   rubber.allow_optional_tasks(self)
   tasks.values.each do |t|
     if t.options[:roles]
