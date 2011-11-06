@@ -46,7 +46,9 @@ namespace :deploy do
   task :fast, :roles => :app do
     update_code
     symlink
-    run "cd #{current_path}; touch tmp/restart.txt"
+    #done by Nap
+    run "/etc/init.d/apache2 restart"
+    run "curl http://localhost:80 &> /dev/null; exit 0"
   end
   
   
