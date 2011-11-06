@@ -5,6 +5,9 @@ class Plan < ActiveRecord::Base
   has_many :users, :through => :subscribed_plans
   has_many :subscribed_plans, :dependent => :destroy
 
+
+  has_many :tickets
+
   has_many :comments, :dependent => :destroy
   has_many :organizers, :through => :hosts, :source => :user
   

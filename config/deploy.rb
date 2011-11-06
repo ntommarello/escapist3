@@ -53,6 +53,7 @@ end
 
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
+after "deploy:migrations", "rubber:package_assets"
 
 namespace :rubber do
   desc "Set permissions"

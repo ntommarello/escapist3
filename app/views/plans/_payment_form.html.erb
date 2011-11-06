@@ -1,11 +1,16 @@
+<%if source !="purchase"%>	
 <div style="float:left; width:100px">
+
 	<img src="/images/creditInfo2.png" style="width:87px; height:80px; ">	
 	<img src="/images/geotrust.gif" style="margin-top:75px; opacity:.7; width:87px; height:47px">
+
 </div>
+<%end%>
+
 
 <div style="float:left; width:360px;margin-left: 10px;  padding-bottom:10px;">
 	
-	<div id="PaymentBox" class="registerBorder" style="font-size:12px;  padding:15px; font-weight:normal;">
+	<div id="PaymentBox" <%if source !="purchase"%>	class="registerBorder ticketBox"<%end%> style="font-size:12px; padding-top:15px; width:300px; font-weight:normal;">
 		
 		
 		<%if source=="post_signup_modal"%>
@@ -87,9 +92,10 @@
 					</div>
 				</div>
 			</div>
+			<%if source !="purchase"%>
 			<div style="clear:both"></div>
 				<div class="SubTitle" style="font-weight:normal; margin-top:10px; font-size:12px;"><b>Refund Policy</b>:  100% refund, for any reason.</div>
-			
+			<%end%>
 			<div style="clear:both"></div>
 			
 				</div>

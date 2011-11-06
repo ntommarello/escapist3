@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103035924) do
+ActiveRecord::Schema.define(:version => 20111103171952) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -344,6 +344,29 @@ ActiveRecord::Schema.define(:version => 20111103035924) do
     t.string   "label"
     t.integer  "amount"
     t.string   "charge_id"
+  end
+
+  create_table "ticket_purchases", :force => true do |t|
+    t.integer  "subscribed_plan_id"
+    t.integer  "plan_id"
+    t.integer  "user_id"
+    t.integer  "ticket_id"
+    t.integer  "qty"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tickets", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.integer  "amount"
+    t.integer  "qty"
+    t.integer  "type"
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

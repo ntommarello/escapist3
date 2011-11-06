@@ -1,4 +1,12 @@
 Trek::Application.routes.draw do
+  get "purchase/index"
+
+  get "purchase/show"
+
+  get "purchase/create"
+
+  get "purchase/destroy"
+
   get "groups/show"
 
   get "groups/new"
@@ -96,7 +104,7 @@ Trek::Application.routes.draw do
   
   
   
-  
+  resources :purchase
   resources :plans
   resources :escapes, :controller => "plans"
   match '/edit_plan_date', :controller => 'plans', :action => 'edit_plan_date'

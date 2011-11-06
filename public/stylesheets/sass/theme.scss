@@ -4908,11 +4908,25 @@ width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
 }
 .connectBoxHeader {
 	padding-left:10px; padding-right:10px; padding-top:6px; padding-bottom:1px; width:280px; background:#6D83B2;
-		@include roundTop(7px);
+	@include roundTop(7px);
 }
 
 .textLogo {
 	line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;
 }
 
+.ticketRow {
+	padding-top:15px;  border-top:1px solid #fff; padding-bottom:15px; border-bottom:1px solid #E9E9EB;
+	
+}
 
+
+.ticketBox {
+	
+	background:url(/images/graytile.png);  padding:15px; padding-top:0px; width:480px; border:1px solid #AAB0B5;
+	text-shadow: 0 1px 0 rgba(255,255,255,1);
+	
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+		-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+		-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+}
