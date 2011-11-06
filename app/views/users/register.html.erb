@@ -1,77 +1,21 @@
-<script>
-$("#SignUpButton").css('opacity','.3')
-</script>
+<% content_for :head do %>
+	<meta property="fb:app_id" content="<%=@fb_id%>" /> 
+	<meta property="og:site_name" content="<%=APP_NAME%>" /> 
+	<meta property="og:title" content="<%=APP_NAME%>" /> 
+
+	<%if params[:refer_id]%>
+		<meta property="og:url" content="http://<%=APP_URL%>/register?refer_id=<%=params[:refer_id]%>" />	
+	<%else%>
+		<meta property="og:url" content="http://<%=APP_URL%>/register" /> 
+	<%end%>	
+
+	<meta property="og:type" content="website" /> 
+	<meta property="og:image" content="http://assets.stomp.io/images/10/thumb_50_original_sail3_hl2.jpg"/> 
+	<meta property="og:description" content="Join kick-ass adventures and meet awesome people.  Sign up now and save $5 off your next adventure." /> 
+	<meta property="fb:admins" content="14902644" />
+<% end %>
 
 
-
-<div style="float:left; width:335px; margin-top:50px;">
-	<div class="HighlightedTitle">Have a Facebook Account?</div>
-	<div style="margin-top:7px; margin-bottom:10px">Sign up with one click</div>
-	
-	<div style="cursor:pointer;" onclick="fblogin()">
-		<img class="Transparent" src="/images/facebook_login_large.png" style="width:154; height:22px">
-	</div>
-	
-<span class="button-signin-facebook" style="display:none"><fb:login-button onlogin="fblogin();" size="large" v="2">Login with Facebook</fb:login-button></span>
-	
-	
-	
-		<div style="float:left; cursor:pointer; margin-top:-1px; margin-left:20px; display:none"><a href="/auth/twitter"><img src="/images/twitter_login_large.png"></a></div>
-		
-		<div style="font-size:10px; margin-top:7px; margin-bottom:7px;"><b>Privacy:</b>
-		We don’t share your Stomp data with Facebook, or post anything to your Facebook profile, without your explicit permission.</div>
-		
-		<div id="fb-root"></div><fb:facepile max-rows="2" width="300"></fb:facepile>
-		
-		
+<div style="width:700px; margin-left:auto; margin-right:auto">	
+	<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}", :font_size=>"32", :num=>3}%>
 </div>
-
-
-<div style="float:right; width:300px; margin-right:40px; margin-top:50px;">
-	
-	<span class="HighlightedTitle">Don't want to use Facebook?  It's ok.  Sign up below.</span>
-	<div style="padding-top:10px; padding-bottom:10px;">Already have an account?  <a href="#" onclick="openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.</div>
-	
-     	<% form_for @user, :html => { :id => 'RegisterForm' }  do |form| %>
-			<div class="RegisterLabel">Name</div>
-			<input id="name" name="name" type="textfield" class="TextBox RegisterBox" size="30">
-	
-		
-		
-			<div style="clear:both; position:relative; height:10px; "></div>
-			
-			<div class="RegisterLabel"><%= form.label :email %></div>
-			<%= form.text_field :email, :class => "TextBox RegisterBox" %>
-			
-			<div style="clear:both; position:relative; height:10px; "></div>
-			
-				<div class="RegisterLabel"><%= form.label :password %></div>
-			<%= form.password_field :password, :class => "TextBox RegisterBox", :onKeyPress=>"return submitOnEnter(this,event,2)"   %>
-				<div style="clear:both; position:relative; height:10px; "></div>
-			
-		
-			<div class="RegisterLabel"></div>
-				<div class="RegisterBox">
-			
-					<div id="Error" style=" color:red; font-weight:bold">	
-						<%= flash[:notice] || flash[:error] %>
-					</div>
-			
-						<div id="registerbutton" unselectable="on" class="yellowButton noSelect" onclick="validateRegister()">Join</div>
-					
-					
-					<div style="float:left; margin-top:10px; clear:both">
-					</div>
-				</div>
-				
-				<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
-				
-		<% end %>
-	
-</div>
-
-<script>
-	$('#name').alpha({allow:"., "});
-	$("#name").focus()
-
-</script>

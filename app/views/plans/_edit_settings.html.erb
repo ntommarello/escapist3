@@ -1,0 +1,145 @@
+
+
+
+	<div id="SettingsLayer" style=" <%if @user_agent.mobile?%>width:940px; padding:0px; border:0; background:transparent<%else%>width:960px;<%end%>">
+		
+		  
+
+		<div id="popup" style="display:none; position:absolute; z-index:1000">
+				<img src="//wufoo.com/images/iframe/demo/fancy_close.png" style="float:right;" alt="Close">
+			<div id="iframe-goes-here"></div> 
+
+		</div>
+		
+		<div class="HighlightedTitle" style="font-size:24px; line-height:28px; margin-bottom:20px">Settings</div>
+		
+		<div style="float:left; width:45%">
+		
+		
+		
+	
+			<div class="HighlightedTitle" style="font-size:15px; line-height:18px; margin-bottom:5px;">Tickets</div>
+		
+			<%=render :partial=>"ticket_settings", :locals=>{:source=>"edit"}%>
+		</div>
+		
+		<div style="float:right; width:45%">
+		
+
+		<div class="HighlightedTitle" style="font-size:15px; line-height:18px; ">Privacy</div>
+		<input name="privacy" type="radio" value="1" onclick="$('#PasswordLayer').hide()" <%if @plan.privacy == 1%>checked<%end%>><b>Public</b>. List in the Escapist directory and on search engines<br>
+		<input name="privacy" value="2" type="radio" onclick="$('#PasswordLayer').hide()" <%if @plan.privacy == 2%>checked<%end%>><b>Private</b>. Only those with the link 
+		
+		<%if @plan.group and @plan.group.url%>
+			<a class="BlueLink" target="_blank" href="http://<%=@plan.group.url%>/">http://<%=@plan.group.url%>/</a> 
+	
+		<%else%>
+		<a class="BlueLink" target="_blank" href="http://escapist.me/?id=<%=@plan.id%>">http://escapist.me/?id=<%=@plan.id%></a> 
+		<%end%>
+		
+		may view.<br>
+		<input name="privacy" value="3" type="radio" onclick="$('#PasswordLayer').show()" <%if @plan.privacy == 3%>checked<%end%>><b>Password-Protected</b>. Restrict access to splash page without password.
+		<div id="PasswordLayer" style="margin-left:30px; <%if @plan.privacy != 3%>display:none<%end%>"><input id="plan_password" class="ShadowedTextBox" onfocus="if ($(this).val()=='password') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('password');  $(this).css('color','#ccc')}" style="width:100px; height:10px; <%unless @plan.password or @plan.password == ""%>color:#ccc<%end%>" type="textfield" value="<%if @plan.password and @plan.password != ""%><%=@plan.password%><%else%>password<%end%>"></div>
+		
+		<div style="clear:both"></div>
+		<div class="HighlightedTitle" style="font-size:15px; line-height:18px; margin-top:20px">Other Settings</div>
+		<input id="enable_comments" type="checkbox" <%if @plan.enable_comments%>checked<%end%>>Enable comments<br>
+		<input id="enable_sharing" type="checkbox" <%if @plan.enable_sharing%>checked<%end%>>Show Twitter & Facebook sharing<br>
+		<input id="enable_signups" type="checkbox" <%if @plan.enable_signups%>checked<%end%>>Show attendee sign-ups<br>
+		
+		<input id="enable_donations" onchange="if ($(this).is(':checked')) { $('#donation_settings').show() } else { $('#donation_settings').hide() }" type="checkbox" <%if @plan.enable_donations%>checked<%end%>>Enable donations<br>
+		
+		
+		<div id="donation_settings" style="margin-left:30px; margin-top:5px; <%if !@plan.enable_donations%>display:none; <%end%>">
+
+			<div id="dollar2" style="position:absolute; margin-left:6px; margin-top:6px; font-size:13px; <%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%>color:#333<%else%>color:#aaa<%end%>" >$</div><input class="ShadowedTextBox" style="width:47px; color:#333; padding-left:15px; height:10px;" type="textfield" name="plan[donation_suggested_amount]" id="plan_donation_suggested_amount"  value="<%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%><%= number_with_precision @plan.donation_suggested_amount, :precision => 2 %><%end%>" onfocus="$('#dollar2').css('color','#333')" onblur="if ($(this).val() == '') {$('#dollar2').css('color','#aaa') }"> suggested
+		
+			<br>
+		
+			<input id="plan_donation_text" name="plan[donation_text]" class="ShadowedTextBox" onfocus="if ($(this).val()=='optional text') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('optional text');  $(this).css('color','#ccc')}" style="width:350px; margin-top:5px; height:12px; <%unless @plan.donation_text or @plan.donation_text == ""%>color:#ccc<%end%>" type="textfield" value="<%if @plan.donation_text and @plan.donation_text != ""%><%=@plan.donation_text%><%else%>optional text<%end%>">
+		
+		</div>
+		
+			</div>
+			
+			<div style="clear:both"></div>
+			
+
+					
+					<div style="width:100%; margin-top:20px; background:rgba(255, 255, 204, .2); border:1px solid rgba(102,102, 0, .2)">
+					<div style="padding:10px;">
+						<div style="font-size:16px; font-weight:bold;">Upgrade to a Pro Account for More Settings</div>
+						
+						<div style="margin-top:10px; margin-bottom:10px">
+							
+							<div style="float:left; margin-left:20px;">
+							<div class="CreateScoreBox" style=""><img src="/images/icon_easy.png"></div>
+							<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF">
+								<div class="HighlightedTitle" style="font-size:14px;">It's gorgeous and easy!</div>
+								Set up your own .com with a couple of clicks. Customize it as you like.
+							</div>
+							</div>
+
+							<div class="CreateScoreBox" ><img src="/images/icon_dollar.png"></div>
+							<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF; margin-top:0px">
+								<div class="HighlightedTitle" style="font-size:14px;">Shopping Cart</div>
+								Billing system is seamlessly integrated. We take care of the hassle.
+							</div>
+
+
+												<div class="CreateScoreBox"><img src="/images/icon_monkey.png"></div>
+												<div style="float:left; margin-left:10px; width:220px; padding-top:11px; color:#558CBF">
+													<div class="HighlightedTitle" style="font-size:14px;">Cross-Promoted on Escapist</div>
+													Meet awesome escapists from around the world!</div>
+													<div style="clear:both"></div>
+						</div>
+						
+						
+						<div id="invite">
+						<b>Ask for an invite</b><br>
+							<span style="font-size:13px">We're in beta testing.  Request early access.</span>
+
+
+
+							<div style="width:266px;">	
+								<textarea id="digest_email" type="textfield"  onKeyPress="return submitDigestOnEnter(this,1,0)" class="ShadowedTextBox" style="float:left; height:20px; margin-left:0px; line-height:20px; float:left;  color:#ccc;margin-top:5px; width:190px; " onfocus="if ($(this).val()=='email') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('email');  $(this).css('color','#ccc')}">email</textarea>
+
+								<div  class="WhiteActiveBorder"  >
+									<div unselectable="on" class="LightGrayButton" style="width:50px; margin-left:3px; float:left;height:34px; margin-top:4px; line-height:34px; font-size:12px " onclick="joinCreateDigest(88)">
+										<div id="JoinDigest" class="InnerLightGrayBorder"style="height:32px;" >
+											Submit
+										</div>
+									</div>
+								</div>
+
+							</div>
+							</div>
+								<div style="clear:both"></div>
+					</div>
+			
+			</div>
+			<div style="clear:both"></div>
+			
+			<div style="width:100%; margin-top:20px;  height:40px; background:rgba(0, 0, 0, .2); border:1px solid #999">
+
+
+
+
+					<button  class="newGrayButton GreenB" style="margin-top:5px; padding-top:0px;margin-right:10px; float:right; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="saveSettings(<%=@plan.id%>)">Save</button>	
+					
+					<button class="newGrayButton" style="margin-top:5px; padding-top:0px;margin-right:10px; float:right; height:30px; line-height:29px; width:100px; font-size:16px;"  onclick="slideSettings()">Cancel</button>
+					
+
+
+	
+		</div>
+	</div>
+	
+	
+		
+	<script>
+	$(document).ready(function() {
+
+		$('#plan_donation_suggested_amount').numeric({allow:"."});
+	 });
+	</script>

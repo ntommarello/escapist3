@@ -1,30 +1,24 @@
-<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Hosted by</div>
-
-<div style="float:left">
-	<a href="/<%=host.username%>">
-		<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
-	</a>
-</div>
-<div style='float:left; margin-left:10px; padding-top:5px;'><a CLASS="BlueLink" href="/<%=@plan.user.username%>"><%=@plan.user.first_name%> <%=@plan.user.last_name%></a>
-	<div style="padding-top:5px; color:black"><%=APP_NAME%> Founder</div>
-</div>
-
-<div style="clear:both"></div>
-
-<div class="DarkBlueLabel" style="padding-top:20px; padding-bottom:10px;">Who's coming? <span style="color:#666">(<%=attendees.length + 1%>)</span></div>
-
-<a href="/<%=host.username%>">
-	<%= image_tag(host.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>host.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
-</a>
-	
-<%for person in attendees%>
-	<a href="/<%=person.username%>">
-	<%= image_tag(person.avatar.url(:thumb_90), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer") %>
-	</a>
+<%if @attendees.length > 0 and @plan.enable_signups%>
+	<div>
+		<img style="margin-top:3px; margin-right:0px; margin-bottom:3px;float:left; width:26px; height:19px" src="/images/crowdIcon.png" title="# Attendees" class="tl Transparent">
+		<div style="margin-top:5px; color:#ABABAC; font-weight:bold; font-size:12px;float:left"><%= @plan.signups%></div>
+	</div>
 <%end%>
 
-<div style="clear:both; height:40px;"></div>
+<%for host in @plan.organizers%>
+	<%=render :partial=>"users/user_card", :locals=>{:user=>host, :label=>"Organizer"}%>
+<%end%>
 
-<script>
-	$(".tl").tooltip();
-</script>
+
+<%if @plan.id == 27%>
+	<%judges = User.find(:all, :conditions=>"id=1316 || id=1318 || id=1321 || id=1319 || id=1320")%>
+	<%for judge in judges%>
+		<%=render :partial=>"users/user_card", :locals=>{:user=>judge, :label=>"Judge"}%>
+	<%end%>
+<%end%>
+
+<%if @plan.enable_signups%>
+		<%for user in attendees%>
+			<%=render :partial=>"users/user_card", :locals=>{:user=>user}%>
+		<%end%>
+<%end%>

@@ -26,9 +26,34 @@ module ApplicationHelper
     
     day_one = start_time.to_datetime.strftime('%j').strip().to_i
     day_two = end_time.to_datetime.strftime('%j').strip().to_i
+    month_one = start_time.to_datetime.strftime('%b').strip()
+    month_two = end_time.to_datetime.strftime('%b').strip()
+    year_one = start_time.to_datetime.strftime('%Y').strip().to_i
+    year_two = Date.today.strftime('%Y').to_i
     
     if (day_two != day_one) 
-       @time_string = "until #{end_time.to_datetime.strftime('%b %e')}"
+        
+        if (year_two != year_one) 
+          if (month_two == month_one) 
+            @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%e')}"
+          else
+            @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%b %e')}"
+          end
+        else
+          
+          number_of_days = (end_time.to_datetime - start_time.to_datetime).to_i + 1
+          if (number_of_days > 1)
+            @time_string = "until #{end_time.to_datetime.strftime('%B %e')}"
+            @time_string = "#{@time_string}<br><span style='font-size:11px'>(#{number_of_days} days)</span>"
+          else
+             @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')} <div style='font-size:12px; margin-top:3px;'>#{start_time.to_datetime.strftime('%l:%M%p')} until the next day at #{end_time.to_datetime.strftime('%l:%M%p')}</div>"
+          end
+          
+         
+        end
+  
+        
+
     else 
     
       @start = start_time.to_datetime.strftime('%l').strip()
@@ -47,9 +72,9 @@ module ApplicationHelper
       e_am = end_time.to_datetime.strftime('%p').downcase()
     
       if s_am == e_am
-        @time_string = "#{@start}#{s_am}-#{@end}#{e_am}"
+        @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')}<br><div style='margin-top:4px;font-size:15px'>#{@start}#{s_am}-#{@end}#{e_am}</div>"
       else
-        @time_string = "#{@start}#{s_am}-#{@end}#{e_am}"
+        @time_string = "#{start_time.to_datetime.strftime('%A, %B %e')}<br><div style='margin-top:4px; font-size:15px'>#{@start}#{s_am}-#{@end}#{e_am}</div>"
       end
     end
     
@@ -92,6 +117,20 @@ module ApplicationHelper
     end
     
   end
+  
+  def strip_html(string)
+    
+    if string
+      
+
+      
+      return string.gsub(/%3Cbr%3E/,' ').gsub(/%20/,' ').gsub(/<\s*br\s*\/?>/i,' ').gsub(/&nbsp;/,' ').gsub(/%26nbsp;/, ' ').gsub("<div>"," ").gsub("</div>"," ")
+      
+      #return string
+    end
+    
+  end
+  
   
   
 end

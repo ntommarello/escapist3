@@ -1,0 +1,73 @@
+<%@user = User.new%>
+<div id="RegisterTitle" class="HighlightedTitle registerTitle" style="font-size:<%=font_size%>px; line-height:<%=font_size%>px"><%=title%></div>
+<div class="registerSubtitle"> 
+	<%if @group%><b><%=@group.name%></b> is powered by Escapist.<%end%> Already have an account?  
+	<a href="#" onclick="closeRegister(); openLoginDrop($('#LoginButton')); ignoreHide=1;" class="BlueLink">Log in</a>.
+</div>
+
+
+	
+<div class="registerRight">
+	<div class="registerBorder">
+		<div class="RegisterLabel2 registerFB">- OR - sign up without Facebook </div>
+		<% form_for @user, :html => { :id => "RegisterForm#{num}" }  do |form| %>
+			<div class="RegisterLabel2">full name</div>
+			<div style="float:left; width:150px;">
+				<input id="name" name="name" type="textfield" class="ShadowedTextBox RegisterBox" size="30">
+			</div>
+			<div style="clear:both; position:relative; height:10px; "></div>
+			<div class="RegisterLabel2">email</div>
+			<div style="float:left; width:150px;">
+				<%= form.text_field :email, :class => "ShadowedTextBox RegisterBox" %>
+			</div>
+			<div style="clear:both; position:relative; height:10px; "></div>
+			<div class="RegisterLabel2">password</div>
+			<div style="float:left; width:220px;">
+				<%= form.password_field :password, :class => "ShadowedTextBox RegisterBox", :onKeyPress=>"return submitRegOnEnter($('#RegisterForm#{num}'),event,$('#SignIn#{num}'))"   %>
+			</div>
+			<div id="Error" class="Error" style=" color:red; font-weight:bold">	
+				<%= flash[:notice] || flash[:error] %>
+			</div>
+			<div style="clear:both; position:relative; height:2px; "></div>
+		
+			<div id="SignIn<%=num%>"  class="WhiteActiveBorder" onclick="validateRegister(this, $('#RegisterForm<%=num%>'))" style="margin-left:80px; width:120px">
+				<div unselectable="on" class="LightGrayGreenButton" >
+					<div id="registerbutton" class="InnerLightGrayGreenBorder">
+						Join <%=APP_NAME%>
+					</div>
+				</div>
+			</div>
+			<div style="clear:both"></div>
+			<input type="hidden" name="fromPage" id="fromPage" value="<%=request.env['HTTP_REFERER']%>">	
+		<% end %>
+		<div style="clear:both"></div>
+	</div>
+</div>
+
+<div style="float:left; width:310px; margin-left:2px; margin-top:23px;">
+	<div>
+		
+		
+		<div class="BigFBIcon" onclick="FBLogin3(this)">
+			<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>
+		</div>
+	
+		<br><b>Privacy:</b>
+		We won’t share your data with Facebook, or post anything to your wall, without your explicit permission.
+	</div>
+	<div style="clear:both"></div>
+	<div style="margin-top:10px; width:300px; font-size:10px;" >
+		<fb:facepile max-rows="1" width="300"></fb:facepile>
+	</div>
+	
+	<%if params[:refer_id] || session[:refer_id]%>
+		<%if params[:refer_id]%><%@id=params[:refer_id]%><%else%><%@id=session[:refer_id]%><%end%>
+		<%@refer = User.find_by_id(@id)%>
+		<%if @refer%>
+			<%session[:refer_id] = @refer.id%>
+			<div style="font-size:16px; line-height:22px; margin-top:10px;"><b><%=@refer.first_name%> <%=@refer.last_name%></b> gave you a $5 discount off your next adventure when you sign up!</div>
+		<%end%>
+	<%end%>
+	
+</div>
+<div style="clear:both"></div>

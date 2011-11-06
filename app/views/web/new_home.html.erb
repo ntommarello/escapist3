@@ -1,66 +1,180 @@
+<% content_for :head do %>
+	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan[@start_id]}%>
+<%end%>
+
+
+
+	
+
+
+
+
 	<script>plans = <%=raw @plan_json%>;</script>
-	<div id="spinner"></div>
-	
-	<script>
-	left = ($(window).width()-220) /2	
-	$("#spinner").css("left",left+"px")
-	</script>
-	<div id="big_image_background"></div>
-				
-	<div id="home_info_container" style="margin-top:250px" >
-		<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
-		<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
-		<div style="clear:both"></div>
-		<div class="home_slogan">Kickass adventures with awesome people</div>
-		<div class="home_description">
-			<div id="plan_note" class="multiline" style="width:100%; height:88px; overflow:hidden"></div>	
-			<div style="float:left; margin-top:5px;">
-				<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
-				<div id="plan_attendees" style="float:left"></div>
-				<div id="MoreAttendees" onclick="window.location.href='/plans/'+plan_id" class="Transparent"></div>
-			</div>
-				
-			<div style="float:right;margin-top:3px;">
-				<div class="home_info_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id">
-					<div class="DetailIcon"></div>
-					
-					<div style="position:absolute; margin-left:50px;">Details</div>
-				</div>
-					
-				<div class="home_buy_button" onclick="clearButton($(this)); window.location.href='/plans/'+plan_id+'?pop=yes'">
-					<div class="BuyIcon"></div>
-					<div id="plan_price" style="position:absolute; margin-left:50px;"></div>
-				</div>
-			</div>
-				
-			</div>
-			
 
-			<div class="home_info_next" style="font-size:17px;">
-				<div style="float:right" onmouseover="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#2EA42E')" onmouseout="$('#next_arrow').toggleClass('home_NextArrowButton_h'); $('#next_plan_link').css('color','#3366CC')">
-					<div id="next_arrow" onclick="nextPlan(1)" class="home_NextArrowButton" ></div>
-					<div id="next_plan_link" onclick="nextPlan(1)" style="float:right; margin-right:5px; margin-left:5px;" class="home_link"></div>
-				</div>
-				<div id="prevarrow" onclick="nextPlan(-1)" class="home_BackArrowButton" ></div>
-				<a href="/schedule">
-					<div style="float:left; " onmouseover="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#2EA42E')" onmouseout="$('#viewall1').toggleClass('ScheduleIconButton_h'); $('#viewall2').css('color','#3366CC')">
-						<div id="viewall1" class="ScheduleIconButton" ></div>
-						<div id="viewall2" style="float:left; margin-left:5px" class="home_link">All Events</div>
+	 	<div id="spinner"></div>
+   
+	 	<script>
+	 		left = ($(window).width()-220) /2	
+	 		$("#spinner").css("left",left+"px")
+		</script>
+	
+	<div id="big_image_background" style="
+	<%if @plan[0]%>
+		
+	<%else%>
+		background:url('/images/ComingSoon.jpg')
+	<%end%>
+	"></div>
+	
+	
+	<div id="DraftLayer"><img src="/images/draft.png"></div>
+	
+	
+
+	
+		<%if @plan.length > 0%>
+		<div id="home_info_container" >
+			<div id="plan_startdate" class="home_date"><span id="plan_startdate_month"></span><div id="plan_startdate_day" style="margin-top:10px;"></div></div>
+			<div class="home_title"><div class="dragIcon"></div><div id="plan_title"></div><div id="plan_url_name" class="home_subtitle"></div></div>
+			<div style="clear:both"></div>
+			<%if @slogan.length > 0%>
+			<div class="home_slogan"><span><%=raw @slogan%></span></div>
+			<%end%>
+			<div class="home_description">
+	
+	
+				<div id="description_not_logged_in" style="margin-top:7px; display:none">
+						<div style="float:left; font-size:16px;  width:189px; padding-right:20px; padding-top:15px;  text-align:Center">
+
+							Organize fun experiences & invite your friends
+
+							<div class="home_info_button" style="width:130px; font-size:15px; height:40px; line-height:40px; margin-top:20px; margin-left:auto; margin-right:auto" onclick="clearButton($(this));  window.location.href='/host_an_adventure'">
+							<div align="center">Host</div>
+
+							</div>
+						</div>
+						
+							<div style="float:left; width:1px; background:#000033; border-right:1px solid #29384D; height:150px"></div>
+						
+					<div style="float:left; font-size:16px; width:184px; padding-left:25px; padding-top:15px;  text-align:Center">
+					
+						Join adventures nearby, <br>or around the world
+					
+						<div id="discover" class="GreenButton2" style="width:130px; font-size:15px; height:40px; line-height:40px; margin-top:20px; margin-left:auto; margin-right:auto" onclick="clearButton($(this)); displayDefaultPanel = 0;  start=0; $('.home_slogan').hide(); nextPlan(0)">
+						<div style="float:left; margin-left:20px; " align="center">Discover</div>
+					<img style="float:left; margin-left:10px; margin-top:9px; width:26px; height:23px;" src="/images/next_arrow.png">
+						</div>
 					</div>
-				</a>
-			</div>
-		</div>
-
-		<div id="Home_Footer">
-			<a class="HomeFooterLink" href="/about">About</a> / <a class="HomeFooterLink" href="/jobs">Jobs</a> / <a class="HomeFooterLink" href="/tos">Terms</a> / <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
-		</div>
+		
+				
+		
+				
+				
+				</div>
+				
+				
+				<div id="description_logged_in" style="display:none" >
+	
+					<div id="plan_note" class="multiline" style="width:100%; height:48px; width:425px; overflow:hidden; font-size:17px; line-height:24px;"></div>	
+					<div style="float:left; margin-top:8px;">
+						<div style="padding-top:19px; padding-bottom:5px; color:#E8FAFF; font-size:13px;"><span id="plan_signup_count" style="color:#EDE9CD"></span> <span id="plan_signup_words"></span></div>
+						<div id="plan_attendees" style="float:left; min-width:250px;"></div>
+						<div id="MoreAttendees" onclick="window.location.href='/escapes/'+plan_id" class="Transparent"></div>
+					</div>
+				
+				
+				
+					<div style="float:right;margin-top:3px;">
+						<div class="home_info_button" onclick="clearButton($(this)); window.location.href='/escapes/'+plan_id">
+							<div class="DetailIcon"></div>
+					
+							<div style="position:absolute; margin-left:50px;">Details</div>
+						</div>
+						
+						<%if @plan.length > 1%>
+						
+						<div id="prevarrow"  class="home_info_button" style="text-align:Center; width:55px; float:left; " onclick="nextPlan(-1)">
+								<img style="margin-top:9px; width:26px; height:23px;" src="/images/back_arrow.png">
+						</div>
+						
+					
+							<div id="next_arrow" class="home_buy_button" style="margin-left:7px; text-align:Center; float:right; width:55px; " onclick="nextPlan(1)">
+									<img style="margin-top:9px; width:26px; height:23px;" src="/images/next_arrow.png">
+							</div>
+							
+						<%else%>
+						
+						<div id="homeGroupBuy" class="home_buy_button" style="float:right; margin-left:7px; " onclick="clearButton($(this));   $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'}); window.location.href='/escapes/'+plan_id">
+							
+						</div>
+						
+						
+						
+						<%end%>
+							
+					</div>
+					
+					
+					
+				</div>
+				</div>
 			
+				<%if !current_user%>
+						<div class="home_info_next" style="font-size:17px;">
+							<div style="float:left; font-size:15px; margin-left:10px">
+								Join Escapist to learn about new events
+							</div>
+							<div style="float:right; margin-right:10px; margin-top:7px;">
+							 	<div class="fb_login_small" onclick="fblogin()"></div>
+							</div>
+						</div>
+				<%end%>	
+						
+				
+				
+		
+			<%else%>
+			<div class="coming_soon">Coming Soon</div>
+			<%end%>
+			</div>
+		<%#else%>
+		
+		
+		<%#end%>
+
+  
+		<div id="Home_Footer">
+		  <%if !@group%>
+			<div style="float:left; height:24px;">
+			<a class="HomeFooterLink" href="/about">About</a>  <a class="HomeFooterLink" href="/jobs">Jobs</a>  <a class="HomeFooterLink" href="/tos">Terms</a>  <a class="HomeFooterLink" href="/privacy_policy">Privacy</a>
+			</div>
+			<%end%>		
+			
+			<%if @group and @group.twitter_name != nil%>
+				<%@twitter_link =  @group.twitter_name%>
+			<%else%>
+				<%@twitter_link =  "escapist_me"%>
+			<%end%>
+			<%if @group and @group.fb_link != nil%>
+				<%@fb_link =  @group.fb_link%>
+			<%else%>
+				<%@fb_link =  "#"%>
+			<%end%>
+			
+			
+			<div style="float:right; height:24px;">
+				<a target="_blank" href="http://<%=@fb_link%>"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:20px; height:20px; width:20px;" src="/images/fb_follow.png"></a>
+				<a href="http://twitter.com/#!/<%=@twitter_link%>" target="_blank"><img style="margin-top:2px; float:right; cursor:pointer; margin-right:5px; height:20px; width:20px;" src="/images/twitter_follow.png"></a>
+				<div style="float:right; font-size:11px; color:#fff; margin-right:10px">FOLLOW US</div>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	
+
 	
 	
 
-	<img id="hideImage" src="" style="display:none">
 
-	
 	
 	<div style="clear:both"></div>
 	<div name="preload" style="display:none">
@@ -73,7 +187,9 @@
 
 <script>
 
-height = $(window).height() + 220;
+
+
+height = $(window).height() - 60;
 
 $("#container2").css("height",height)
 
@@ -90,20 +206,59 @@ $(document).ready(function() {
 
 	handle: '.dragIcon',
   //cursor: "move",
-  containment: '#container2',
+  containment: [0, -225, $(window).width()-480, $(window).height() -240-330-60],
   
 
   });
 });
 
 
+<%if @group%>
+	group = 1
+<%else%>
+	group = 0;
+<%end%>
+
+
+
+
+<%if @plan[0]%>
+	image_url = 'http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>'
+<%else%>
+	image_url = '/images/ComingSoon.jpg'
+<%end%>
 
 
 	<%if current_user%>
 		loggedIn = 1;
 	<%else%>
 		loggedIn = 0;
+		image_url = 'http://assets.stomp.io/images/14/original_original_16.jpg'
 	<%end%>
+	
+	
+	displayDefaultPanel = 0;
+	redisplayDefault = 0;
+	<%if !@group%>
+		<%if !@start_plan%>
+			<%if !current_user%>
+			    redisplayDefault = 1;
+				displayDefaultPanel = 1;
+			<%end%>
+		<%end%>
+	<%end%>
+
+	
+	
+	
+	$('#big_image_background').css("background","url("+image_url+")")
+	
+	//short term hack to determine if password should show. Only works with one event on @group	
+	bypass_password = <%=@bypass_password%>;
+	
+	
+	
+	
 	
 	
 	skip = 0;
@@ -123,6 +278,9 @@ $(document).ready(function() {
 	
     History.Adapter.bind(window,'statechange',function(){
 
+
+
+
         State = History.getState(); 
 	
 		if (backButton == 1) {
@@ -137,6 +295,8 @@ $(document).ready(function() {
 		if (plan_index < 0) {
 			plan_index = 0;
 		}
+		
+		
 		
 		if (skip == 1 ) {
 			
@@ -176,16 +336,17 @@ $(document).ready(function() {
 
 
 
-	image_url = "http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>"
 
-		loadInfo(plan_index);
-		$("#home_info_container").show();
-		setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
-			if ($(window).height() > 600) {
-				margt = $(window).height()-51-40-330;
-				$("#home_info_container").css("margin-top",margt)
-			}
-				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
+
+	loadInfo(plan_index);
+	$("#home_info_container").show();
+	
+	setTimeout("$('#home_info_container').animate({opacity:1},500);",1);
+		if ($(window).height() > 420) {
+			margt = $(window).height()-51-40-330;
+			$("#home_info_container").css("margin-top",margt)
+		}
+				topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340-24;
 				if ($(window).height() < topInfo) {
 					$('#big_image_background').css('height', topInfo+'px');
 					footer_h =topInfo-25;
@@ -194,70 +355,58 @@ $(document).ready(function() {
 					footer_h = $(window).height()-75;
 				}
 				
-		
-				
-				
-	//load main image first, turn off slider and display
-	$('#hideImage').attr('src', image_url).load(function() {
-		
-		//TODO: TEMP HACKY
-		
 	
 		
-		
-		if ($(window).height() > 600) {
-			margt = $(window).height()-51-40-330;
-			$("#home_info_container").css("margin-top",margt)
-		}
-		
-		
-		topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340;
-		if ($(window).height() < topInfo) {
-			$('#big_image_background').css('height', topInfo+'px');
-			footer_h =topInfo;
-		} else {
-			$('#big_image_background').css('height', $(window).height()-51);
-			footer_h = $(window).height()-25;
-		}
-		
+					var img = new Image();
+					$(img).load(function(){
+
+
+
+					      
+
+
+							topInfo = parseInt($("#home_info_container").css("margin-top"))+55+340-24;
+							if ($(window).height() < topInfo) {
+								$('#big_image_background').css('height', topInfo+'px');
+								footer_h =topInfo;
+							} else {
+								$('#big_image_background').css('height', $(window).height()-51);
+								footer_h = $(window).height()-25;
+							}
+
+
+
+							$('#big_image_background').show();
+							$('#big_image_background').animate({opacity:1},500);	
+							$('#Home_Footer').show();
+							$('#Home_Footer').css("top",footer_h+"px");
+							$('#spinner').hide();
+
+							//setTimeout("initHomePageAfterImageLoad()",500);
+
+							
+				
+				
+				if (displayDefaultPanel == 1) {
+					preload_image_index = -1;
+				} else {
+					preload_image_index = 0;
+				}
+				
+				
+							preloadImage();
+
+
+
+
+					}).attr("src", image_url);
 	
-		
-		$('#big_image_background').show();
-		$('#big_image_background').animate({opacity:1},500);	
-		$('#Home_Footer').show();
-		$('#Home_Footer').css("top",footer_h+"px");
-		$('#spinner').hide();
+
+		$(document).ready(function() {
 			
-		//setTimeout("initHomePageAfterImageLoad()",500);
-		
-		preload_image_index = 0;
-		preloadImage();
-		
-	});
-	
+			$('.home_slogan').textfill({ maxFontPixels: 38 });
 
-	
-
-
-function preloadImage() {
-	
-	preload_image_index = preload_image_index +1;
-	
-	if (plans.plan != null) {
-		return;
-	} else {
-		preload_plan = plans[preload_image_index].plan;
-	}
-	
-	
-	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+preload_plan.image_file_name
-	
-	var img = new Image();
-	$(img).load(function(){
-	      preloadImage();
-	}).attr("src", image_url);
-}
+		});
 
 
 

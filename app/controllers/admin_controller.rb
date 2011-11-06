@@ -28,23 +28,23 @@ class AdminController < ApplicationController
       
     
       if session[:dropdown_city_value] == "1"  #boston
-       @origin = [42.358431,-71.059773]
+          @origin = [42.358431,-71.059773]
       end
        if session[:dropdown_city_value] == "2"  #SF
           @origin = [37.77493,-122.419416]
        end
        if session[:dropdown_city_value] == "3"  #NYC
-         @origin = [40.7144,-74.006]
+          @origin = [40.7144,-74.006]
        end
 
 
       if session[:dropdown_city_value] == "99"  #globe
-        @users = User.paginate(:all,  :page => params[:page], :per_page=>100, :conditions=>"", :order=>"created_at desc")
+        @users = User.find(:all, :conditions=>"", :order=>"created_at desc")
         @total = User.find(:all)
         @total_pics = User.find(:all, :conditions=>"avatar_file_name != ''")
         @active_10_days = User.find(:all, :conditions=>"DATE_SUB(CURDATE(),INTERVAL 10 DAY) <= last_sign_in_at")
      else
-       @users = User.paginate(:all,  :page => params[:page], :per_page=>200,  :order=>"created_at desc", :origin=>@origin, :within=>100)
+       @users = User.find(:all,  :order=>"created_at desc", :origin=>@origin, :limit=>100)
        @total = User.find(:all,:origin=>@origin,:within=>100)
        @total_pics = User.find(:all, :conditions=>"avatar_file_name != ''", :origin=>@origin,:within=>100)
        @active_10_days = User.find(:all, :conditions=>"DATE_SUB(CURDATE(),INTERVAL 10 DAY) <= last_sign_in_at",:origin=>@origin,:within=>100)

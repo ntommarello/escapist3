@@ -1,0 +1,293 @@
+
+<% content_for :head do %>
+
+<% end %>
+
+
+
+<%if flash[:message]%>
+<script>
+	displaySavedFirst();
+</script>
+<%end%>
+<div style="margin-bottom:25px;" class="HighlightedTitle"><%=@info.name%> Settings</div>
+
+
+
+
+		
+<table cellspacing="0" cellpadding="0">
+	
+	<form id="ProfileEdit" name="ProfileEdit" action="/groups/<%=@info.id%>" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="_method" value="PUT"/>
+	
+	
+	<tr>
+		
+		<td class="SettingTableLabel">Info</td>
+		
+		<td class="SettingTableForms">
+			
+			<div  class="SettingLabel">Name</div>
+			 <input type="textfield" style="width:300px" id="group_name" name="group[name]" class="ShadowedTextBox"  value="<%=@info.name%>">
+
+			 <div class="SettingLabel">Tagline</div>
+			<textarea style="width:300px; height:50px;" id="group_subtitle" name="group[subtitle]" class="ShadowedTextBox"><%=@info.subtitle%></textarea>
+			
+		</td>	
+	</tr>
+	
+	
+	<tr>
+		<td class="SettingTableLabel">Domain</td>
+		<td class="SettingTableForms">
+			
+			<div style="margin-top:20px;">
+			<%=render :partial=>"groups/username"%>
+			</div>
+			<div style="clear:both"></div>
+			<div  class="SettingLabel"><input id="group_domain" name="group[domain]" type="checkbox" onchange="if ($(this).attr('checked')) { $('#domain').show(); } else {$('#domain').hide(); }" <%if @info.domain%>checked<%end%>>Use a custom domain <a target="_blank" href="/help.html#domains"><img class="TransparentOpposite" style="margin-left:5px; border:0px" src="/images/question_icon.png"></a></div>
+			
+		
+			<div id="domain" style="margin-left:20px; margin-top:5px; <%if !@info.domain%>display:none<%end%>">
+				
+		
+				
+						<%=render :partial=>"layouts/url_field", :locals=>{:model=>"group", :field=>"url", :prefill=>@info.url, :width=>259, :margintop=>7}%>
+				
+			
+				<div class="connectBox">
+					<div class="connectBoxHeader"><a target="_blank" href="http://facebook.com/developers" class="Transparent"><img src="/images/connecttofacebook.png"></a></div>
+
+					
+					<div style="padding-left:10px; padding-right:10px; padding-bottom:15px; ">
+						<div style="line-height:17px; margin-top:2px">Required for users to log in to your web site with their Facebook accounts.  <a href="/help.html#facebook" target="_blank" class="BlueLink">Learn more</a>.</div>
+					<div  class="SettingLabel" style="margin-top:5px; margin-bottom:2px;">Facebook App ID</div>
+					<input type="textfield" style="width:260px" id="group_fb_id" name="group[fb_id]" class="TextBox"  value="<%=@info.fb_id%>">
+
+					<div  class="SettingLabel" style="margin-top:5px; margin-bottom:2px;">Facebook App Secret</div>
+					<input type="textfield" style="width:260px" id="group_fb_secret" name="group[fb_secret]" class="TextBox"  value="<%=@info.fb_secret%>">
+				
+				</div>
+
+			</div>
+			
+			
+			
+			
+		</td>	
+	</tr>
+	
+	
+	
+	<tr>
+		
+		<td class="SettingTableLabel">Appearance</td>
+		
+		<td class="SettingTableForms">
+			
+			<div  class="SettingLabel">Logo <img title="For best results, use a transparent PNG at least 44 pixels high." class="tl TransparentOpposite" style="margin-left:5px" src="/images/question_icon.png"></div>
+
+				<div style="float:left; margin-right:20px;">
+					<input type="file" style="width:200px" id="group_logo" name="group[logo]" class="ShadowedTextBox">
+				</div>
+				
+				<div class="template_topnav" style="width:420px; padding-left:10px; min-width:200px; float:left">
+					<div style="margin-right:20px">
+					<%if @info.logo_file_name and @info.logo_file_name != ""%>
+						<%=image_tag @info.logo.url(:header), :size => @info.logo.image_size(:header), :style=>"margin-top:3px" %>
+					<%else%>
+						<div class="textLogo"><%=@info.name%></div>
+					<%end%>
+					</div>
+					<div style="float:left">
+							<div class="powered"><img src="/images/powered-by.png"></div>
+					</div>
+				</div>
+				
+			
+			<div style="clear:both;"></div>
+			
+			<div  class="SettingLabel">Favicon <img title=".PNG or .ICO file.  Displays in browser bar. 16x16 pixels." class="tl TransparentOpposite" style="margin-left:5px" src="/images/question_icon.png"></div>
+			
+				<div style="float:left; margin-right:20px;">
+						<input type="file" style="width:200px" id="group_favicon" name="group[favicon]" class="ShadowedTextBox"  value="<%=@info.favicon%>">
+				</div>
+				
+				
+				<div style="float:left; width:250px; height:30px; background:url(/images/tab.png)">
+					<div style=" height:16px; width:16px; float:left; ">
+						<%if @info.favicon_file_name and @info.favicon_file_name != ""%>
+							<%=image_tag @info.favicon.url(:original), :style=>"height:16px; margin-left:18px; margin-top:9px; width:16px;" %>	
+						<%else%>
+							<img src="/images/escapist.ico" style="width:16px; height:16px;  margin-left:18px; margin-top:9px;">
+						<%end%>
+					</div><div style="float:left; margin-left:24px; margin-top:6px; font-size:11px; color:black"><%=@info.name%></div>
+				</div>
+				
+		
+			<div style="clear:both;"></div>
+			
+		</td>	
+	</tr>
+	
+	
+	
+	
+	<tr>
+		
+		<td class="SettingTableLabel">Social Networks</td>
+		
+		<td class="SettingTableForms">
+			
+			<div  class="SettingLabel">Twitter Name</div>
+		
+			<input type="textfield" style="width:300px" id="group_twitter_name" name="group[twitter_name]" class="ShadowedTextBox"  value="<%=@info.twitter_name%>">
+			
+			
+			<div  class="SettingLabel">Custom Tweet</div>
+			<textarea style="width:300px; height:50px;" id="group_custom_twitter_text" name="group[custom_twitter_text]" class="ShadowedTextBox"><%=@info.custom_twitter_text%></textarea>
+			
+
+				<div  class="SettingLabel">Facebook Fan Page</div>
+<%=render :partial=>"layouts/url_field", :locals=>{:model=>"group", :field=>"fb_link", :prefill=>@info.fb_link, :width=>259, :margintop=>7}%>
+
+				
+				<div  class="SettingLabel">Tumblr</div>
+				
+				<%=render :partial=>"layouts/url_field", :locals=>{:model=>"group", :field=>"tumblr", :prefill=>@info.tumblr, :width=>259, :margintop=>7}%>
+				
+				
+				
+					
+			
+		</td>	
+	</tr>
+	
+
+	
+	
+	
+	<tr>
+		
+		<td class="SettingTableLabel">Integrations</td>
+		
+		<td class="SettingTableForms">
+			
+			
+			
+			<div class="Integration" style="background:#E9F6FC; border:1px solid #3D84B3">
+				<a target="_blank" href="http://mailchimp.com/"><img  style="border:0" class="Transparent" src="/images/mailchimp.png"></a>
+					<div style="width:270px; margin-bottom:25px;margin-left:auto; margin-right:auto">
+					<div style="margin-top:15px;">API Key 		<a target="_blank" href="/help.html#mailchimp"><img title="This key is like your password. To get it, log into MailChimp, <br>click the orange Account button at the top left of the screen,<br> then click 'API Keys & Info'. Your API key is the long string<br>of digits and numbers in the Key column<br><a target='_blank' class='BlueLink' href='/help.html#mailchimp'>View screenshots</a>" class="tl TransparentOpposite" style="margin-left:5px; border:0px" src="/images/question_icon.png"></a></div>
+					<input type="textfield" style="width:250px" id="group_mailchimp_key" name="group[mailchimp_key]" class="TextBox"  value="<%=@info.mailchimp_key%>">
+				
+					<div style="margin-top:15px;">List ID</div>
+					<input type="textfield" style="width:250px" id="group_mailchimp_list" name="group[mailchimp_list]" class="TextBox"  value="<%=@info.mailchimp_list%>">
+				</div>
+			</div>
+			
+			
+					<div class="Integration" style="background:#E3E7EB; border:1px solid #ccc; margin-left:50px;">
+						<a target="_blank" href="http://stripe.com/"><img class="Transparent" style="border:0" src="/images/stripe.png"></a>
+							<div style="width:270px; margin-bottom:25px;margin-left:auto; margin-right:auto">
+							<div style="margin-top:15px;">Publishable API Key (live) <a target="_blank" href="/help.html#stripe"><img title="This key is like your password. To get it, log into Stripe, then click <br>'Your Account' on the left menu. Your API key is the long string<br>of digits and numbers.  Copy the live ones, ignore the test. <a target='_blank' class='BlueLink' href='/help.html#stripe'>View screenshots</a>" class="tl TransparentOpposite" style="margin-left:5px; border:0px" src="/images/question_icon.png"></a></div>
+							<input type="textfield" style="width:250px" id="group_stripe_public" name="group[stripe_public]" class="TextBox"  value="<%=@info.stripe_public%>">
+
+							<div style="margin-top:15px;">Secret API Key (live)</div>
+							<input type="textfield" style="width:250px; " id="group_stripe_private" name="group[stripe_private]" class="TextBox"  value="<%=@info.stripe_private%>">
+						</div>
+					</div>
+					<div style="clear:both; height:0px"></div>
+					<div class="Integration" style="background:#fff; margin-top:50px; border:1px solid #ccc; ">
+						<a target="_blank" href="http://www.google.com/analytics/"><img class="Transparent" style="border:0" src="/images/google.png"></a>
+						<div style="margin-top:15px;">Javascript Embed Code</div>
+						<textarea style="width:250px; height:100px" id="group_statcounter" name="group[statcounter]" class="TextBox"> <%=@info.statcounter%></textarea>
+					</div>
+			
+			<div style="clear:both; height:15px"></div>
+					
+			
+		</td>	
+	</tr>
+	
+	
+	<tr>
+		
+		<td class="SettingTableLabel" >Moderators</td>
+		
+		<td class="SettingTableForms" >
+			
+			<div  class="SettingLabel">Coming Soon</div>
+		
+					
+			
+		</td>	
+	</tr>
+	
+	</form>
+	
+	<tr>
+		
+		<td class="SettingTableLabel" style="background:#fff; padding:0px;"></td>
+		
+		<td class="SettingTableForms"style="background:#fff; padding:0px;" >
+			
+				<div style="width:715px; margin-top:20px;  padding-left:30px; height:50px; ">
+
+
+
+					<button  class="newGrayButton GreenB" style="margin-top:10px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:27px; width:100px; font-size:16px;" onclick="displaySavingInProgress(); checkUsername(this,$('#ProfileEdit'),$('#group_username').val(),<%=@info.id%>);">Save</button>	
+
+
+						<button class="newGrayButton" style="margin-top:10px; padding-top:0px;margin-right:10px; float:left; height:30px; line-height:29px; width:100px; font-size:16px;"  onclick="$(this).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>'); window.location.href='/my_escapes'">Cancel</button>
+
+
+
+
+
+
+			</div>
+		
+					
+			
+		</td>	
+	</tr>
+	
+	
+	
+</table>		
+
+
+
+
+		
+		
+		
+		
+<script>
+$(document).ready(function() {
+
+
+	$(".tl").tooltip();
+	
+
+
+	
+$("#group_username").blur();
+
+
+});
+</script>
+
+
+		
+		
+		
+		
+	
+
+
+
+		
+		

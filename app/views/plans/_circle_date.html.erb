@@ -1,0 +1,21 @@
+	<div class="DateCircle <%if @editable%>EditBoxHide<%end%>" <%if @editable%>onclick="displayEditDate()<%end%>">
+	
+	<%if @plan.start_time%>
+		<%if Date.today.strftime('%Y') == @plan.start_time.to_date.strftime('%Y')%>
+			<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
+			<%= @plan.start_time.to_date.strftime('%e').strip()%>
+		<%else%>
+
+			<div style="font-size:20px; line-height:20px; margin-top:10px;">
+				<%= @plan.start_time.to_date.strftime('%Y').strip()%>
+			</div>
+		<%end%>
+	<%end%>
+	</div>
+	<div style="clear:both"></div>
+	<div class="DarkBlueLabel <%if @editable%>EditBoxHide<%end%>" style="font-size:15px; width:85px;  text-align:center; margin-top:8px; " <%if @editable%>onclick="displayEditDate()<%end%>">
+		<%if @plan.start_time%>
+			<%@timestring = calc_end_plan_time(@plan.start_time,@plan.end_time)%>
+			<div style="line-height:18px;"><%=raw @timestring%></div>
+		<%end%>
+	</div>

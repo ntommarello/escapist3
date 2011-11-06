@@ -1,4 +1,11 @@
+
+
+
 $(document).ready(function() {
+
+	
+	$('#name').alpha({allow:"., "});
+	 
   $('input[title]').inputHints();
 	$(".disallowReturn").keypress(function(e) {
 		$(this).attr("edited","yes");
@@ -11,7 +18,36 @@ $(document).ready(function() {
 	logindropopen=0;
 	ignoreHide =0;  //hack for body event
 	$("#settings").tooltip({position: "bottom center"});
+	
+	
+	
+	$(window).scroll(function() {
+	  	if ( $("#StatusBar").is(':visible') ) {
+			var scrolltop = $(window).scrollTop()
+			if (scrolltop < 50) {
+				scrolltop = 50 - scrolltop
+			} else {
+				scrolltop = 0;
+			}
+			$("#StatusBar").css("top",scrolltop+"px");
+		}
+	});
+	
+	
+	
+	
+
+  
+
+	        
+	          
+	
+	
+	
+	
+	
  });
+
 
 function getAuthToken() {
   var ret = '';
@@ -77,9 +113,18 @@ function newUser(button) {
  	window.location.href='/register'
 }
 
+
+function setActive(link) {
+	$("#CreateLink").css("background","transparent")
+	$("#AdventuresLink").css("background","transparent")
+	$(link).css("background","rgba(93, 148, 197, .2)")
+}
+
 function switchMenuBar(link, active) {
 
-	
+	$(link).css("background","rgba(93, 148, 197, .2)")
+
+
 
 	if (active == 0) {
 		//jQuery("#HoverMenuBar").css('margin-left',posX+'px')
@@ -91,7 +136,7 @@ function switchMenuBar(link, active) {
 		
 	} else {
 
-		spotWidth = Math.round($(link).width()) -8;
+	/*	spotWidth = Math.round($(link).width()) -8;
 	    LeftOfLink=$(link).offset().left; 
 		CenterTop=$("#TheCenter").offset().left; 
 		LeftOfLink = LeftOfLink - CenterTop
@@ -108,7 +153,7 @@ function switchMenuBar(link, active) {
 		
 	//	jQuery(link).css('background','#fff');
 		switchMenuBar(link, 0);
-		setTimeout("$('#ActiveBar').css('opacity',1)",10);
+		setTimeout("$('#ActiveBar').css('opacity',1)",10); */
 	}
 }
 
@@ -168,12 +213,12 @@ function returnHoverBarPerform () {
 }
 
 function logoHover() {
-$("#TempLogoHover").animate({ opacity: 1}, 500);
-$("#TempLogo").animate({ opacity: 0}, 500);
+$(".template_logo").animate({ opacity: 0}, 500);
+//$("#TempLogo").animate({ opacity: 0}, 500);
 }
 function logoUnhover() {
-$("#TempLogoHover").animate({ opacity: 0 }, 500);
-$("#TempLogo").animate({ opacity: 1}, 500);
+$(".template_logo").animate({ opacity: 1 }, 500);
+//$("#TempLogo").animate({ opacity: 1}, 500);
 }
 
 
@@ -296,7 +341,7 @@ if (keycode == 13)
 		}
 	}
 	if (type == 2) {
-		validateRegister();
+		validateRegister(myfield,myfield);
 	}
 	if (type == 3) {
 		if ($('#searchfield').val() != '' && $('#searchfield').val() != 'search nearby') {
@@ -329,7 +374,24 @@ else
    return true;
 }
 
+function submitRegOnEnter(myfield,e,type)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
 
+if (keycode == 13)
+   {
+
+		validateRegister(type,myfield);
+
+	
+   return false;
+   }
+else
+   return true;
+}
 
 
 function uploadPhoto() {
@@ -374,61 +436,51 @@ function uploadPhoto() {
 }
 
 
-function validateRegister() {
+function validateRegister(field,form) {
 	
-	$('#Error').html('')
-	$('#Error').hide()
+	
+	//parent = $(field).parent();
+	
+	parent = form;
+	
+	$('.Error',parent).html('')
+	$('.Error',parent).hide()
 	error = 0
-
 	
-	if ($('#user_password', '#RegisterForm').val() == '') {
-		$('#Error').show()
-		$('#Error').html('Password required')
-		$('#user_password', '#RegisterForm').focus()
+	if ($('#user_password', parent).val() == '') {
+		$('.Error',parent).show()
+		$('.Error',parent).html('Password required')
+		$('#user_password', parent).focus()
 		error = 1
 	} else {
-		if ($('#user_password', '#RegisterForm').val().length < 4) {
-			$('#Error').show()
-			$('#Error').html('Needs 4+ characters')
-			$('#user_password', '#RegisterForm').val('')
-			$('#user_password', '#RegisterForm').focus()
+		if ($('#user_password', parent).val().length < 4) {
+			$('.Error',parent).show()
+			$('.Error',parent).html('Needs 4+ characters')
+			$('#user_password', parent).val('')
+			$('#user_password', parent).focus()
 			error = 1
 		}
 	}
 	
-	if ($('#user_email', '#RegisterForm').val().length < 2) {
-		$('#Error').show()
-		$('#Error').html('Email required')
-		$('#user_email', '#RegisterForm').focus()
+	if ($('#user_email', parent).val().length < 2) {
+		$('.Error',parent).show()
+		$('.Error',parent).html('Email required')
+		$('#user_email', parent).focus()
 		error = 1
 	}
 	
-	wordcount = verifyName($('#name'))
+	wordcount = verifyName($('#name',parent))
 	
 	if (wordcount < 2) {
-		$('#Error').show()
-		$('#Error').html('First and last name required')
-		$('#name').focus()
+		$('.Error',parent).show()
+		$('.Error',parent).html('First and last name required')
+		$('#name',parent).focus()
 		error = 1	
 	}
-	
-	//if ($('#user_last_name').val().length < 2) {
-	//	$('#Error').show()
-	//	$('#Error').html('Last name required')
-	//	$('#user_last_name').focus()
-	//	error = 1
-	//}
-	
-	//if ($('#user_first_name').val().length < 2) {
-	//	$('#Error').show()
-	//	$('#Error').html('First name required')
-	//	$('#user_first_name').focus()
-	//	error = 1
-	//}
 
 	if (error == 0) {
-		$('#registerbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
-		$('#RegisterForm').submit();
+		$('#registerbutton',parent).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+		$(parent).submit();
 	}	
 }
 
@@ -718,7 +770,7 @@ $.ajax({
 
 function uploadPlanPhoto(id,source) {
 	
-	txt = '<form id="ChallengeUpload" name="ChallengeUpload" action="/plans/'+id+'" method="post" enctype="multipart/form-data"><input id="_method" name="_method" value="PUT" type="hidden"><p class="HighlightedTitle" style="text-align:center">Upload Photo</p><div class="SubTitle" style="font-weight:normal; padding-bottom:10px">Show off your adventure!  Attach a pic of someone doing it... and looking like they are having fun!</div> <input autocomplete="off" class="UploadBox" id="plan_image" name="plan[image]" onchange="$.prompt.goToState(\'state1\'); $(\'#ChallengeUpload\').submit();" style="cursor:pointer;" type="file" />'
+	txt = '<form id="ChallengeUpload" name="ChallengeUpload" action="/escapes/'+id+'" method="post" enctype="multipart/form-data"><input id="_method" name="_method" value="PUT" type="hidden"><p class="HighlightedTitle" style="text-align:center">Upload Photo</p><div class="SubTitle" style="font-weight:normal; padding-bottom:10px">Show off your adventure!  Attach a pic of someone doing it... and looking like they are having fun!</div> <input autocomplete="off" class="UploadBox" id="plan_image" name="plan[image]" onchange="$.prompt.goToState(\'state1\'); $(\'#ChallengeUpload\').submit();" style="cursor:pointer;" type="file" />'
 	txt = txt+'</form>'
 	
 	//$.prompt(txt, {focus:1, persistent:false, callback: photoUploaded,  buttons: {  Cancel: 'Cancel', Upload: 'Upload' }});
@@ -831,6 +883,17 @@ function sendMessage(button) {
 		setTimeout("$('#darkenBackground').hide();",150);//
 		$("#MessageUser").hide();
 			$("#MessageThread").html(theResponse);
+	});
+	
+}
+
+
+function destroyMedia(id,row) {
+	$(row).parent().parent().hide()
+	
+	$.post("/medias/"+id, { _method:'delete'}, function(theResponse){
+	
+	
 	});
 	
 }
@@ -1138,13 +1201,8 @@ function addBucket(button,challenge_id) {
 			    $("#RenderLog").html(theResponse)
 			});
 		
-		});
-		
+		});	
 	}
-	
-
-	
-	
 }
 
 
@@ -1175,7 +1233,76 @@ function RemoveBucketCount() {
 
 }
 
+
+function showConfirmMessage() {
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+	$("#StatusBar").html("You are attending this event!");
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "22",}, 300 );
+}
+
+
+function displaySavingInProgress() {
+	
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	$("#StatusBar").removeClass("error").removeClass("warning").removeClass("success").addClass("info");
+	$("#StatusBar").html("Saving");
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "22",}, 300 );	
+}
+
+function displaySaved() {
+	$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+	$("#StatusBar").html("Saved");
+	setTimeout("animateStatusBarUp()",1000)	
+}	
+
+function displaySavedFirst() {
+
+		var scrolltop = $(window).scrollTop()
+		if (scrolltop < 50) {
+			scrolltop = 50
+		} else {
+			scrolltop = 0;
+		}
+
+		$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+		$("#StatusBar").html("Saved");
+		setTimeout("animateStatusBarUp()",3000)
+		$("#StatusBar").css("top",scrolltop+"px");
+		$("#StatusBar").show();
+		$("#StatusBar").animate({ height: "22",}, 300 );	
+	}
+
+
+function animateStatusBarUp() {
+	$("#StatusBar").animate({ height: "0",}, 300 );
+	setTimeout("removeStatusBar()",290)	
+}
+function removeStatusBar() {
+	$("#StatusBar").hide();
+}
+
+
+
 function animateFlashMessage() {
+	
+
 	$("#flashMessage").animate({ opacity: "1",}, 300 );
 	
 	setTimeout("$('#flashMessage').animate({opacity: 0,}, 500); ",1000)	
@@ -1212,7 +1339,16 @@ function GeoCode_Challenge(location, challenge_id) {
 		}
 	});
 }
+
+function adjustMapLabel() {
+	offset = 300-$('#directions').height();
+	$('#directions').css('margin-top',offset);
+}
+
+
 function GeoCode_Plan(location, plan_id) {
+
+	
 
 	$.post("/geocode_plan", { location: location, plan_id:plan_id}, 
 	function(data){
@@ -1221,7 +1357,7 @@ function GeoCode_Plan(location, plan_id) {
 			$('#error').html('Could not convert address to GPS coordinates.')
 		} else {
 	
-			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=100x100&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom='+map_zoom+'&size=590x300&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
 			
 			//mapURL = 'http://maps.google.com/staticmap?center='+Lat+','+Lng+'&zoom=14&size=90x90&maptype=roadmap&markers='+Lat+','+Lng+'&sensor=false&key=ABQIAAAAd5t8h7gf8hlpFfM_zmOU7hT39yqx9PTFa5e5gPxu0g05YTxiBBQVciAICRx_q0y51mk2-CbIMukdNA';
 			//jQuery('#GeoCodeMap').html('<img style="border:1px solid #ccc" src="'+mapURL+'">');
@@ -1231,6 +1367,45 @@ function GeoCode_Plan(location, plan_id) {
 			$("#GoogleMap").show();
 			
 			$("#GoogleLink").attr("href", link_url);
+			$("#plan_lat").val(lat)
+			$("#plan_lat").val(lng)
+			
+			$.ajax({
+		        type: "POST",
+		        url: "/plans/"+plan_id,
+		        data: "_method=PUT&plan[map_zoom]=" + map_zoom,
+		        success: function(msg){
+					//animateFlashMessage();
+				
+					displaySaved();
+				
+		        }
+		     });
+			
+			
+		}
+	});
+	
+}
+
+
+function GeoCode_PlanNew(location, plan_id) {
+
+	$.post("/geocode_plan", { location: location, plan_id:plan_id}, 
+	function(data){
+		eval(data);
+		if (lat == 0 ) {
+			$('#error').html('Could not convert address to GPS coordinates.')
+		} else {
+			mapURL = 'http://maps.google.com/maps/api/staticmap?center='+lat+','+lng+'&zoom=14&size=125x125&maptype=roadmap&markers='+lat+','+lng+'&sensor=false';
+			document.getElementById('GoogleMap').src = mapURL;
+			$("#GoogleMap").show();
+			$("#GoogleLink").attr("href", link_url);
+			$("#plan_url_name").css("width","265px")
+			$("#plan_location").css("width","265px")
+			$("#plan_url_link").css("width","231px")
+			$("#plan_lat").val(lat)
+			$("#plan_lat").val(lng)
 		}
 	});
 	
@@ -1767,7 +1942,7 @@ function chooseCity(city,city_id,page) {
 	}
 	
 	
-	if (page == "/schedule" ) {
+	if (page == "/discover" ) {
 		
 			$('.spinner2').show();
 			$('#OpacityContent').animate({
@@ -1775,7 +1950,7 @@ function chooseCity(city,city_id,page) {
 			}, 200, function() {} );
 
 
-				$.post("/schedule", { dropdown_city_value:city_id, dropdown_city:$(city).html() }, function(theResponse){
+				$.post("/discover", { dropdown_city_value:city_id, dropdown_city:$(city).html() }, function(theResponse){
 					$("#RenderContent").html(theResponse)
 					$('.spinner2').hide();
 					$('#OpacityContent').animate({opacity: 1}, 250);
@@ -2354,22 +2529,27 @@ function addNote(box,id,source) {
 
 function postComment(box,plan_id) {
 
-	parent=$(box).parent().parent();
+	value = $('#commentTextBox').val();
 	
-	value = $('.resize', parent).val();
-	
-	if (value == 'comment') {
-		$('.resize', parent).focus();
+	if (value == 'What\'s up?') {
+		$('#commentTextBox').focus();
 		return;
 	}
 	
+	
+	theBox = $('.InnerLightGrayBorder',box);
+	if ($(theBox).html() != "Post") {
+		return;
+	}
+	
+	
 	$('.InnerLightGrayBorder',box).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
-	theBox = $('.InnerLightGrayBorder',box)
-	$('.resize', parent).val('comment');
-	$('.resize', parent).css('color','#ccc')
-	$('.resize', parent).css('height','20px')
+	
+	
+	$('#commentTextBox').val('What\'s up?');
+	$('#commentTextBox').css('color','#ccc')
+	$('#commentTextBox').css('height','20px')
 	stopClose=1;
-	id=plan_id;
 	
 	
 	
@@ -2380,8 +2560,7 @@ function postComment(box,plan_id) {
         success: function(msg){
 			stopClose=0;
 			$(theBox).html('Post')
-			$('#CommentsArea'+id).html(msg)
-		
+			$('#CommentsArea').html(msg)
         }
      });
 
@@ -2451,7 +2630,7 @@ function togglePrivacy(box,id) {
 
 
 
-function submitPostOnEnter(myfield,id)
+function submitPostOnEnter(myfield,plan_id)
 {
 var keycode;
 if (window.event) keycode = window.event.keyCode;
@@ -2465,14 +2644,35 @@ if (keycode == 13)
 	
 	
 	button = $('.WhiteActiveBorder', parent)
-button2 = $('.LightGrayButton', button)
-	postComment(button2,id)
+	button2 = $('.LightGrayButton', button)
+	postComment(button2,plan_id)
 	$(myfield).blur();
    return false;
    }
 else
    return true;
 }
+
+function submitDigestOnEnter(myfield,type,edition)
+{
+var keycode;
+if (window.event) keycode = window.event.keyCode;
+else if (e) keycode = e.which;
+else return true;
+
+if (keycode == 13)
+   {
+	
+	if(type==1) {
+		joinCreateDigest(88)
+	} else {
+		joinDigest(edition)
+	}
+   }
+else
+   return true;
+}
+
 
 
 function toggleMenu(button,layer) {
@@ -2556,23 +2756,211 @@ $.ajax({
 
 
 function openRegister(title) {
-	$("#RegisterTitle").html(title)
+	$(".registerTitle").html(title)
 	$("#BlackModal").show();
 	$("#BlackModal").animate({opacity: .4,}, 100 );
 	$("#BlackModal").height($(document).height())
-	setTimeout("centerBox($('#RegisterModal')); $('#RegisterModal').show(); $('#name').focus(); $('#RegisterModal').animate({ opacity: 1,}, 250 );",50);
+	setTimeout("centerBox($('#RegisterModal')); $('#RegisterModal').show();  $('#RegisterModal').animate({ opacity: 1,}, 250 );",50);
 }
 
-function closeRegister() {
-	$("#BlackModal").animate({ 
-   		opacity: 0,
-  		}, 100 );
-		setTimeout("$('#BlackModal').hide();",150);
-
-		$("#RegisterModal").hide();
-		$("#RegisterModal").css('opacity',0)
+function openSignedUp() {
 		
-		$("#RenderAchievements").hide();
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#SignedUpModal')); $('#SignedUpModal').show();  $('#SignedUpModal').animate({ opacity: 1,}, 250 ); $('#SignedUpModal').css('top',30);",50);
+}
+
+
+function openPayment() {
+		
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#PaymentModal')); $('#PaymentModal').show();  $('#PaymentModal').animate({ opacity: 1,}, 250 ); $('#PaymentModal').css('top',30);",50);
+
+	setTimeout("$('.card-number').focus();",200);
+}
+
+
+function validatePayment(button,type) {
+	
+	$.cookie('showAttendPop', null, { path: '/escapes/'});
+	
+	if ($('#paymentbutton').html() == '<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">') {
+		return;
+	}
+	
+	
+	if ($('.card-number').val().length < 14) {
+		$('#payment_warning').html('Enter valid card number')
+		$('.card-number').focus();
+		return
+	}
+	if ($('.card-cvc').val().length < 2) {
+		$('#payment_warning').html('Enter security code (~3 digits on back of card)')
+		$('.card-cvc').focus();
+		return
+	}
+	if ($('.card-expiry-month').val() == "MM") {
+		$('#payment_warning').html('Choose expiration month')
+		return
+	}
+	if ($('.card-expiry-year').val() == "YYYY") {
+		$('#payment_warning').html('Choose expiration year')
+		return
+	}
+	$('#payment_warning').html('');
+	$('#paymentbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+
+
+    if (type == 1) {
+			var amount = price * 100; //amount you want to charge in cents
+		
+		    Stripe.createToken({
+		        number: $('.card-number').val(),
+		        cvc: $('.card-cvc').val(),
+		        exp_month: $('.card-expiry-month').val(),
+		        exp_year: $('.card-expiry-year').val()
+		    }, amount, stripeResponseHandler);
+	} else {
+		
+		var amount = parseFloat($('#plan_donation_suggested_amount2').val()) * 100; //amount you want to charge in cents
+		
+		    Stripe.createToken({
+		        number: $('.card-number').val(),
+		        cvc: $('.card-cvc').val(),
+		        exp_month: $('.card-expiry-month').val(),
+		        exp_year: $('.card-expiry-year').val()
+		    }, amount, stripeResponseHandler2);
+		
+		
+	}
+	
+}
+
+function stripeResponseHandler2(status, response) {
+    if (response.error) {
+		$('#paymentbutton').html('Submit Payment');
+        //show the errors on the form
+        $("#payment_warning").html(response.error.message);
+    } else {
+
+
+		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:0 }, function(theResponse){
+		
+			$('#donationtext').html('<div style="text-align:center; font-size:18px;" class="HighlightedTitle">Thanks!  You Rock!</div>')
+
+		});
+		
+		
+
+    }
+}
+
+
+function stripeResponseHandler(status, response) {
+    if (response.error) {
+		$('#paymentbutton').html('Submit Payment');
+        //show the errors on the form
+        $("#payment_warning").html(response.error.message);
+    } else {
+	
+	
+	
+	
+        /*var form$ = $("#payment-form");
+        var token = response['id'];
+		var amount = response['amount'];
+        form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+		form$.append("<input type='hidden' name='amount' value='" + token + "'/>");
+        form$.get(0).submit();*/
+
+
+		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:$('#qty').val() }, function(theResponse){
+			
+			$('.card-number').val('');
+			$('#paymentbutton').html('Submit Payment');
+			closeRegister()	
+				
+			seats_remaining = seats_remaining - 1;
+
+			$("#seat_remain").html(seats_remaining)
+
+			$('#RenderPlan2').html(theResponse)
+
+			$('#SignUpButtons').hide();
+			$('#SignedUp').show();
+
+$("#CancelPlan").hide();
+
+			setTimeout("openSignedUp();",200);
+
+		});
+		
+		
+
+    }
+}
+
+
+
+
+
+function closeRegister() {
+	
+
+	
+	if ($("#BlackModal").is(":visible")) {
+	
+		$("#BlackModal").animate({ 
+	   		opacity: 0,
+	  		}, 100 );
+	
+	
+			setTimeout("$('#BlackModal').hide();",150);
+
+			$.cookie('showAttendPop', null, { path: '/escapes/'});
+			$.cookie('watchPlan', null, { path: '/escapes/'});
+			$("#RegisterModal").hide();
+			$("#RegisterModal").css('opacity',0)
+			setTimeout("$('#EditDateLayer').hide();",150);
+			$("#EditDateLayer").hide();
+			$("#EditDateLayer").css('opacity',0)
+			
+			
+			setTimeout("$('#EditPhotos').hide();",150);
+			$("#EditPhotos").hide();
+			$("#EditPhotos").css('opacity',0)
+			
+			
+			setTimeout("$('#EditLinkLayer').hide();",150);
+			$("#EditLinkLayer").hide();
+			$("#EditLinkLayer").css('opacity',0)
+			
+			setTimeout("$('#DeletePlanLayer').hide();",150);
+			$("#DeletePlanLayer").hide();
+			$("#DeletePlanLayer").css('opacity',0)
+		
+			
+			setTimeout("$('#DeleteGroupLayer').hide();",150);
+			$("#DeleteGroupLayer").hide();
+			$("#DeleteGroupLayer").css('opacity',0)
+			
+		
+					setTimeout("$('#SignedUpModal').hide();",150);
+			$("#SignedUpModal").hide();
+			$("#SignedUpModal").css('opacity',0)
+		
+					setTimeout("$('#PaymentModal').hide();",150);
+			$("#PaymentModal").hide();
+			$("#PaymentModal").css('opacity',0)
+			
+			
+			$("#RenderAchievements").hide();
+		}
+		
+		
 }
 
 function centerBox(box) {
@@ -2596,12 +2984,13 @@ function toggleUserMenu(layer) {
 	$('#LogoutMenu').css('margin-left',left+'px') 
 	
 	if ( $('#LogoutMenu').is(':visible') ) {
-		$("#UserLinkMenu > .UserLink").css("color","#6090B4")
+		$("#UserLinkMenu > .UserLink").css("color","#21547E")
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#FFFFFF 0 1px 0")
-		$("#UserLinkMenu").css("background","#E4F1F9")
+		$("#UserLinkMenu").css("background","#fff")
 		$("#UserLinkMenu").css("border","1px solid #7094AC")
 	} else {
 		$("#UserLinkMenu > .UserLink").css("color","white")
+			
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
 		
 		$("#UserLinkMenu").css("background","none")
@@ -2613,11 +3002,12 @@ function userMenuMouseOver() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		
 	} else {
-		$("#UserLinkMenu > .UserLink").css("color","#6090B4")
+		$("#UserLinkMenu > .UserLink").css("color","#21547E")
 		$("#UserLinkMenu > .UserLink").css("text-shadow","#FFFFFF 0 1px 0")
 	
+		$("#UserMenuArrow").addClass("upArrowIcon").removeClass("WhiteTriangle");
 		
-		$("#UserLinkMenu").css("background","#D1E6F4")
+		$("#UserLinkMenu").css("background","#fff")
 		$("#UserLinkMenu").css("border","1px solid #6F9CB9")
 	}
 }
@@ -2625,6 +3015,10 @@ function userMenuMouseOut() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		
 	} else {
+		
+		$("#UserMenuArrow").addClass("WhiteTriangle").removeClass("upArrowIcon");
+		
+		
 			$("#UserLinkMenu > .UserLink").css("color","white")
 			$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
 		$("#UserLinkMenu").css("background","none")
@@ -2636,6 +3030,7 @@ function userMenuMouseOut() {
 function closeUserMenu() {
 	if ( $('#LogoutMenu').is(':visible') ) {
 		$('#LogoutMenu').hide(); 
+		$("#UserMenuArrow").addClass("WhiteTriangle").removeClass("upArrowIcon");
 		//	$("#UserLinkMenu").removeClass("UserLinkMenuActive")
 			$("#UserLinkMenu > .UserLink").css("color","white")
 			$("#UserLinkMenu > .UserLink").css("text-shadow","#000 0 1px 0")
@@ -2692,43 +3087,142 @@ function maybePlan(button,render,plan_id) {
 	}	
 }	
 	
-function signupPlan(button,render,plan_id) {
-		outer = $(".outerB",button)
-		inner = $(".innerB",outer)
-		label = $(inner).html()
-		id = plan_id;
-		
-		maybe = $(".maybe",$(button).parent().parent()) 
-		outer_maybe = $(".outerB",maybe)
-		inner_maybe = $(".innerB",outer_maybe)
-		
-		if (label == "Count me in! ($0)") {
-			$(maybe).hide();
-			$(inner).html("I can't come. Remove me.");
-			$(outer).addClass("RedButton").removeClass("GreenButton").removeClass("LightGrayButton")
-			$(inner).addClass("InnerRedBorder").removeClass("InnerGreenBorder").removeClass("InnerLightGrayBorder")
+	
+function joinDigest(edition) {
+	if ($("#digest_email").val() == "" || $("#digest_email").val() == "email") {
+		$("#digest_email").focus()
+	} else {
+		$("#JoinDigest").html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
+			$("#JoinDigest").html("Join");
+			$("#SignUpCard").hide();
+			openRegister('Sign up for Escapist!'); 
+			$("#user_email",$("#RegisterForm")).val($("#digest_email").val())
 			
-			$(outer_maybe).addClass("LightGrayButton").removeClass("RedButton")
-			$(inner_maybe).addClass("InnerLightGrayBorder").removeClass("InnerRedBorder")
+			$.cookie('digestJoined', 'true', { expires: 7, path: '/schedule'});
+			
+		});
+	}
+}		
+	
+function joinCreateDigest(edition) {
+	if ($("#digest_email").val() == "" || $("#digest_email").val() == "email") {
+		$("#digest_email").focus()
+	} else {
+		$("#JoinDigest").html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+		edition1 = edition;
+		$.post("/digest_emails", { email:$("#digest_email").val(), edition:edition}, function(theResponse){		
+			
+			if (edition1 == 88) {
+				$(".Thanks").html("Thanks! You'll hear from us soon.")
+				$(".Thanks2").html("Thank you!")
+				$(".Shortly").html("You'll hear from us shortly.")
+				$(".BetaAccess").hide();
+			} else {
+				$("#invite").html("<b>Thanks!  We'll be in touch.</b>")
+			}
+			
+		});
+	}
+}	
+	
+	
+function watchMouseDown(button) {
+	label = $(button).html()
+	if (label == "Follow") {
+		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
+	} else {
+		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
+	}
+}	
+
+function watchMouseUp(button) {
+
+	label = $(button).html()
+	if (label == "Following") {
+		$(button).addClass("newGrayButtonPushed").removeClass("newGrayButton")
+	}
+	if (label == "Follow") {
+		$(button).addClass("newGrayButton").removeClass("newGrayButtonPushed")
+	}
+}
+
+
+	
+function watchPlan(button,plan_id) {
+	label = $(button).html()
+	$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+	
+	
+	if (label == "Follow") {
+		$.post("/watched_plans", { plan_id:plan_id}, function(theResponse){		
+			
+			$(button).html("Following");
+		});
+	} else {
+		$.post("/watched_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
+			
+			$(button).html("Follow");
+		});
+	}
+}
+	
+function signupPlan(button,render,plan_id) {
+		label = $(button).html()
+		id = plan_id;
+		$(button).html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+	
+		if (label == "Sign Me Up!") {
+			
 			
 				$.post("/subscribed_plans", { plan_id:plan_id, maybe:0}, function(theResponse){
-						$('#RenderPlan').html(theResponse)
+					
+						seats_remaining = seats_remaining - 1;
+
+						$("#seat_remain").html(seats_remaining)
+						
+						//$(button).addClass("RedB").removeClass("GreenB").removeClass("LightGrayButton")
+						//$(button).html("I'm coming!");
+						$(button).html("Sign Me Up!");
+		
+						$('#RenderPlan2').html(theResponse)
+
+						$('#SignUpButtons').hide();
+						$('#SignedUp').show();
+
+						closeRegister();
+						setTimeout("openSignedUp();",150);
+
 				});
 	
 			
-		} else {
-			$(maybe).show();
-			$(inner).html("Count me in! ($0)");
-			$(outer).addClass("GreenButton").removeClass("RedButton")
-			$(inner).addClass("InnerGreenBorder").removeClass("InnerRedBorder")
-			
-			$.post("/subscribed_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
-					$('#RenderPlan').html(theResponse)
-			});
-			
-			
-		}
+		} 
 }
+
+
+function unsubscribePlan(button,render,plan_id) {
+
+	$('#RemoveSignUpLink').html('<img style=\'margin-top:3px;\' src=\'/images/ajax-loader_f.gif\'>');
+
+	$.post("/subscribed_plans/"+plan_id, { plan_id:plan_id, _method:'delete'}, function(theResponse){
+				
+					seats_remaining = seats_remaining + 1;
+					$("#seat_remain").html(seats_remaining)
+					
+					$('#attend').addClass("GreenB").removeClass("RedB")
+					$('#attend').html("Sign Me Up!");
+					$('#RenderPlan2').html(theResponse)
+
+					$('#SignUpButtons').show();
+					$('#SignedUp').hide();
+
+					$('#RemoveSignUpLink').html('cancel')
+					
+
+
+			});
+}
+
 
 function signUpFree(plan_id) {
 	$.post("/subscribed_plans", { plan_id:plan_id, maybe:0}, function(theResponse){
@@ -2871,6 +3365,60 @@ function animateLabel(on) {
 		}	
 	}
 }	
+
+function bioCounter(input) {
+	value = $(input).val().length;
+	
+	chars_left = 100 - value;
+	if (chars_left < 100) {
+		$(".BioCounter").show();
+		$(".BioCounter").html(chars_left);
+
+		$(".BioCounter2").show();
+		$(".BioCounter2").html(chars_left);
+		
+	} else {
+		$(".BioCounter").hide();
+	}
+	
+	if (chars_left < 0) {
+		$(input).val($(input).val().slice(0,100))
+		$(".BioCounter").html("0");
+		$(".BioCounter2").html("0");
+	}
+	
+}
+
+function updateUser(id,field,value) {
+	
+	if (field == "short_bio") {
+		$('#short_bio').html(value)
+		$('#showShortBio').show();
+		$('#showShortBioBox').hide();
+	}
+	
+	if (field == "about_me") {
+		$('#about_me').html(value)
+		$('#showAboutMe').show();
+		$('#showAboutMeBox').hide();
+	}
+	
+	
+	
+	
+    $.ajax({
+        type: "POST",
+        url: "/users/"+id,
+        data: "_method=PUT&user["+field+"]=" + escape(value),
+        success: function(msg){
+			animateFlashMessage();
+        }
+     });
+}
+
+
+
+
 
 
 function CharacterCount(input) {
@@ -3027,13 +3575,7 @@ function publishChallenge(a_id) {
 
 
 function resetPublish() {
-	if (draftTag == 0 && draftTitle == 0 && draftUser == 0 && draftDetails == 0 && draftLocation == 0 && draftPhoto == 0) {
-		$("#draftButton").css("opacity",1);
-		$('#PublishText').html('You are ready to publish your adventure!');
-		$("#PublishIntruct").hide();
-		$("#draftButtonInactive").hide();
-		$("#draftButton").show();
-	} 
+
 }
 
 
@@ -3105,8 +3647,17 @@ function ApplyReward(value) {
 		return;
 	}
 	
+	if (value=='2.009') {
+		ReducePriceBy(10,2)
+		return;
+	}
+	
 	if (value=='mongoose') {
 		ReducePriceBy(20,2)
+		return;
+	}
+	if (value=='joinme42') {
+		ReducePriceBy(5,2)
 		return;
 	}
 	
@@ -3115,18 +3666,33 @@ function ApplyReward(value) {
 }
 
 function ReducePriceBy(amount,type) {
+
 	if (type == 1) { //percent
 		newprice = $('#unit_price').val() * amount;
+		original_price = original_price * amount;
 	} else { //dollar amount
+		
 		newprice = $('#unit_price').val() - amount;	
+		original_price = original_price - amount;
 	}
 	
+	if (newprice < 0) {
+		newprice = 0;
+	}
+	
+	
 	$('#unit_price').val(newprice);
-	price = newprice * qty;
-	$('.price_display').html('$'+roundNumber($('#unit_price').val()*qty,2))
+	price = newprice * quantity;
+	
+	$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
 	$(".RewardDiv").html('Discount Applied')
 	
 	$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
+	
+	if (price < 1) {
+		$("#PaymentBox").hide();
+		$("#FreeSignup").show();
+	}
 	
 }
 
@@ -3142,10 +3708,7 @@ function adjustLoginLayer() {
 
 function adjustWindowSize() {
 	
-	
-	
-	
-	if ($(window).height() > 600) {
+	if ($(window).height() > 420) {
 		margt = $(window).height()-51-40-330;
 		$("#home_info_container").css("margin-top",margt)
 	}
@@ -3186,7 +3749,27 @@ function getUrlVars()
 }
 function nextPlan(offset) {
 	
+	
+	
 	plan_index = plan_index+offset;
+	
+	
+	if (plan_index == -1) {
+		plan_index = 0;
+		displayDefaultPanel = 1;
+		$("#discover").html('<div style="float:left; margin-left:20px; " align="center">Discover</div><img style="float:left; margin-left:10px; margin-top:9px; width:26px; height:23px;" src="/images/next_arrow.png">')
+	
+		History.pushState({id:0}, null, "");
+		
+		$('#big_image_background').animate({
+			opacity: .2,
+		}, 200, function() {
+			loadInfo(plan_index);
+		
+			//$('#big_image_background').animate({opacity: 1}, 250);
+		} );
+		return;
+	}
 	
 
 	if (plan_index + 1> plans.length || !plans.length) {
@@ -3233,68 +3816,170 @@ function nextPlan(offset) {
 
 
 function loadInfo(index) {
-
+	
 	start = 0;
-	if (plan_index == 0) {
-		$("#prevarrow").hide();
+
+
+
+
+	
+	
+	if (displayDefaultPanel == 0) {
+		$("#description_not_logged_in").hide();
+		$("#description_logged_in").show();
+		$("#plan_startdate").show();
+		$(".home_title").css("width","340px")
+		if (plan_index >0) {
+			$(".home_slogan").hide();
+		}
+	} else {
+		$("#description_not_logged_in").show();
+		$("#description_logged_in").hide();
+		$("#plan_startdate").hide();
+		$(".home_title").css("width","430px")
+		$("#plan_title").html("Create amazing memories")
+		$("#plan_url_name").html("Life is short. Enjoy it while you can!")
 		$(".home_slogan").show();
+		image_url = 'http://assets.stomp.io/images/14/original_original_16.jpg'
+		switchPhoto(image_url);
+		
+		
+		return;
+	}
+	
+
+	if (plan_index == 0) {
+		
+		if (redisplayDefault == 0) {
+			$("#prevarrow").hide();
+		}
+			
+		if (displayDefaultPanel != 0) {
+			$(".home_slogan").show();
+		}
 	} else {
 		$("#prevarrow").show();
 		$(".home_slogan").hide();
 	}
 	
+	
+	$("#MoreAttendees").hide();
+	
+	
+	
+	
+	
+
+	
 	if (plans.plan != null) {
 		current_plan = plans.plan
 	} else {
+		if (plans.length == 0) {
+			return;
+		}
 		current_plan = plans[plan_index].plan;
 	}
+
 	
 	if (plans.length-1 > plan_index) {
 		next_plan = plans[plan_index+1].plan;
 	}
 	plan_id = current_plan.id
 	$('#plan_title').html(current_plan.title);
-	$('#plan_url_name').html(current_plan.url_name);
-	$('#plan_note').html(current_plan.note);
-	setTimeout("$('.multiline').ellipsis();",500);
+	$('#plan_url_name').html(current_plan.short_location);
 	
-	//start_time = new Date(current_plan.start_time);
+	if (group == 0) {
+		note = current_plan.short_desc
+	} else {
+		note = current_plan.note
+		setTimeout("$('.multiline').ellipsis();",500);
+	}
+	if (note.length > 300) {
+		note = note.substring(0, 300)
+	}
+	$('#plan_note').html(note);
 	
-	str=current_plan.start_time.split('-');
-	var start_time=new Date();
-	start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
-	start_time.setUTCHours(0, 0, 0, 0);
 	
-	month_index = start_time.getUTCMonth()+1;
-	month = getShortMonth(month_index);
-	day = start_time.getUTCDate()
-	$('#plan_startdate_day').html(day);
-	$('#plan_startdate_month').html(month);
+	//
 	
-	if (current_plan.price) {
+	
+	if(current_plan.application_required) {
+		html = '<div style="text-align:center">Apply Now!</div>'
+	} else {
+		html = '<div class="BuyIcon"></div>'
+		html = html +'<div id="plan_price" style="position:absolute; margin-left:50px;"></div>'
+	}
+	$("#homeGroupBuy").html(html)
+
+	if ( parseInt(current_plan.price) > 0) {
+	
 		string_price = ''+current_plan.price+''
-		string_price = string_price.replace('.0','');
+		string_price = string_price.replace('.0','.00');
 		$('#plan_price').html('$'+string_price);
     } else {
+
 		$('#plan_price').html('FREE');
 	}
+	
+	
+	//start_time = new Date(current_plan.start_time);
+	if (current_plan.start_time) {
+		str=current_plan.start_time.split('-');
+		var start_time=new Date();
+		start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
+		start_time.setUTCHours(0, 0, 0, 0);
+	
+		month_index = start_time.getUTCMonth()+1;
+		month = getShortMonth(month_index);
+		day = start_time.getUTCDate()
+		year  = str[0];
+		 currentTime = new Date()
+		 thisYear = currentTime.getFullYear();
+		$('#plan_startdate_month').html(month);
+	
+		if (year > thisYear ) {
+			$('#plan_startdate_day').html(year);
+		} else {
+			$('#plan_startdate_day').html(day);
+		}
+	}
+	
+	
+	
+	if (current_plan.privacy == 3) {
+		if (bypass_password == 1) {
+			$('.home_description').html('<p style="font-size:18px">This event is by invitation only.<br>Please enter the password to view.</p><input type="textfield" style="float:left" id="plan_password" class="ShadowedTextBox"> <div class="home_password_button" onclick="checkPlanPassword(this,'+ current_plan.id+')">Go</div><div style="clear:both"></div><div id="password_incorrect"></div>')
+			setTimeout("$('#plan_password').focus();",500);
+		}
+	}
+	
+	
+	
 
 	if (plans.length-1 > plan_index) {
 		$('#next_plan_link').show();
 		$('#next_arrow').show();
 		//new_start_time = new Date(next_plan.start_time);
 		
-		str=next_plan.start_time.split('-');
-		var new_start_time=new Date();
-		new_start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
-		new_start_time.setUTCHours(0, 0, 0, 0);
-		
-		
-		new_month_index = new_start_time.getUTCMonth()+1;
-		new_month = getShortMonth(month_index).toLowerCase();
-		new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
-		new_day = new_start_time.getUTCDate()
-		$('#next_plan_link').html(next_plan.title+' on '+new_month+' '+new_day);
+		if (next_plan.start_time) {
+			str=next_plan.start_time.split('-');
+			var new_start_time=new Date();
+			new_start_time.setUTCFullYear(str[0], str[1]-1, str[2]);
+			new_start_time.setUTCHours(0, 0, 0, 0);
+			new_month_index = new_start_time.getUTCMonth()+1;
+			new_month = getShortMonth(new_month_index).toLowerCase();
+			new_month = new_month.charAt(0).toUpperCase() + new_month.charAt(1) + new_month.charAt(2);
+			new_day = new_start_time.getUTCDate()
+			
+			shortText = next_plan.title
+			if (next_plan.title.length > 25) {
+			 	shortText = next_plan.title.trim().substring(0, 25)
+			    .split(" ").slice(0, -1).join(" ") + "...";
+			}
+			
+			
+			$('#next_plan_link').html(shortText+' on '+new_month+' '+new_day);
+		}
 	} else {
 		
 		if (loggedIn == 0) {
@@ -3307,38 +3992,104 @@ function loadInfo(index) {
 	//	$('#next_arrow').hide();
 	}
 	
-	$("#plan_signup_count").html(current_plan.users.length+1);
-	if (current_plan.users.length+1 == 1) {
+	
+
+	
+	
+	num_hosts = current_plan.organizers.length
+
+	
+	$("#plan_signup_count").html(current_plan.users.length+num_hosts);
+	if (current_plan.users.length+num_hosts == 1) {
 		$("#plan_signup_words").html("sign-up");
 	} else {
 		$("#plan_signup_words").html("sign-ups");
 	}
 	
-	html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+	//html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		
-	
 
-	pic_count = 0;
-	for (var i = 0; i < current_plan.users.length; i++) {
-		the_user = current_plan.users[i];
+	if (current_plan.published == false) {
+		$("#DraftLayer").show();
+	} else {
+		$("#DraftLayer").hide();
+	}
+	
+	organizer_count = 0;
+	signup_count = 0;
+	total_count = 0;
+	hosts = ''
+	html = ''
+	host_names = ''
+	for (var i = 0; i < current_plan.organizers.length; i++) {
+			the_user = current_plan.organizers[i];
 		if (the_user.avatar_file_name != null) {
-			if (pic_count < 4) {
-				html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+			if (organizer_count < 5) {
+				transition =''
+				if (organizer_count == 0) {
+					
+				} else {
+					if (organizer_count == 4 || organizer_count+1 == current_plan.organizers.length) {
+						transition ='& '
+					} else {
+						transition =', '
+					}
+				}
+				file_name = fixFBImages(the_user.avatar_file_name)
+				host_names = host_names + ' '+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
+				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
-			pic_count = pic_count + 1;
+			organizer_count = organizer_count + 1;
+		} 
+	}
+	
+	total_count = organizer_count;
+	
+	
+	html = hosts;
+	for (var i = 0; i < current_plan.users.length; i++) {
+			the_user = current_plan.users[i];
+		if (the_user.avatar_file_name != null) {
+			if (total_count < 5) {
+				
+				
+				file_name = fixFBImages(the_user.avatar_file_name)
+				
+				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+			}
+			signup_count = signup_count + 1;
+			total_count = total_count + 1;
+			
 		} else {
 		//	html = html+'<a href="/'+the_user.username+'"><img alt="" class="Transparent" src="/images/no_avatar.png?1263875148" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		}
 	}
 	
+	
+	if (signup_count < 2) {
+		$("#plan_signup_count").html('')
+		$("#plan_signup_words").html("Hosted by "+host_names)
+		the_user = current_plan.user;
+		$("#plan_attendees").html(hosts)
+		//html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+		//html = html + '<div style="margin-left:5px; float:left; font-size:12px">'+the_user.first_name+' '+the_user.last_name +'</div>';
+	} else {
+		$("#plan_attendees").html(html)
+	}
+	
 	//html = html + "<script>$('.tip').tooltip();</script>"
  
 	//setTimeout(" $('.tl').tooltip();",1000)
-	if (pic_count > 4)	{
+	if (total_count > 4)	{
 		$("#MoreAttendees").show();
 	}
 	
-	$("#plan_attendees").html(html)
+
+	
+	
+	
+	
+	
 	
 	//if (plans.length < 2) {
 	//	$('.home_info_next').hide();
@@ -3359,9 +4110,23 @@ function loadInfo(index) {
 		$('.home_info_next').show();
 	}
 	
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+current_plan.image_file_name
+
+	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/original_"+escape(current_plan.image_file_name)
 	switchPhoto(image_url);
 	
+	
+
+	
+}
+
+function fixFBImages(name) {
+	
+	test = name.indexOf(".", 0)
+	
+	if (test == -1) {
+		name = name+"."
+	}
+	return name;
 }
 
 
@@ -3375,6 +4140,8 @@ function switchPhoto(image_url) {
 	      
 				$('#big_image_background').animate({opacity: 1}, 250);
 	}).attr("src", image_url);
+	
+	
 		
 //	$('#hideImage').attr('src', image_url).load(function() {
 //		alert('ho')
@@ -3434,4 +4201,853 @@ function refresh_home(json) {
 //	$('#big_image_background').animate({opacity: 1}, 250);
 }
 
+
+preload_image_index=0;
+function preloadImage() {
+
+	preload_image_index = preload_image_index +1;
+	preload_plan = plans[preload_image_index].plan;
+	
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/original_"+escape(preload_plan.image_file_name)
+	
+	var img = new Image();
+	$(img).load(function(){
+	      preloadImage();
+	}).attr("src", image_url);
+}
+
+function iconWhite(type) {
+	$("#"+type).removeClass(type).addClass(type+"_h")
+}
+function iconBlue(type) {
+	$("#"+type).removeClass(type+"_h").addClass(type)
+}
+function setAnimate(row) {
+	$(row).css("text-align","center")
+	$(row).html('<img src="/images/ajax-loader_f.gif">')
+}
+
+
+
+
+
+
+function slideOverview() {
+	$("#applyNowLayer")
+            .animate(
+              { left: "200%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+				$("#faqLayer")
+			            .animate(
+			              { left: "100%",  }, {
+			                duration: 1500,
+			                easing: 'easeOutBack'
+			              });
+
+	$("#learnMoreLayer")
+            .animate(
+			        { left: "0%",  }, {
+			          duration: 1500,
+			          easing: 'easeOutBack'
+	            });
+	
+				$('.learn-more').addClass('mainLinkActive');
+								$('.faq-link').removeClass('mainLinkActive');
+					$('.apply-now').removeClass('mainLinkActive');
+					
+					height = $("#learnMoreLayer").height()
+					$("#maincontainer").css("height",height+20)
+}
+
+function slideFaq() {
+	$("#applyNowLayer")
+            .animate(
+              { left: "200%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+			$("#learnMoreLayer")
+		            .animate(
+		              { left: "-100%",  }, {
+		                duration: 1500,
+		                easing: 'easeOutBack'
+		              });
+
+
+	$("#faqLayer")
+            .animate(
+			        { left: "0%",  }, {
+			          duration: 1500,
+			          easing: 'easeOutBack'
+	            });
+	
+				$('.learn-more').removeClass('mainLinkActive');
+								$('.faq-link').addClass('mainLinkActive');
+					$('.apply-now').removeClass('mainLinkActive');
+					
+					height = $("#faqLayer").height()
+					$("#maincontainer").css("height",height+20)
+					
+}
+
+function slideApp() {
+
+	$("#learnMoreLayer")
+            .animate(
+              { left: "-100%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+				$("#faqLayer")
+			            .animate(
+			              { left: "-100%",  }, {
+			                duration: 1500,
+			                easing: 'easeOutBack'
+			              });
+
+	$("#applyNowLayer")
+            .animate(
+              { left: "100%",  }, {
+                duration: 1500,
+                easing: 'easeOutBack'
+              });
+
+
+			height = $("#applyNowLayer").height()
+			$("#maincontainer").css("height",height+20)
+			
+
+
+$('.learn-more').removeClass('mainLinkActive');
+				$('.faq-link').removeClass('mainLinkActive');
+	$('.apply-now').addClass('mainLinkActive');
+	
+}
+
+
+function goToByScroll(id){
+      $('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');
+}
+
+
+
+function editDate(plan_id) {
+	closeRegister();
+displaySavingInProgress();
+	
+	$.post("/edit_plan_date", { plan_id: plan_id, start_time_date:$("#start_time_date").val(), start_time_hour:$("#start_time_hour").val(), start_time_minute:$("#start_time_minute").val(), start_time_ampm:$("#start_time_ampm").val(), end_time_date:$("#end_time_date").val(), end_time_hour:$("#end_time_hour").val(), end_time_minute:$("#end_time_minute").val(), end_time_ampm:$("#end_time_ampm").val()}, function(theResponse){
+		$('#RenderDate').html(theResponse)
+		displaySaved();
+	});
+}
+
+
+
+function displayDatesNew() {
+	enableDateFields();
+	$('#AddDateLayer').show();
+}
+
+function RequestLayer(box) {
+	if ($(box).is(':checked')) {
+		$("#RequestLayer").show();
+	} else{
+		$("#RequestLayer").hide();
+	}
+}
+
+
+
+function displayEditPhoto() {
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#EditPhotos')); $('#EditPhotos').css('top','35px');  $('#EditPhotos').show();  $('#EditPhotos').animate({ opacity: 1,}, 250 );",50);
+}
+
+
+function displayEditDate() {
+	enableDateFields();
+	$("#BlackModal").show();
+	$("#BlackModal").animate({opacity: .4,}, 100 );
+	$("#BlackModal").height($(document).height())
+	setTimeout("centerBox($('#EditDateLayer')); $('#EditDateLayer').css('top','35px');  $('#EditDateLayer').show();  $('#EditDateLayer').animate({ opacity: 1,}, 250 );",50);
+}
+
+function enableDateFields() {
+		$('#end_time_date').datepicker({
+			minDate: "-0D", 
+			maxDate: "+2Y",
+		   onClose: function(dateText, inst) { 
+
+			var startDate = new Date($("#start_time_date").val());
+			var endDate = new Date($("#end_time_date").val());
+
+			if (startDate > endDate) {
+
+				$("#start_time_date").val(dateText)
+			}
+		 	}
+		});
+		
+		
+		
+			$('#start_time_date').datepicker({
+						minDate: "-0D", 
+						maxDate: "+2Y",
+			   onClose: function(dateText, inst) { 
+				
+				var startDate = new Date($("#start_time_date").val());
+				var endDate = new Date($("#end_time_date").val());
+			
+				if (endDate = "") {
+					$("#end_time_date").val(dateText)
+				}
+			
+				if (startDate > endDate) {
+				
+					$("#end_time_date").val(dateText)
+				}
+			 	}
+			});
+}
+
+
+
+
+
+
+
+
+
+
+function editLink(plan_id) {
+//	$("#MapLink").attr("href", $("#url_link").val());
+	$("#MapLink").html($("#url_name").val());
+	closeRegister();
+	displaySavingInProgress();
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "/escapes/"+plan_id,
+        data: "_method=PUT&plan[url_link]=" + escape($("#url_link").val()) + "&plan[url_name]="+escape($("#url_name").val()),
+        success: function(msg){
+			displaySaved();
+        }
+     });
+	
+	
+	
+}
+
+function OpenDeletePlan() {
+	
+		$("#BlackModal").show();
+		$("#BlackModal").animate({opacity: .4,}, 100 );
+		$("#BlackModal").height($(document).height())
+		setTimeout("centerBox($('#DeletePlanLayer')); $('#DeletePlanLayer').css('margin-top','-135px');  $('#DeletePlanLayer').show();  $('#DeletePlanLayer').animate({ opacity: 1,}, 250 );",50);
+	}
+
+	function OpenDeleteGroup(id) {
+deleteThisGroupID = id;
+			$("#BlackModal").show();
+			$("#BlackModal").animate({opacity: .4,}, 100 );
+			$("#BlackModal").height($(document).height())
+			setTimeout("centerBox($('#DeleteGroupLayer')); $('#DeleteGroupLayer').css('margin-top','-135px');  $('#DeleteGroupLayer').show();  $('#DeleteGroupLayer').animate({ opacity: 1,}, 250 );",50);
+		}
+		
+
+function openLinkEditor() {
+	
+		$("#BlackModal").show();
+		$("#BlackModal").animate({opacity: .4,}, 100 );
+		$("#BlackModal").height($(document).height())
+		setTimeout("centerBox($('#EditLinkLayer')); $('#EditLinkLayer').css('margin-top','-35px');  $('#EditLinkLayer').show();  $('#EditLinkLayer').animate({ opacity: 1,}, 250 );",50);
+	}
+
+
+function saveSettings(plan_id) {
+	
+	if ($("#plan_attendance_cap").val() < 1) {
+		showWarningMessage("Error:  Set Quantity.  How many tickets are there?")
+		$("#plan_attendance_cap").focus();
+		return;
+	}
+	
+	if ($('input[name=privacy]:checked').val() == 3) {	
+		if ($("#plan_password").val() == "password") {
+			showWarningMessage("Error:  Set password.")
+			$("#plan_password").focus();
+			return;
+		}
+		if ($("#plan_password").val().length < 3) {
+			showWarningMessage("Error:  Password requires at least 3 characters.")
+			$("#plan_password").focus();
+			return;
+		}
+	}
+	
+	price = 0;
+	if ($('input[name=plan_price_radio]:checked').val() == 2) {	
+		if ($("#plan_price").val() == "") {
+			showWarningMessage("Error:  Set Price.")
+			$("#plan_price").focus();
+			return;
+		} else {
+			price = $("#plan_price").val();
+		}
+	}
+	
+	if ($('input[name=application]:checked').val() == 2) {	
+		if ($("#plan_application_wufoo").val() == "") {
+			showWarningMessage("Error:  Embed Wufoo Form Code")
+		}
+		if ($("#plan_application_deadline").val() == "") {
+			showWarningMessage("Error: Set Application Deadline")
+			$("#plan_application_deadline").focus();
+			return;
+		}
+	}
+	
+	enable_sharing = 0;
+	if ($('#enable_sharing').is(':checked')) {
+		enable_sharing = 1;
+	}
+	enable_comments = 0;
+	if ($('#enable_comments').is(':checked')) {
+		enable_comments = 1;
+	}
+	enable_signups = 0;
+	if ($('#enable_signups').is(':checked')) {
+		enable_signups = 1;
+	}
+	enable_donations = 0;
+	if ($('#enable_donations').is(':checked')) {
+		enable_donations = 1;
+	}
+	enable_discount = 0;
+	if ($('#enable_discount').is(':checked')) {
+		enable_discount = 1;
+	}
+	application_required = 0;
+	if ($('input[name=application]:checked').val() == 2) {	
+		application_required = 1;
+	}
+	
+	donation_text = $('#plan_donation_text').val();
+	donation_suggested_amount = $('#plan_donation_suggested_amount').val();
+	
+	displaySavingInProgress();
+	slideSettings()
+	$.ajax({
+        type: "POST",
+        url: "/escapes/"+plan_id,
+        data: "_method=PUT&plan[price]=" + price + "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing+"&plan[enable_donations]="+enable_donations+"&plan[donation_suggested_amount]="+donation_suggested_amount+"&plan[donation_text]="+donation_text,
+        success: function(msg){
+			displaySaved();
+			window.location.reload();
+        }
+     });
+	
+	
+	
+	
+}
+
+
+
+
+
+
+function showWarningMessage(error) {
+	var scrolltop = $(window).scrollTop()
+	if (scrolltop < 50) {
+		scrolltop = 50
+	} else {
+		scrolltop = 0;
+	}
+	
+	$("#StatusBar").removeClass("warning").removeClass("success").removeClass("info").addClass("error");
+	$("#StatusBar").html(error);
+	$("#StatusBar").css("top",scrolltop+"px");
+	$("#StatusBar").show();
+	$("#StatusBar").animate({ height: "22",}, 300 );
+}
+
+
+function slideSettings() {
+
+	
+	if ( $("#SettingsLayer").is(':visible') ) {
+		
+		
+		$("#SettingsLayer").animate({ "height": 1, "padding-top":1,"padding-bottom":1}, 300, function(){
+		  	$('#SettingsLayer').hide();
+		  	$('#SettingsLayer').css("height","1px");
+	      	$('#SettingsLayer').css("padding-top","1px");
+			$('#SettingsLayer').css("padding-bottom","1px");
+			$("#EditPlanMenu").show();
+			
+		});
+	} else {
+				$('#plan_application_deadline').datepicker({
+				   onClose: function(dateText, inst) { 
+				 	}
+				});
+				
+		$('#SettingsLayer').css("height","1px");
+		$('#SettingsLayer').css("padding-bottom","1px");
+		$('#SettingsLayer').css("padding-top","1px");
+		$("#EditPlanMenu").hide();
+		$('#SettingsLayer').show();
+		$("#SettingsLayer").animate({ "height": 500, "padding-top":20,  "padding-bottom":20}, 300, function(){
+		  $(this).css('height','auto').css('max-height',1000);
+		});
+	}
+}
+
+function planEditToggle() {
+	if (editable) {
+		editable = false;
+		$("#LockLinkIcon").addClass("LionHighlight")
+		$("#EditLinkIcon").removeClass("LionHighlight")
+		$.cookie('disable_edit', 'yes', { path: '/escapes/', expires: 1});
+					$(".EditBox").each( function(i,n) {
+						$(this).addClass("EditBoxHide").removeClass("EditBox");
+					} );
+
+							$(".EditIcon").each( function(i,n) {
+								$(this).hide();
+							} );
+
+
+		window.location.reload();
+	} else {
+		editable = true;
+		$("#LockLinkIcon").removeClass("LionHighlight")
+		$("#EditLinkIcon").addClass("LionHighlight")
+		$.cookie('disable_edit', null, { path: '/escapes/'});
+		window.location.reload();
+	}
+}
+
+
+
+function destroyPlan(id) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/escapes/"+id, { id:id, _method:'delete'}, function(theResponse){
+		window.location.href="/"
+	});
+	
+}
+
+function destroyPlan2(id,layer) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/escapes/"+id, { id:id, _method:'delete'}, function(theResponse){
+		$(layer).hide();
+		$("#StatusBar").removeClass("error").removeClass("warning").addClass("success").removeClass("info");
+		$("#StatusBar").html("Deleted");
+		setTimeout("animateStatusBarUp()",500)
+	});
+	
+}
+
+function destroyGroup(id) {
+	closeRegister();
+	showWarningMessage("Deleting")
+	$.post("/groups/"+id, { id:id, _method:'delete'}, function(theResponse){
+		window.location.href="/my_escapes"
+	});
+	
+}
+
+
+
+function submitDrafttoCreate(button) {
+	$(button).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+		$('#EscapeForm').submit();
+	
+}
+
+function submitPlantoCreate(button) {
+	$(button).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
+	validatePublish("new",button,0)
+	
+}
+
+function validatePublish(source,button,plan_id) {
+
+	error = 0;
+	
+	if (source == "new") {
+		title = $("#plan_title").val();
+		short_desc = $("#plan_short_desc").val();
+		note = $("#plan_note").val();
+		short_location = $("#plan_url_name").val();
+		location2 = $("#plan_location").val();
+		image = $("#plan_image").val();
+	} else {
+		title = $("#title").html();
+		short_desc = $("#short_desc").html();
+		note = $("#note").html();
+		short_location = $("#short_location").html();
+		location2 = $("#location").html();
+		image = $("#plan_image2").val();
+	}
+	
+	attendance_cap = $("#plan_attendance_cap").val();	
+	lat = $("#plan_lat").val();
+
+	
+
+	
+	if (attendance_cap == "" || attendance_cap == 0 || attendance_cap == "0") {
+		showWarningMessage("Error:  Quantity required");
+		if (source =="edit") {
+			slideSettings()
+		}
+		$("#plan_attendance_cap").focus();
+		error = 1;
+			$(button).html('Publish');
+			setTimeout("animateStatusBarUp()",3000)
+			return;
+	}
+	
+	//TODO:  Don't always require dates
+	
+	if ($("#start_time_date").val() == "" || $("#end_time_date").val() == "") {
+		showWarningMessage("Error:  Start and End Time Required");
+		displayDatesNew();
+		
+		if (source =="edit") {
+			displayEditDate();
+		}
+		
+		
+		if ($("#start_time_date").val() == "") {
+			$("#start_time_date").focus();
+		} else {
+			$("#end_time_date").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+
+	
+	
+	
+	if ($('input[name=application]:checked').val() == 2) {	
+		if ($("#plan_application_deadline").val() == "") {
+			showWarningMessage("Error:  Application Deadline Required");
+			if (source =="edit") {
+				slideSettings()
+			}
+			$("#plan_application_deadline").focus();
+			error = 1;
+			$(button).html('Publish');
+			setTimeout("animateStatusBarUp()",3000)
+			return;
+		}
+	}
+	
+	
+	if (lat == "" || lat == 0 || lat == "0") {
+		showWarningMessage("Error:  Google could not determine location.");
+		if (source =="edit") {
+	  		$("#location").focus();
+		} else {
+			$("#plan_location").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+	
+	
+	if (location2 == "" || location2 == "Type anything Google Maps can figure out") {
+	  showWarningMessage("Error:  Full address required");
+		if (source =="edit") {
+	  		$("#location").focus();
+		} else {
+			$("#plan_location").focus();
+		}
+	 	error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+
+	
+	if (short_location == "" || short_location == "Place, business, or landmark") {
+		showWarningMessage("Error:  Venue required");
+		if (source =="edit") {
+			$("#short_location").focus();
+		} else {
+			$("#plan_url_name").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+	
+	if (note == "" || note == "Why is this fun? What can people expect?") {
+		showWarningMessage("Error:  Summary Required");
+		if (source =="edit") {
+			$("#note").focus();
+		} else {
+			$("#plan_note").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+
+	if (image == "" || image == null ) {
+	
+		showWarningMessage("Error:  Photo Required")
+		if (source =="edit") {
+			uploadPlanPhoto(plan_id,'show')
+		} else {
+			$("#plan_image").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	} else {
+		if (source =="new") {
+			test = image.split('.').pop().toLowerCase(); 
+			var allow = new Array('gif','png','jpg','jpeg'); 
+			if(jQuery.inArray(test, allow) == -1) {
+				showWarningMessage("Error:  Photo must be 'gif','png','jpg', or 'jpeg'")
+				$("#plan_image").focus();
+				error = 1;
+				$(button).html('Publish');
+				setTimeout("animateStatusBarUp()",3000)
+				return;
+			}
+		}
+	} 
+	
+	if (short_desc == "" || short_desc == "Type up a tweetable one-liner.  Sell it!") {
+		showWarningMessage("Error:  Tagline Required")
+		if (source =="edit") {
+			$("#short_desc").focus();
+		} else {
+			$("#plan_short_desc").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+	
+	if (title == "" || title == "Give it a cool name. Try using a verb.") {
+		showWarningMessage("Error:  Title Required");
+		if (source =="edit") {
+			$("#title").focus();
+		} else {
+			$("#plan_title").focus();
+		}
+		error = 1;
+		$(button).html('Publish');
+		setTimeout("animateStatusBarUp()",3000)
+		return;
+	}
+
+	
+	
+	
+	
+	
+	if (error == 0) {
+		
+		if (source == "new") {
+			$('#EscapeForm').submit();
+		} else {
+			displaySavingInProgress();
+			$("#PublishLink").hide()
+
+			$.ajax({
+		        type: "POST",
+		        url: "/escapes/"+plan_id,
+		        data: "_method=PUT&plan[published]=1",
+		        success: function(msg){
+					displaySaved();
+					$("#UnpublishLink").show()
+						$("#DraftLayer").hide()
+		        }
+		     });
+		}
+	}
+	
+}
+
+
+
+
+function unpublishPlan(plan_id) {
+	displaySavingInProgress();
+	$("#UnpublishLink").hide()
+	$.ajax({
+        type: "POST",
+        url: "/escapes/"+plan_id,
+        data: "_method=PUT&plan[published]=0",
+        success: function(msg){
+			displaySaved();
+			$("#PublishLink").show()
+			$("#DraftLayer").show()
+        }
+     });
+}
+function publishPlan(plan_id) {
+
+}
+
+function advanceUse() {
+	Use = Use+1;
+	if (Use == 2) {
+		
+		$('#UseHeading').html("Use #5: Local Community Events")
+		$('#UseSubHeading').html("<A class='BlueLink' target='_blank' href='http://escapist.me?id=19'>Startup Pirate Yacht</a> knows how to throw a party.  <br>Har har har!  1000 pirates in a boat.")
+		$("#UseImage").attr("src","/images/use_2.png")
+	}
+	
+	if (Use == 3) {
+		
+		$('#UseHeading').html("Use #3: Meet New Friends")
+		$('#UseSubHeading').html("You've never really bonded with someone until you've been flying together in a vertical wind tunnel!")
+		$("#UseImage").attr("src","/images/use_3.png")
+		$("#UseNextLink").css("opacity","0");
+	}
+}
+
+
+function checkPlanPassword(button,plan_id) {
+	
+	if ($('#plan_password').val() == '') {
+		$('#plan_password').focus();
+		return;
+	}
+	$(".home_password_button").html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">')
+	$("#password_incorrect").html('')
+	
+	$.ajax({
+        type: "POST",
+        url: "/check_plan_password",
+        data: "_method=PUT&plan[password]="+$('#plan_password').val()+"&plan[id]="+plan_id,
+        success: function(id){
+
+			if (id == 0) {  //failed
+				$("#password_incorrect").html('Incorrect Password')
+				$(".home_password_button").html('Go')
+			} else {
+				window.location.href="/plans/"+id
+			}
+        }
+     });
+	
+	
+	
+}
+
+
+function FBLogin3(button) {
+	
+	if ($(button).html() == '<img style="margin-top:10px;" src="/images/ajax-loader_f.gif">') {
+		return;
+	}
+	$(button).html('<img style="margin-top:10px;" src="/images/ajax-loader_f.gif">')
+	fblogin()
+}
+
+
+
+function AddDonation(field) {
+	value = $(field).val();
+
+	
+	parsedVal = parseInt(value)
+	
+	if (parsedVal) {
+			$(field).val('')
+			price = parseInt(price) + parsedVal
+			$('.price_display').html('$'+roundNumber(price,2))
+	}
+	
+}
+
+
+function stripTags(callingObject, originalText, cursorInfo) {
+    // Get the front part of the original text (part before the new text)
+    
+alert('sad')
+var front = originalText.substring(0, cursorInfo.start);
+    // Get the back part of the original text (part after the new text)
+    var back = originalText.substring(cursorInfo.end);
+    // Get the pasted text out of the new text
+    var pasted = callingObject.val().replace(front, "").replace(back, "");
+    // Remove tags from the pasted stuff
+    pasted = pasted.replace(/(<[^<>]*>)/g, "");
+    // Remove newline characters, if we want to.
+	
+    // Put the new text into the target
+
+
+    $(callingObject).text(front + pasted + back);
+}
+
+
+function checkUsername(button,form,username,id) {
+	
+	oldVal = $(button).html();
+	
+	$(button).html("<img style='margin-top:3px;' src='/images/ajax-loader_f.gif'>");  
+	oldButton = $(button)
+
+	
+	
+	
+	$.ajax({
+        type: "POST",
+        url: "/check_group_username",
+        data: "username="+username+"&id="+id,
+        success: function(error){
+
+			error = parseInt(error)
+			
+			
+			failed = false
+			if (error == 1) { 
+				failed = true
+			}
+	
+			
+			if (failed) {  
+				
+				$(oldButton).html(oldVal);
+				showWarningMessage('Username already taken.  Please try another!');
+				
+			} else {
+			
+				$(form).submit();
+			
+			}
+        }
+     });
+
+	
+	
+	
+}
 

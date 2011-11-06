@@ -1,0 +1,438 @@
+<div style="font-size:16px; line-height:20px; width:950px; margin-left:auto; margin-right:auto">
+
+
+
+<div style="width:500px; text-align:center; margin-left:auto; margin-right:auto">
+
+<div class="HighlightedTitle">Vampire Hackathon</div>
+
+<p>Part Halloween party, part coding contest, over 130 local hackers celebrated the night in true startup fashion: creating something awesome.... before the sun rose at 7:04am!  <a class="BlueLink" href="/escapes/27">View photos</a></p>
+
+<p>These projects were largely completed in a single night.</p>
+
+<p></p>
+
+<div class="HighlightedTitle" style="margin-top:30px">Finalists</div>
+
+</div>
+
+
+<div style="clear:both"></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:30px"></div>
+<div style="float:left; width:480px; ">
+	<div style=" margin-top:30px; font-size:14px;  margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">AB Positive</span></div>
+	<a class="BlueLink" target="_blank" href="http://abpositiveapp.com">http://abpositiveapp.com</a><br>
+	
+	<p>AB+ is the first A/B testing solution for mobile applications. With AB+, you can configure experiments, track conversions, and update designs from the web. This lets you measure and act on user behavior without the costs and delays of development, App Store approval, and software updates.</p>
+
+	<p>The Rails backend and iOS client library are fully operational and Android support is coming soon.</p>
+
+	<p>Email Justin at <a class="BlueLink" href="jkaufman@raizlabs.com">jkaufman@raizlabs.com</a> for the demo iPhone app.</p>
+
+
+	<div class="vampUserBox">
+		<div>Created by <a href="/james-daniels" class="SubtleLink">James Daniels</a>, <a href="/michele-titolo" class="SubtleLink">Michele Titolo</a>, <a href="/justin-kaufman" class="SubtleLink">Justin Kaufman</a>, & <a href="/andrew-tremblay" class="SubtleLink">Andrew Tremblay</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"id in (1346,1434,1432,1433)")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+
+</div>
+
+
+<iframe style="float:right; width:400px; margin-left:20px; margin-top:90px;" src="http://player.vimeo.com/video/31288351?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+<div style="float:left; width:480px; ">
+	<div style=" margin-top:50px; font-size:14px;  margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">Alpha-Helix</span></div>
+
+	<p>Alpha-Helix | Improving conversion through natural selection</p>
+
+	<p>We're building a tool for constructing multivariate tests that do more. Our system uses the highest converting elements of a page to mix and match new page elements for a perpetually increasing conversion rate.</p>
+
+	<div class="vampUserBox">
+		<div>Created by  <a href="/ryan-detzel" class="SubtleLink">Ryan Detzel</a> & <a href="/steven-trevathan" class="SubtleLink">Steven Trevathan</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"id in (1359,1327)")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+
+
+
+
+</div>
+
+
+<iframe class="youtube-player" style="float:right; width:400px; margin-left:20px; margin-top:85px;" type="text/html" width="400" height="300" src="http://www.youtube.com/embed/Xp6Ga2ig5zM" frameborder="0" webkitAllowFullScreen allowFullScreen>
+</iframe>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">Ghost Raiders</span></div>
+
+	<p>Our Halloween-themed project consists of a floating cat. Ghosts fly out of our tombstones to try to kill the cat. The user tilts the screen to move the cat out of the way of the ghosts. There are several types of ghosts that randomly move out of the tombstones at different speeds. The game becomes increasingly difficult as time goes on as ghosts will spawn more rapidly and the amount of faster-moving ghosts will increase. In addition, there are two power ups. A heart represents an extra life while a star represents extra points for the player.</p>
+
+	<p>This game is awesome because it allows the ambidextrous to win :) WOOT!</p>
+	
+	<p>Email Vincent at <a class="BlueLink" href="mailto:vlin91@gmail.com">vlin91@gmail.com</a> for the iPhone app.</p>
+	
+	<div class="vampUserBox">
+		<div>Created by  <a href="/chenkai-liu" class="SubtleLink">Chenkai Liu</a>, <a href="/zhen-zhu" class="SubtleLink">Zhen  Zhu</a>, & <a href="/vincent-lin" class="SubtleLink">Vincent Lin</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"id in (1469,1471,1472)")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+</div>
+
+<iframe style="float:right; width:400px; margin-left:20px; margin-top:85px;" src="http://player.vimeo.com/video/31320160?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+
+
+
+
+
+
+<div style="float:left; width:480px; ">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">Hack or Whack</span></div>
+	<a class="BlueLink" target="_blank" href="http://www.hackorwhack.com/">http://www.hackorwhack.com/</a><br>
+	mobile:  <a class="BlueLink" target="_blank" href="http://www.hackorwhack.com/m">http://www.hackorwhack.com/m</a>
+	
+	<p>Our project is about giving voice to all those ideas in your head that you never got a chance to do - it gives them wings and let's other people have an opportunity to learn from or be inspired by them. Alternatively if your project gets a bunch of votes, you might be inspired to take up the reins for your hack to make the world a better place.</p>
+
+	<div class="vampUserBox">
+		<div>Created by  <a href="/pascal-rettig" class="SubtleLink">Pascal Rettig</a>, <a href="/chris-myles" class="SubtleLink">Chris Myles</a>, & <a href="/martha-rettig" class="SubtleLink">Martha Rettig</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"id in (1383,1385,1384)")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+
+
+</div>
+
+
+<iframe class="youtube-player" style="float:right; width:400px; margin-left:20px; margin-top:90px;" type="text/html" width="400" height="300" src="http://www.youtube.com/embed/_zWBuoGHOeE " frameborder="0" webkitAllowFullScreen allowFullScreen>
+</iframe>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">HiPay.Me</span><br>
+
+	<a class="BlueLink" target="_blank" href="http://hipay.me/">http://hipay.me/</a></div>
+	<p>We make long-distance freelance payment easy. Traditional payment methods, including mailed cash, checks, and merchant accounts, create unnecessary payment delays and hassles. hipay.me makes it easy for any freelancer to collect payments instantly online. No knowledge of Web development is required.</p>
+
+	<p>Why is this awesome? Never before has it been so simple and fast for freelancers to bill and get paid.
+	A freelancer enters the billing amount and receive a unique hipay.me link to forward to the client. The client opens this link and enters only: credit card number, expiry date, and security code. The freelancer gets paid as soon as the client completes the transaction.</p>
+	
+	
+	<div class="vampUserBox">
+		<div>Created by  <a href="/harley-trung" class="SubtleLink">Harley Trung</a>, <a href="/mike-schroll" class="SubtleLink">Mike Schroll</a>, & <a href="/mike-nguyen" class="SubtleLink">Mike Nguyen</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('harley-trung','mike-schroll','mike-nguyen')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+	
+</div>
+
+<iframe style="float:right; width:400px; margin-left:20px; margin-top:110px;" src="http://player.vimeo.com/video/30944397?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">Symtax</span></div>
+	<a class="BlueLink" target="_blank" href="http://github.com/elitheeli/symtax">http://github.com/elitheeli/symtax</a><br>
+	
+	<p>What does your code sound like? What's the beat to which you program? Symtax explores the relationship between abstract syntax and musical pattern, turning Javascript into music. Symtax is a first step towards fully immersive coding, elevating developers' states of minds through conforming all sensory inputs to the code architecture the brain scaffolds.</p>
+
+	<p>Our design is extremely extensible. For example, without much work, a future version could adapt to the intensity of programming. Changing sounds and moods are easy, even without Ruby knowledge.</p>
+
+	<p>Symtax is implemented in Ruby and SuperCollider, though without much trouble, one could use an alternate synthesis engine.</p>
+	
+	<div class="vampUserBox">
+		<div>Created by  <a href="/eli-fox-epstein" class="BlueLink">Eli Fox-Epstein</a>, <a href="/michael-shah" class="BlueLink">Mike Shah</a>, & <a href="/paul-ellis-linton" class="BlueLink">Paul Ellis Linton</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('eli-fox-epstein','michael-shah','paul-ellis-linton')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+</div>
+
+<iframe style="float:right; width:400px; margin-left:20px; margin-top:110px;" src="http://player.vimeo.com/video/31288136?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:50px; margin-top:50px"></div>
+
+
+<div style="text-align:center">
+<div class="HighlightedTitle">Other Hacks</div>
+Frankly, anyone that stays up coding until 7am deserves a prize.<br>We need more sponsor-donated prizes next year!<br>Buy these guys a beer if you see them!
+
+</div>
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">LearnTable</span></div>
+	<a class="BlueLink" target="_blank" href="http://learntable.com/">http://learntable.com/</a><br>
+	
+	<p>Think back to the small study groups that many of us participated in throughout our educational careers - Learntable is a 21st century re-imagination of this experience. Learntable is all about creating a compelling experience around the learning process. Over the past couple of months, we have all been fascinated by the amazing set of visual and social interactions that turntable.fm has enabled for the music sharing community. Our goal is test a similar model in the education space.</p>
+
+	<p>Learntable allows groups of learners to enter a "room" and collaborate in real time, asking each other questions and receiving immediate visual feedback when they and others chime in with answers. Users are graded on their responses immediately and earn points for their knowledge in a particular subject area. Learntable is a great way for students who couldn't or wouldn't otherwise meet up in person to get together to learn in a fun, engaging environment.</p>
+
+
+	<div class="vampUserBox">
+		<div>Created by   <a href="/josh-silverman" class="SubtleLink">Josh Silverman</a>, <a href="/bill-derusha" class="SubtleLink">Bill DeRusha</a>, <a href="/bernard-huang" class="SubtleLink">Bernard Huang</a>, & <a href="/jason-urton" class="SubtleLink">Jason Urton</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('josh-silverman','bill-derusha','bernard-huang','jason-urton')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+	
+</div>
+
+<iframe class="youtube-player" style="float:right; width:400px; margin-left:20px; margin-top:110px;" type="text/html" width="400" height="300" src="http://www.youtube.com/embed/VAqC5cjxoRk" frameborder="0" webkitAllowFullScreen allowFullScreen>
+</iframe>
+
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">ImagetoPDF</span></div>
+
+	<p>ImagetoPDF is an Android app that allows you to scan documents into PDFs with your phone.</p>
+	<p>Take a picture of your document (or anything really) and receive a PDF of your document, ready for email!</p>
+
+
+	<div class="vampUserBox">
+		<div>Created by   <a href="/grace-woo" class="SubtleLink">Grace Woo</a>, <a href="/julia-ma" class="SubtleLink">Julia Ma</a>, & <a href="/eliransapir" class="SubtleLink">Eliran Sapir</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('grace-woo','julia-ma','eliransapir')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+</div>
+
+<iframe style="float:right; width:400px; margin-left:20px; margin-top:85px;" src="http://player.vimeo.com/video/30941111?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">ClientCanvas</span></div>
+	<a class="BlueLink" target="_blank" href="http://clientcanvas.com">http://clientcanvas.com</a><br>
+	
+	<p>ClientCanvas allows clients to give feedback on web designs by drawing directly on the webpage itself. Simply add a javascript tag to any page and draw on any page you want. Share the drawings between client and designer.</p>
+
+	<p>It also allows you to draw dicks on everything on the internet.</p>
+
+	<div class="vampUserBox">
+		<div>Created by   <a href="/ben-tucker" class="SubtleLink">Ben Tucker</a> & <a href="/brian-cardarella" class="SubtleLink">Brian Cardarella</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('ben-tucker','brian-cardarella')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+</div>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">eCallRecorder</span></div>
+	<a class="BlueLink" target="_blank" href="http://www.ecallrecorder.com">http://www.ecallrecorder.com</a><br>
+	
+	<p>eCallRecorder lets yourecord your phone calls from your phone or web browser. Just give eCallRecorder the USA phone number you want to call, your number and your email address. eCallRecorder will then connect you with the other party and record the call. When your call is finished, you’ll receive an MP3 file of the recording in your inbox.</p>
+
+	<p>What kind of calls can I make with eCallRecorder?  Any call you’d like. Use eCallRecorder when you call your cable/phone company, customer service, your lawyer, a prospective employee, the weird sounding guy selling that futon on Craigslist, your cheating boyfriend—any call you’d like recorded.</p>
+
+
+	<div class="vampUserBox">
+		<div>Created by   <a href="/eliransapir" class="BlueLink">Eliran Sapir</a> & <a href="/szymon-jakubczak" class="BlueLink">Szymon Jakubczak</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('eliransapir','szymon-jakubczak')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+	
+</div>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">PickupConnect</span> </div>
+	<a class="BlueLink" target="_blank" href="http://pickupconnect-staging.djangozoom.net/">http://pickupconnect-staging.djangozoom.net/</a><br>
+	
+	<p>Stay in touch! We want to help you you stay in touch with your friends and loved ones.</p>
+
+	<p>Register, teach us about your contacts.  We'll call you with gentle reminders about all those phone calls you've been procrastinating.  With your permission, we'll even automatically bring your buddy on the line.</p>
+
+	<div class="vampUserBox">
+		<div>Created by   <a href="/ted-w" class="SubtleLink">Ted Wing</a>, <a href="/jared-chung" class="SubtleLink">Jared Chung</a>, <a href="/nate-aune" class="SubtleLink">Nate Aune</a>, & <a href="/maximilian-thayer" class="SubtleLink">Max Thayer</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('ted-w','jared-chung','nate-aune','maximilian-thayer')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+
+
+</div>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">Shauben</span></div>
+	<a class="BlueLink" target="_blank" href="http://www.shaunagm.net/vampire/hack.py">http://www.shaunagm.net/vampire/hack.py</a><br>
+	
+	<p>Our project is an attempt to graph campaign contribution data taken from transparencydata.com's API. Using Highchart.com's graphing library, we were able to display financial industry contributions over time. The project was written primarily in Python, a new language for both members of the team.</p>
+
+	<p>There are some features we were hoping to add, which we didn't quite get to. We plan on adding them in the future. They include:</p>
+	<ul><li>allowing users to specify which representatives to display (or to display an average for a party or state delegation)</li>
+	<li>adding information about votes on high profile financial legislation (such as the Commodity Futures Modernization Act of 2000, The Graham-Leach-Bliley Act of 1999, and the Wall Street Reform Act of 2010 ) so users can explore, visually, the effect of contributions on votes</li>
+	<li>allowing users to do (very) basic statistical analyses of campaign contributions</li></ul>
+
+	<p>Our project is cool (if somewhat primitive) because it takes advantage of the wealth of information about our government that we as American citizens have access to. The project is our attempt to make that info more accessible - to tell a story with it.</p>
+	
+	
+	<div class="vampUserBox">
+		<div>Created by   <a href="/shauna-gordon-mckeon" class="SubtleLink">Shauna Gordon-McKeon</a> & <a href="/benjamin-hitov" class="SubtleLink">Ben Hitov</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('shauna-gordon-mckeon','benjamin-hitov')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+
+</div>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:1px; margin-top:50px"></div>
+
+
+
+
+<div style="float:left; width:480px;">
+	<div style=" margin-top:50px; margin-bottom:3px;"><span style="font-weight:bold; font-size:18px; color:#333;">PlanAwesome</span></div>
+	<a class="BlueLink" target="_blank" href="http://planawesome.heroku.com">http://planawesome.heroku.com</a><br>
+	
+	<p>IT'S IN THE NAME. But seriously, it lets you organize activities that are contingent on a large group attending.</p>
+
+	<p>Example: we play basketball every week. It sucks when only 2-3 people show up. Nobody wants to commit until there are big numbers. Our app gives people a way to commit to something early, but it only applies if the activity gets critical mass</p>
+	
+	<div class="vampUserBox">
+		<div>Created by   <a href="/robby-grossman" class="BlueLink">Robby Grossman</a> & <a href="/william-sulinski" class="BlueLink">Will Sulinski</a></div>
+		<%@users = User.sort_photos_first.find(:all, :conditions=>"username in ('robby-grossman','william-sulinski')")%>
+		<%for user in @users%>
+			<a href="/<%=user.username%>">
+			<%= image_tag(user.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{user.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+			</a>
+		<%end%>
+		<div style="clear:both"></div>
+	</div>
+	
+
+</div>
+
+
+<div style="clear:both; "></div>
+<div style="border-top:1px dotted #ccc; height:30px; margin-top:30px"></div>
+
+
+
+
+
+
+
+
+
+
+</div>

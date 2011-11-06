@@ -7,7 +7,6 @@ class Challenge < ActiveRecord::Base
   
   belongs_to :user, :foreign_key => 'author_id'
   has_many :subscribed_challenges
-  has_many :plans, :dependent => :destroy
   has_many :dislikes, :dependent => :destroy
   belongs_to :achievement
   belongs_to :category

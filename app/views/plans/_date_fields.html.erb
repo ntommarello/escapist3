@@ -1,0 +1,99 @@
+<div style="float:left; width:250px; padding:10px; padding-top:1px; padding-bottom:30px;<%if source=="edit"%>border-right:1px solid #666<%end%>">
+
+	<p align="center" style="font-size:15px;" class="HighlightedTitle">Start Time</p>
+	
+	<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:8px; ">Date:</div>
+	
+	<div style="float:left;">
+		<input id="start_time_date" name="start_time_date" class="ShadowedTextBox" value="<%if @plan.start_time%><%=@plan.start_time.strftime('%m/%d/%Y')%><%end%>">
+	</div>	
+	
+	
+	<div style="clear:both"></div>
+	<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:18px; ">Time:</div>
+	<div style="float:left; margin-top:14px">
+		
+		<%if @plan.start_time%>
+			<%@start_hour = @plan.start_time.strftime('%I').to_i%>
+			<%@start_minute = @plan.start_time.strftime('%M').to_i%>
+			<%@start_ampm = @plan.start_time.strftime('%p').downcase()%>
+		<%else%>
+			<%@start_hour = 5%>
+			<%@start_minute = 0%>
+			<%@start_ampm = "pm"%>
+		<%end%>
+		
+		<select id="start_time_hour" name="start_time_hour">
+			<option <%if @start_hour == 1%>selected<%end%>>1</option>
+			<option <%if @start_hour == 2%>selected<%end%>>2</option>
+			<option <%if @start_hour == 3%>selected<%end%>>3</option>
+			<option <%if @start_hour == 4%>selected<%end%>>4</option>
+			<option <%if @start_hour == 5%>selected<%end%>>5</option>
+			<option <%if @start_hour == 6%>selected<%end%>>6</option>
+			<option <%if @start_hour == 7%>selected<%end%>>7</option>
+			<option <%if @start_hour == 8%>selected<%end%>>8</option>
+			<option <%if @start_hour == 9%>selected<%end%>>9</option>
+			<option <%if @start_hour == 10%>selected<%end%>>10</option>
+			<option <%if @start_hour == 11%>selected<%end%>>11</option>
+			<option <%if @start_hour == 12%>selected<%end%>>12</option>
+		</select>
+		<select id="start_time_minute" name="start_time_minute">
+			<option <%if @start_minute == 0%>selected<%end%> value="0">:00</option>
+			<option <%if @start_minute == 15%>selected<%end%> value="15">:15</option>
+			<option <%if @start_minute == 30%>selected<%end%> value="30">:30</option>
+			<option <%if @start_minute == 45%>selected<%end%> calue="45">:45</option>
+		</select>
+		<select id="start_time_ampm" name="start_time_ampm">
+			<option  <%if @start_ampm == "pm"%>selected<%end%> >PM</option>
+			<option  <%if @start_ampm == "am"%>selected<%end%> >AM</option>
+		</select>
+	</div>
+</div>
+
+<div style="float:left; width:250px; padding:10px;  padding-top:1px; padding-bottom:30px;">
+	<p align="center" style="font-size:15px;" class="HighlightedTitle">End Time</p>	
+	<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:8px; ">Date:</div>
+	<div style="float:left;"><input id="end_time_date" name="end_time_date" class="ShadowedTextBox" value="<%if @plan.end_time%><%=@plan.end_time.strftime('%m/%d/%Y')%><%end%>"></div>	
+
+	<div style="clear:both"></div>
+	<div style="float:left;  width:50px; text-align:right; margin-right:10px; margin-top:18px; ">Time:</div>
+		<div style="float:left; margin-top:14px">
+			
+			<%if @plan.end_time%>
+				<%@end_hour = @plan.end_time.strftime('%I').to_i%>
+				<%@end_minute = @plan.end_time.strftime('%M').to_i%>
+				<%@end_ampm = @plan.end_time.strftime('%p').downcase()%>
+			<%else%>
+				<%@end_hour = 8%>
+				<%@end_minute = 0%>
+				<%@end_ampm = "pm"%>
+			<%end%>
+			
+			<select id="end_time_hour" name="end_time_hour">
+				<option <%if @end_hour == 1%>selected<%end%>>1</option>
+				<option <%if @end_hour == 2%>selected<%end%>>2</option>
+				<option <%if @end_hour == 3%>selected<%end%>>3</option>
+				<option <%if @end_hour == 4%>selected<%end%>>4</option>
+				<option <%if @end_hour == 5%>selected<%end%>>5</option>
+				<option <%if @end_hour == 6%>selected<%end%>>6</option>
+				<option <%if @end_hour == 7%>selected<%end%>>7</option>
+				<option <%if @end_hour == 8%>selected<%end%>>8</option>
+				<option <%if @end_hour == 9%>selected<%end%>>9</option>
+				<option <%if @end_hour == 10%>selected<%end%>>10</option>
+				<option <%if @end_hour == 11%>selected<%end%>>11</option>
+				<option <%if @end_hour == 12%>selected<%end%>>12</option>
+			</select>
+			<select id="end_time_minute" name="end_time_minute">
+				<option <%if @end_minute == 0%>selected<%end%>  value="0">:00</option>
+				<option <%if @end_minute == 15%>selected<%end%>  value="15">:15</option>
+				<option <%if @end_minute == 30%>selected<%end%>  value="30">:30</option>
+				<option <%if @end_minute == 45%>selected<%end%>  value="45">:45</option>
+			</select>
+			<select id="end_time_ampm" name="end_time_ampm">
+				<option <%if @end_ampm == "pm"%>selected<%end%>>PM</option>
+				<option <%if @end_ampm == "am"%>selected<%end%>>AM</option>
+			</select>
+		</div>	
+		
+	
+</div>

@@ -1,14 +1,16 @@
 class AuthenticationsController < ApplicationController
    require 'open-uri'
    
+   
+   
+ 
+   
+   
   def index
   end
 
   def create
-    
-    
-    
-    
+  
     
     omniauth = request.env["omniauth.auth"]
      @secret = ""
@@ -24,7 +26,13 @@ class AuthenticationsController < ApplicationController
       authentication.token = omniauth['credentials']['token']
       authentication.secret = @secret
       authentication.save
-      sign_in authentication.user
+      if authentication.user
+        sign_in authentication.user
+      else
+        authentication.destroy
+        redirect_to '/'
+        return
+      end
       if cookies[:redirect_settings]
            if omniauth['provider'] == "facebook"
              current_user.fb_extended_permissions = true
@@ -33,7 +41,8 @@ class AuthenticationsController < ApplicationController
            cookies.delete :redirect_settings
            redirect_to settings_path
       else
-        redirect_to user_path(current_user)
+        redirect_to request.env['omniauth.origin'] || '/'
+        #redirect_to user_path(current_user)
       end
     elsif current_user
       #no need to add account, but add auth link
@@ -48,10 +57,35 @@ class AuthenticationsController < ApplicationController
          if @user_params['facebook_link']
             current_user.facebook_link  = @user_params['facebook_link']
          end
+         if @avatar_link
+           unless current_user.avatar_file_name
+             begin
+               tempfile = Tempfile.new("test")
+               tempfile.write open(@avatar_link).read.force_encoding('utf-8')
+               current_user.avatar  = tempfile
+             rescue
+
+             end  
+           end
+         end
          current_user.save
        end
        if omniauth['provider'] == "twitter"
+         parse_twitter_data(omniauth)
          current_user.twitter_link = omniauth['user_info']['nickname']
+         
+         if @avatar_link
+            unless current_user.avatar_file_name
+              begin
+                tempfile = Tempfile.new("test")
+                tempfile.write open(@avatar_link).read.force_encoding('utf-8')
+                current_user.avatar  = tempfile
+              rescue
+
+              end  
+            end
+          end
+          
          current_user.save
        end
        
@@ -67,7 +101,8 @@ class AuthenticationsController < ApplicationController
            end
            redirect_to settings_path
       else
-        redirect_to user_path(current_user)
+         redirect_to request.env['omniauth.origin'] || '/'
+        #redirect_to user_path(current_user)
       end
     else
       if omniauth['provider'] == "facebook"
@@ -91,16 +126,31 @@ class AuthenticationsController < ApplicationController
         if @user_params['facebook_link']
            current_user.facebook_link  = @user_params['facebook_link']
         end
+        
+        
+        
+        
         current_user.save
         current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
-        redirect_to user_path(current_user)
+        
+
+
+        #HERE
+          location = request.env['omniauth.origin']  || root_path
+
+          #if location.include? "escapes/"
+            redirect_to location
+          #else
+          #  redirect_to "/#{current_user.username}"
+          #end
+        
       else
         
         #totally new user: register
  
         
         user = User.new(@user_params)
-        user.source = "web"
+        user.source = @source
         if @user_params['location_city']
           location = Geokit::Geocoders::MultiGeocoder.geocode(@user_params['location_city'])
           if location.lat
@@ -113,7 +163,7 @@ class AuthenticationsController < ApplicationController
         if @avatar_link
           begin
             tempfile = Tempfile.new("test")
-            tempfile.write open(@avatar_link).read
+            tempfile.write open(@avatar_link).read.force_encoding('utf-8')
             user.avatar  = tempfile
           rescue
             
@@ -123,10 +173,22 @@ class AuthenticationsController < ApplicationController
         
 
         if user.save
+          @user = user
           check_cookies
           sign_in user
           current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token=>omniauth['credentials']['token'], :secret=>@secret)
-          redirect_to user_path(current_user)
+          
+          location = request.env['omniauth.origin']  || root_path
+
+          if location.include? "escapes/"
+            redirect_to location
+          else
+            redirect_to "/#{current_user.username}"
+          end
+          
+          #redirect_to user_path(current_user)
+          #redirect_to :back
+          #request.env['omniauth.origin'] || '/'
         else
           session[:omniauth] = omniauth.except('extra')
           flash[:error] = user.errors.to_a.map { |msg| msg }.join(". ")
@@ -168,9 +230,13 @@ class AuthenticationsController < ApplicationController
     @user_params['temp_password'] = @user_params['password'] 
     if omniauth['extra']['user_hash']['hometown']
       @user_params['hometown'] = omniauth['extra']['user_hash']['hometown']['name']
+    else
+      @user_params['hometown'] = session[:location_city]
     end
     if omniauth['extra']['user_hash']['location']
       @user_params['location_city'] = omniauth['extra']['user_hash']['location']['name']
+    else
+      @user_params['location_city'] = session[:location_city]
     end
     if omniauth['extra']['user_hash']['birthday']
       @user_params['birthday'] = omniauth['extra']['user_hash']['birthday']
@@ -191,7 +257,7 @@ class AuthenticationsController < ApplicationController
       @custom_link = omniauth['user_info']['nickname']   #evntually use if firstname-lastname taken
     end
     
-    @avatar_link = "http://graph.facebook.com/#{omniauth['uid']}/picture?type=large"
+    @avatar_link = "http://graph.facebook.com/#{omniauth['extra']['user_hash']['id']}/picture?type=large"
     
     
   end
@@ -231,7 +297,7 @@ class AuthenticationsController < ApplicationController
     end
     
     if omniauth['user_info']['image']
-      @avatar_link =  omniauth['user_info']['image'].gsub("_normal", "_bigger")
+      @avatar_link =  omniauth['user_info']['image'].gsub("_normal", "")
       @user_params['small_twitter_pic'] = true
     end
   

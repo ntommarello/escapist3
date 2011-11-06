@@ -1,58 +1,178 @@
-<div class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
-	<div class="BrowseBorder" >
-		<A href="/plans/<%=plan.id%>">
-			<div class="BrowseExpandImage"
-			<%if plan.image_file_name%> 		style="background:url(http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_400_<%=plan.image_file_name%>)"
+<%source = "" unless defined?(source)%>
+
+<div id="card<%=plan.id%>" class="BrowseColumn" <%if i%3==0%>style="margin-right:0%;"<%end%>>
+	<div class="BrowseBorder"  >
+		<div style="padding-right:12px">
+		<A class="browselink" href="/escapes/<%=plan.id%>" onmouseover="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon').addClass('ArrowIcon_H')" onmouseout="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').removeClass('ArrowIcon_A').addClass('ArrowIcon')" onmousedown="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_H').addClass('ArrowIcon_A')" onclick="$('#Arrow<%=plan.id%>').removeClass('ArrowIcon_A');$('#blackSpinner<%=plan.id%>').show(); ">
+			<div class="BrowseExpandImage" 
+			<%if plan.image_file_name%> 		style="background:url(<%=plan.image.url(:thumb_400)%>)"
 			<%else%>
 	style="background:url(/images/no_pic_b.png)"
 			<%end%>
 			>
+			
+			<%unless plan.published%>
+					<div id="DraftLayer" style="display:block" class="" title="This event is not published."><img src="/images/draft.png"></div>
+		<%end%>
 		
 				<div class="BrowseInfoContainer">
-					<div class="BrowseDate"><div style="margin-top:3px"><%=plan.start_time.to_date.strftime('%b').upcase()%><br><%= plan.start_time.to_date.strftime('%e').strip()%></div></div>
-					<div class="BrowseTitle"><div style="margin-top:3px; margin-left:10px"><%=raw plan.title%><div style="color:#ccc"><%=raw plan.url_name%></div></div></div>
+					<div class="BrowseDate"><div style="margin-top:3px">
+						
+					<%if plan.start_time%>
+						<%=plan.start_time.to_date.strftime('%b').upcase()%><br>
+					
+						<%if Date.today.strftime('%Y') == plan.start_time.to_date.strftime('%Y')%>
+							<%= plan.start_time.to_date.strftime('%e').strip()%>
+						<%else%>
+							<%= plan.start_time.to_date.strftime('%Y').strip()%>
+						<%end%>
+					<%end%>
+					</div></div>
+					<div class="BrowseTitle">
+						<div style="float:left; margin-top:3px; padding-left:10px; width:80% ">
+							<%=raw plan.title%>
+							<div style="color:#ccc">
+								<%=raw plan.short_location%>
+							</div>
+						</div>
+						<div style="float:right; margin-top:3px; padding-right:5px; ">
+							<div id="blackSpinner<%=plan.id%>" class="blackSpinner"><img src="/images/blackSpinner.gif"></div>
+							<div id="Arrow<%=plan.id%>" class="ArrowIcon"></div>
+						</div>
+					</div>
+					
 				</div>
 		
 			</div>
 		</a>
-		<div style="height:95px; margin:5px;">
-			
-			<div style="height:45px; overflow:hidden; margin-bottom:8px; color:#21547E;" class="auto multiline">
-				<%=raw plan.note%>
-			</div>
-			
-			<div style="float:left">
-				<a href="/<%=plan.user.username%>">
-				<%= image_tag(plan.user.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>plan.user.first_name, :style=>"width:40px; height:40px; border:1px solid #ddd; cursor:pointer; float:left; margin-right:1px;") %>
-				</a>
-				
-				<%if plan.users.length == 0%>
-					<div style="float:left; margin-left:5px; margin-top:5px; coloe:#ccc; font-size:11px">Hosted by:<br> <a href="/<%=plan.user.username%>" class="BlueLink"><%=plan.user.first_name%> <%=plan.user.last_name%></a></div>
-				<%end%>
-				
-				<%ii=0%>
 	
-				<%for person in plan.users.sort_photos_first%>
-					<%ii=ii+1%>
-					<%if ii < 5%>
-						<a href="/<%=person.username%>">
-						<%= image_tag(person.avatar.url(:thumb_50), :class=>"Transparent tl", :title=>person.first_name, :style=>"width:39px; height:39px; cursor:pointer; border:1px solid #ddd; float:left; margin-right:1px;") %>
-					<%end%>
-					</a>
-				<%end%>
-			</div>
+		<Script>
+		$('.browselink').live('touchend', function(e) {
+		    var el = $(this);
+		    var link = el.attr('href');
+		    window.location = link;
+		});
+		</script>
+		
+		
+		<div style="<%if source == "my_escapes"%>height:37px; <%else%>height:110px;<%end%> margin:5px;">
 			
+			<%if source == "my_escapes"%>
 			
-			<div class="home_buy_button" style="float:right; margin-top:8px; margin-left:0px;width:83px; height:30px; margin-right:-10px; line-height:30px;"onclick="clearButton($(this)); window.location.href='/plans/<%=plan.id%>?pop=yes'">
-				<img src="/images/buy-icon.png" style="position:absolute; margin-left:5px; margin-top:4px;  width:24px; height:21px">
-				<div id="plan_price" style="position:absolute; margin-left:30px; width:50px; text-align:center; font-size:12px;" >
-					<%if plan.price and plan.price > 0%>
-						$<%=plan.price.to_s.sub( ".0", "") %>
-					<%else%>
-						FREE
+				<div style="font-size:15px; width:150px; margin-top:10px; margin-left:5px; float:left">
+					<%if plan.attendance_cap%>
+						<%if plan.application_required%>
+							<b><%=plan.subscribed_plans.length%></b> application<%if plan.subscribed_plans.length !=1%>s<%end%>
+						<%else%>
+						
+							<%if plan.price and plan.price > 0%>
+								<b>$<%= number_with_precision plan.total_amount_earned.to_f, :precision => 2 %></b> earned
+							<%else%>
+								<b><%=plan.signups%></b> / <b><%=plan.attendance_cap%></b> signups
+							<%end%>
+						<%end%>
 					<%end%>
 				</div>
+				
+				<div style="float:right; width:80px; color:#ccc; margin-top:10px; text-align:right; margin-right:-5px">
+					[ <a class="BlueLink" href="/escapes/<%=plan.id%>" onclick="$.cookie('disable_edit', null, { path: '/escapes/'}); ">edit</a> ] [ <span class="BlueLink" onclick="deleteThisPlanID = <%=plan.id%>; OpenDeletePlan()">delete</span> ]
+				</div>
+				<div style="clear:both"></div>
+				
+			
+			<%else%>
+			<div>
+			
+		
+	
+					<div style="height:40px; color:#666; font-size:14px; line-height:20px; font-style:italic; font-family:'georgia'; overflow:hidden; margin-bottom:11px; " class="auto multiline">
+						
+						<%if plan.short_desc%>
+							<%= raw plan.strip_short_desc%>
+						<%end%>
+					</div>
 			</div>
+			
+		
+			<div style="height:52px; float:left; overflow:hidden; width:99%">
+			
+			
+			
+			<% i = 0%>
+			<%if plan.organizers%>
+			
+				<%for organizer in plan.organizers%>
+				<% i = i+1%>
+						<div style="float:left;  ">
+							<a href="/<%=organizer.username%>">
+
+								<%if i==1%><%@css = "margin-left:0px"%><%else%><%@css = ""%><%end%>
+							<%= image_tag(organizer.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"Hosted by #{organizer.first_name}", :style=>"width:50px;border:1px solid #ddd; height:50px; cursor:pointer; float:left; #{@css}") %>
+
+							</a>
+
+						</div>
+					<%end%>
+				<%end%>
+			
+				<%if plan.enable_signups%>
+					<%for signup in plan.users.sort_photos_first%>
+						<% i = i+1%>
+						<%if i < 7%>
+							<div style="float:left;  ">
+								<a href="/<%=signup.username%>">
+
+								<%= image_tag(signup.avatar.url(:thumb_50), :class=>"Transparent tl PlanThumbs", :title=>"#{signup.first_name}", :style=>"width:50px; height:50px; border:1px solid #ddd; cursor:pointer; float:left; ") %>
+
+								</a>
+
+							</div>
+						<%end%>
+					<%end%>
+				<%end%>
+			</div>				
+								
+			
+			
+			
+			
+			
+			
+		
+		<%end%>
 		</div>
+		
+			</div>
+		<div class="ChallengeBottom UnSelected" style="cursor:pointer" onclick="window.location.href='/escapes/<%=plan.id%>'">
+	
+			<img src="/images/crowdIcon.png" style="margin-top:5px; float:left; margin-left:5px; height:16px; width:21px;">
+			<div style="float:left; margin-left:8px; margin-top:6px;"><%=plan.signups%></div>
+
+			<div style="float:left; margin-left:13px;  color:#ddd; font-size:15px; margin-top:5px;">|</div>
+
+
+			<div style="float:left; margin-left:13px;  margin-top:6px;">
+				<b><%if plan.price and plan.price > 0%>
+					$<%=plan.price.to_s.sub( ".0", "") %>
+				<%else%>
+					FREE
+				<%end%></b>
+				
+				<%if plan.application_required%>
+					- Application Required
+				<%end%>
+				
+			</div>
+	
+				
+
+		</div>
+		
+		
 	</div>
+	
+	
+		
+		
+		
 </div>

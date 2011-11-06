@@ -1,0 +1,47 @@
+#package_assets: always
+javascript_compressor: uglifier
+embed_assets: on
+
+javascripts:  
+
+  preload: 
+    - public/javascripts/jquery-1.6.2.min.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.url.min.js
+    - public/javascripts/history.adapter.jquery.js
+
+    
+
+  postload:
+
+    - public/javascripts/history.js
+    - public/javascripts/sanitize.js
+    - public/javascripts/json2.js
+    - public/javascripts/jquery-impromptu.3.1.min.js
+    - public/javascripts/jquery.inputhints.min.js
+    - public/javascripts/jquery.alphanumeric.pack.js
+    - public/javascripts/jquery.tools.min.js
+    - public/javascripts/autoresize.jquery.min.js
+    - public/javascripts/jquery-ui-1.8.16.custom.min.js
+    - public/javascripts/jquery.maskedinput-1.2.2.min.js
+    - public/javascripts/jquery.ellipsis.js
+    - public/javascripts/amplify.store.js
+    - public/javascripts/jquery.easing.1.3.js
+    - public/javascripts/engage.itoggle-min.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/rfc3339date.js
+    - public/javascripts/jquery.addtocal.js
+    - public/javascripts/date.js
+    - public/javascripts/jquery-textfill-0.1.js
+    
+    
+   
+stylesheets: 
+  base: 
+    - public/stylesheets/theme.css
+    - public/stylesheets/impromptu.css
+    - public/stylesheets/jquery-ui-1.8.4.custom.css
+    - public/stylesheets/jquery.ad-gallery.css
+    - public/stylesheets/engage.itoggle.css
+    - public/stylesheets/jquery.addtocal.css
+    

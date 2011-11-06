@@ -1,6 +1,6 @@
 class SubscribedChallengesController < ApplicationController
   require 'open-uri'
-  require 'bitly'
+  #require 'bitly'
 
   before_filter :login_from_token
   
@@ -106,12 +106,12 @@ class SubscribedChallengesController < ApplicationController
           if current_user.autopost_twitter_bucket
             if current_user.authentications.twitter[0]
               begin
-                bitly = Bitly.new(BITLY_ID,BITLY_KEY)
-                page_url = bitly.shorten("http://#{APP_URL}/challenges/#{@challenge.id}-#{@challenge.title.parameterize}")
-                oauth = Twitter::OAuth.new(TWITTER_KEY, TWITTER_SECRET)
-                oauth.authorize_from_access(current_user.authentications.twitter[0].token, current_user.authentications.twitter[0].secret)
-                client = Twitter::Base.new(oauth)
-                client.update("I want to do this: #{@challenge.title}. Join me! #{page_url.shorten} #StompIO")
+               # bitly = Bitly.new(BITLY_ID,BITLY_KEY)
+                #page_url = bitly.shorten("http://#{APP_URL}/challenges/#{@challenge.id}-#{@challenge.title.parameterize}")
+                #oauth = Twitter::OAuth.new(TWITTER_KEY, TWITTER_SECRET)
+                #oauth.authorize_from_access(current_user.authentications.twitter[0].token, current_user.authentications.twitter[0].secret)
+                #client = Twitter::Base.new(oauth)
+                #client.update("I want to do this: #{@challenge.title}. Join me! #{page_url.shorten} #StompIO")
               rescue
                 
               end

@@ -1,4 +1,30 @@
 Trek::Application.routes.draw do
+  get "purchase/index"
+
+  get "purchase/show"
+
+  get "purchase/create"
+
+  get "purchase/destroy"
+
+  get "groups/show"
+
+  get "groups/new"
+
+  get "groups/index"
+
+  get "medias/create"
+
+  get "medias/destroy"
+
+  get "medias/update"
+
+  get "digest_emails/create"
+
+  get "watched_plans/create"
+
+  get "watched_plans/destroy"
+
   get "admin/index"
 
   get "dislikes/create"
@@ -25,18 +51,28 @@ Trek::Application.routes.draw do
   get "subscribed_challenges/create"
   get "subscribed_challenges/destroy"
 
+
+  match '/auth/:provider/callback' =>'authentications#create'
+
+
   devise_for :users, :as => '', :path_names => { :sign_in => "login", :password => "reset_password" }, :controllers => { :sessions => 'sessions' } do
     get "/logout" => "devise/sessions#destroy"
     match "/api/login", :to => "sessions#create", :via => [:get, :post], :mobile => true
+    
+    get '/auth/:provider' => 'sessions#passthru'
+    
+    match '/auth/twitter/setup', :to => 'sessions#twitter_setup'
+    match '/auth/facebook/setup', :to => 'sessions#fb_setup'
+
   end
 
   resources :users
   match 'confirm_email/:id' => 'users#confirm_email', :as => :confirm_email
-  
-  match 'auth/:provider/callback' =>'authentications#create'
-  
+
+  resources :medias
   resources :challenges
   resources :admin
+  resources :groups
   resources :adventures, :controller => "challenges"
   
   match 'refresh_challenges' => 'challenges#refresh_challenges', :as => :refresh_challenges
@@ -65,12 +101,28 @@ Trek::Application.routes.draw do
   resources :likes
   resources :dislikes
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
+  
+  
+  
+  resources :purchase
   resources :plans
+  resources :escapes, :controller => "plans"
+  match '/edit_plan_date', :controller => 'plans', :action => 'edit_plan_date'
+  
+  match 'my_escapes' => 'plans#my_escapes', :as => :my_escapes
+  
+  match "plans/:id", :controller => 'plans', :action => 'show', :via => [:get, :post]
+  resources :digest_emails
   resources :subscribed_plans
+  resources :watched_plans
   match 'initial_comment' => 'comments#initial_comment', :as => :initial_comment
   
   
   match 'spotlight' => 'web#spotlight', :as => :spotlight
+  
+  
+  match 'check_group_username' => 'groups#check_group_username', :as => :check_group_username
+  
   match 'spotlight2' => 'web#spotlight2', :as => :spotlight2
   match 'new_home' => 'web#new_home', :as => :new_home
   match 'live_search' => 'web#live_search', :as => :live_search
@@ -97,8 +149,18 @@ Trek::Application.routes.draw do
   
   match 'confirmation', :controller => 'plans', :action => 'confirmation'
   match 'wepay_callback', :controller => 'plans', :action => 'wepay_callback'
-  match 'schedule', :controller => 'plans', :action => 'schedule'
+   match 'paypal_ipn', :controller => 'plans', :action => 'paypal_ipn'
+  match 'discover', :controller => 'plans', :action => 'discover'
+  match 'check_plan_password', :controller => 'plans', :action => 'check_plan_password'
+  
+  match 'new_plan', :controller => 'plans', :action => 'new_plan' 
+  match 'payment', :controller => 'subscribed_plans', :action => 'payment' 
+  
   match 'create', :controller => 'web', :action => 'apply'
+  match 'host_an_adventure', :controller => 'web', :action => 'host_an_adventure'
+ 
+  match 'test', :controller => 'web', :action => 'test'
+  match 'upgrade_browser', :controller => 'web', :action => 'upgrade_browser'
   match ':username', :controller => 'users', :action => 'show'
   
   

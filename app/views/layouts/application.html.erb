@@ -1,28 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%=APP_NAME%> | <%= yield_for(:page_title, 'Social Adventure & Travel Network')%></title>
-  <%= yield_for(:head, '')%>
-  <%= raw stylesheet_link_merged :base %>
-  <%= raw javascript_include_merged :preload %>
+<!DOCTYPE html> 
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head profile="http://www.w3.org/2005/10/profile">
+  
+
+
+
+	
+	<%= raw include_stylesheets :base %>
+  	<%= raw include_javascripts :preload %>
+
+	
+
+	<%= yield_for(:head, '')%>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	<title>
+		<%if @group%>
+			<%if @group.subtitle%>
+				<%sanitizedTitle = sanitize @group.subtitle%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<div>"," ")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("</div>"," ")%>
+				<%sanitizedTitle = sanitizedTitle.gsub("<br>"," ")%>
+				<%if sanitizedTitle.length > 1%><%sanitizedTitle = " | #{sanitizedTitle}"%><%end%>
+			<%else%>
+				<%sanitizedTitle = 'Kick-Ass Events'%>
+			<%end%>
+			<%=@group.name%> <%= yield_for(:page_title, sanitizedTitle)%>
+		<%else%>
+			<%=APP_NAME%> <%= yield_for(:page_title, '| Kick-Ass Events ')%>
+		<%end%>
+	</title>
+	
+		
+		
+	<%if @group and  @group.favicon%>
+		<link rel="shortcut icon" type="image/png"  href="<%=@group.favicon.url(:original)%>"/>
+	<%else%>
+		<link rel="shortcut icon" type="image/png"  href="/images/escapist.ico"/>
+	<%end%>	
+	
+
 </head>
 
 <body onclick="checkLoginLayer();" <%if params[:action] == "new_home"%> style="background:#35507C" <%end%>>
-	
-	<%if params[:action] == "new_home"%>
-		<div id="container2" style="position:absolute; margin-top:-230px; width:100%"></div>
-	<%end
-	%>
+
+
+
+
 	<%if current_user%>
-		<div id="LogoutMenu">
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/<%=current_user.username%>'" >
-				<a class="MainMenuLink" style="font-size:12px" href="/<%=current_user.username%>">Profile</a>
+		<div id="LogoutMenu" >
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/<%=current_user.username%>'" onmouseover="iconWhite('ProfileIcon')" onmouseout="iconBlue('ProfileIcon')">
+				<div id="ProfileIcon" class="ProfileIcon"></div><div style="float:left">Profile</div>
 			</div>
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/settings'">
-				<a class="MainMenuLink" style="font-size:12px" href="/settings">Settings</a>
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/settings'" onmouseover="iconWhite('SettingsIcon')" onmouseout="iconBlue('SettingsIcon')">
+				<div id="SettingsIcon" class="SettingsIcon"></div><div style="float:left">Settings</div>
 			</div>
-			<div class="LogoutMenuRow" onclick="closeUserMenu(); window.location.href='/logout'">
-				<a class="MainMenuLink" style="font-size:12px" href="/logout">Logout</a>
+			<div class="LogoutMenuRow" onclick="setAnimate($(this)); window.location.href='/logout'" onmouseover="iconWhite('LogoutIcon')" onmouseout="iconBlue('LogoutIcon')">
+				<div id="LogoutIcon" class="LogoutIcon"></div><div style="float:left">Logout</div>
 			</div>
 		</div>
 	<%end%>
@@ -35,40 +69,101 @@
 	
 	<div class="template_topnav">
 		<div id="TheCenter">
-					<div id="TheTab" class="TheActiveTab">	
-						<div class="lc"></div>
-						<div class="stretch"></div>
-						<div class="rc"></div>
-					</div>
-					<div id="HoverTab" class="TheActiveTab" style="opacity:.2; z-index:0;" >	
-						<div class="lc"></div>
-						<div class="stretch"></div>
-						<div class="rc"></div>
-					</div>
 		
-				
-		<a href="/">
-			<div class="template_logo"></div>
-		</a>
-	
 			
-		<div style="float:left;">
-			<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
-			<div class="LocIcon"></div>
-					<div id="CityLabel" style="top:20px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
+			<%if @group %>
+			<div style="float:left; margin-right:20px;">
+				<a href="/">
+					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
+						
+						<%if @group.logo_file_name and @group.logo_file_name != ""%>
+							<%=image_tag @group.logo.url(:header), :size => @group.logo.image_size(:header), :style=>"margin-top:3px" %>
+						<%else%>
+							<div class="textLogo"><%=@group.name%></div>
+						<%end%>
 					
-			
-			</button>
-		</div>
+					</div>
+				</a>
+				<a target="_blank" href="http://<%=APP_URL%>/">
+						<div class="powered"><img src="/images/powered-by.png"></div>
+				</a>
+				</div>
+			<%else%>
+			<div style="float:left; width:120px;">&nbsp;	</div>
+				<a href="/">
+					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
+					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
+				</a>
+				
+			<%end%>
 		
-		<div style="position:absolute; left:280px; z-index:10; width:200px;">
-			<div style="float:left; margin-left:20px; margin-top:17px;">
-				<a id="AdventuresLink"  <%unless @browser.ie? %>onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"<%end%>  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/schedule" >Browse</a>
-			</div>
-			<div style="float:left; margin-left:5px; margin-top:17px;">
-				<a id="CreateLink"  <%unless @browser.ie? %>onmouseover="moveTab(this,0)" onmouseout="returnHoverBar()" onmousedown="$('#HoverTab').css('opacity',.4)"<%end%>  onclick="moveTab(this,1)"  class="MainMenuLink2" href="/create" >Create</a>
-			</div>
-		</div>
+	
+
+	
+			<%unless @group%>
+				<div style="float:left; margin-left:25px; margin-right:25px">
+					<button class="cupid-blue" onclick="openCityDrop();" style="margin-top:12px; margin-left:30px; height:25px; width:100px; text-align:center">
+						<div class="LocIcon"></div>
+						<div id="CityLabel" style="top:19px; text-align:center; width:90px;position:absolute"><%=session[:dropdown_city]%></div>
+					</button>
+				</div>
+			<%end%>
+			
+
+
+			<%@tabs = 0%>
+			
+			<%show = false%>
+			<%if @group%>
+				<%t = Time.zone.now%>
+				<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
+				<%@check = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")%>
+				<%if @check.length > 1%>
+					<%show = true%>
+				<%end%>
+			<%else%>
+				<%show = true%>
+			<%end%>
+			<%if show %>
+				<%@tabs = @tabs+1%>
+				<div class="TopDivider"></div>
+				<a href="/discover">
+					<div id="AdventuresLink"  class="NewTopTab" onclick="setActive(this)">
+						Discover
+					</div>
+				</a>
+			<%end%>
+			
+			
+			<%if !@group or ((current_user and @group.check_admin(current_user)) or (current_user and current_user.mod_level == 5))%>		
+				<%@tabs = @tabs+1%>
+				<%if current_user and (current_user.plans_authored.length > 0 or current_user.subscribed_groups.admins.length > 0)%>
+					<%displayHost = false%>
+				<%else%>
+					<%displayHost = true%>
+				<%end%>
+				
+				<div class="TopDivider"></div>
+				<a href="<%unless displayHost%>/my_escapes<%else%>/host_an_adventure<%end%>">
+					<div id="CreateLink"  class="NewTopTab" onclick="setActive(this)">
+						<%unless displayHost%>My Escapes<%else%>Host an Adventure<%end%>
+					</div>
+				</a>
+			<%end%>
+			
+			
+			<%if @tabs >0%>		
+				<div class="TopDivider"></div>	
+			<%end%>	
+					
+		
+			<Script>
+			$('.MainMenuLink2').live('touchend', function(e) {
+			    var el = $(this);
+			    var link = el.attr('href');
+			    window.location = link;
+			});
+			</script>
 		</div>						
 		<div style="float:right">
 			<%=render :partial => "layouts/usermenu2" %>
@@ -78,53 +173,93 @@
 	<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
 			
 	<%if params[:action] != "new_home"%>
-	
-	<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
-		<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
-		<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
-		<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
+		<div  class="WhiteBackground"  onmouseover="returnHoverBar()" ONCLICK="closeUserMenu()">
+			
+			<%if @old_browser%>
+				<div style="position:relative;  margin-bottom:10px; width:100%; border-bottom:1px solid #999; margin-top:-25px; height:25px; color:#000; line-height:25px; font-weight:bold; text-align:center; background:yellow; z-index:0">Your Internet browser is not supported.   Please  <a href="/upgrade_browser">upgrade</a> to a modern browser.</div>
+			<%else%>
+				<div style="position:absolute;  width:100%; margin-top:-25px; height:50px; background:url(/images/tile_top.png); z-index:0"></div>
+			<%end%>
+			
+			
+			<div id="flashMessage"><img src="/images/ajax-loader_f.gif">saving</div>
+			<div id="OpacitySpotlight" onclick="closeCityDrop()"></div>
 		
-		<div style="position:relative; min-width:1000px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
-		<%= yield%>
+			<div id="StatusBar" class="info message"></div>
+			
+			<div id="maincontainer" style="position:relative; min-width:900px; padding-left:25px; padding-right:25px; margin-right:auto; margin-left:auto">
+			<%= yield%>
+			</div>
 		</div>
-	</div>
-	
 	<%else%>
-	<div ONCLICK="closeUserMenu()">
-		<%= yield%>
-	</div>
-	<%end%>
-
+		<div ONCLICK="closeUserMenu()">
 			
+			<%if @old_browser%>
+				<div style="position:absolute; width:100%; border-bottom:1px solid #999; margin-top:1px; height:25px; color:#000; line-height:25px; font-weight:bold; text-align:center; background:yellow; z-index:1000">Your Internet browser is not supported.   Please  <a href="/upgrade_browser">upgrade</a> to a modern browser.</div>
+			<%end%>	
+			
+			<%= yield%>
 		</div>
+	<%end%>
+</div>
 			
 
-	<%if params[:action] != "new_home"%>
+<%if params[:action] != "new_home"%>
 	<div id="Foot">	
 		<div id="FootBorder"></div>
+		
+		
 		<div id="FooterCenter">
+			<%if @group%>
+				<div style="padding-bottom:10px"><a class="BottomLink" href="http://<%=APP_URL%>/"><b>powered by <%=APP_NAME%></b></a></div>
+			<%end%>
 				<a class="BottomLink" href="/about">About</a> /
 				<a class="BottomLink" href="/jobs">Jobs</a> /
 				<a class="BottomLink" href="/tos">Terms of Use</a> /
 				<a class="BottomLink" href="/privacy_policy">Privacy</a>
-				<div class="quote1">Inside every old person is a younger person wondering WTF happened - Confucius</div>
+				
+				<%if !@group%>
+					<div class="quote1">Inside every old person is a younger person wondering WTF happened - Confucius</div>
+				<%end%>
 		</div>	
 	</div>
-	<%end%>
+<%end%>
 	
 	<div id="flipthis"></div>
-	<noscript><p><img alt="Clicky" width="1" height="1" src="http://in.getclicky.com/66358181ns.gif" /></p></noscript>
 	
-	<%if !current_user and params[:action] != "register"%>
-		<%= render :partial => "layouts/register" %>
+	<%if !current_user %>
+		<div id="RegisterModal"> 
+			<div class="closeRegister" onclick="closeRegister()"></div>
+			<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME}!", :font_size=>"35", :num=>"1"}%>
+		</div>
 	<%end%>
-	
 
-</body>
-<%= raw javascript_include_merged :postload %>
+	 <%= raw include_javascripts :postload %>
+
+
+	<%if @group%>
+		<%=raw @group.statcounter%>
+	<%else%>
+		<!-- Start of Woopra Code -->
+		<script type="text/javascript">
+		var woo_settings = {idle_timeout:'300000', domain:'escapist.me'};
+		var woo_actions = [{type:'pageview',url:window.location.pathname+window.location.search,title:document.title}];
+		(function(){
+		var wsc = document.createElement('script');
+		wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
+		wsc.type = 'text/javascript';
+		wsc.async = true;
+		var ssc = document.getElementsByTagName('script')[0];
+		ssc.parentNode.insertBefore(wsc, ssc);
+		})();
+		</script>
+		<!-- End of Woopra Code -->
+	<%end%>
+
+
+  
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-
 
 <script>
 
@@ -137,7 +272,7 @@ $(document).ready(function() {
 	});
 });
 
-  FB.init({appId: '<%=FACEBOOK_APP_ID%>', status: true, cookie: true, xfbml: true});
+  FB.init({appId: '<%=@fb_id%>', status: true, cookie: true, xfbml: true});
 
   FB.Event.subscribe('auth.sessionChange', function(response) {
     if (response.session) {
@@ -147,14 +282,27 @@ $(document).ready(function() {
     }
   });
 
-  function fblogin() {
-    FB.login(function(response) {
-		if(response.session)
-		          {
-		              window.location = '/auth/facebook';
-		          }
-     }, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
-   }
+
+
+
+
+
+ function fblogin() {
+FB.login(function(response) {
+  if (response.session) {
+    if (response.perms) {
+      	window.location = '/auth/facebook';
+    } else {
+      $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
+    }
+  } else {
+    $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
+  }
+}, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
+
+}
+
+
 
 	function fblogin2() {
     FB.login(function(response) {
@@ -170,8 +318,9 @@ $(document).ready(function() {
 
 </script>
 
+<textarea id="clipboard"></textarea>
 
-
+</body>
 
 	
 </html>

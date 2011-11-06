@@ -1,10 +1,12 @@
 class Postoffice < ActionMailer::Base
-  default :from => "Stomp <no-reply@stomp.io>"
-  default_url_options[:host] = "stomp.io"
+  default :from => "Escapist <noreply@escapist.me>"
+  default_url_options[:host] = "escapist.me"
     
-  def newmember(to_email, user_id)
-    @user_id = user_id
-    mail(:to      => to_email,
+  def newmember(user, group)
+    @user = user
+    @group = group
+    mail(:to      => "\"#{user.first_name} #{user.last_name}\" <#{user.email}>" ,
+         :from => "\"Nick @ Escapist\" <nick@tommarello.com>" ,
          :subject => "Confirm your #{APP_NAME} account")
   end
    
@@ -18,21 +20,36 @@ class Postoffice < ActionMailer::Base
      
     mail(:to      => "\"#{reciever.first_name} #{reciever.last_name}\" <#{to_email}>" ,
          :subject => "#{from_first} #{from_last} sent you a message on #{APP_NAME}!")
+         
+  end
+  
+  
+  def notify_signup(user,plan,organizer)
+    @plan = plan
+    @user = user
+    @organizer = organizer
+  
+    mail(:to      => "\"#{organizer.first_name} #{organizer.last_name}\" <#{organizer.email}>" ,
+         :subject => "#{user.first_name} #{user.last_name} signed up for #{plan.title}")
   end
   
   
   
-  def cc_comment(from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
+  
+  def cc_comment(organizer, comment, group, plan, from_first, from_last, from_id, to_email, message, autotoken, challenge_title,url,type)
+    @comment = comment
+    @group = group
+    @plan = plan
     @first_name = from_first    
     @last_name = from_last   
     @message = message 
     @autotoken = autotoken 
     @message_id = from_id
-    @plan = challenge_title
+    @title = challenge_title
     @challenge_url = url
     @type = type
      
-    mail(:to      => to_email,
+    mail(:to      => "\"#{organizer.first_name} #{organizer.last_name}\" <#{organizer.email}>" ,
          :subject => "#{from_first} #{from_last} #{type} #{challenge_title}")
   end
   
@@ -57,12 +74,25 @@ class Postoffice < ActionMailer::Base
    @from_name = "#{from_first_name} #{from_last_name}" 
     
    mail(:to      => to_email,
-       :subject => "#{from_first_name} #{from_last_name} invited you to join Stomp!")
+       :subject => "#{from_first_name} #{from_last_name} invited you to join #{APP_NAME}!")
          
   end
   
   
-  
+  def confirmation(user,plan, subscribed)
+    
+    
+      @user = user
+      @plan = plan
+      @subscribed = subscribed
+      
+      if plan.start_time  
+        @date = plan.start_time.strftime('%A, %B %e at %I:%M %p')
+      end
+
+      mail(:to      => "\"#{user.first_name} #{user.last_name}\" <#{user.email}>" ,
+        :subject => "Escapist e-Ticket Confirmation: #{plan.title}")
+  end
   
   
 end

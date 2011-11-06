@@ -6,25 +6,21 @@ on :load do
   set :application, rubber_env.app_name
   set :runner,      rubber_env.app_user
   set :deploy_to,   "/mnt/#{application}-#{RUBBER_ENV}"
-  set :copy_exclude, [".git/*", ".bundle/*", "log/*"]
+  set :copy_exclude, [".git/*", ".bundle/*", "log/*", ".rvmrc"]
 end
 
 # Use a simple directory tree copy here to make demo easier.
 # You probably want to use your own repository for a real app
 set :scm, :git
-#set :repository, "."
-set :repository,    'git@urbaninteractive.unfuddle.com:urbaninteractive/trek.git'
-#set :deploy_via, :copy
+set :repository, "git@urbaninteractive.unfuddle.com:urbaninteractive/escapist.git"
 set :deploy_via, :remote_cache
 
 set :ssh_options, { :forward_agent => true }
-
 
 # Easier to do system level config as root - probably should do it through
 # sudo in the future.  We use ssh keys for access, so no passwd needed
 set :user, 'root'
 set :password, nil
-set :app_user, 'app'
 
 # Use sudo with user rails for cap deploy:[stop|start|restart]
 # This way exposed services (mongrel) aren't running as a privileged user
@@ -46,6 +42,16 @@ rubber.allow_optional_tasks(self)
 # with something like a deploy:cold which tries to run deploy:migrate but can't
 # because we filtered out the :db role
 namespace :deploy do
+  
+  task :fast, :roles => :app do
+    update_code
+    symlink
+    #done by Nap
+    run "/etc/init.d/apache2 restart"
+    run "curl http://localhost:7000 &> /dev/null; exit 0"
+  end
+  
+  
   rubber.allow_optional_tasks(self)
   tasks.values.each do |t|
     if t.options[:roles]
@@ -54,20 +60,32 @@ namespace :deploy do
   end
 end
 
+
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
+after "deploy:migrations", "rubber:package_assets"
 
 namespace :rubber do
   desc "Set permissions"
   task :set_permissions, :roles => :app do
-    run "cd #{current_path}; chown -R #{app_user} public"
+    run "cd #{current_path}; chown -R root public"
+    run "cd #{current_path}/public; chown -R root assets"
+    run "cd #{current_path}/public; chown -R root javascripts"
+    run "cd #{current_path}/public; chown -R root stylesheets"
   end
 
   desc "Package deployment assets"
   task :package_assets, :roles => :app do
-    run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake asset:packager:build_all"
+    
+     run "cd #{deploy_to}/current && bundle exec jammit --base-url 'http://escapist.me'"
+     
+    #run "cd #{current_path}; RAILS_ENV=#{RUBBER_ENV} /usr/bin/env rake utils:package"
+    # For Apache content negotiation with Multiviews, we need to rename .css files to .css.css and .js files to .js.js.
+    # They will live alongside .css.gz and .js.gz files and the appropriate file will be served based on Accept-Encoding header.
+    # run "cd #{current_release}/public/assets; for f in *.css; do mv $f `basename $f .css`.css.css; done; for f in *.js; do mv $f `basename $f .js`.js.js; done"
   end  
 end
+
 
 # load in the deploy scripts installed by vulcanize for each rubber module
 Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
@@ -75,3 +93,6 @@ Dir["#{File.dirname(__FILE__)}/rubber/deploy-*.rb"].each do |deploy_file|
 end
 
 after "deploy", "deploy:cleanup"
+
+        require './config/boot'
+        require 'hoptoad_notifier/capistrano'

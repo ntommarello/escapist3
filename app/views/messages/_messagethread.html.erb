@@ -14,10 +14,9 @@
       <%= link_to(message.user.full_name, user_path(message.user), :class => 'BlueLink') %>
       <span style="font-size:11px; color:#847784; font-weight:normal"><%=message.created_at.strftime("%B %d at %I:%M%p")%></span>
 		
-      <br/>
-      <br/>
 
-      <%= raw auto_link_urls(render_string_with_breaks(message.message), :target => '_blank', :class=>"BlueLink") %>
+
+      <div style="margin-top:5px"><%= raw auto_link_urls(render_string_with_breaks(message.message), :target => '_blank', :class=>"BlueLink") %></div>
 	  </div>
 	  <div style="clear:both;"></div>
   </div>

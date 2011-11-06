@@ -1,15 +1,16 @@
-<div style="margin-left:auto; width:980px; margin-right:auto">
 <% content_for :page_title do %>
-  <%=@user.first_name%> <%=@user.last_name%> - Adventure Log
+  | <%=@user.first_name%> <%=@user.last_name%> - Adventure Log
+<% end %>
+
+<% content_for :head do %>
+
 <% end %>
 
 
-<%if @editable%><script>setTimeout("switchMenuBar($('#ProfileLink'),1);",10);</script><%end%>
 
-	
-<div style="float:left; width:320px;">
-
-	<div class="PhotoBorder" style="width:302px; height:325px; cursor:default " <%if @editable%>onmouseover="$('#UploadLink').css('color', '#0066FF');" onmouseout="$('#UploadLink').css('color', 'white'); " onclick="uploadPhoto();"<%end%>> 
+<div style="margin-left:auto; width:960px; margin-right:auto">
+	<div style="float:left; width:320px;">
+		<div class="PhotoBorder" style="width:302px; height:325px; cursor:default " <%if @editable%>onmouseover="$('#UploadLink').css('color', '#0066FF');" onmouseout="$('#UploadLink').css('color', 'white'); " onclick="uploadPhoto();"<%end%>> 
 		
 		<%if @editable%>
 			<%@t = "Transparent"%>
@@ -24,44 +25,37 @@
 			last signed in <%=@user.current_sign_in_at.strftime('%B %e')%>
 		</div>
 		<%if @editable%>
-			<div style="text-align:center; width:300px; margin-top:3px;">
-				<a id="UploadLink"  class="AppLink" href="#"> 
-					<%if @user.avatar_file_name.nil?%> 
-						Upload Photo 
-					<%else%> 
-						Replace Photo 
-					<%end%> 
+			<%if @user.avatar_file_name.nil?%>
+			<div class="UploadAvatarIcon">
+				<img src="/images/addavatar.png" style="width:31px; height:28px; float:left; margin-left:115px;"><div style="float:left">Upload</div>
+			</div>
+			<%else%>
+			<div style="text-align:center;  width:300px; margin-top:3px;">
+				<a id="UploadLink"  class="AppLink" href="#">Replace Photo 
 				</a>
 			</div>
+			<%end%>
 		<%end%>
 	</div>
-	
-
-	
 
 	<div style="clear:both"></div>
+
 	<div style="margin-top:20px; margin-bottom:5px; font-size:14px"  class="DarkBlueLabel">Home City</div>
-	
-	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"hometown", :content=>@user.hometown, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
+
+	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"hometown", :content=>@user.hometown, :id=>@user.id, :model=>"user", :allow_return=>false,  :extra_visibility=>true, :border=>true}%>
 	
 	
 	<div style="margin-top:20px;  margin-bottom:5px; font-size:14px"  class="DarkBlueLabel">Current City</div>
 	
 	<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location_city", :content=>@user.location_city, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>true}%>
-	
+
 	
 	
 	<%if @editable or @user.facebook_link or @user.twitter_link%>
 		<div style="margin-top:25px;  margin-bottom:5px; font-size:14px" class="DarkBlueLabel">My Links</div>
 	<%end%>
 	
-	
-	
-	
-	
-	
-	
-	
+
 	<%if @user.facebook_link != nil%>
 	<div>
 		
@@ -93,80 +87,147 @@
 </div>
 
 
-<div style="float:left;  margin-left:35px; width:615px;">
-
-
-
+<div style="float:left;  margin-left:25px; width:410px;">
 	
+
 	<div style="margin-top:3px;  margin-bottom:7px;" class="HighlightedTitle"><%=@user.first_name%>  <%=@user.last_name%></div>
 	
-		<div style=" float:left; width:475px; font-size:16px; line-height:22px;">
+		
+
+		<div style=" float:left; width:390px; font-size:16px; line-height:22px;">
 			
-		<%if @user.about_me.length > 90%><%@border=false%><%else%><%@border=true%><%end%>
+			<%unless @user.short_bio and @user.short_bio != ""%><div id="showShortBio" style="display:none"><%end%>
+					<div class="BioCounter2" style="float:right; font-size:12px; display:none; margin-top:-25px; margin-right:15px">100</div>
+				<div style="margin-top:-3px; font-size:18px">
+			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_bio", :full_editor=>true, :content=>@user.short_bio, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+			</div>
+			<%unless @user.short_bio  and @user.short_bio != ""%></div><%end%>
 			
-		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"about_me", :content=>@user.about_me, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+			
+			<%unless  @user.short_bio and @user.short_bio !=""%>
+			<%if @editable%>
+			<div id="showShortBioBox">
+				<div style="margin-top:10px; float:left; font-size:12px; font-weight:bold">Headline</div>
+				
+				<div class="BioCounter" style="float:right; font-size:12px; display:none; margin-top:10px; margin-right:15px">100</div>
+				<div style="clear:both"></div>
+					<textarea id="short_bio2" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox resize" style="float:left; color:#666; height:20px; margin-left:0px; line-height:20px; float:left; margin-top:2px; width:380px; " onkeyup="bioCounter(this)" onfocus="$('#tweet_bio_button').show();" onblur="if ($(this).val() == '') { $('#tweet_bio_button').hide(); }"></textarea>
+				
+				<BUTTON id="tweet_bio_button" style="display:none" onclick="updateUser(<%=current_user.id%>, 'short_bio', $('#short_bio2').val())">submit</button>
+			</div>
+			<%end%>	
+			<%end%>	
+			
+				<div style="clear:both"></div>
+				
+				
+		<%unless @user.about_me and @user.about_me != "" and @user.about_me != "I'm new, so I haven't filled out my bio yet!"%><div id="showAboutMe" style="display:none"><%end%>
+						<DIV STYLE="MARGIN-TOP:20PX; font-size:14px; line-height:18px;"><%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"about_me", :full_editor=>true, :content=>@user.about_me, :id=>@user.id, :model=>"user", :allow_return=>false, :extra_visibility=>true, :border=>@border}%>
+							</div>
+		<%unless @user.about_me  and @user.about_me != "" and @user.about_me != "I'm new, so I haven't filled out my bio yet!"%></div><%end%>		
+				
+				
+		<%unless  @user.about_me  and @user.about_me != "" and @user.about_me != "I'm new, so I haven't filled out my bio yet!"%>
+		<%if @editable%>
+		<div id="showAboutMeBox">
+			<div style="margin-top:10px; font-size:12px; font-weight:bold">Bio  &nbsp;<span style="font-size:11px; font-weight:normal">(Tip: Have any favorite adventure stories?)</span></div>
+				<textarea id="about_me2" type="textfield"  onKeyPress="return submitPostOnEnter(this,1)" class="ShadowedTextBox resize" style="float:left;color:#666;  height:100px; margin-left:0px; line-height:20px; float:left; margin-top:2px; width:380px; " onfocus="$('#about_me_button').show();" onblur="if ($(this).val() == '') { $('#about_me_button').hide(); }"></textarea>
+				
+				<BUTTON id="about_me_button" style="display:none" onclick="updateUser(<%=current_user.id%>, 'about_me', $('#about_me2').val())">submit</button>
+		</div>
+		<%end%>
+		<%end%>
+		
+	
+	<div style="clear:both"></div>
+
+		
+		
+		
 		</div>
 
 
-		<%if !@editable%>
-			<div style='float:right'>
-				<div id="MessageButton" style="width:100px; margin-top:6px;   <%if current_user and !@user.allow_messages_from?(current_user)%>opacity:.3<%end%>" title="<%=@user.first_name%> has messages disabled" class="ProfileButton" onclick="<%if !current_user%>openRegister('Sign up for Stomp to Message <%=@user.first_name%>')<%else%><%if @user.allow_messages_from?(current_user)%>SendMessage('<%=@user.first_name%>',<%=@user.id%>)<%end%><%end%>">Message</div>
+	
+			
+		
+</div>
 
-				<%if current_user%>
-					<% unless @user.allow_messages_from?(current_user) %>
-						<script>$("#MessageButton").tooltip();</script>
-					<% end %>
-				<%end%>
-		 		<%=render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
+<div style='float:right;'>
+	
+	
+	<%if @editable%>
+
+
+	<div style="width:180px; padding:4px; display:none; background:#FFFFEF; border:1px solid #ccc; margin-top:35px">
+
+				<div class="HighlightedTitle" style="font-size:15px; ">Give Discounts to Friends</div>
+
+			
+				<fb:send style="float:left; margin-top:5px; margin-left:2px" href="http://<%=APP_URL%>/register?refer_id=<%=current_user.id%>" font=""></fb:send>
+				
+				<div style='float:left; padding-top:5px; margin-left:5px'>
+					<a style="" href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-related="@escapist_me" data-url="http://<%=APP_URL%>/register?refer_id=<%=current_user.id%>" data-text="I joined <%=APP_NAME%> - a place to kind kick-ass adventures and meet awesome people.  Save $5 on your next adventure:">Tweet</a> 
+		   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			</div>
-		<%end%>
+			
+			<a href="mailto:?subject=Escapist $5 Discount&amp;body=I joined <%=APP_NAME%> - a place to kind kick-ass adventures and meet awesome people.%0D%0A%0D%0ASave $5 on your next adventure by signing up at: http://<%=APP_URL%>/register?refer_id=<%=current_user.id%>">
+			<div class="emailbutton" style="float:left; margin-top:5px; margin-left:5px; "><img src="/images/email.png" style="width:16px; height:12px; margin-top:3px; float:left; margin-left:3px;"><div style="float:left; margin-left:3px">Email</div></div></a>
 		
-		
-		
+			<div style="clear:both"></div>
+		<div style="font-size:13px; margin-top:6px;">They save $5 off next escape. You earn good karma.</div>
 
-
+	</div>
+	<%end%>
+	
+	
+		<%if !@editable%>
+	
+		<button id="MessageButton" class="newGrayButton" style="margin-top:5px; height:35px; line-height:30px; width:140px; font-size:14px;  width:126px; <%if current_user and !@user.allow_messages_from?(current_user)%>opacity:.3<%end%>" <%if current_user and !@user.allow_messages_from?(current_user)%>title="<%=@user.first_name%> has messages disabled"<%end%> ><img style="float:left; height:11px; width:17px; margin-top:10px; margin-left:4px" src="/images/sendmessage.png"><div style="float:left; margin-left:7px" onclick="<%if !current_user%>openRegister('Sign up for <%=APP_NAME%> to Message <%=@user.first_name%>')<%else%><%if @user.allow_messages_from?(current_user)%>SendMessage('<%=@user.first_name%>',<%=@user.id%>)<%end%><%end%>">Contact me</div></button>
 	
 
-	
+	<%if current_user%>
+		<% unless @user.allow_messages_from?(current_user) %>
+			<script>$("#MessageButton").tooltip();</script>
+		<% end %>
+	<%end%>
+	<div style="display:none">
+	<%render :partial=>"users/blockbutton", :locals=>{:user=>@user}%>
+	</div>
+	<%end%>
+</div>
+
+
 
 
 </div>
+
+
+
+
+
 
 
 
 <script>
-//var $tabs = $("#tabs").tabs({ cookie: { expires: 30 }});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$("#comparison").tooltip();
-$("#points").tooltip();
 
 
 	
+	$(document).ready(function() {
+		$('.resize').autoResize({
+		    // On resize:
+		    onResize : function() {
+		        $(this).css({opacity:0.8});
+		    },
+		    // After resize:
+		    animateCallback : function() {
+		        $(this).css({opacity:1});
+		    },
+		    // Quite slow animation:
+		    animateDuration : 300,
+		    // More extra space:
+		    extraSpace : 1
+		});
+	});
+
 	
-});
-
-
-
 </script>
-
-</div>
-
-
-
-

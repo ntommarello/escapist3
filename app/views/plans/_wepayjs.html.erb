@@ -1,35 +1,58 @@
-<div id="Payment" style="display:none">
-	<p class="HighlightedTitle" style="text-align:center">Purchase Tickets</p>
-	<div class="price_display" style="float:left; width:100px; font-weight:bold; color:black; font-size:22px;">$<%=plan.price%></div>
 
-	<div class="SubTitle" style="float:left; width:270px;margin-left: 10px; font-weight:normal; padding-bottom:10px"><%=raw plan.title%></div>
-	<div style="clear:both"></div>
-	<select id="qty" class="qty" onchange="qty=$(this).val(); price=$('#unit_price').val()*qty; $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); $('.qty').val($(this).val()); ">
-		<option value="1">1 ticket</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		
-	</select>
-	
-	<div style="clear:both; height:15px;"></div>
-	<span class="SubTitle" style="font-weight:normal; font-size:12px;"><b>Refund Policy</b>:  100% refund if requested, for any reason.</span>
-	
-	<div class="rewardlink" style="font-weight:normal" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Have a reward code?</a></div>
-	<div class="RewardDiv" style="display:none">
-		<input class="RewardCode" type="textfield" style="font-size:12px;">
-		<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
-	</div>
-</div>
 
+
+
+<form id="BB_BuyButtonForm" style="display:none" action="https://checkout.google.com/api/checkout/v2/checkoutForm/Merchant/830265948339379" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+    <input name="item_name_1" type="hidden" value="<%=strip_tags raw @plan.title%>"/>
+<%if @plan.start_time%>
+    <input name="item_description_1" type="hidden" value="<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>"/>
+<%end%>
+    <input name="email-allowed" type="hidden" value="false"/>
+<input id="item_quantity_1"  name="item_quantity_1" type="hidden" value="1"/>
+	<%if current_user%>
+		<input name="merchant-private-data" type="hidden" value="<%=current_user.id%>"/>
+	<%end%>
+    <input id="item_price_1" name="item_price_1" type="hidden" value="5.95"/>
+    <input name="item_currency_1" type="hidden" value="USD"/>
+    <input name="_charset_" type="hidden" value="utf-8"/>
+    <input alt="" src="https://checkout.google.com/buttons/buy.gif?merchant_id=830265948339379&amp;w=117&amp;h=48&amp;style=white&amp;variant=text&amp;loc=en_US" type="image"/>
+</form>
+
+
+<%if @plan.group%><%if @plan.group.paypal_email%><%@paypal_email = @plan.group.paypal_email%><%end%><%end%>
+<form id="PaypalForm" style="display:none" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+	<input type="hidden" name="cmd" value="_xclick">
+	<input type="hidden" name="business" value="<%=@paypal_email%>">
+	<input type="hidden" name="lc" value="US">
+	<%if @plan.start_time%>
+	<input type="hidden" name="item_name" value="<%= strip_tags raw @plan.title%> on <%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>">
+	<%else%>
+		<input type="hidden" name="item_name" value="<%= strip_tags raw @plan.title%>">
+	<%end%>
+	<%if current_user%>
+		<input type="hidden" name="custom" value="<%=current_user.id%>">
+	<%end%>
+	<input type="hidden" id="amount" name="amount" value="<%=@plan.price%>">
+	<input type="hidden" name="item_number" value="<%=@plan.id%>">
+	<input type="hidden" name="return" value="http://<%=@source%>/escapes/<%=@plan.id%>?confirm=yes" />
+	<input type="hidden" name="currency_code" value="USD">
+	<input type="hidden" name="button_subtype" value="services">
+	<input type="hidden" id="quantity" name="quantity" value="1" />
+	<input type="hidden" name="no_note" value="1" />
+	<input type="hidden" name="no_shipping" value="1" />
+	<input type="hidden" name="tax_rate" value="0">
+	<input type="hidden" name="notify_url" value="http://<%=APP_URL%>/paypal_ipn">
+	<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+	<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
 
 
 <SCRIPT>
 plan_id=<%=plan.id%>
-qty=1;
+quantity=1;
+original_price = <%=plan.price%>;
 price=<%=plan.price%>;
-
-
 
 
 function roundNumber(num, dec) {
@@ -39,7 +62,7 @@ function roundNumber(num, dec) {
 }
 
 
-function payBill() {
+function payBill(discount) {
  	
 	txt = $("#Payment").html();
 
@@ -53,18 +76,18 @@ function payBill() {
 	            focus: 1,
 				submit: function(v, m, f) {
 			         if (v == 0) {
+						$.cookie('showAttendPop', null, { path: '/escapes/'});
 						$.prompt.close();
 							return false;
 					} else {
 						
 						if (price <1) {
-							
+							$.cookie('showAttendPop', null, { path: '/escapes/'});
 							signUpFree(plan_id)
 							
 						} else {
-						
+							$.cookie('showAttendPop', null, { path: '/escapes/'});
 							createBill();
-						
 						}
 		  				$.prompt.goToState('state1');
 						
@@ -78,36 +101,40 @@ function payBill() {
 	            focus: 0,
 	            submit: function(v, m, f) {
 	                if (v === 0) {
+						$.cookie('showAttendPop', null, { path: '/escapes/'});
 	                    $.prompt.close();
 		return false;
 	                }
 	            }
 	        }
 	    };
-	    $.prompt(temp);
+	    $.prompt(temp,{ callback: mycallbackfunc });
 }
+
+function mycallbackfunc(v,m,f){
+		$.cookie('showAttendPop', null, { path: '/escapes/'});
+}
+
 
 function createBill() {
-	$.getJSON("https://www.wepay.com/sp/create?format=jsonp&callback=?",
-         {  token: "a8a520ec65", 
-            group_id: "11377",
-            buyer_email: "<%if current_user%><%=current_user.email%><%end%>",
-            amount: price,
-			fee_payer: "recipient",
-			ref_id: "<%=plan.id%>",
-			message: "<%=plan.start_time.strftime('%A, %B %e at %l:%M%p')%>",
-			silent: 0,
-			<%if current_user%>
-				rd: "http://<%=APP_URL%>/confirmation?plan_id=<%=plan.id%>&user_id=<%=current_user.id%>",
-			<%end%>
-            reason: "<%=plan.title%> (x"+qty+")"
-         } ,function(data) {
-            window.location.href=data.result;
-         });
+	
+	$("#amount").val(original_price)
+	$("#quantity").val(qty)
+	$("#PaypalForm").submit();
+	
+//	$("#item_quantity_1").val(qty)
+//	$("#item_price_1").val(original_price)
+	
+	
+	
+//	$("#BB_BuyButtonForm").submit();
+	
+
 }
 
 
-
+$(document).ready(function() {
+	$('.tl').tooltip();
 	$('.resize').autoResize({
 	    // On resize:
 	    onResize : function() {
@@ -123,7 +150,7 @@ function createBill() {
 	    extraSpace : 1
 	});
 	
-	
+});	
 	$('#transportation').focus(function(){ 
 		
 		if ($(this).html() == "input directions") {
@@ -144,6 +171,7 @@ function createBill() {
 		}
 	});
 	
+	
 	function clearTrans() {
 		$('#MeetingPlace').hide(); $('#AddMeeting').show();
 		
@@ -156,12 +184,41 @@ function createBill() {
 	        }
 	     });
 	}
-	
-	<%if params[:pop] == "yes"%>
-	  
-	   $(document).ready(function() {
+
+
+
+	<%if cookies[:showAttendPop] == 'true'%>
+		 $(document).ready(function() {
+		 	$.cookie('showAttendPop', null, { path: '/escapes/'});
+			<%if @plan.application_required%>
+				
+			<%end%>
+			
+			
 		
-	  	$("#attend").click();
-	 });
+			
+		  	setTimeout('$("#attend").click();',1000);
+		
+		 });
 	<%end%>
+	
+	///Auto signed up with 1 domain with record of one, so check
+	<%if @signedup%>
+		<%@recent = SubscribedPlan.find(:first, :conditions => ["plan_id = #{@plan.id} and user_id = #{current_user.id} and created_at > ?", 30.seconds.ago])%>
+		<%if @recent%>	
+		$(document).ready(function() {
+			openSignedUp();
+			});
+		<%end%>
+	<%end%>
+
+	<%if cookies[:watchPlan] == 'true'%>
+		 $(document).ready(function() {
+			setTimeout('watchMouseDown($("#WatchButton"))',100);
+		  	setTimeout('$("#WatchButton").click();',100);
+			$.cookie('watchPlan', null, { path: '/escapes/'});
+		 });
+	<%end%>
+	
+	
 </SCRIPT>

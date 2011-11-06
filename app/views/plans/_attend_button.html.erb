@@ -1,77 +1,98 @@
-<%t = Time.zone.now%>
-<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
-
-<%if rounded_t <= @plan.start_time%>
-
-<%if current_user && @plan.has_maybed?(current_user)%>
-	<%@color_count="LightGray"%>
-	<%@color_maybe="Red"%>
-<%else%>
-	<%@color_count="Green"%>
-	<%@color_maybe="LightGray"%>
-<%end%>
-
-<%if current_user && @plan.has_signedup?(current_user)%>
-
-	<%if @plan.price and @plan.price > 0%>
-	
-		<div class="WhiteActiveBorder" style="margin-top:15px; float:left" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)">
-			<div unselectable="on" class="outerB RedButton" style="width:200px;margin-left:10px;  line-height:38px; height:40px;">
-				<div class="innerB InnerRedBorder" style="height:38px;">Request Refund</div>
-			</div>
-		</div>
-	<%else%>
-		<div  class="WhiteActiveBorder" style="margin-top:15px; float:left" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)">
-			<div unselectable="on" class="outerB RedButton" style="width:200px; margin-left:10px;  line-height:38px; height:40px;">
-				<div class="innerB InnerRedBorder" style="height:38px;">I can't come. Remove me.</div>
-			</div>
-		</div>
-	<%end%>
-	
-<%else%>
-
-	<% if @plan.has_soldout %>		
-
-		<div style="font-weight:bold; font-size:16px; color:red; text-align:center; width:100%;padding-top:20px;">This event is sold out!</div>
-
-	<%else%>
-	
-		<div id="attend"  class="countmein WhiteActiveBorder" style="margin-top:4px;  float:left" onclick="<%if current_user%><%if @plan.price and @plan.price > 0%>payBill();<%else%>signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>)<%end%><%else%>openRegister('Sign up for <%=APP_NAME%> to attend this plan')<%end%>">
-			<div unselectable="on" class="outerB <%=@color_count%>Button" style="width:180px; margin-left:10px;  line-height:38px; height:50px;">
-					<div class="buyticket innerB Inner<%=@color_count%>Border" style="height:43px; font-size:16px; line-height:40px; padding-top:5px;">
-					
-							<div style="position:absolute; margin-left:7px; margin-top:3px;">
-							<img src="/images/buy-icon.png" style="width:24px; height:21px">
-							</div>
-							<div style="margin-left:31px;">
-								<%if @plan.price and @plan.price > 0%>
-									$<%=@plan.price.to_s.sub( ".0", "") %> per ticket
-								<%else%>
-									Sign Up for FREE
-								<%end%>
-							</div>
-						
-				 
-					</div>
-				</div>
-			</div>
-
+<%if @plan.start_time%>
+	<%@over = false%>
+	<%t = Time.zone.now%>
+	<%rounded_t = Time.local(t.year, t.month, t.day, 0, 0)%>
+	<%if rounded_t >= @plan.start_time%>
+		<%@over = true%>
 	<%end%>
 <%end%>
-		
-<div style="clear:both"></div>
-		
-	<%if @plan.seats_remaining != 0 and @plan.seats_remaining < 10 %>
-		<%if current_user && @plan.has_signedup?(current_user)%>
-		
+<%if @plan.attendance_cap%>
+	<%plural = ""%>
+	<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
+
+	<%if @plan.seats_remaining.to_i < 7%>
+				<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
+	<%else%>
+			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
+	<%end%>
+	<%if @plan.seats_remaining == 0%>
+			<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >Sold Out!</div>"%>
+			
+	<%end%>
+<%else%>
+<%@tickets_remaining = ""%>
+
+<%end%>
+
+
+
+
+<%if @plan.application_required%>
+	<%@clickaction = "goToByScroll('ApplicationLayer');"%>
+<%else%>
+	<%if @plan.seats_remaining == 0%>
+		<%@clickaction = ""%>
+	<%else%>
+		<%if current_user%>
+			<%if @plan.price and @plan.price > 0%>
+				<%@clickaction = "openPayment();"%>
+			<%else%>
+				<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
+			<%end%>
 		<%else%>
-		<div style="text-align:center; width:100%; padding-top:5px; font-size:14px; font-weight:bold; color:red"><b><%=@plan.seats_remaining%></b> ticket<%if @plan.seats_remaining !=1%>s<%end%> left!</div>
+				<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'});"%>
+		<%end%>
+	<%end%>
+<%end%>
+
+
+	<%if @plan.application_required%>
+		<%@title = "Apply Now!"%>
+		<%@subtitle = "Deadline: #{@plan.application_deadline.to_date.strftime('%b').titlecase()} #{@plan.application_deadline.to_date.strftime('%e').strip()}"%>
+	<%else%>
+		<%if @plan.price and @plan.price > 0%>
+			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@plan.price.to_s.sub( ".0", ".00")}</div>"%>
+
+
+			<%if @signedup%>
+				<%@subtitle = "You are attending!"%>	
+			<%else%>
+				<%if @plan.attendance_cap and (@plan.seats_remaining < 10 and @plan.seats_remaining > 0) %>
+					<%@subtitle = @tickets_remaining%>	
+				<%else%>
+					<%@subtitle = "per ticket"%>
+				<%end%>
+			<%end%>
+		<%else%>
+			<%if @signedup%>
+				<%@title = "I'm coming"%>
+			<%else%>
+				<%@title = "Sign Me Up!"%>
+			<%end%>
+	
+			<%@subtitle = @tickets_remaining%>
+		
 		<%end%>
 	<%end%>
 	
 	
-<%else%>
-	<div style="text-align:center; width:100%; padding-top:15px; font-size:14px; font-weight:bold; color:red">
-		This plan has happened
-	</div>
+
+
+
+		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining == 0%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
+		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
+			<%if @over == true%>
+				<div style="color:red; font-size:12px;">This event is over</div>
+			<%else%>
+			<div style="font-size:12px;">	<%=raw @subtitle%></div>
+			<%end%>
+		</div>
+		
+
+
+
+<%if @plan.attendance_cap%>
+<script>
+seats_remaining = <%=@plan.seats_remaining%>
+</script>
 <%end%>

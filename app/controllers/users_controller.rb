@@ -33,6 +33,14 @@ class UsersController < ApplicationController
   end
   
   def create
+    
+    @check = User.find_by_email(params[:user][:email]) 
+    if @check
+      flash[:error] = "#{params[:user][:email]} already has an account"
+      redirect_to "/register"
+      return
+    end
+    
     @user = User.new(params[:user])
     
     if params[:name]
@@ -44,22 +52,37 @@ class UsersController < ApplicationController
       end
     end
     
-    
     @user.location_city = session[:location_city]
     @user.hometown = session[:location_city]
     @user.lat = session[:lat] #TODO:  iphone and android will pass in lat/lng in params
     @user.lng = session[:lng]
-    @user.source = "web" #todo:  iphone and android will pass in differently
+    @user.source = @source
     
     if @user.save
       sign_in @user
       check_cookies      
       location = request.env["HTTP_REFERER"] || root_path
-      if location.match(/plans/)
-        redirect_to "#{location}?pop=yes"
-      else
-        redirect_to user_path(current_user)
+
+      #if only one plan on a custom domain, auto sign up for only plan
+      if @group
+        t = Time.zone.now
+        rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
+        @group_plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
+        if @group_plans.length == 1
+          if @group_plans[0].price < 1 and @group_plans[0].application_required == false
+            params[:plan_id] = @group_plans[0].id
+            sign_up_plan
+          end
+        end
       end
+
+      if location.include? "escapes/"
+        redirect_to :back
+      else
+        redirect_to "/#{@user.username}"
+      end
+      
+  
     else
       flash[:error] = @user.errors.to_a.map { |msg| msg }.join(". ")
       render(:action => 'register')
@@ -69,6 +92,15 @@ class UsersController < ApplicationController
   
   def update
     error = ""
+    
+    params[:user].each  do |key, value| 
+       unless key == "avatar"
+        params[:user][key] = CGI::unescape(value) 
+        #params[:user][key] = remove_end_breaks(params[:user][key])
+       end
+     end
+     
+     
     current_user.update_attributes(params[:user])
       
     if params[:name]
@@ -136,7 +168,11 @@ class UsersController < ApplicationController
       end
       redirect_to settings_path
     else
-      redirect_to user_path(current_user)
+      if params[:user][:apply]
+      redirect_to :back
+      else
+        redirect_to user_path(current_user)
+      end
     end
   end
    
@@ -249,9 +285,7 @@ class UsersController < ApplicationController
    
    def scan_addressbook
 
-    @names = JSON.parse(params[:emails_json])
-
-
+     @names = JSON.parse(params[:emails_json])
 
      @follow = Array.new
      @invite = Array.new

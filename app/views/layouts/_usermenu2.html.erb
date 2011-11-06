@@ -10,59 +10,44 @@
 	
 
 	
-	<div id="UserLinkMenu"  onclick="toggleUserMenu(this)" onmouseover="userMenuMouseOver()" onmouseout="userMenuMouseOut()">
+	<div id="UserLinkMenu"  onmousedown="toggleUserMenu(this);" onmouseover=" userMenuMouseOver()" onmouseout="userMenuMouseOut()">
 		<span id="Profileink" style="float:left" class="UserLink"  >  <%=@name%></span>
-		<div class="WhiteTriangle"></div>
+		<div id="UserMenuArrow" class="WhiteTriangle"></div>
 	</div>
 		
 	<div class="AvatarShadow">
-		<a href="<%if current_user.avatar_file_name%>/<%=current_user.username%><%else%>#<%end%>" <%unless current_user.avatar_file_name%>onclick="uploadPhoto()"<%end%>>
-		<%= image_tag current_user.avatar.url(:thumb_40), :class=>"Transparent UserLinkAvatar" %>
+		<a href="/<%=current_user.username%>">
+		<%= image_tag current_user.avatar.url(:rounded_50), :class=>"Transparent UserLinkAvatar" %>
 		</a>
 	</div>
 		
 
 	<div class="TopIcon" onclick="window.location.href='/inbox'" title="Inbox">
-		<img class="TopImage" id="InboxIcon" src="/images/message<% if current_user.unread_messages.length > 0%>_a<%end%>.png" >
-		<div style="margin-top:-4px">
+		
+		<div class="Envelope<% if current_user.unread_messages.length > 0%>_Closed<%end%>"></div>
+	
+	<% if current_user.unread_messages.length > 0%>
+		<div style="margin-top:0px">
 			<span id="InboxCount">
-				<span id="top_unread_count1" <% if current_user.unread_messages.length > 0%> class="highlightedBold" <%end%>><%=current_user.unread_messages.length%></span>
+				<span id="top_unread_count1" class="highlightedBold"><%=current_user.unread_messages.length%></span>
 			</span> 
 		</div>
+		<%end%>
 	</div>
 
 	
-	<div class="TopDivider"> </div>
+	<div class="TopDivider" style="float:right; margin-right:20px;"> </div>
 	
-	<script>
-	$(".TopIcon").tooltip({ position: "top center", tipClass:'smallTip'});
-	</script>	
 
 
 	
 <%else%>
 
-<%#cookies.delete :challenges%>
-
-    <%@bucketcount = 0%>
-	<%if cookies[:challenges]%>
-	    <%@var =  cookies[:challenges].split(",")%>
-  		<%for var in @var%>
-			<%if var != "0"%>
-  			  <%@bucketcount = @bucketcount + 1%>
-             <%end%>
-  		 <%end%>
-	 <%end%>
-	
 
 	
 	
 	
 
-
-		<div id="NotLoggedInBucket" style="float:right;  margin-top:22px; <%if cookies[:challenges_created]%>margin-right:10px;<%else%>margin-right:300px;<%end%> font-size:12px; color:#999; <%if @bucketcount == 0%>display:none;<%end%>">
-<a id="BucketListLink" class="UserLink" href="/bucket_list">Bucket List</a><span id="insertBucket"><%if @bucketcount > 0%><span id="BucketCount">(<span id="top_bucket_count"><%=@bucketcount%></span>) </span><%end%></span>
-		</div>
 
 
 		<div id="SignUp2" unselectable="on" class="GreenButton2">
@@ -86,15 +71,10 @@
 	$('#LoginButton2').bind('mousedown', function() {
 	openLoginDrop(this); ignoreHide=1
 	});
-
-
-
-	
-	
 	</script>
 
 
-	<div id="LoginLayer" style="top:36px" onclick="ignoreHide=1;">
+	<div id="LoginLayer" style="top:34px" onclick="ignoreHide=1;">
 		<div class="LoginBorder">
 			<div style="margin-top:-18px; position:absolute; width:99px; height:5px; left:90px; background:#ECECEC; border-right:1px solid #fff"></div>
 		

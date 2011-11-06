@@ -1,6 +1,8 @@
-<script>
-	$("#TopCreateIcon").attr("src","/images/cog-active.png")
-</script>
+
+<% content_for :head do %>
+
+<% end %>
+
 
 
 <%if flash[:message]%>
@@ -67,8 +69,8 @@
 											<%@onclick2 = "if($('#autopost_facebook_completed:checked').val() != null) {$.cookie('redirect_settings', 'true'); fblogin2()}"%>
 										<%end%>	
 
-										<%=check_box("user", "autopost_facebook_bucket", {:checked =>@user.autopost_facebook_bucket, :onclick=>@onclick1},  true, false)%>Share stuff added to my bucket list on my Facebook news feed<br><br>
-										<%=check_box("user", "autopost_facebook_completed", {:checked =>@user.autopost_facebook_completed, :onclick=>@onclick2},  true, false)%>Share completed challenges on my Facebook news feed
+										<%=check_box("user", "autopost_facebook_bucket", {:checked =>@user.autopost_facebook_bucket, :onclick=>@onclick1},  true, false)%>Post to Facebook when I sign up for an adventure<br><br>
+										<%=check_box("user", "autopost_facebook_completed", {:checked =>@user.autopost_facebook_completed, :onclick=>@onclick2},  true, false)%>Post to Facebook when I upload adventure photos
 										<div style="padding-top:20px;"><a href="#" class="BlueLink" onclick="alert('Coming Soon')">Find my Facebook Friends on <%=APP_NAME%></a></div>
 									</div>
 
@@ -94,8 +96,8 @@
 										  :action => "destroy"}, :class=>"BlueLink" %></div>
 
 									<div style="margin-top:10px; padding:10px; border:2px solid #ccc; background:#eee; width:400px;">
-												<%=check_box("user", "autopost_twitter_bucket", {:checked =>@user.autopost_twitter_bucket},  true, false)%>Post to Twitter when I add an item to my bucket list<br><br>
-												<%=check_box("user", "autopost_twitter_completed", {:checked =>@user.autopost_twitter_completed},  true, false)%>Post to Twitter when I complete a challenge
+												<%=check_box("user", "autopost_twitter_bucket", {:checked =>@user.autopost_twitter_bucket},  true, false)%>Post to Twitter when I sign up for an adventure<br><br>
+												<%=check_box("user", "autopost_twitter_completed", {:checked =>@user.autopost_twitter_completed},  true, false)%>Post to Twitter when I upload adventure photos
 												<div style="padding-top:20px;"><a href="#" class="BlueLink" onclick="alert('Coming Soon')">Find my Twitter Friends on <%=APP_NAME%></a></div>
 									</div>
 
@@ -169,9 +171,12 @@
 
 					<%=check_box("user", "privacy_cc_email", {:checked => @user.privacy_cc_email},  true, false)%>Someone messages me<br><br>
 					
-						<%=check_box("user", "messaging_bucket_comment", {:checked => @user.messaging_bucket_comment},  true, false)%>Someone comments on my bucket<br><br>
+						<%=check_box("user", "messaging_bucket_comment", {:checked => @user.messaging_bucket_comment},  true, false)%>Someone comments on an event I joined<br><br>
+						
+							<%=check_box("user", "privacy_cc_signups", {:checked => @user.privacy_cc_signups},  true, false)%>Someone signs up for my event<br><br>
+							
 					
-					<%=check_box("user", "messaging_weekly_email", {:checked => @user.messaging_weekly_email},  true, false)%>New challenges are added (max once per week)
+					<%=check_box("user", "messaging_weekly_email", {:checked => @user.messaging_weekly_email},  true, false)%>New events are added (max once per week)
 						
 					  
 					
@@ -184,23 +189,18 @@
 		
 		<div id="tabs-4" class="ui-tabs-hide ui-tabs-container" style="min-height:300px;padding-top:0px; margin-top:-3px ">
 			<div class="SettingsTitle" style="padding-bottom:15px">Allow users to</div>
-			<div style="float:left; width:135px; margin-top:4px; text-align:right">Send me messages</div>
+			<div style="float:left; width:140px; margin-top:4px; text-align:right">Send me messages</div>
 			<div style="float:left; margin-left:10px"><%= select( "user", "privacy_allow_messages", { "Everyone" => 1, "Only those I follow" => 0}, :selected => @privacy_allow_messages) %></div>
 
 <div style="clear:both; height:15px"></div>
 
-					<div style="float:left;width:135px; margin-top:4px; text-align:right">See my adventure log</div>
+					<div style="float:left;width:140px; margin-top:4px; text-align:right">View my adventure log</div>
 					<div style="float:left; margin-left:10px"><%= select( "user", "privacy_block_adventure_log", { "Everyone" => false, "Only those I follow" => true}, :selected => @user.privacy_block_adventure_log) %></div>
 
 					<div style="clear:both; height:15px"></div>
 
-										<div style="float:left;width:135px; margin-top:4px; text-align:right">See my achievements</div>
-										<div style="float:left; margin-left:10px"><%= select( "user", "privacy_achievement", { "Everyone" => 0, "Only those I follow" => 1}, :selected => @user.privacy_achievement) %></div>
-
-
-														<div style="clear:both; height:15px"></div>
-
-																			<div style="float:left;width:135px; margin-top:4px; text-align:right">See my bucket list</div>
+									
+																			<div style="float:left;width:140px; margin-top:4px; text-align:right">View my schedule</div>
 																			<div style="float:left; margin-left:10px"><%= select( "user", "privacy_bucket", { "Everyone" => 0, "Only those I follow" => 1}, :selected => @user.privacy_bucket) %></div>
 
 
@@ -242,13 +242,22 @@
 		
 			
 			<script>
-			$('#name').alpha({allow:"., "});
-			$('#username').alphanumeric({allow:"-"});
+			
+			
+			
+		
 			
 			$(document).ready(function() {
+			
+					$('#name').alpha({allow:"., "});
+					$('#username').alphanumeric({allow:"-"});
+					
+					
 				$("#tabs").tabs({ cookie: { expires: 30 }}).addClass('ui-tabs-vertical ui-helper-clearfix');
+	
 				$("#tabs li").removeClass('ui-corner-top').addClass('ui-corner-left');
 				$('#tabs').show();
+				
 			});
 			
 			</script>

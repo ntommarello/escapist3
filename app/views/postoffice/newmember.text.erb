@@ -1,10 +1,22 @@
-Welcome to <%=APP_NAME%>!  
+<%if @group%>
+Hi <%=@user.first_name%>,
 
-In order to receive full access to <%=APP_NAME%>, please confirm your account by clicking here:  http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user_id%>
+Thanks for signing up!
 
-Please feel free to reach out to me with any ideas, thoughts, war stories, etc. I'd love to hear from you!  The whole reason I create <%=APP_NAME%> was to meet more awesome people while doing fun things.
+<%=@group.name%> is powered by <%=APP_NAME%>.  We help you discover kick-ass adventures... or create a beautiful web site to host your awesome event.
+<%else%>
+Hi <%=@user.first_name%>,
 
-Thanks for trying it out!
+Thanks for trying out <%=APP_NAME%>!  We help you discover kick-ass adventures... or create a beautiful web site to host your awesome event.	
+<%end%>
 
+Please verify your e-mail address by clicking here:  http://<%=APP_URL%>/confirm_email/1?authentication_token=<%=@user.authentication_token%>
+
+Feel free to reach out to me with any ideas or suggestions. I'd love to hear from you!
+	
+Thanks again,
+	
 Nick
-Founder, <%=APP_NAME%>
+Founder, Escapist
+nick@tommarello.com
+http://tommarello.com

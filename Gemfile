@@ -3,7 +3,7 @@ source 'http://gems.github.com'
 
 gem 'rails', '3.0.4'
 gem 'mysql', '~> 2.8'
-gem 'devise', '~> 1.1'
+gem 'stripe'
 gem 'haml'
 gem 'paperclip'
 gem 'aws-s3'
@@ -17,15 +17,26 @@ gem 'i18n'
 gem 'tzinfo'
 gem 'riddle'
 gem 'koala'
-gem 'omniauth'
+gem 'omniauth', "0.2.6"
 gem 'carmen'
-gem 'twitter'
-gem 'bitly'
+#gem 'twitter'
+#gem 'bitly'
 gem "browser" 
+gem "useragent" 
 gem "awesome_print"
 gem "samsouder-titlecase"
 gem "oauth"
-gem "json"
+gem "json", "1.5.2"
+gem "devise", "1.1.7"
+gem "jammit"
+gem "rake", "0.9.2.2"
+gem "sass"
+gem "hominid"
+#gem "active_merchant"
+gem "ri_cal"
+#gem "aws-ses", "~> 0.3.2", :require => 'aws/ses'
+gem 'paperclip-meta'
+
 
 # To use debugger
 # gem 'ruby-debug'
@@ -45,5 +56,4 @@ group :test do
   gem 'mocha'
 end
 
-gem "rubber"
-gem "rubber", "1.11.0"
+gem "rubber", "1.15.0"

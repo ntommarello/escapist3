@@ -14,7 +14,6 @@ MAILTO=<%= rubber_env.admin_email %>
 RUBBER_ENV=<%= RUBBER_ENV %>
 RAILS_ENV=<%= RUBBER_ENV %>
 RUBYOPT=rubygems
-GEM_PATH=/usr/local/rvm/gems/ruby-1.9.2-p0:/usr/local/rvm/gems/ruby-1.9.2-p0@global
 
 # Roll all rails logs at midnight
 0 0 * * * LOG_DIR=<%= RUBBER_ROOT %>/log <%= RUBBER_ROOT %>/script/cron-rake rubber:rotate_logs

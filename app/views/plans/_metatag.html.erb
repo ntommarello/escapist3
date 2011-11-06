@@ -1,0 +1,40 @@
+<%if plan%>
+	<meta name="description" content="<%=strip_tags plan.note[ 0 .. 300 ]%>" /> 
+
+
+	<meta property="fb:app_id" content="<%=@fb_id%>" /> 
+
+
+	<%if @group%>
+		<meta property="og:site_name" content="<%=@group.name%>" /> 
+		<meta property="og:title" content="<%=strip_tags plan.title%>" /> 
+		<%if params[:refer_id]%>
+			<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>&refer_id=<%=refer_id%>" /> 
+		<%else%>
+			<meta property="og:url" content="http://<%=@group.url%>/?id=<%=plan.id%>" /> 
+		<%end%>
+	<%else%>
+		<meta property="og:site_name" content="<%=APP_NAME%>" /> 
+		<meta property="og:title" content="<%=strip_tags plan.title%> | <%=APP_NAME%>" /> 
+		<%if params[:refer_id]%>
+			<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>&refer_id=<%=params[:refer_id]%>" /> 
+		<%else%>
+			<meta property="og:url" content="http://<%=APP_URL%>/?id=<%=plan.id%>" /> 
+		<%end%>
+	<%end%>
+	
+
+	<meta property="og:type" content="activity" /> 
+	<%if plan.city_id == 1%>
+		<meta property="og:locality" content="Boston" /> 
+	<%end%>
+	<%if plan.city_id == 2%>
+		<meta property="og:locality" content="San Francisco" /> 
+	<%end%>
+	<%if plan.city_id == 3%>
+		<meta property="og:locality" content="New York City" /> 
+	<%end%>
+	<meta property="og:image" content="http://<%=ASSETS_URL%>/images/<%=plan.id%>/thumb_50_<%=plan.image_file_name%>"/> 
+	<meta property="og:description" content="<%=strip_tags plan.note[ 0 .. 300 ]%>" /> 
+	<meta property="fb:admins" content="14902644" />
+<%end%>

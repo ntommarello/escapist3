@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613212149) do
+ActiveRecord::Schema.define(:version => 20111103171952) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -134,6 +134,15 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
 
   add_index "deleted_users", ["id"], :name => "index_deleted_users_on_id"
 
+  create_table "digest_emails", :force => true do |t|
+    t.string   "email"
+    t.integer  "edition"
+    t.boolean  "joined"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "approved"
+  end
+
   create_table "dislikes", :force => true do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
@@ -144,6 +153,51 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "dislikes", ["challenge_id"], :name => "index_dislikes_on_challenge_id"
   add_index "dislikes", ["id"], :name => "index_dislikes_on_id"
   add_index "dislikes", ["user_id"], :name => "index_dislikes_on_user_id"
+
+  create_table "groups", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "name"
+    t.text     "subtitle"
+    t.boolean  "domain"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "twitter_name"
+    t.text     "custom_twitter_text"
+    t.string   "twitter"
+    t.string   "tumblr"
+    t.text     "statcounter"
+    t.string   "fb_id"
+    t.string   "fb_key"
+    t.string   "fb_secret"
+    t.string   "favicon"
+    t.string   "logo"
+    t.string   "mailchimp_key"
+    t.string   "mailchimp_list"
+    t.string   "wepay_token"
+    t.string   "wepay_group_id"
+    t.string   "paypal_email"
+    t.string   "fb_link"
+    t.string   "stripe_public"
+    t.string   "stripe_private"
+    t.string   "favicon_file_name"
+    t.string   "favicon_content_type"
+    t.integer  "favicon_file_size"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.text     "logo_meta"
+    t.string   "username"
+    t.text     "about"
+  end
+
+  create_table "hosts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "admin"
+  end
 
   create_table "invites", :force => true do |t|
     t.integer  "user_id"
@@ -165,6 +219,18 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "likes", ["subscribed_challenge_id"], :name => "index_likes_on_subscribed_challenge_id"
   add_index "likes", ["user_id"], :name => "index_likes_on_user_id"
 
+  create_table "medias", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.integer  "sort_order"
+    t.text     "caption"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "media_type"
+  end
+
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
     t.integer  "receiver_id"
@@ -181,32 +247,46 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "plans", :force => true do |t|
-    t.integer  "challenge_id"
     t.boolean  "featured"
     t.integer  "privacy"
-    t.integer  "host_id"
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "attendance_cap"
     t.text     "note"
-    t.integer  "subscribed_plans_count"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
-    t.decimal  "price",                  :precision => 10, :scale => 2
+    t.decimal  "price",                     :precision => 10, :scale => 2
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
     t.text     "transportation"
     t.string   "url_link"
     t.string   "url_name"
-    t.string   "photo_file_name"
-    t.integer  "photo_file_size"
-    t.string   "photo_content_type"
     t.string   "image_file_name"
     t.integer  "image_file_size"
     t.string   "image_content_type"
     t.integer  "city_id"
+    t.integer  "group_id"
+    t.boolean  "application_required"
+    t.date     "application_deadline"
+    t.string   "short_location"
+    t.string   "short_desc"
+    t.text     "application_wufoo"
+    t.boolean  "enable_comments"
+    t.boolean  "enable_sharing"
+    t.boolean  "enable_signups"
+    t.boolean  "enable_discount"
+    t.string   "password"
+    t.boolean  "published"
+    t.text     "availability"
+    t.boolean  "enable_date_requests"
+    t.boolean  "enable_date_poll"
+    t.string   "custom_comment"
+    t.integer  "map_zoom"
+    t.boolean  "enable_donations"
+    t.text     "donation_text"
+    t.decimal  "donation_suggested_amount", :precision => 10, :scale => 0
   end
 
   create_table "subscribed_achievements", :force => true do |t|
@@ -245,6 +325,15 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "subscribed_challenges", ["id"], :name => "index_subscribed_challenges_on_id"
   add_index "subscribed_challenges", ["user_id"], :name => "index_subscribed_challenges_on_user_id"
 
+  create_table "subscribed_groups", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.integer  "admin"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "subscribed_plans", :force => true do |t|
     t.integer  "plan_id"
     t.integer  "user_id"
@@ -252,6 +341,32 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "maybe"
+    t.string   "label"
+    t.integer  "amount"
+    t.string   "charge_id"
+  end
+
+  create_table "ticket_purchases", :force => true do |t|
+    t.integer  "subscribed_plan_id"
+    t.integer  "plan_id"
+    t.integer  "user_id"
+    t.integer  "ticket_id"
+    t.integer  "qty"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tickets", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.integer  "amount"
+    t.integer  "qty"
+    t.integer  "type"
+    t.integer  "order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -310,6 +425,13 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
     t.string   "phone_OS"
     t.string   "phone_model"
     t.string   "app_version"
+    t.text     "apply"
+    t.text     "short_bio"
+    t.integer  "referred_by"
+    t.boolean  "discount_active"
+    t.string   "stripe_id"
+    t.boolean  "privacy_cc_signups",                         :default => true
+    t.string   "active_card"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token"
@@ -318,5 +440,13 @@ ActiveRecord::Schema.define(:version => 20110613212149) do
   add_index "users", ["id"], :name => "index_users_on_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "watched_plans", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

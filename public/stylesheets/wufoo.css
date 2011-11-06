@@ -1,0 +1,54 @@
+input.text, input.search, textarea.textarea {
+   -webkit-border-radius: 7px;
+   -moz-border-radius: 7px;
+   border-radius: 7px;
+        background:#FDFDFD;
+        color:#666;
+        border:1px solid #B9B9B9;
+        font-size:13px;
+        padding:7px;
+        height:16px;
+max-width:280px;
+background-image: -moz-linear-gradient(100% 100% 90deg,  #FDFDFD, #ECECEC);
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ECECEC), to(#FDFDFD));
+}
+
+input.text:focus, input.search:focus, textarea.textarea:focus {
+background-image: -moz-linear-gradient(100% 100% 90deg,  #FFFFCC, #ECEFC2);
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ECEFC2), to(#FFFFCC));
+
+
+}
+
+
+textarea.textarea {
+  height:100px;
+  padding-right:0px;
+}
+
+#saveForm {
+        background:#30D31A;
+        border:1px solid #30D31A;
+        margin-top:10px;
+        margin-left:0px;
+        font-size:16px;
+        cursor:pointer;
+        color:#fff;
+         height:40px; line-height:38px;
+background-image: -moz-linear-gradient(100% 100% 90deg,  #30D31A, #02A204);
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#30D31A), to(#02A204));
+ -webkit-border-radius: 7px;
+   -moz-border-radius: 7px;
+}
+
+#saveForm:hover {
+background:#02A204;
+background-image: -moz-linear-gradient(100% 100% 90deg,  #30D31A, #008C00);
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#30D31A), to(#008C00));
+
+}
+#header {display:none;}
+
+html{background-image:none;background-color:#99cc00}
+
+

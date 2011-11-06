@@ -1,6 +1,30 @@
 class SessionsController < Devise::SessionsController
   include GeoKit::Geocoders
 
+
+  def passthru
+     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+   end
+
+  def fb_setup
+    
+    request.env['omniauth.strategy'].client_id = @fb_id
+    request.env['omniauth.strategy'].client_secret = @fb_secret
+    request.env['omniauth.strategy'].options[:scope] = 'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'
+    
+
+    render :text => "Setup complete.", :status => 404
+  end
+    
+  def twitter_setup
+    request.env['omniauth.strategy'].consumer_key = TWITTER_KEY
+    request.env['omniauth.strategy'].consumer_secret = TWITTER_SECRET
+
+    render :text => "Setup complete.", :status => 404
+  end
+    
+    
+    
   def new
     @user = User.new
     render(:template => 'devise/sessions/new')
@@ -30,7 +54,8 @@ class SessionsController < Devise::SessionsController
         @user.app_version = params[:app_version] if params[:app_version]
         @user.lat = params[:lat] if params[:lat]
         @user.lng = params[:lng] if params[:lng]
-
+        @user.apply = params[:apply] if params[:apply]
+        
         if params[:lat] and params[:lng]
           if params[:lat].to_i != 0
             loc=GoogleGeocoder.reverse_geocode([params[:lat] ,params[:lng] ])

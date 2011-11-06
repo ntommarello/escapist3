@@ -1,0 +1,29 @@
+Order Confirmation:  <%=raw @plan.title%>
+
+http://<%=@url%>/escapes/<%=@plan.id%>
+
+<%if @date%><%=raw @date%><%end%>
+
+<%=raw @plan.location%>
+
+
+Receipt:
+
+	<%amount = (@subscribed.amount.to_f / 100).to_f%>
+	<%if @subscribed.num_guests%>
+		<%qty = @subscribed.num_guests + 1%>
+	<%else%>
+	  <%qty = + 1%>
+	<%end%>
+$<%= number_with_precision amount, :precision => 2 %></div>
+
+<%=@user.first_name%> <%=@user.last_name%>
+<%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each)<%end%>
+
+<%if @subscribed.amount and @subscribed.amount > 0 %><%=@user.active_card%></p><%end%>
+	
+Host<%if @plan.organizers.length > 1%>s<%end%>:
+
+			<%for organizer in @plan.organizers%>
+<%=organizer.first_name%> <%=organizer.last_name%>
+			<%end%>

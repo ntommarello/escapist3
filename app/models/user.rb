@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   include GeoKit::Mappable
   acts_as_mappable
 
+  has_many :watched_plans 
+
   slug :full_name, :column => :username
   
   has_many :subscribed_challenges, :dependent => :destroy
@@ -9,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :likes, :dependent => :destroy
   has_many :dislikes, :dependent => :destroy
   has_many :challenges, :through => :subscribed_challenges 
+  has_many :subscribed_groups, :dependent => :destroy
   
   has_many :authentications
     
@@ -20,9 +23,11 @@ class User < ActiveRecord::Base
 
   alias :messages :received_messages
   
-  has_many :challenges_authored, :class_name => 'Challenge', :foreign_key => :author_id
+ 
+  has_many :hosts
+  has_many :plans_authored, :through => :hosts, :source => :plan
 
-  has_many :plans, :dependent => :destroy
+
   has_many :subscribed_plans, :dependent => :destroy
   
   has_many :blocks, :dependent => :destroy
@@ -41,20 +46,15 @@ class User < ActiveRecord::Base
   
   has_attached_file :avatar, attachment_attrs(
     :default_url => "/images/no_avatar.png",
-    :styles => { :thumb_40 => ["40x40#"], :thumb_50 => ["50x50#"], :thumb_90 => ["90x90#"], :thumb_150 => ["150x150#"], :thumb_350 => ["350x350#"] },
-    :convert_options => { :all => '-quality 75' }
+    :styles => { :thumb_40 => ["40x40#"], :thumb_50 => ["50x50#"], :rounded_90 => ["90x90#", :png], :rounded_50 => ["50x50#", :png], :thumb_90 => ["90x90#"], :thumb_150 => ["150x150#"], :thumb_350 => ["350x350#"] },
+    :convert_options => { :all => '-quality 75', :rounded_90 => Proc.new{self.convert_options}, :rounded_50 => Proc.new{self.convert_options} }
     )
- 
- 
-
-   
- 
- 
  
   scope :active, :conditions => ["active = ? and hidden_reputation > ?",true,50]
   
   scope :sort_photos_first, :select=> "users.*, users.avatar_file_name IS NULL AS isnull", :order => "isnull ASC"
   
+  scope :limiteight, :limit=>"8"
   
   define_index do
       # fields
@@ -114,6 +114,14 @@ class User < ActiveRecord::Base
     return count.length
   end
   
+  def has_watched?(plan)
+    if plan.group_id
+      watched_plans.find(:first, :conditions=>["group_id=?",plan.group_id])
+    else
+      watched_plans.find(:first, :conditions=>["plan_id=?",plan.id])
+    end
+  end
+  
   
 
   def allow_messages_from?(user)
@@ -137,7 +145,7 @@ class User < ActiveRecord::Base
 
   def capitalize_names
     self.first_name = first_name.titleize
-    self.last_name = last_name.capitalize
+    self.last_name = last_name.slice(0,1).capitalize + last_name.slice(1,last_name.length);
     set_slug  
   end
   
@@ -145,7 +153,15 @@ class User < ActiveRecord::Base
     self.about_me = self.about_me.strip
   end
   
-
+  def self.convert_options
+      trans = ""
+      px = 5
+      trans << " \\( +clone  -threshold -1 "
+      trans << "-draw 'fill black polygon 0,0 0,#{px} #{px},0 fill white circle #{px},#{px} #{px},0' "
+      trans << "\\( +clone -flip \\) -compose Multiply -composite "
+      trans << "\\( +clone -flop \\) -compose Multiply -composite "
+      trans << "\\) +matte -compose CopyOpacity -composite "
+    end
   
   
 end
