@@ -45,6 +45,7 @@ namespace :deploy do
   
   task :fast, :roles => :app do
     update_code
+    symlink
     run "cd #{current_path}; touch tmp/restart.txt"
   end
   
