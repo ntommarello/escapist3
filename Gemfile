@@ -4,38 +4,41 @@ source 'http://gems.github.com'
 gem 'rails', '3.0.4'
 gem 'mysql', '~> 2.8'
 gem 'stripe'
-gem 'haml'
 gem 'paperclip'
+gem 'paperclip-meta'
 gem 'aws-s3'
 gem 'geokit-rails3'
-gem 'will_paginate', '~> 3.0.pre2'
-gem 'panda'
 gem 'slug'
 gem 'hoptoad_notifier'
-gem 'thinking-sphinx', :require => 'thinking_sphinx'  
-gem 'i18n'
-gem 'tzinfo'
-gem 'riddle'
-gem 'koala'
+gem 'thinking-sphinx', :require => 'thinking_sphinx'
 gem 'omniauth', "0.2.6"
-gem 'carmen'
-#gem 'twitter'
-#gem 'bitly'
-gem "browser" 
-gem "useragent" 
-gem "awesome_print"
-gem "samsouder-titlecase"
 gem "oauth"
 gem "json", "1.5.2"
 gem "devise", "1.1.7"
 gem "jammit"
 gem "rake", "0.9.2.2"
 gem "sass"
-gem "hominid"
-#gem "active_merchant"
+gem "samsouder-titlecase"
 #gem "ri_cal"
+
+
+gem 'haml'
+gem 'will_paginate', '~> 3.0.pre2'
+gem 'panda'
+gem 'i18n'
+gem 'tzinfo'
+gem 'riddle'
+gem 'koala'
+gem 'carmen'
+gem "browser" 
+gem "useragent" 
+gem "awesome_print"
+gem "hominid"
+
+#gem "active_merchant"
 #gem "aws-ses", "~> 0.3.2", :require => 'aws/ses'
-gem 'paperclip-meta'
+#gem 'twitter'
+#gem 'bitly'
 
 
 # To use debugger
