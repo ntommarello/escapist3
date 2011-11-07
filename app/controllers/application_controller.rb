@@ -40,6 +40,8 @@ class ApplicationController < ActionController::Base
             @fb_id = test2.fb_id
             @fb_secret = test2.fb_secret
             @source = test2.url
+          else
+            redirect_to APP_URL
           end
         end
       end
