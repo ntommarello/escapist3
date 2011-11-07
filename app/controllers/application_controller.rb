@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
             @fb_secret = test2.fb_secret
             @source = test2.url
           else
-            redirect_to APP_URL
+            redirect_to "http://#{APP_URL}"
           end
         end
       end
