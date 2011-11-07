@@ -8,10 +8,28 @@
 		
 		
 		<div class="TopCardShadow"></div>
-
-				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
 		
+		
+		
+			<%name = user.avatar_file_name%>
+		
+			<%if name%>
+				<%test = name.index(".")%>
 
+				<%if test.to_i < 1%>
+					<%name = "#{name}."%>
+				<%end%>
+				<img class="UserCardPhoto" src="http://assets.stomp.io/avatars/<%=user.id%>/thumb_150_<%=name%>"/>
+			<%else%>
+				<img alt="No_avatar" class="UserCardPhoto" src="/images/no_avatar.png" style="" />
+			<%end%>
+			
+			
+		
+				<%# image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
+		
+	
+		
 		
 
 		<div class="TopPhotoShadow"></div>
@@ -32,7 +50,12 @@
 			<div style=" margin-top:2px; line-height:16px; font-style:italic; font-family:'georgia'"><%=raw user.short_bio%></div>
 		</div>
 		
-		
+		<%if @plan%>
+			<%guest = SubscribedPlan.find(:first,:conditions=>"plan_id=#{@plan.id} and user_id=#{user.id}")%>
+			<%if guest and guest.num_guests.to_i > 0%>
+				<div class="NumGuests"><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px">+</div><div style="float:left"><%=guest.num_guests%></div></div>
+			<%end%>
+		<%end%>
 
 	</div>
 	</a>
