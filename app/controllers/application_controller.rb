@@ -22,21 +22,26 @@ class ApplicationController < ActionController::Base
 
     @domain = URI.parse(request.url).host
       
-    groups = Group.find(:all)  
-    
-    
-    #group = Group.find(9)
 
-    for group in groups
-       if group.domain == true
-        if group.url != ""
-           if @domain.include? group.url
-            @group = group
-            @fb_id = group.fb_id
-            @fb_secret = group.fb_secret
-            @source = group.url
+    #@domain = "asdsad.escapist.me"
+    
+    if @domain != APP_URL and @domain != "localhost:3000"
+      test = Group.find_by_url(@domain)
+      if test
+        @group = test
+        @fb_id = test.fb_id
+        @fb_secret = test.fb_secret
+        @source = test.url
+      else
+        if request.subdomains.first
+          test2 = Group.find_by_username(request.subdomains.first)
+          if test2
+            @group = test2
+            @fb_id = test2.fb_id
+            @fb_secret = test2.fb_secret
+            @source = test2.url
           end
-      end
+        end
       end
     end
   end
