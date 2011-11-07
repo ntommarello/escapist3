@@ -1,0 +1,47 @@
+<%-
+  @path = '/etc/haproxy/errors/502.http'
+-%>
+HTTP/1.0 502 Bad Gateway^M
+Cache-Control: no-cache^M
+Connection: close^M
+Content-Type: text/html^M
+^M
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The page you were looking for doesn't exist (404)</title>
+  <style type="text/css">
+    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+    div.dialog {
+      width: 25em;
+      padding: 0 4em;
+      margin: 4em auto 0 auto;
+      border: 1px solid #ccc;
+      border-right-color: #999;
+      border-bottom-color: #999;
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  </style>
+</head>
+
+<body>
+
+
+<div style="width:850px; margin-left:auto; margin-right:auto; margin-top:30px; padding:30px; border:1px solid #ccc">
+        <div style="float:left; width:300px; text-align:left">
+                <img src="/images/codemonkey.jpg">
+        </div>
+        <div style="float:left;width:500px; margin-left:50px;  margin-top:20px">
+                <div style="font-weight:bold; color:red; line-height:60px;font-size:40px; text-align:left">Oh noes!  We're down for maintenance!</div>
+
+                <div style=" font-size:20px; text-align:left"><p>Sorry! The monkeys are deploying some code.</p>
+
+                <p>Please try again later.</p></div>
+
+        </div>
+
+        <div style="clear:both"></div>
+</div>
+
+</body>
+</html>
