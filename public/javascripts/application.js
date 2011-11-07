@@ -2792,6 +2792,13 @@ function validatePayment(button,type) {
 	}
 	
 	
+	
+	
+	if (cum_qty == 0) {
+		$('#payment_warning').html('Select a ticket to purchase')
+		return	
+	}
+	
 	if ($('.card-number').val().length < 14) {
 		$('#payment_warning').html('Enter valid card number')
 		$('.card-number').focus();
@@ -3664,7 +3671,11 @@ function ApplyReward(value) {
 	alert('invalid code')
 	
 }
-
+function roundNumber(num, dec) {
+	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
+	result  = result.toFixed(2);
+	return result;
+}
 function ReducePriceBy(amount,type) {
 
 	if (type == 1) { //percent
@@ -3681,18 +3692,32 @@ function ReducePriceBy(amount,type) {
 	}
 	
 	
-	$('#unit_price').val(newprice);
-	price = newprice * quantity;
 	
-	$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
-	$(".RewardDiv").html('Discount Applied')
+		$('#unit_price').val(newprice);
+		price = newprice * quantity;
 	
-	$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
+		$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
+		$(".RewardDiv").html('Discount Applied')
 	
-	if (price < 1) {
-		$("#PaymentBox").hide();
-		$("#FreeSignup").show();
+		$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
+	
+		if (price < 1) {
+			$("#PaymentBox").hide();
+			$("#FreeSignup").show();
+		}
+
+	
+	
+	//code for multi-ticket page
+	if (type == 1) { //percent
+		DiscountPercent = amount;
+	} else { //dollar amount
+		DiscountAmount = amount*100;
 	}
+
+	calcPrices();
+	
+	
 	
 }
 

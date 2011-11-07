@@ -55,11 +55,7 @@ original_price = <%=plan.price%>;
 price=<%=plan.price%>;
 
 
-function roundNumber(num, dec) {
-	var result = Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
-	result  = result.toFixed(2);
-	return result;
-}
+
 
 
 function payBill(discount) {

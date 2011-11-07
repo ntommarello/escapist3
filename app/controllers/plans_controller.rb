@@ -292,24 +292,10 @@ class PlansController < ApplicationController
 
 
 
-  ical = RiCal.Calendar do |cal|
-    cal.event do |event|
-      event.description = "#{@plan.strip_short_desc}\n#{@plan.grab_url}"
-      if @plan.start_time
-        event.dtstart =  @plan.start_time.to_datetime
-      end
-      if @plan.end_time
-        event.dtend = @plan.end_time.to_datetime
-      end
-      event.location = @plan.strip_location
-      event.summary = @plan.strip_title
-    end
-  end
+  
+  
 
- respond_to do |format|
-   format.ics { send_data(ical.export, :filename=>"mycal.ics", :disposition=>"inline; filename=mycal.ics", :type=>"text/calendar")}
-   format.html {render}
- end
+
 
 
 

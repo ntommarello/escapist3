@@ -86,6 +86,7 @@
 		
 		<div style="float:left; width:300px;">
 		<%=render :partial=>"plans/payment_form", :locals=>{:source=>"purchase"}%>
+			<button id="FreeSignup" class="newGrayButton GreenB" style="margin-top:8px; margin-left:11px; height:40px; line-height:35px; width:140px; font-size:16px; display:none" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>);">Sign Me Up!</button>
 		</div>
 		
 
@@ -93,6 +94,7 @@
 				<div style="background:rgba(33,33,33,.04); padding:5px">
 					<div style="font-size:10px; font-weight:normal">Grand Total</div>
 				<%if @tickets.length > 0%>
+					<input type="hidden" id="purchase_total_amount" value="<%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %>">
 					<div id="grand_total" style="line-height:34px">$<%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %></div>
 				<%end%>
 				</div>
@@ -115,7 +117,7 @@
 	<img src="/images/credit.png" style="margin-top:10px">
 </div>
 
-<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:right; margin-right:5px; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
+<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:right; margin-right:5px; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><span  class="BlueLink">Discount Code</span></div>
 	<div class="RewardDiv" style="display:none; float:right; margin-top:10px">
 		<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
 		<input class="RewardCode" type="textfield" style="font-size:12px;">
@@ -207,6 +209,13 @@
 
 <script>
 
+//leftovers from old ticket
+original_price = 0;
+quantity = 0;
+DiscountPercent = 1;
+DiscountAmount = 0;
+cum_qty = 0;
+
 	$(document).ready(function() {
 
 		$("#ticket_donation").numeric({allow:"."});
@@ -219,6 +228,7 @@
 
 function calcPrices() {
 	item_total = 0
+	cum_qty = 0;
 	$(".ticketRow").each(function() {
 		var child = $(this);
 		
@@ -227,9 +237,11 @@ function calcPrices() {
 		
 		item_total = item_total + (item_price * item_qty);
 		
-		
+		cum_qty = cum_qty + item_qty;
 		
 	});
+	
+
 	
 	
 	donation = parseFloat($("#ticket_donation").val())
@@ -244,12 +256,33 @@ function calcPrices() {
 		donation = donation * 100;
 		item_total = item_total + donation
 	}
+
+	item_total = (item_total - DiscountAmount)*DiscountPercent;
 	
 	
 	dollars = parseFloat(item_total / 100)
 	
 	$("#grand_total").html("$"+dollars.toFixed(2))
+	$("#purchase_total_amount").val(dollars.toFixed(2))
 	
+	
+	if (cum_qty == 0) {
+		$("#SignIn").css("opacity",.3);
+		$("#FreeSignup").hide();
+	} else {
+		$("#SignIn").css("opacity",1);
+		if (item_total < 1) {
+			$("#PaymentBox").hide();
+			$("#FreeSignup").show();
+		} else {
+			$("#PaymentBox").show();
+			$("#FreeSignup").hide();
+		}
+	}
+	
+
+		
+		
 	
 	
 }		
