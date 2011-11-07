@@ -8,9 +8,12 @@
 		
 		
 		<div class="TopCardShadow"></div>
-
+				<img class="UserCardPhoto" src="http://assets.stomp.io/avatars/<%=user.id%>/thumb_150_<%=user.avatar_file_name%>"/>
 		
-				<%= image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
+				<%#image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
+		
+	
+		
 		
 
 		<div class="TopPhotoShadow"></div>
