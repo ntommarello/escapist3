@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
     @fb_secret = FACEBOOK_SECRET
     @source = APP_URL
 
-    @domain = URI.parse(request.url).host
-      
+    #@domain = URI.parse(request.url).host
+    @domain = request.domain
 
     #@domain = "asdsad.escapist.me"
     
