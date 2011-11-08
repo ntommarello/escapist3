@@ -80,6 +80,7 @@ Trek::Application.routes.draw do
   match 'geocode_plan' => 'plans#geocode_plan', :as => :geocode_plan
   
   
+  match 'download_ics' => 'plans#download_ics', :as => :download_ics
   
   match 'ajax_redraw_planning_box' => 'challenges#ajax_redraw_planning_box', :as => :ajax_redraw_planning_box
   

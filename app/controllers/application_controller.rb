@@ -24,10 +24,6 @@ class ApplicationController < ActionController::Base
     
     @domain = @domain.sub( "www.", "" )
     
-    #@domain = request.domain
-
-    #@domain = "asdsad.escapist.me"
-    
     if @domain != APP_URL and @domain != "localhost:3000"
       test = Group.find_by_url(@domain)
       if test

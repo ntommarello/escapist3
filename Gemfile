@@ -19,7 +19,7 @@ gem "jammit"
 gem "rake", "0.9.2.2"
 gem "sass"
 gem "samsouder-titlecase"
-#gem "ri_cal"
+gem "ri_cal"
 
 
 gem 'haml'
