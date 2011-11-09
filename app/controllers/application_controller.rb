@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def check_group  
     
-    @snowriders = "(46)"
+    @snowriders = "(46,53,54,55)"
     
     @fb_id = FACEBOOK_APP_ID
     @fb_secret = FACEBOOK_SECRET
