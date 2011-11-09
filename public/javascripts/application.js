@@ -2963,9 +2963,7 @@ function calcPrices() {
 	}
 
 
-
-
-	item_total = parseFloat((item_total - DiscountAmount)*DiscountPercent);
+	item_total =(item_total - DiscountAmount)*DiscountPercent;
 	
 	discount_amount = DiscountAmount + (item_total-(item_total*DiscountPercent))
 	
@@ -2973,10 +2971,13 @@ function calcPrices() {
 	
 	price = parseFloat(item_total / 100)
 	
+	if (price < 0) {
+		price = 0;
+	}
+	
 	$("#grand_total").html("$"+price.toFixed(2))
 	$("#purchase_total_amount").val(price.toFixed(2))
 	
-
 	if (cum_qty == 0) {
 		$("#SignIn").css("opacity",.3);
 		$("#FreeSignup").hide();
@@ -2990,7 +2991,6 @@ function calcPrices() {
 			$("#FreeSignup").hide();
 		}
 	}
-	
 }
 
 
@@ -3743,7 +3743,7 @@ function ApplyReward(value) {
 		return;
 	}
 	if (value=='sr2011') {
-		ReducePriceBy(10,2,value)
+		ReducePriceBy(.9,1,value)
 		return;
 	}
 	if (value=='mongoose') {
