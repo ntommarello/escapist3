@@ -15,6 +15,15 @@ class SubscribedPlansController < ApplicationController
    end
    
    
+   
+    #purchase[plan_id], #purchase[grand_total],  purchase[discount_code], purchase[discount]
+
+
+
+     #array of purchases:  ticket_id, qty, amount after discount
+        #suscribed_id, plan_id, current_user
+        
+        
    def payment
 
      check = SubscribedPlan.find_by_plan_id_and_user_id(params[:plan_id],current_user.id)
@@ -28,6 +37,8 @@ class SubscribedPlansController < ApplicationController
         end
         check.num_guests = check.num_guests + params[:qty].to_i 
         check.amount = check.amount + params[:amount].to_i
+        check.discount_code = params[:discount_code]
+        check.discount = check.discount.to_i + params[:discount].to_i
         check.save!
         @subscribed = check
         @plan = Plan.find(params[:plan_id])
@@ -37,8 +48,26 @@ class SubscribedPlansController < ApplicationController
         sign_up_plan
         @subscribed.amount = params[:amount]
         @subscribed.num_guests = params[:qty].to_i - 1
-         @subscribed.save!
+        @subscribed.discount = params[:discount]
+        @subscribed.discount_code = params[:discount_code]
+        @subscribed.save!
       end
+      
+ 
+     parsed_json = ActiveSupport::JSON.decode(params[:tickets])
+      
+      
+      for ticket in parsed_json["tickets"]
+        check = TicketPurchase.find(:first, :conditions=>"subscribed_plan_id = #{@subscribed.id} and plan_id=#{@plan.id} and user_id=#{current_user.id}")
+        if check
+          check.qty = check.qty + ticket["qty"].to_i
+          check.amount = check.amount + ticket["amount"].to_i
+          check.save!
+        else
+          TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :user_id=>current_user.id, :ticket_id=>ticket["id"], :qty=>ticket["qty"], :amount=>ticket["amount"])
+        end
+      end
+      
 
      token = params[:token]
      
@@ -51,11 +80,13 @@ class SubscribedPlansController < ApplicationController
        end
        
        customer = Stripe::Customer.create(:card => token, :description => "#{current_user.id} | #{current_user.first_name} #{current_user.last_name} | #{current_user.email} | plan: #{@plan.id}" )
+       
        charge = Stripe::Charge.create(
-           :amount => params[:amount].to_i, # in cents
+           :amount => params[:amount].to_i, # in cents2
            :currency => "usd",
           :customer => customer.id
        )
+       
        current_user.stripe_id = customer.id
        current_user.active_card = "#{charge.card.type} ending in #{charge.card.last4} (#{charge.card.exp_month}/#{charge.card.exp_year})"
        current_user.save!

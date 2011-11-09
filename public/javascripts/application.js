@@ -2852,16 +2852,11 @@ function stripeResponseHandler2(status, response) {
         //show the errors on the form
         $("#payment_warning").html(response.error.message);
     } else {
-
-
-		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:0 }, function(theResponse){
-		
+	
+		$.post("/payment", { token:response['id'], amount:response['amount'], discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:0 }, function(theResponse){		
 			$('#donationtext').html('<div style="text-align:center; font-size:18px;" class="HighlightedTitle">Thanks!  You Rock!</div>')
-
 		});
 		
-		
-
     }
 }
 
@@ -2874,8 +2869,6 @@ function stripeResponseHandler(status, response) {
     } else {
 	
 	
-	
-	
         /*var form$ = $("#payment-form");
         var token = response['id'];
 		var amount = response['amount'];
@@ -2883,8 +2876,11 @@ function stripeResponseHandler(status, response) {
 		form$.append("<input type='hidden' name='amount' value='" + token + "'/>");
         form$.get(0).submit();*/
 
+		//var SuperEncodedTickets = $.toJSON(encodedTickets);
+		
+		
 
-		$.post("/payment", { token:response['id'], amount:response['amount'], plan_id:plan_id, qty:$('#qty').val() }, function(theResponse){
+		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), tickets:encodedTickets}, function(theResponse){
 			
 			$('.card-number').val('');
 			$('#paymentbutton').html('Submit Payment');
@@ -2908,6 +2904,93 @@ $("#CancelPlan").hide();
 		
 
     }
+}
+
+
+
+//leftovers from old ticket
+original_price = 0;
+quantity = 0;
+DiscountPercent = 1;
+DiscountAmount = 0;
+cum_qty = 0;
+price = 0;
+
+function calcPrices() {
+	
+	encodedTickets = {}
+	encodedTickets.tickets = [];
+	
+	item_total = 0
+	cum_qty = 0;
+	
+	$(".ticketRow").each(function() {
+		var child = $(this);
+		
+		var item_price = parseInt($(".item_price",child).val())
+		var item_qty = parseInt($(".item_qty",child).val())
+		var item_id = parseInt($(".item_id",child).val())
+		var item_amount = item_price * item_qty;
+		
+		item_total = item_total + (item_price * item_qty);
+		
+		cum_qty = cum_qty + item_qty;
+		
+		if (item_qty > 0) {
+			var json = {}
+			json.id = item_id;
+			json.qty = item_qty;
+			json.amount = item_amount;
+			encodedTickets.tickets.push(json);
+		}
+	});
+	
+	encodedTickets = JSON.stringify(encodedTickets)
+
+	$('#qty').val(cum_qty);
+	
+	donation = parseFloat($("#ticket_donation").val())
+
+	if (donation > 0) {
+		
+		if (donation > 5000) {
+			donation = 5000
+			$("#ticket_donation").val(5000)
+		}
+		
+		donation = donation * 100;
+		item_total = item_total + donation
+	}
+
+
+
+
+	item_total = parseFloat((item_total - DiscountAmount)*DiscountPercent);
+	
+	discount_amount = DiscountAmount + (item_total-(item_total*DiscountPercent))
+	
+	$("#purchase_discount").val(discount_amount)
+	
+	price = parseFloat(item_total / 100)
+	
+	$("#grand_total").html("$"+price.toFixed(2))
+	$("#purchase_total_amount").val(price.toFixed(2))
+	
+
+	if (cum_qty == 0) {
+		$("#SignIn").css("opacity",.3);
+		$("#FreeSignup").hide();
+	} else {
+		$("#SignIn").css("opacity",1);
+		if (item_total < 1) {
+			$("#PaymentBox").hide();
+			$("#FreeSignup").show();
+		} else {
+			$("#PaymentBox").show();
+			$("#FreeSignup").hide();
+		}
+	}
+	
 }
 
 
@@ -3644,27 +3727,31 @@ else
 function ApplyReward(value) {
 	value = value.toLowerCase();
 	
+
+	
 	if (value=='stompvip') {
-		ReducePriceBy(0,1)
+		ReducePriceBy(0,1,value)
 		return;
 	}
 	
 	if (value=='urbaninteractive') {
-		ReducePriceBy(20,2)
+		ReducePriceBy(20,2,value)
 		return;
 	}
-	
 	if (value=='2.009') {
-		ReducePriceBy(10,2)
+		ReducePriceBy(10,2,value)
 		return;
 	}
-	
+	if (value=='sr2011') {
+		ReducePriceBy(10,2,value)
+		return;
+	}
 	if (value=='mongoose') {
-		ReducePriceBy(20,2)
+		ReducePriceBy(20,2,value)
 		return;
 	}
 	if (value=='joinme42') {
-		ReducePriceBy(5,2)
+		ReducePriceBy(5,2,value)
 		return;
 	}
 	
@@ -3676,7 +3763,13 @@ function roundNumber(num, dec) {
 	result  = result.toFixed(2);
 	return result;
 }
-function ReducePriceBy(amount,type) {
+function ReducePriceBy(amount,type,discount_code) {
+
+
+	$("#purchase_discount_code").val(discount_code)
+
+
+
 
 	if (type == 1) { //percent
 		newprice = $('#unit_price').val() * amount;
@@ -3693,18 +3786,18 @@ function ReducePriceBy(amount,type) {
 	
 	
 	
-		$('#unit_price').val(newprice);
-		price = newprice * quantity;
+		//$('#unit_price').val(newprice);
+		//price = newprice * quantity;
 	
-		$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
-		$(".RewardDiv").html('Discount Applied')
+		//$('.price_display').html('$'+roundNumber($('#unit_price').val()*quantity,2))
+		//$(".RewardDiv").html('Discount Applied')
 	
-		$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
+		//$(".buyticket").html('Buy Ticket - $'+roundNumber(newprice,2));
 	
-		if (price < 1) {
-			$("#PaymentBox").hide();
-			$("#FreeSignup").show();
-		}
+		//if (price < 1) {
+		//	$("#PaymentBox").hide();
+	//		$("#FreeSignup").show();
+	//	}
 
 	
 	
@@ -4136,7 +4229,7 @@ function loadInfo(index) {
 	}
 	
 
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/original_"+escape(current_plan.image_file_name)
+	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+escape(current_plan.image_file_name)
 	switchPhoto(image_url);
 	
 	
@@ -4233,7 +4326,7 @@ function preloadImage() {
 	preload_image_index = preload_image_index +1;
 	preload_plan = plans[preload_image_index].plan;
 	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/original_"+escape(preload_plan.image_file_name)
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+escape(preload_plan.image_file_name)
 	
 	var img = new Image();
 	$(img).load(function(){

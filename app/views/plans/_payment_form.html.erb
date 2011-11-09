@@ -83,6 +83,11 @@
 					<div style="clear:both"></div>
 		    </div>
 		
+			<input type="hidden" name="purchase[plan_id]" id="purchase_plan_id" value="<%=@plan.id%>">
+			<input type="hidden" name="purchase[discount]" id="purchase_discount" value="">
+			<input type="hidden" name="purchase[discount]" id="purchase_discount_code" value="">
+			<input type="hidden" name="qty" id="qty" value="1">
+		
 			<div id="payment_warning" style="margin-left:90px; margin-top:5px; color:red; font-weight:bold"></div>
 		
 			<div id="SignIn"  class="WhiteActiveBorder" onclick="validatePayment(this, <%if source=="post_signup_modal"%>2<%else%>1<%end%> )" style="margin-left:85px; width:202px">

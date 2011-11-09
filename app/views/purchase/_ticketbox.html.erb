@@ -1,0 +1,161 @@
+<div class="ticketBox" >
+	
+
+		
+
+
+	
+	<div style="border-bottom:1px solid #E9E9EB;  line-height:50px; height:50px; ">
+	 			<div style="float:left; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px; margin-top:8px; font-size:15px;">Tickets</div>
+				
+
+	 
+	</div>
+	<div>
+		
+<%i=0%>
+<%addon_shown=false%>
+
+<%for ticket in @tickets%>
+	<%i=i+1%>
+	
+	<%if ticket.ticket_type == 2%>
+		<%if !addon_shown%>
+			<%addon_shown=true%>
+				<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px; border-bottom:1px solid #E9E9EB; padding-bottom:10px">Add-ons</div>
+			
+		<%end%>
+	<%end%>
+	
+	<div class="ticketRow">
+
+		<input type="hidden" class="item_id" value="<%=ticket.id%>">
+		
+		<input type="hidden" class="item_price" value="<%=ticket.amount%>">
+
+		<div style="float:left; width:330px; margin-left:10px; ">
+			<B><%=ticket.title%></b>
+			<% if ticket.subtitle and ticket.subtitle !=""%>
+				<div style="font-size:13px; margin-top:3px"><%=ticket.subtitle%></div>
+			<%end%>
+		</div>
+	
+	
+			<select class="item_qty" onchange="calcPrices()" style="float:right;  margin-left:10px;  margin-top:-3px">
+				<option>0</option>
+				<option <%if i==1%>selected<%end%>>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+			</select>
+		
+		<div style="float:right; margin-left:10px;">
+			$<%= number_with_precision (ticket.amount.to_f / 100.0), :precision => 2 %>
+		</div>
+				
+		<div style="clear:both"></div>
+	</div>
+<%end%>
+
+
+<%if @plan.enable_donations%>
+<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Donation</div>
+ 
+<div style="margin-left:10px; float:left; font-size:13px; width:330px;">
+<%=@plan.donation_text%>
+</div>
+<div style="float:right; margin-right:10px">
+	
+		<div id="dollar3" style="position:absolute; margin-left:6px; margin-top:6px; font-size:13px; color:#aaa" >$</div>
+		
+		<input class="ShadowedTextBox" style="width:65px; color:#333; padding-left:15px; height:10px;" type="textfield" name="ticket[donation]" id="ticket_donation"  onfocus="$('#dollar3').css('color','#333')" value="" onblur="if ($(this).val() == '') {$('#dollar3').css('color','#aaa') }" onkeyup="calcPrices()">
+	
+	
+</div>
+
+<div style="clear:both"></div>
+
+
+<%end%>
+	<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:0px">Payment</div>
+	
+	<div style="float:left; width:300px;">
+	<%=render :partial=>"plans/payment_form", :locals=>{:source=>"purchase"}%>
+		<button id="FreeSignup" class="newGrayButton GreenB" style="margin-top:8px; margin-left:11px; height:40px; line-height:35px; width:140px; font-size:16px; display:none" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>);">Sign Me Up!</button>
+	</div>
+	
+
+		 <div style="float:right;margin-top:17px; text-align:right;font-size:34px; font-weight:bold; margin-right:10px">
+			<div style="background:rgba(33,33,33,.04); padding:5px">
+				<div style="font-size:10px; font-weight:normal">Grand Total</div>
+			<%if @tickets.length > 0%>
+				<input type="hidden" id="purchase_total_amount" value="<%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %>">
+				<div id="grand_total" style="line-height:34px">$<%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %></div>
+			<%end%>
+			</div>
+			
+				<div style="margin-top:40px"><img src="/images/geotrust.png"></div>
+				
+				
+		</div>
+
+	
+ </div>
+
+
+<div style="clear:both"></div>
+
+	
+</div>
+
+<div style="float:left">
+<img src="/images/credit.png" style="margin-top:10px">
+</div>
+
+<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:right; margin-right:5px; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><span  class="BlueLink">Discount Code</span></div>
+<div class="RewardDiv" style="display:none; float:right; margin-top:10px">
+	<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
+	<input class="RewardCode" type="textfield" style="font-size:12px;">
+	<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
+</div>
+<div style="clear:both"></div>
+
+<div style="color:#C0C0C0; font-size:12px;">
+	<b>Refund Policy</b>: 100% refund, for any reason.
+</div>
+<div style="color:#C0C0C0; font-size:12px; display:none">
+This should appear on your statement as:
+
+<table style="border:1px solid #C0C0C0" cellpadding="4" cellspacing="0">
+	<tr style="font-weight:bold">
+		<td style="width:155px; border-bottom: 1px solid #C0C0C0;">Description</td>
+		<td style="border-bottom: 1px solid #C0C0C0;">Amount</td>
+	</tr>
+	<tr >
+		<td>Escapist</td>
+		<td>$100.97</td>
+	</tr>
+</table>
+
+</div>
+
+
+
+
+<script>
+
+
+
+	$(document).ready(function() {
+
+		$("#ticket_donation").numeric({allow:"."});
+		calcPrices()
+		
+		
+	 });
+
+
+
+
+</script>
+

@@ -18,8 +18,19 @@ class PurchaseController < ApplicationController
     
   end
 
+
   def create
+    
+   
+    
   end
+
+
+
+
+
+
+
 
   def destroy
   end

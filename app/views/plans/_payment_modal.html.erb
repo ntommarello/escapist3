@@ -1,112 +1,15 @@
 <div id="PaymentModal"> 
-	<div class="closeRegister" style="margin-left:492px" onclick="closeRegister()"></div>
+	<div class="closeRegister" style="margin-left:535px" onclick="closeRegister()"></div>
 	
-	<div style="margin-top:3px; margin-left:3px; border:1px solid #ccc; width:95%; margin-left:auto; margin-right:auto; padding:5px; background:#FFFFCC;  text-align:center;">
+	<div style="margin-top:3px; margin-left:3px;width:95%; margin-left:auto; margin-right:auto; padding:5px;   text-align:center;">
 			<div class="HighlightedTitle"  style="font-size:22px; margin-top:2px;">Purchase Tickets</div>
 	</div>
 	
 	
-	<div id="Payment" style="margin-top:20px; width:95%; margin-left:auto; margin-right:auto;" >
-	<form action="" method="POST" id="payment-form">
-	
-		<div style="float:left; width:100px">
-			<div class="price_display" style=" margin-top:2px; font-weight:bold; color:black; font-size:26px;">
-				$<%= number_with_precision @plan.price, :precision => 2 %>
-			</div>
-		
-	
-					<select id="qty" style="margin-top:10px" class="qty" onchange="quantity=$(this).val(); $('.price_display').html('$'+roundNumber($('#unit_price').val()*$(this).val(),2)); price = roundNumber($('#unit_price').val()*$(this).val(),2);  ">
-						<option value="1">1 ticket</option>
-				
-							<%if @plan.seats_remaining.to_i > 1%><option value="2">2</option><%end%>
-							<%if @plan.seats_remaining.to_i > 2%><option value="3">3</option><%end%>
-							<%if @plan.seats_remaining.to_i > 3%><option value="4">4</option><%end%>
-					
-					</select>
-					
-
-					
-			</div>	
-					
-
-		<div style="float:left; width:360px;margin-left: 10px;  padding-bottom:10px;">
-		<div class="HighlightedTitle" style="font-size:18px;"><%=raw @plan.title%></div>
-			
-			
-			<%if @plan.enable_donations%>
-			<div style="margin-top:10px; margin-bottom:10px">
-				<div style="margin-top:10px; font-size:12px">
-					<span class="BlueLink" onclick="$(this).hide(); $('#AddDonateLayer').show(); $('#plan_donation_suggested_amount2').focus() ">Add Donation</span><div id="AddDonateLayer" style="margin-top:5px; margin-bottom:7px; display:none">
-					<div id="dollar3" style="position:absolute; margin-left:6px; margin-top:6px; font-size:13px; <%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%>color:#333<%else%>color:#aaa<%end%>" >$</div><input class="ShadowedTextBox" style="width:47px; color:#333; padding-left:15px; height:10px;" type="textfield" name="plan[donation_suggested_amount2]" id="plan_donation_suggested_amount2"  value="<%if @plan.donation_suggested_amount and @plan.donation_suggested_amount > 0%><%= number_with_precision @plan.donation_suggested_amount, :precision => 2 %><%end%>" onfocus="$('#dollar3').css('color','#333')" onblur="if ($(this).val() == '') {$('#dollar3').css('color','#aaa') }">
-					
-							<input type="button" style="" value="Add Donation" onclick="AddDonation($('#plan_donation_suggested_amount2'))">
-							
-					</div>
-			
-				</div><%=@plan.donation_text%>
-				</div>
-			
-				
-			<%end%>
-			
-			
-			<div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:left; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><a href="#"  class="BlueLink">Discount Code</a></div>
-				<div class="RewardDiv" style="display:none; margin-top:10px">
-					<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>
-					<input class="RewardCode" type="textfield" style="font-size:12px;">
-					<input type="button" style="" value="apply" onclick="ApplyReward($('.RewardCode',$(this).parent()).val())">
-				</div>
-			<div style="clear:both"></div>
-			
-			
-				
-			</div>
-			
-			<%=render :partial=>"payment_form", :locals=>{:source=>"payment_modal"}%>
-				
-				
-					
-		
-				
-				
-			
-				
-
-					
-					
-					
-			
-		
-				</form>
-			
-					<button id="FreeSignup" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; display:none" onclick="signupPlan(this,$('RenderPlan<%=@plan.id%>'),<%=@plan.id%>);">Sign Me Up!</button>	
-			
-			
-		<div style="clear:both"></div>
-	
-
-	<div style="clear:both"></div>
-
-	
-
-
-
-		<div style="clear:both; height:15px;"></div>
-	
-
-		<%if current_user and current_user.discount_active%>
-			<div style="float:left" style="display:none">
-				<div style="font-weight:normal; float:left; " onclick="$(this).parent().hide(); ReducePriceBy(5,2)"><a href="#"  class="BlueLink">Apply $5 Discount</a></div>
-				<div style="float:left; font-weight:normal; margin-right:10px; margin-left:10px">|</div>
-			</div>
-		<%end%>
-
-		
-
-
-
+	<div style="margin-top:15px; width:515px; margin-left:auto; margin-right:auto">
+		<%@tickets = @plan.tickets.sort_by_type%>
+		<%=render :partial=>"purchase/ticketbox"%>
 	</div>
-	
 	
 	
 </div>
