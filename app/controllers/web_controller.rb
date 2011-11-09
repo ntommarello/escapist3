@@ -106,7 +106,7 @@ class WebController < ApplicationController
        end
      end
 
-     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :privacy, :application_required])
+     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :privacy, :enable_signups, :application_required])
 
 
 

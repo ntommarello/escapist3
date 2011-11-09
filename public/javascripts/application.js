@@ -4184,7 +4184,10 @@ function loadInfo(index) {
 	}
 	
 	
-	if (signup_count < 2) {
+	
+
+	
+	if (signup_count < 2 || !current_plan.enable_signups) {
 		$("#plan_signup_count").html('')
 		$("#plan_signup_words").html("Hosted by "+host_names)
 		the_user = current_plan.user;
@@ -4198,7 +4201,7 @@ function loadInfo(index) {
 	//html = html + "<script>$('.tip').tooltip();</script>"
  
 	//setTimeout(" $('.tl').tooltip();",1000)
-	if (total_count > 4)	{
+	if (total_count > 4 && current_plan.enable_signups)	{
 		$("#MoreAttendees").show();
 	}
 	
