@@ -45,8 +45,14 @@ class PlansController < ApplicationController
                
                if @plan.group
                  if @plan.group.mailchimp_key and @plan.group.mailchimp_list
-                   h = Hominid::API.new(@plan.group.mailchimp_key)
-                   h.list_subscribe(@plan.group.mailchimp_list, @user.email, {'FNAME' => @user.first_name, 'LNAME' => @user.last_name}, 'html', false, true, true, false)
+                   if @plan.group.mailchimp_key != "" and @plan.group.mailchimp_list != "" 
+                     begin
+                       h = Hominid::API.new(@plan.group.mailchimp_key)
+                       h.list_subscribe(@plan.group.mailchimp_list, @user.email, {'FNAME' => @user.first_name, 'LNAME' => @user.last_name}, 'html', false, true, true, false)
+                    rescue
+                      
+                    end
+                  end
                  end
                end
 

@@ -4,7 +4,7 @@ class WebController < ApplicationController
 
      if params[:id]
        @start_plan = Plan.find(:all, :conditions=>["id=?", params[:id].to_i],:order=>"start_time asc")
-       if @start_plan 
+       if @start_plan.length > 1
          @city_id = @start_plan[0].city_id
          #@no_ids = "(#{@start_plan[0].id})"  
          session[:dropdown_city_value] = @city_id

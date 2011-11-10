@@ -127,9 +127,15 @@ class SubscribedPlansController < ApplicationController
        @plan = Plan.find(params[:plan_id])
 
        if @plan.group
-         if @plan.group.mailchimp_key
-          h = Hominid::API.new(@plan.group.mailchimp_key)
-          h.list_unsubscribe(@plan.group.mailchimp_list, current_user.email, true, false, false)
+         if @plan.group.mailchimp_key and @plan.group.mailchimp_list
+           if @plan.group.mailchimp_key != "" and @plan.group.mailchimp_list != "" 
+             begin
+               h = Hominid::API.new(@plan.group.mailchimp_key)
+               h.list_unsubscribe(@plan.group.mailchimp_list, current_user.email, true, false, false)
+            rescue
+              
+            end
+          end
         end
        end
 

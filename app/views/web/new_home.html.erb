@@ -223,7 +223,9 @@ $(document).ready(function() {
 
 
 <%if @plan[0]%>
-	image_url = 'http://assets.stomp.io/images/<%=@plan[0].id%>/thumb_1250_<%=@plan[0].image_file_name%>'
+	image_url = '<%=@plan[0].image.url(:thumb_1250)%>'
+
+	
 <%else%>
 	image_url = '/images/ComingSoon.jpg'
 <%end%>

@@ -31,10 +31,21 @@ class WatchedPlansController < ApplicationController
       @splan = WatchedPlan.find_by_group_id_and_user_id(@plan.group_id,current_user.id)
       @splan.destroy
       
-      if @plan.group.mailchimp_key
-        h = Hominid::API.new(@plan.group.mailchimp_key)
+      if @plan.group
         
-        h.list_unsubscribe(@plan.group.mailchimp_list, current_user.email, true, false, false)
+        if @plan.group.mailchimp_key and @plan.group.mailchimp_list
+          if @plan.group.mailchimp_key != "" and @plan.group.mailchimp_list != "" 
+            begin
+              
+        
+              h = Hominid::API.new(@plan.group.mailchimp_key)
+        
+              h.list_unsubscribe(@plan.group.mailchimp_list, current_user.email, true, false, false)
+            rescue
+              
+            end
+          end
+        end
       end
       
       

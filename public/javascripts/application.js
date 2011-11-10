@@ -4250,7 +4250,16 @@ function loadInfo(index) {
 	}
 	
 
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+escape(current_plan.image_file_name)
+
+
+if (current_plan.image_file_name) {
+	filea_name = current_plan.image_file_name.split('.')[0]+ ".jpg";
+} else {
+	filea_name = "";
+}
+
+
+	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+escape(filea_name)
 	switchPhoto(image_url);
 	
 	
@@ -4347,7 +4356,14 @@ function preloadImage() {
 	preload_image_index = preload_image_index +1;
 	preload_plan = plans[preload_image_index].plan;
 	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+escape(preload_plan.image_file_name)
+	if (preload_plan.image_file_name) {
+		filea_name = preload_plan.image_file_name.split('.')[0]+ ".jpg";
+	} else {
+		filea_name = "";
+	}
+	
+	
+	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+escape(filea_name)
 	
 	var img = new Image();
 	$(img).load(function(){
