@@ -24,6 +24,8 @@ class ApplicationController < ActionController::Base
     
     @domain = @domain.sub( "www.", "" )
     
+   # @domain = "trips.thesnowriders.com"
+    
     if @domain != APP_URL and @domain != "localhost:3000"
       test = Group.find_by_url(@domain)
       if test
@@ -305,8 +307,14 @@ class ApplicationController < ActionController::Base
             @plan = Plan.find(params[:plan_id])
             if @plan.group
                 if @plan.group.mailchimp_key and @plan.group.mailchimp_list
-                  h = Hominid::API.new(@plan.group.mailchimp_key)
-                  h.list_subscribe(@plan.group.mailchimp_list, current_user.email, {'FNAME' => current_user.first_name, 'LNAME' => current_user.last_name}, 'html', false, true, true, false)
+                  if @plan.group.mailchimp_key != "" and @plan.group.mailchimp_list != "" 
+                    begin
+                      h = Hominid::API.new(@plan.group.mailchimp_key)
+                      h.list_subscribe(@plan.group.mailchimp_list, current_user.email, {'FNAME' => current_user.first_name, 'LNAME' => current_user.last_name}, 'html', false, true, true, false)
+                    rescue
+                    
+                    end
+                  end
                 end
             end
 

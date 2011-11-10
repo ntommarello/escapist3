@@ -38,6 +38,7 @@ class SubscribedPlansController < ApplicationController
         check.num_guests = check.num_guests + params[:qty].to_i 
         check.amount = check.amount + params[:amount].to_i
         check.discount_code = params[:discount_code]
+        check.extra_info = "#{check.extra_info} \n #{params[:extra_info]}"
         check.discount = check.discount.to_i + params[:discount].to_i
         check.save!
         @subscribed = check
@@ -48,6 +49,7 @@ class SubscribedPlansController < ApplicationController
         sign_up_plan
         @subscribed.amount = params[:amount]
         @subscribed.num_guests = params[:qty].to_i - 1
+        @subscribed.extra_info = params[:extra_info]
         @subscribed.discount = params[:discount]
         @subscribed.discount_code = params[:discount_code]
         @subscribed.save!

@@ -193,6 +193,7 @@ class PlansController < ApplicationController
   def show
     
     @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
+    @tickets = @plan.tickets.sort_by_type
     
      if !@plan
         redirect_to "/"

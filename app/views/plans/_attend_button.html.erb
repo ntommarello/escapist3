@@ -10,7 +10,7 @@
 	<%plural = ""%>
 	<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
 
-	<%if @plan.seats_remaining.to_i < 7%>
+	<%if @plan.seats_remaining.to_i < 20%>
 				<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!</div>"%>
 	<%else%>
 			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
@@ -35,7 +35,11 @@
 	<%else%>
 		<%if current_user%>
 			<%if @plan.price and @plan.price > 0%>
-				<%@clickaction = "openPayment();"%>
+				<%if @tickets.length > 1%>
+					<%@clickaction = "$(this).html('<img style=\"margin-top:3px;\" src=\"/images/ajax-loader_f.gif\">'); window.location.href='/escapes/#{@plan.id}/purchase/'"%>
+				<%else%>
+					<%@clickaction = "openPayment();"%>
+				<%end%>
 			<%else%>
 				<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
 			<%end%>

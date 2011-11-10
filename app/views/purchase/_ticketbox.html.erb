@@ -43,7 +43,7 @@
 	
 			<select class="item_qty" onchange="calcPrices()" style="float:right;  margin-left:10px;  margin-top:-3px">
 				<option>0</option>
-				<option <%if i==1%>selected<%end%>>1</option>
+				<option <%if i==1 and @tickets.length == 1%>selected<%end%>>1</option>
 				<option>2</option>
 				<option>3</option>
 				<option>4</option>
@@ -56,6 +56,10 @@
 		<div style="clear:both"></div>
 	</div>
 <%end%>
+
+
+
+
 
 
 <%if @plan.enable_donations%>
@@ -77,6 +81,13 @@
 
 
 <%end%>
+
+<div id="ExtraInfo" style="display:none">
+	<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Additional Information</div>
+	<div style="padding-left:10px">Who are you paying for with this booking? Please list their names.</div>
+	<textarea id="extra_info" style="margin-left:10px; margin-top:5px; width:450px; height:50px" class="ShadowedTextBox"></textarea>
+</div>
+
 	<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:0px">Payment</div>
 	
 	<div style="float:left; width:300px;">
@@ -120,8 +131,15 @@
 </div>
 <div style="clear:both"></div>
 
-<div style="color:#C0C0C0; font-size:12px;">
-	<b>Refund Policy</b>: 100% refund, for any reason.
+<div style="color:#C0C0C0; font-size:12px; width:300px;">
+	<b>Refund Policy</b>: 
+	
+	
+	<%if @plan.group and @plan.group.refund_policy and @plan.group.refund_policy != ""%>
+		<%=@plan.group.refund_policy%>
+	<%else%>
+		100% refund, for any reason.
+	<%end%>
 </div>
 <div style="color:#C0C0C0; font-size:12px; display:none">
 This should appear on your statement as:

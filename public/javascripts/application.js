@@ -2785,6 +2785,8 @@ function openPayment() {
 
 function validatePayment(button,type) {
 	
+
+	
 	$.cookie('showAttendPop', null, { path: '/escapes/'});
 	
 	if ($('#paymentbutton').html() == '<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">') {
@@ -2880,24 +2882,32 @@ function stripeResponseHandler(status, response) {
 		
 		
 
-		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), tickets:encodedTickets}, function(theResponse){
+		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), extra_info:$('#extra_info').val(),   tickets:encodedTickets}, function(theResponse){
 			
-			$('.card-number').val('');
-			$('#paymentbutton').html('Submit Payment');
-			closeRegister()	
+			
+			if ( $('#redirect').val() == "0" ) {
+			
+				$('.card-number').val('');
+				$('#paymentbutton').html('Submit Payment');
+				closeRegister()	
 				
-			seats_remaining = seats_remaining - 1;
+				seats_remaining = seats_remaining - 1;
 
-			$("#seat_remain").html(seats_remaining)
+				$("#seat_remain").html(seats_remaining)
 
-			$('#RenderPlan2').html(theResponse)
+				$('#RenderPlan2').html(theResponse)
 
-			$('#SignUpButtons').hide();
-			$('#SignedUp').show();
+				$('#SignUpButtons').hide();
+				$('#SignedUp').show();
 
-$("#CancelPlan").hide();
+	$("#CancelPlan").hide();
 
-			setTimeout("openSignedUp();",200);
+				setTimeout("openSignedUp();",200);
+				
+			} else {
+				$.cookie('confirmSignUp', 'true', { path: '/escapes/'});
+				window.location.href=$('#redirect').val();
+			}
 
 		});
 		
@@ -2978,6 +2988,13 @@ function calcPrices() {
 	$("#grand_total").html("$"+price.toFixed(2))
 	$("#purchase_total_amount").val(price.toFixed(2))
 	
+	if (cum_qty > 1) {
+		$('#ExtraInfo').show();
+	} else {
+		$('#ExtraInfo').hide();
+	}
+	
+	
 	if (cum_qty == 0) {
 		$("#SignIn").css("opacity",.3);
 		$("#FreeSignup").hide();
@@ -3012,6 +3029,7 @@ function closeRegister() {
 
 			$.cookie('showAttendPop', null, { path: '/escapes/'});
 			$.cookie('watchPlan', null, { path: '/escapes/'});
+			$.cookie('confirmSignUp', null, { path: '/escapes/'});
 			$("#RegisterModal").hide();
 			$("#RegisterModal").css('opacity',0)
 			setTimeout("$('#EditDateLayer').hide();",150);

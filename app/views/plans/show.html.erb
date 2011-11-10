@@ -340,7 +340,15 @@ adjustMapLabel();
 				<div id="CancelPlan" style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
 				
 				<%else%>
-				<div style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>openPayment();<%end%>" >buy more</span> ]</div>
+				<div style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>
+					
+					<%if @tickets.length > 1%>
+					 	window.location.href='/escapes/<%=@plan.id%>/purchase/';
+					<%else%>
+					openPayment();
+					<%end%>
+					
+					<%end%>" >buy more</span> ]</div>
 				
 				<%end%>
 				<div style="clear:both"></div>

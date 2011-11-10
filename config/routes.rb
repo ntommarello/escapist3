@@ -103,7 +103,7 @@ Trek::Application.routes.draw do
   resources :dislikes
   match '/plans/featured.:format', :controller => 'plans', :action => 'featured'
   
-  
+   match '/escapes/:id/purchase', :controller => 'purchase', :action => 'show'
   
   resources :purchase
   resources :plans

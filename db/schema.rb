@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108160443) do
+ActiveRecord::Schema.define(:version => 20111110053723) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20111108160443) do
     t.text     "logo_meta"
     t.string   "username"
     t.text     "about"
+    t.text     "refund_policy"
   end
 
   create_table "hosts", :force => true do |t|
@@ -346,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20111108160443) do
     t.string   "charge_id"
     t.integer  "discount"
     t.string   "discount_code"
+    t.text     "extra_info"
   end
 
   create_table "ticket_purchases", :force => true do |t|
