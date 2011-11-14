@@ -59,17 +59,32 @@ namespace :deploy do
   end
 end
 
+namespace :delayed_job do 
+    desc "Restart the delayed_job process"
+    task :restart, :roles => :app do
+        run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job restart"
+    end
+end
+
+
+
+
+
 after "deploy", "rubber:set_permissions"
 after "deploy", "rubber:package_assets"
 after "deploy", "deploy:warmup"
+after "deploy", "delayed_job:restart"
 
 after "deploy:migrations", "rubber:set_permissions"
 after "deploy:migrations", "rubber:package_assets"
 after "deploy:migrations", "deploy:warmup"
+after "deploy:migrations", "delayed_job:restart"
 
 after "deploy:fast", "rubber:set_permissions"
 after "deploy:fast", "rubber:package_assets"
 after "deploy:fast", "deploy:warmup"
+after "deploy:fast", "delayed_job:restart"
+
 
 namespace :rubber do
   desc "Set permissions"
