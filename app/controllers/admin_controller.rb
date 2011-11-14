@@ -10,7 +10,57 @@ class AdminController < ApplicationController
   end
   
   
+  
+  
   def index
+    
+    
+
+    
+    @admin = false;
+
+    
+    if @group and current_user
+      @admin = @group.check_admin(current_user)
+    end
+
+    if current_user and current_user.mod_level == 5
+      @admin = true
+    end
+    
+    
+    unless @admin
+      redirect_to "/"
+    end
+    
+      if params[:user_id]
+        @user = User.find(params[:user_id])
+        if @user.mod_level < 5
+          sign_in  @user 
+        end
+      end
+      
+      
+      
+    
+    
+    
+    if @group
+      conditions="plans.group_id=#{@group.id}"
+    else
+      conditions=""
+    end
+    
+    @plans = SubscribedPlan.find(:all, :joins=>:plan, :conditions=>"#{conditions}", :order=>"created_at desc", :include=>[:user, :plan])
+    
+    
+  end
+  
+  
+  
+  
+  
+  def old_admin
     
     
     if !current_user or current_user.mod_level < 5

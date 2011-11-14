@@ -1,73 +1,87 @@
-<%#@users.each_with_index do |user,index|%>
-<%#user.email%>,
-<%#end%>
 
+<div style="width:1000px; margin-left:auto; margin-right:auto; font-size:15px;">
 
-<%= render :partial=>"/layouts/dropdown", :locals=>{:model=>"challenge", :fieldname=>"city", :selectedValue=>session[:dropdown_city], :style=>"position:absolute; width:115px; z-index:500", :options=>["Boston","San Francisco","New York City", "Earth"], :values=>[1,2,3,99]}%>
+	<%grand_total = 0%>
+	<div style="float:left; width:700px;">
 
-
-
-<div style="float:left; width:300px; margin-top:50px">
-	<%@users.each_with_index do |user,index|%>
-	<div style="padding-top:10px; padding-bottom:10px; border-bottom:1px solid #eee;">
-		<div style="float:left; width:60px; padding-right:10px; color:#777;text-align:center"><%=time_ago_in_words(user.created_at)%>  </div>
-		<div style="float:left; width:50px">
-				 <%= link_to(user_path(user)) do
-		  			image_tag user.avatar.url(:thumb_50), :class=>"Transparent", :style=>"width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer"
+	<%for subscribed in @plans%>
+	
+		<div style="padding-top:15px; padding-bottom:15px; border-bottom:1px dotted #ccc">
+		<div style="float:left; width:90px; ">
+				 <%= link_to(user_path(subscribed.user)) do
+		  			image_tag subscribed.user.avatar.url(:thumb_90), :class=>"Transparent", :style=>"width:90px; height:90px; border:1px solid #E1E1E1; cursor:pointer"
 				end %>
 		</div>
-		<div style="float:left; margin-left:10px; width:120px">
-		
-		<a class="BlueLink" href="/<%=raw user.username%>"><%=raw user.first_name%> <%=raw user.last_name%></a>
-					
-						<div style="margin-top:3px; font-size:11px"><%= raw user.location_city%></div>
-		</div>
-		<div style="float:left; margin-left:10px; text-align:right; margin-top:17px; width:30px; font-size:20px; font-weight:bold;" class="HighlightedTitle">
-				<%=user.score%><span style="font-size:11px; font-weight:normal">pts</span>
+	
+		<div style="float:left; margin-left:10px; ">
+			<div><a class="BlueLink" href="/<%=raw subscribed.user.username%>"><%=raw subscribed.user.first_name%> <%=raw subscribed.user.last_name%></a> signed up for <a class="BlueLink" href="/escapes/<%=subscribed.plan.id%>"><%=raw subscribed.plan.title%></a></div>
+			
+			<div style="margin-top:10px"> 
+				<table cellpadding="3" style="margin-left:10px">
+					<%i = 0%>
+					<%subtotal = 0%>
+					<%for ticket in subscribed.ticket_purchases%>
+						<%i = i+1%>
+						<%if ticket.ticket%>
+						<%subtotal = subtotal+ticket.ticket.amount%>
+							<tr>
+								<td style="vertical-align:top; width:85px;">Ticket #<%=i%></td>
+								<td style="vertical-align:top; width:330px;"><%=ticket.ticket.title%> - <%if ticket.user%><%=ticket.user.first_name%> <%=ticket.user.last_name%><%else%><%if ticket.user_name%><%=ticket.user_name%><%end%><%end%></td>
+								<td style="vertical-align:top">$<%if ticket.ticket.amount > 0%><%= number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></td>
+							</tr>
+							<%end%>
+					<%end%>
+
+					<%if subscribed.discount and subscribed.discount > 0%>
+						<tr>	
+							<td style="vertical-align:top; ">Discount</td>
+							<td style="vertical-align:top;"><%=@subscribed.discount_code.upcase%></td>
+							<td style="vertical-align:top; color:red">($<%= number_with_precision (@subscribed.discount / 100.0), :precision => 2 %>)</td>
+							<%subtotal = subtotal+(subscribed.discount*-1)%>
+						</tr>
+					<%end%>
+
+
+				
+						<%if subscribed.amount and subscribed.amount > 0 %>
+					<tr style="font-weight:bold">
+						<td>Paid</td>
+						<td><%=subscribed.user.active_card%></td>
+						<td>$<%= number_with_precision (subscribed.amount / 100), :precision => 2 %></td>
+					</tr>
+						<%end%>
+						<tr >
+							<td>&nbsp;</td>
+							<td><a class="BlueLink" target="_blank" href="/tickets/<%=subscribed.id%>">Tickets & Receipt</a></td>
+							<td>&nbsp;</td>
+						</tr>
+				</table>
+				
+	
+				
+				
+			</div>
+			
+			
 		</div>
 
-		<div style="clear:both; "></div>
+		<div style="clear:both"></div>
 		</div>
+		<%if subscribed.amount%>
+			<%grand_total = grand_total + subscribed.amount%>
+		<%end%>
 	<%end%>
+	</div>
 	
+	<div style="float:right; float:280px;">
+		
+		<div style="padding:30px; margin-top:15px; background:#ccc; color:black; font-weight:bold; font-size:24px; line-height:50px; width:50prx; height:50px;">
+		$<%= number_with_precision (grand_total / 100), :precision => 2 %>
+		</div>
+	</div>
+	
+	
+	
+	<div style="clear:both"></div>
 
-	
-	
 </div>
-
-
-<div style="float:left; width:400px; margin-top:50px; margin-left:100px; font-size:14px;">
-	<p># Users: <b><%=@total.length%></b></p>
-	<p style="margin-left:20px">% with Pics: <b><%=@percent_pics.round(2)%></b></p>
-	<p style="margin-left:20px">% Active within 10 Days:  <b><%=@percent_active.round(2)%></b></p>
-	<p style="padding-top:20px"># Saved to Bucket:  <b>TBD</b>  (Avg. per User:  <b>TBD</b>)</p>
-	<p># Stomped:  <b>TBD</b>  (Avg. per User:  <b>TBD</b>)</p>
-	
-	
-	
-						<div class="WhiteActiveBorder" style="margin-top:100px" onclick="alert('tbd')">
-							<div unselectable="on" class="GreenButton" style="width:62px; width:300px;">
-								<div  class="InnerGreenBorder">
-									SEND WEEKLY ADVENTURE EMAIL
-								</div>
-							</div>
-						</div>
-						
-						
-						<div style="margin-top:10px">
-							switch to user ID <input id="user_id" type="textfield" value=""><input type="button" value="submit" onclick="switchUser($('#user_id').val());">
-						</div>
-	
-	
-</div>
-
-
-<script>
-
-$('.dropOption').bind('click', function() {
-
-	//setTimeout("window.location.href='/admin'",1000);
-});
-
-</script>
-

@@ -21,7 +21,7 @@
 					<%if plan.start_time%>
 						<%=plan.start_time.to_date.strftime('%b').upcase()%><br>
 					
-						<%if Date.today.strftime('%Y') == plan.start_time.to_date.strftime('%Y')%>
+						<%if plan.start_time < Time.now + 1.year%>
 							<%= plan.start_time.to_date.strftime('%e').strip()%>
 						<%else%>
 							<%= plan.start_time.to_date.strftime('%Y').strip()%>
