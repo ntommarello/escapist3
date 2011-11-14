@@ -289,9 +289,9 @@ class PlansController < ApplicationController
       return
     end
     
-    
-  @subscribed = @plan.has_signedup?(current_user)
-    
+  if current_user
+    @subscribed = @plan.has_signedup?(current_user)
+  end
   if current_user && @subscribed
     @signedup = TRUE
     @signup_color = "Red"
