@@ -30,7 +30,7 @@ class Postoffice < ActionMailer::Base
     @organizer = organizer
   
     mail(:to      => "\"#{organizer.first_name} #{organizer.last_name}\" <#{organizer.email}>" ,
-         :subject => "#{user.first_name} #{user.last_name} signed up for #{raw plan.title}")
+         :subject => "#{user.first_name} #{user.last_name} signed up for #{plan.title}")
   end
   
   
@@ -100,7 +100,7 @@ class Postoffice < ActionMailer::Base
       attachments["tickets.pdf"] = email
 
       mail(:to      => "\"#{user.first_name} #{user.last_name}\" <#{user.email}>" ,
-        :subject => "Escapist Ticket & Receipt: #{raw plan.title}")
+        :subject => "Escapist - Ticket & Receipt")
   end
   
   
