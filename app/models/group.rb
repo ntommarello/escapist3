@@ -15,6 +15,14 @@ class Group < ActiveRecord::Base
   )
   
   
+  def refund_policy
+    if read_attribute(:refund_policy) == ""
+      "100% refund upon request"
+    else
+      read_attribute(:refund_policy) ||  "100% refund upon request"
+    end
+  end
+  
   
   def check_admin(user)
       @admin = SubscribedGroup.find(:first, :conditions=>["group_id= ? and user_id = ? and admin = 1",self.id, user.id])

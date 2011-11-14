@@ -28,7 +28,11 @@
 <%if @plan.group and @plan.group.stripe_public%>
 	Stripe.setPublishableKey('<%=@plan.group.stripe_public%>');
 <%else%>
-  Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+	<%if Rails.env == "production"%>
+  		Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+	<%else%>
+		Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+	<%end%>
 <%end%>
 
 
@@ -224,7 +228,7 @@
 
 		<%if @editable%>
 
-		<div id="AddMeeting" style="padding-top:10px; <%if @plan.transportation%> display:none<%end%>">[<a class="BlueLink" href="#" onclick="$('#MeetingPlace').show(); $('#AddMeeting').hide(); $('#transportation').html('input directions'); $('#transportation').focus();">add meeting instructions</a>]</div>
+		<div id="AddMeeting" style="padding-top:10px; <%if @plan.transportation%> display:none<%end%>">[<span class="BlueLink" onclick="$('#MeetingPlace').show(); $('#AddMeeting').hide(); $('#transportation').html('input directions'); $('#transportation').focus();">add meeting instructions</span>]</div>
 
 		<%end%>
 		
@@ -333,22 +337,39 @@ adjustMapLabel();
 			</div>
 			
 
-			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:300px; padding:5px; background:#FFFFCC; height:30px;">
-				<div style="width:34px; float:left'"><img src="/images/greencheck.png"></div>
-				<div class="HighlightedTitle"  style=" float:left; font-size:20px; margin-top:2px;">You are <%if @author%>hosting<%else%>attending<%end%>!</div>
+			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:308px; padding:5px; background:#FFFFCC; height:43px;">
+				<div style="width:34px; height:34px; float:left'"><img src="/images/greencheck.png"></div>
+				<div class="HighlightedTitle"  style=" font-size:20px; margin-top:0px;">You are <%if @author%>hosting<%else%>attending<%end%>!</div>
 				<%if @plan.price.to_i < 1%>
-				<div id="CancelPlan" style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >cancel</span> ]</div>
+				
+				<div id="CancelPlan" style=" color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
+					
+					<%unless @author%>
+						
+						[ <a class="BlueLink TicketLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%end%>" target="_blank" >Print Tickets</a> ]
+						
+					<%end%>
+					&nbsp;
+					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >Cancel</span> ]  
+				
+				</div>
 				
 				<%else%>
-				<div style="float:left; color:#999; margin-left:10px; font-size:12px; margin-top:8px;">[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>
+				<div style="color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
+					<%unless @author%>
+						[ <a id="" class="BlueLink" href="/tickets/<%=@subscribed.id%>" target="_blank" >Print Tickets</a> ]
+					<%end%>
+					
+					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="
 					
 					<%if @tickets.length > 1%>
 					 	window.location.href='/escapes/<%=@plan.id%>/purchase/';
 					<%else%>
+				
 					openPayment();
 					<%end%>
 					
-					<%end%>" >buy more</span> ]</div>
+					" ><%if @author%>Test Buy Screen<%else%>Buy More<%end%></span> ]</div>
 				
 				<%end%>
 				<div style="clear:both"></div>

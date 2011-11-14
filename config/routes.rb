@@ -1,4 +1,8 @@
 Trek::Application.routes.draw do
+  get "tickets/index"
+
+  get "tickets/show"
+
   get "purchase/index"
 
   get "purchase/show"
@@ -73,11 +77,16 @@ Trek::Application.routes.draw do
   resources :challenges
   resources :admin
   resources :groups
+  resources :tickets
   resources :adventures, :controller => "challenges"
+  
+  
+  match 'get_subscribed' => 'subscribed_plans#get_subscribed', :as => :get_subscribed
   
   match 'refresh_challenges' => 'challenges#refresh_challenges', :as => :refresh_challenges
   match 'geocoder' => 'challenges#geocoder', :as => :geocoder
   match 'geocode_plan' => 'plans#geocode_plan', :as => :geocode_plan
+  
   
   
   match 'download_ics' => 'plans#download_ics', :as => :download_ics

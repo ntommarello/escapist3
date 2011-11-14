@@ -88,12 +88,16 @@
 			
 			<div  class="SettingLabel">Logo <img title="For best results, use a transparent PNG at least 44 pixels high." class="tl TransparentOpposite" style="margin-left:5px" src="/images/question_icon.png"></div>
 
+
+		
 				<div style="float:left; margin-right:20px;">
 					<input type="file" style="width:200px" id="group_logo" name="group[logo]" class="ShadowedTextBox">
 				</div>
 				
+				<div style="width:400px;overflow:hidden; float:left">
+						
 				<div class="template_topnav" style="width:420px; padding-left:10px; min-width:200px; float:left">
-					<div style="margin-right:20px">
+					<div style="margin-right:20px; float:left">
 					<%if @info.logo_file_name and @info.logo_file_name != ""%>
 						<%=image_tag @info.logo.url(:header), :size => @info.logo.image_size(:header), :style=>"margin-top:3px" %>
 					<%else%>
@@ -104,7 +108,7 @@
 							<div class="powered"><img src="/images/powered-by.png"></div>
 					</div>
 				</div>
-				
+			</div>
 			
 			<div style="clear:both;"></div>
 			
@@ -122,7 +126,7 @@
 						<%else%>
 							<img src="/images/escapist.ico" style="width:16px; height:16px;  margin-left:18px; margin-top:9px;">
 						<%end%>
-					</div><div style="float:left; margin-left:24px; margin-top:6px; font-size:11px; color:black"><%=@info.name%></div>
+					</div><div style="float:left; margin-left:24px; margin-top:6px; font-size:11px; color:black"><%=truncate(@info.name, :length => 30) %></div>
 				</div>
 				
 		
@@ -207,6 +211,20 @@
 			
 			<div style="clear:both; height:15px"></div>
 					
+			
+		</td>	
+	</tr>
+	
+	<tr>
+		
+		<td class="SettingTableLabel" >Other</td>
+		
+		<td class="SettingTableForms" >
+			
+				<div style="margin-top:15px;">Refund Policy</div>
+		
+		
+					<textarea style="width:300px; height:50px;" id="group_refund_policy" name="group[refund_policy]" class="ShadowedTextBox"><%=@info.refund_policy%></textarea>
 			
 		</td>	
 	</tr>

@@ -70,31 +70,20 @@
 
 
 	<DIV STYLE="CLEAR:BOTH"></DIV>
-	
+	<div style="text-align:center; margin-top:10px; font-size:13px;">Your tickets have been e-mailed to <%=current_user.email%> and can also be <a  class="TicketLink BlueLink" target="_blank" href="/tickets/">printed online</a>.</div>
 	
 	
 	<%if @plan.price.nil? or @plan.price == 0%>
 		<%if @plan.enable_donations%>
 		
 		
-		<div id="donationtext" style="margin-top:15px; padding:15px; border:1px solid #ccc; width:500px; margin-left:auto; margin-right:auto">
-			<div style="text-align:center; font-size:18px;" class="HighlightedTitle">
-				Make a Donation!
-			</div>
-		
-		
-			<div style=" font-size:15px; margin-top:5px; line-height:18px; text-align:left; margin-bottom:20px;"><%=@plan.donation_text%></div>
-		
-		
-				
-			
-			
-				<div style="clear:both"></div>
+		<div id="donationtext" style="margin-top:15px; padding:15px; width:500px; margin-left:auto; margin-right:auto">
+
 				
 				<form action="" method="POST" id="payment-form">
-				<%=render :partial=>"payment_form", :locals=>{:source=>"post_signup_modal"}%>
+				<%=render :partial=>"purchase/ticketbox", :locals=>{:source=>"post_signup_modal"}%>
 				</form>
-						<div style="clear:both"></div>
+						
 		</div>		
 	
 		

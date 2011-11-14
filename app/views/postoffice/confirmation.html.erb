@@ -225,7 +225,11 @@
 				<a href="http://<%=@plan.group.url%>">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-						<%=raw @plan.group.logo%>
+									<%if @plan.group.logo_file_name and @plan.group.logo_file_name != ""%>
+										<%=image_tag @plan.group.logo.url(:header), :size => @plan.group.logo.image_size(:header), :style=>"margin-top:3px" %>
+									<%else%>
+										<div style="line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;"><%=@plan.group.name%></div>
+									<%end%>
 					
 					</div>
 				</a>

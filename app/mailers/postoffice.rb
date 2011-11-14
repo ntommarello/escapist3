@@ -89,9 +89,18 @@ class Postoffice < ActionMailer::Base
       if plan.start_time  
         @date = plan.start_time.strftime('%A, %B %e at %I:%M %p')
       end
+      
+
+       @purchased = TicketPurchase.find(:all, :conditions=>"subscribed_plan_id=#{@subscribed.id}", :include=>:ticket)
+       email = render_to_string(:template => "tickets/show", :layout => false)
+       email = PDFKit.new(email)  
+       email = email.to_pdf 
+      
+
+      attachments["tickets.pdf"] = email
 
       mail(:to      => "\"#{user.first_name} #{user.last_name}\" <#{user.email}>" ,
-        :subject => "Escapist e-Ticket Confirmation: #{plan.title}")
+        :subject => "Escapist Ticket & Receipt: #{plan.title}")
   end
   
   

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   acts_as_mappable
 
   has_many :watched_plans 
+  has_many :ticket_purchases
 
   slug :full_name, :column => :username
   

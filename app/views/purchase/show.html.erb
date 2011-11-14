@@ -10,7 +10,11 @@
 <%if @plan.group and @plan.group.stripe_public%>
 	Stripe.setPublishableKey('<%=@plan.group.stripe_public%>');
 <%else%>
-  Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+	<%if Rails.env == "production"%>
+		Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+	<%else%>
+		Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+	<%end%>
 <%end%>
 
 </script>

@@ -20,6 +20,8 @@ gem "rake", "0.9.2.2"
 gem "sass"
 gem "samsouder-titlecase"
 gem "ri_cal"
+gem "pdfkit"
+gem "delayed_job", "~> 2.1.4"
 
 
 gem 'haml'

@@ -329,6 +329,12 @@ class ApplicationController < ActionController::Base
          end
 
 
+        
+   
+        
+       
+       
+
          @attendees = User.sort_photos_first.find(:all, :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",params[:plan_id]])
          
     end

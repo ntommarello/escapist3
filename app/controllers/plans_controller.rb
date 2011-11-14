@@ -199,12 +199,14 @@ class PlansController < ApplicationController
   def show
     
     @plan = Plan.find(:first, :conditions=>["id=?",params[:id]])
-    @tickets = @plan.tickets.sort_by_type
-    
+ 
      if !@plan
         redirect_to "/"
         return
       end
+      
+      @tickets = @plan.tickets.sort_by_type
+      
       
     @photos = Media.find(:all, :conditions=>["plan_id=? and media_type = ?",@plan.id,0], :order=>"sort_order asc")
     
@@ -288,8 +290,9 @@ class PlansController < ApplicationController
     end
     
     
+  @subscribed = @plan.has_signedup?(current_user)
     
-  if current_user && @plan.has_signedup?(current_user)
+  if current_user && @subscribed
     @signedup = TRUE
     @signup_color = "Red"
   else

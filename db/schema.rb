@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110053723) do
+ActiveRecord::Schema.define(:version => 20111114035014) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -120,6 +120,21 @@ ActiveRecord::Schema.define(:version => 20111110053723) do
 
   add_index "comments", ["id"], :name => "index_comments_on_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "deleted_users", :force => true do |t|
     t.string   "first_name"
@@ -348,6 +363,7 @@ ActiveRecord::Schema.define(:version => 20111110053723) do
     t.integer  "discount"
     t.string   "discount_code"
     t.text     "extra_info"
+    t.integer  "donation"
   end
 
   create_table "ticket_purchases", :force => true do |t|
@@ -359,6 +375,10 @@ ActiveRecord::Schema.define(:version => 20111110053723) do
     t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "payer_user_id"
+    t.string   "user_name"
+    t.string   "user_email"
+    t.string   "qr_code"
   end
 
   create_table "tickets", :force => true do |t|

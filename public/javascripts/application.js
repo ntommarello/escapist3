@@ -2769,6 +2769,16 @@ function openSignedUp() {
 	$("#BlackModal").animate({opacity: .4,}, 100 );
 	$("#BlackModal").height($(document).height())
 	setTimeout("centerBox($('#SignedUpModal')); $('#SignedUpModal').show();  $('#SignedUpModal').animate({ opacity: 1,}, 250 ); $('#SignedUpModal').css('top',30);",50);
+
+	$.ajax({
+        type: "POST",
+        url: "/get_subscribed",
+        data: "plan_id="+plan_id,
+        success: function(msg){
+			
+			$(".TicketLink").attr("href","/tickets/"+msg)
+        }
+     });
 }
 
 
@@ -2797,8 +2807,10 @@ function validatePayment(button,type) {
 	
 	
 	if (cum_qty == 0) {
-		$('#payment_warning').html('Select a ticket to purchase')
-		return	
+		if (num_tickets > 0) {
+			$('#payment_warning').html('Select a ticket to purchase')
+			return	
+		}
 	}
 	
 	if ($('.card-number').val().length < 14) {
@@ -2822,9 +2834,12 @@ function validatePayment(button,type) {
 	$('#payment_warning').html('');
 	$('#paymentbutton').html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
 
+	var amount = price * 100; //amount you want to charge in cents
 
-    if (type == 1) {
-			var amount = price * 100; //amount you want to charge in cents
+	amount=Math.round(amount*100)/100;
+
+    if (num_tickets > 0) {
+		
 		
 		    Stripe.createToken({
 		        number: $('.card-number').val(),
@@ -2834,8 +2849,7 @@ function validatePayment(button,type) {
 		    }, amount, stripeResponseHandler);
 	} else {
 		
-		var amount = parseFloat($('#plan_donation_suggested_amount2').val()) * 100; //amount you want to charge in cents
-		
+	
 		    Stripe.createToken({
 		        number: $('.card-number').val(),
 		        cvc: $('.card-cvc').val(),
@@ -2855,7 +2869,7 @@ function stripeResponseHandler2(status, response) {
         $("#payment_warning").html(response.error.message);
     } else {
 	
-		$.post("/payment", { token:response['id'], amount:response['amount'], discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:0 }, function(theResponse){		
+		$.post("/payment", { token:response['id'], amount:response['amount'], discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(),donation:parseFloat($('#ticket_donation').val())*100, qty:0 }, function(theResponse){		
 			$('#donationtext').html('<div style="text-align:center; font-size:18px;" class="HighlightedTitle">Thanks!  You Rock!</div>')
 		});
 		
@@ -2882,7 +2896,7 @@ function stripeResponseHandler(status, response) {
 		
 		
 
-		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), extra_info:$('#extra_info').val(),   tickets:encodedTickets}, function(theResponse){
+		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), extra_info:$('#extra_info').val(),  donation:parseFloat($('#ticket_donation').val())*100, tickets:encodedTickets}, function(theResponse){
 			
 			
 			if ( $('#redirect').val() == "0" ) {
@@ -2933,7 +2947,7 @@ function calcPrices() {
 	
 	item_total = 0
 	cum_qty = 0;
-	
+	num_tickets = 0;
 	$(".ticketRow").each(function() {
 		var child = $(this);
 		
@@ -2945,7 +2959,7 @@ function calcPrices() {
 		item_total = item_total + (item_price * item_qty);
 		
 		cum_qty = cum_qty + item_qty;
-		
+		num_tickets = num_tickets + 1;
 		if (item_qty > 0) {
 			var json = {}
 			json.id = item_id;
@@ -2959,8 +2973,19 @@ function calcPrices() {
 
 	$('#qty').val(cum_qty);
 	
-	donation = parseFloat($("#ticket_donation").val())
+	
+	discount_amount = DiscountAmount + (item_total-(item_total*DiscountPercent))
 
+	$("#purchase_discount").val(discount_amount)
+	item_total =(item_total - DiscountAmount)*DiscountPercent;
+
+	
+
+
+
+
+	donation = parseFloat($("#ticket_donation").val())
+	
 	if (donation > 0) {
 		
 		if (donation > 5000) {
@@ -2973,11 +2998,7 @@ function calcPrices() {
 	}
 
 
-	item_total =(item_total - DiscountAmount)*DiscountPercent;
-	
-	discount_amount = DiscountAmount + (item_total-(item_total*DiscountPercent))
-	
-	$("#purchase_discount").val(discount_amount)
+
 	
 	price = parseFloat(item_total / 100)
 	
@@ -2996,10 +3017,12 @@ function calcPrices() {
 	
 	
 	if (cum_qty == 0) {
-		$("#SignIn").css("opacity",.3);
-		$("#FreeSignup").hide();
+		if (num_tickets > 0) {
+			$("#PurchaseButton").css("opacity",.3);
+			$("#FreeSignup").hide();
+		}
 	} else {
-		$("#SignIn").css("opacity",1);
+		$("#PurchaseButton").css("opacity",1);
 		if (item_total < 1) {
 			$("#PaymentBox").hide();
 			$("#FreeSignup").show();
@@ -4166,13 +4189,13 @@ function loadInfo(index) {
 					
 				} else {
 					if (organizer_count == 4 || organizer_count+1 == current_plan.organizers.length) {
-						transition ='& '
+						transition =' & '
 					} else {
 						transition =', '
 					}
 				}
 				file_name = fixFBImages(the_user.avatar_file_name)
-				host_names = host_names + ' '+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
+				host_names = host_names + ''+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
 				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			organizer_count = organizer_count + 1;

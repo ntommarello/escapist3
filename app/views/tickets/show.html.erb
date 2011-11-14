@@ -1,0 +1,422 @@
+<html>
+
+<head>
+
+
+</head>
+
+<body>
+	
+	<style type="text/css">
+
+	a {
+		text-decoration:none;
+	}
+	body {
+	
+		font-size:16px;
+	}
+
+	.BlueLink {
+		text-decoration:none;
+		color:#0066FF;
+		cursor:pointer;
+
+	}
+	.BlueLink:hover {
+		text-decoration:underline;
+		color:#0066FF;
+	}
+	.BlueLink:active {
+	color:#0066FF;
+	}
+	.BlueLink:visited {
+	color:#0066FF;
+	}
+
+	.UserCard {
+		float:left;
+		margin-top:10px;
+		margin-bottom:10px;
+		width:330px;
+		height:121px;
+		padding:0px;
+		-moz-border-radius:7px;
+		-webkit-border-radius:7px;
+		border-radius:7px;
+		border:1px solid #ddd;
+		box-shadow: 0 0 3px #ddd;
+		background:#fff;
+		cursor:pointer;
+		color:#999;
+	}
+
+	.subtleShadow {
+		border:1px solid #ddd;
+		box-shadow: 0 0 3px #ddd;
+	}
+	.subtleShadow {
+		border:1px solid #666;
+		box-shadow: 0 0 3px #666;
+	}
+
+
+
+
+
+	.UserCardPhoto {
+	position:absolute;
+		margin-top:1px;
+	width:120px; border-right:1px solid #eee; height:120px; cursor:pointer;
+			-webkit-border-top-left-radius: 6px;
+			-moz-border-radius-topleft:6px;
+			border-top-left-radius:6px;
+			-webkit-border-bottom-left-radius: 6px;
+			-moz-border-radius-bottomleft:6px;
+			border-bottom-left-radius:6px;
+	}
+
+	.TopCardShadow {
+		text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+			position:absolute;
+			width:330px;
+		-webkit-border-top-right-radius: 7px;
+		-moz-border-radius-topright:7px;
+		border-top-right-radius:7px;
+		-webkit-border-top-left-radius: 7px;
+		-moz-border-radius-topleft:7px;
+		border-top-left-radius:7px;
+		background:#ccc;
+		border-top:1px solid #fff;
+		height:24px;
+		background:#fff;
+		background-image: -moz-linear-gradient(100% 100% 90deg,  rgba(0,0,0,0.0), rgba(0,0,0,0.08));
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0,0,0,0.08)), to(rgba(0,0,0,0.0)));
+		background-image: -o-linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.0));
+	}
+
+	.TopPhotoShadow {
+		position:absolute;
+		width:120px;
+		-webkit-border-top-left-radius: 7px;
+		-moz-border-radius-topleft:7px;
+		border-top-left-radius:7px;
+		height:25px;
+		background-image: -moz-linear-gradient(100% 100% 90deg,  rgba(0,0,0,0.0), rgba(0,0,0,0.35));
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0,0,0,0.35)), to(rgba(0,0,0,0.0)));
+		background-image: -o-linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.0));
+	}
+
+
+	.UserCardBio {
+		position:absolute; margin-left:128px; width:180px;  font-size:13px; 
+		height:120px;
+		overflow:hidden;
+	}
+	.UserCardName {
+		color:#21547E;  margin-top:4px; font-size:15px; line-height:20px;
+	}
+
+	.organizerLabel {
+		position:absolute;
+		width:79px;
+		height:78px;
+
+		background-image:url(/images/organizerLabel2.png);
+	}
+
+	.judgeLabel {
+		position:absolute;
+		width:79px;
+		height:78px;
+
+		background-image:url(/images/judgeLabel.png);
+	}
+
+	.sponsorLabel {
+		position:absolute;
+		width:79px;
+		height:78px;
+
+		background-image:url(/images/sponsorLabel.png);
+	}
+	.Transparent {
+		cursor:pointer;
+	}
+	.Transparent:hover {
+		opacity:.8;
+	}
+	.template_topnav {
+		background:#35507C url(http://<%=APP_URL%>/images/topbar-bg3.png) repeat-x;
+		border-top:none; 
+		@include noselect();
+		height:51px;
+		margin-top:25px;
+		-webkit-border-top-right-radius: 7px;
+		-webkit-border-top-left-radius: 7px;
+		-moz-border-radius-topright:7px;
+		-moz-border-radius-topleft:7px;
+		border-top-right-radius:7px;
+		border-top-left-radius:7px;
+
+	}
+
+	.template_logo {
+	  background:url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;
+	  background-position:-150px 0px;
+		position:absolute;
+		margin-top:9px; 
+		margin-left:15px;
+		width:131px;
+		height:35px;
+		cursor:pointer;
+	}
+
+	.template_logo_h {
+	  background:url(http://<%=APP_URL%>/images/home_tile.png) no-repeat;
+	  background-position:0px -175px;
+		position:absolute; 
+		margin-top:9px; 
+		margin-left:15px;
+		width:131px;
+		height:35px;
+		cursor:pointer;
+	}
+
+	.whiteMain {
+		padding:25px; background:#fff;
+		-webkit-border-bottom-right-radius: 7px;
+		-webkit-border-bottom-left-radius: 7px;
+		-moz-border-radius-bottomright:7px;
+		-moz-border-radius-bottomleft:7px;
+		border-bottom-right-radius:7px;
+		margin-bottom:25px;
+		border-bottom-left-radius:7px;
+	}
+	.powered {
+		float:left; margin-left:10px; margin-top:10px; opacity:.8;
+
+	}
+	.NumGuests {
+		position:absolute;
+		margin-left:306px;
+		margin-top:2px;
+		background:#21547E;
+		height:22px;
+		width:22px;
+		font-size:12px;
+		color:#fff;
+		text-align:center;
+		line-height:22px;
+		@include rounded_corners(10px);
+	}
+	
+	
+	.ticketBox {
+
+		background:url(http://escapist.me/images/graytile.png);  padding:15px; padding-top:0px; width:480px; border:1px solid #AAB0B5;
+		text-shadow: 0 1px 0 rgba(255,255,255,1);
+
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+			-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+			-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	}
+	
+	
+	.HighlightedTitle {
+		font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
+		color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+		font-size:22px;
+		line-height:26px;
+	}
+	
+	
+	
+	</style>
+	
+	
+	
+
+<div style="max-width:650px; min-width:300px; margin-left:auto; margin-right:auto" >
+	
+	<%for ticket in @purchased%>
+	
+		<div style="width:600px; padding-top:15px; margin-top:50px; margin-left:5px; height:250px;" class="ticketBox">
+		
+			<div class="HighlightedTitle" style="text-align:center;  padding-bottom:15px; width:100%"><%if ticket.ticket%><%if ticket.ticket.ticket_type == 1%>- ADMIT ONE -<%else%>- ADD-ON -<%end%><%else%>- ADMIT ONE -<%end%></div>
+		
+		
+			<img style="width:200px; height:200px; border:1px solid #E9E9EB; float:left" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=<%if ticket.qr_code%><%=CGI.escapeHTML(ticket.qr_code) %><%else%><%=ticket.id%><%end%>">
+		
+			<div style="float:left; padding:15px; width:365px; height:170px; border:1px solid #E9E9EB;  border-left:0px solid #E9E9EB; ">
+
+				<div class="HighlightedTitle" style="font-size:18px; line-height:18px;"><%=raw @plan.title%></div>
+				<div style="font-size:16px; margin-top:12px; "><%=raw @plan.start_time.strftime('%A, %B %e at %I:%M %p')%></div>
+
+				<div style="font-size:16px; margin-top:12px;  padding-bottom:15px"><%=raw @plan.short_location%></div>
+			
+				<div style="height:1px; border-bottom:1px solid #E9E9EB;"></div>
+				<div style="height:1px; border-bottom:1px solid #fff; padding-bottom:15px"></div>
+			
+				<div style="float:left; width:250px">
+					<div><b><%if ticket.user_id%><%=ticket.user.first_name%> <%=ticket.user.last_name%><%else%><%if ticket.user_name%><%=ticket.user_name%><%else%>Admits Bearer<%end%><%end%></b></div>
+					<div style="margin-top:5px"><%if ticket.ticket%><%=ticket.ticket.title%><%end%></div>
+					<div style="color:#333; font-size:12px; margin-top:2px"><%if ticket.ticket%><%=ticket.ticket.subtitle%><%end%></div>
+				</div>
+			
+				<div style="background:rgba(33,33,33,.04); font-size:24px; padding:5px; float:right;">			
+					<div id="grand_total" style="line-height:50px">$<%if ticket.ticket%><%if ticket.ticket.amount > 0%><%= number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%><%else%>0.00<%end%></div>
+				</div>
+			
+			</div>
+			
+	
+		
+		
+	</div>
+	
+	
+		<%end%>
+		
+		<div style="height:30px;"></div>
+		
+		
+	<div class="template_topnav" style="width:100%;">
+			<%if @plan.group and @plan.group.logo%>
+			<div style="float:left; margin-right:20px;">
+				<a href="http://<%=@plan.group.url%>">
+					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
+						
+						<%if @plan.group.logo_file_name and @plan.group.logo_file_name != ""%>
+							<%=image_tag @plan.group.logo.url(:header), :size => @plan.group.logo.image_size(:header), :style=>"margin-top:3px" %>
+						<%else%>
+							<div style="line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;"><%=@plan.group.name%></div>
+						<%end%>
+					
+					</div>
+				</a>
+				<a target="_blank" href="http://<%=APP_URL%>/">
+						<div class="powered"><img src="http://<%=APP_URL%>/images/powered-by.png"></div>
+				</a>
+				</div>
+				<%@url = @plan.group.url%>
+			<%else%>
+			<div style="float:left; width:120px;">&nbsp;	</div>
+				<a href="http://<%=APP_URL%>/">
+					<div class="template_logo_h" onmouseover="logoHover()" onmouseout="logoUnhover()"></div>
+					<div class="template_logo" onmouseover="logoHover()"  onmouseout="logoUnhover()" ></div>
+				</a>
+				<%@url = APP_URL%>
+			<%end%>
+		
+	</div>
+	
+	<div class="whiteMain">
+
+		
+		<div style="text-align:center; font-size:24px; font-weight:bold">Order Confirmation</div>
+
+
+	
+					
+
+		<div style="margin-top:15px">
+			<div class="SubTitle" style="font-weight:bold;"><a class="BlueLink" target="_blank" href="http://<%=@url%>/escapes/<%=@plan.id%>"><%=raw @plan.title%></a></div>
+			
+			<%if  @plan.start_time%>
+				<div style="line-height:18px;"><%=raw @plan.start_time.strftime('%A, %B %e at %I:%M %p')%></div>
+			<%end%>
+			
+			<div class="SubTitle" style="margin-top:20px;"><%=raw @plan.location%></div>
+		</div>
+	
+		<div style="clear:both"></div>
+		<%if ticket.ticket%>
+		<div style="width:100%;  margin-top:20px; border-top:1px dotted #ccc"> </div>
+
+
+		<div style="text-align:center; font-size:24px; margin-top:15px; margin-bottom:15px;  font-weight:bold">Receipt</div>
+
+		
+		<%amount = (@subscribed.amount.to_f / 100).to_f%>
+		<%if @subscribed.num_guests%>
+			<%qty = @subscribed.num_guests + 1%>
+		<%else%>
+		  <%qty = + 1%>
+		<%end%>
+		
+
+
+	
+			<table cellpadding="10" style="margin-left:10px">
+				<%i = 0%>
+				<%subtotal = 0%>
+				<%for ticket in @purchased%>
+				<%i = i+1%>
+				<%subtotal = subtotal+ticket.ticket.amount%>
+						<tr>
+							<td style="vertical-align:top; width:85px;">Ticket #<%=i%></td>
+							<td style="vertical-align:top; width:330px;"><%=ticket.ticket.title%><br><%=ticket.ticket.subtitle%></td>
+							<td style="vertical-align:top">$<%if ticket.ticket.amount > 0%><%= number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></td>
+						</tr>
+					
+				<%end%>
+			
+				<%if @subscribed.discount and @subscribed.discount > 0%>
+					<tr>	
+						<td style="vertical-align:top; ">Discount</td>
+						<td style="vertical-align:top;"><%=@subscribed.discount_code.upcase%></td>
+						<td style="vertical-align:top; color:red">($<%= number_with_precision (@subscribed.discount / 100.0), :precision => 2 %>)</td>
+						<%subtotal = subtotal+(@subscribed.discount*-1)%>
+					</tr>
+				<%end%>
+				
+				
+				<%if @subscribed.donation and @subscribed.donation > 0%>
+					
+					<tr>	
+						<td style="vertical-align:top;">Donation</td>
+						<td style="vertical-align:top; "><%=@plan.donation_text%></td>
+						<td style="vertical-align:top; ">$<%= number_with_precision (@subscribed.donation  / 100.0), :precision => 2 %></td>
+					</tr>
+				<%end%>
+				
+					<%if @subscribed.amount and @subscribed.amount > 0 %>
+				<tr style="font-weight:bold">
+					<td>Paid</td>
+					<td><%=@user.active_card%></td>
+					<td>$<%= number_with_precision amount, :precision => 2 %></td>
+				</tr>
+					<%end%>
+			
+
+			</table>
+			<%end%>
+	
+
+		
+
+		
+		<div style="clear:both"></div>
+		
+		
+		
+		<div style="width:100%;  margin-top:20px; border-top:1px dotted #ccc"> </div>
+		
+		<div style="text-align:center; font-size:24px; margin-top:15px; margin-bottom:15px;  font-weight:bold">Host<%if @plan.organizers.length > 1%>s<%end%></div>
+		
+		<div style="width:330px; margin-left:auto; margin-right:auto">
+				
+				<%for organizer in @plan.organizers%>
+					<%=render :partial=>"users/user_card", :locals=>{:user=>organizer, :fullpath=>true, :url=>@url}%>
+				<%end%>
+				<div style="clear:both"></div>
+		</div>
+		
+	</div>
+
+	
+</div>
+</body>
+
+</html>

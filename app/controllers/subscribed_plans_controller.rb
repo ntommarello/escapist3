@@ -7,12 +7,27 @@ class SubscribedPlansController < ApplicationController
   
   def create
     
-    sign_up_plan
-    Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
-    
-       render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
+          sign_up_plan
+          @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>0, :amount=>0)
+          random = SecureRandom.hex(10)
+          qr_code = "#{@ticket.id}-#{random}"
+          @ticket.user_id = current_user.id
+          @ticket.qr_code = qr_code
+          @ticket.save
+          
+
+          
+          
+            #Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
+            
+            Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
+
+          render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
        
    end
+   
+   
+
    
    
    
@@ -40,6 +55,7 @@ class SubscribedPlansController < ApplicationController
         check.discount_code = params[:discount_code]
         check.extra_info = "#{check.extra_info} \n #{params[:extra_info]}"
         check.discount = check.discount.to_i + params[:discount].to_i
+        check.donation = check.donation.to_i + params[:donation].to_i
         check.save!
         @subscribed = check
         @plan = Plan.find(params[:plan_id])
@@ -51,25 +67,49 @@ class SubscribedPlansController < ApplicationController
         @subscribed.num_guests = params[:qty].to_i - 1
         @subscribed.extra_info = params[:extra_info]
         @subscribed.discount = params[:discount]
+        @subscribed.donation = params[:donation]
         @subscribed.discount_code = params[:discount_code]
         @subscribed.save!
       end
       
  
-     parsed_json = ActiveSupport::JSON.decode(params[:tickets])
+    if params[:tickets]
+       parsed_json = ActiveSupport::JSON.decode(params[:tickets])
       
       
-      for ticket in parsed_json["tickets"]
-        check = TicketPurchase.find(:first, :conditions=>"subscribed_plan_id = #{@subscribed.id} and plan_id=#{@plan.id} and user_id=#{current_user.id}")
-        if check
-          check.qty = check.qty + ticket["qty"].to_i
-          check.amount = check.amount + ticket["amount"].to_i
-          check.save!
-        else
-          TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :user_id=>current_user.id, :ticket_id=>ticket["id"], :qty=>ticket["qty"], :amount=>ticket["amount"])
+       num = 0
+        for ticket in parsed_json["tickets"]
+          #check = TicketPurchase.find(:first, :conditions=>"subscribed_plan_id = #{@subscribed.id} and plan_id=#{@plan.id} and user_id=#{current_user.id} and ticket_id=#{ticket['id']}")
+          #if check
+          #  check.qty = check.qty + ticket["qty"].to_i
+          #  check.amount = check.amount + ticket["amount"].to_i
+          #  check.save!
+          #else
+          
+
+            
+            (1..ticket["qty"].to_i).each do |i|
+              num = num + 1
+              @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>ticket["id"], :amount=>ticket["amount"])
+              random = SecureRandom.hex(10)
+              qr_code = "#{@ticket.id}-#{random}"
+              @ticket.qr_code = qr_code
+              @ticket.save
+            end  
+            
+            
+          #end
         end
-      end
-      
+        
+        if num == 1
+          @ticket.user_id = current_user.id
+          @ticket.save
+        end
+        
+        
+        
+        
+     end
 
      token = params[:token]
      
@@ -98,11 +138,6 @@ class SubscribedPlansController < ApplicationController
        
     end
       
-
-     
-    
-
-
        if @plan.price and @plan.price > 0
          if current_user.discount_active == true
            current_user.discount_active = false
@@ -110,7 +145,9 @@ class SubscribedPlansController < ApplicationController
          end 
        end
 
-       Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
+       #Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
+       Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
+
 
        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
 
@@ -143,6 +180,15 @@ class SubscribedPlansController < ApplicationController
        
        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
 
+    end
+    
+    
+    
+    def get_subscribed
+      @subscribed = SubscribedPlan.find(:first, :conditions=>["plan_id= ? and user_id=?",params[:plan_id], current_user.id])
+      @id = @subscribed.id
+      
+      render :layout=>false
     end
 
 
