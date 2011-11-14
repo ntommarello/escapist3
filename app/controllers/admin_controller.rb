@@ -72,7 +72,7 @@ class AdminController < ApplicationController
   
   
   
-  def old_admin
+  def display_users
     
     
     if !current_user or current_user.mod_level < 5

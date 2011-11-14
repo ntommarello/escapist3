@@ -24,7 +24,9 @@ class ApplicationController < ActionController::Base
     
     @domain = @domain.sub( "www.", "" )
     
-    #@domain = "trips.thesnowriders.com"
+    #if Rails.env == "development"
+      #@domain = "trips.thesnowriders.com"
+    #end
     
     if @domain != APP_URL and @domain != "localhost:3000"
       test = Group.find_by_url(@domain)

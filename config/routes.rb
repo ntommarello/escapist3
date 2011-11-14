@@ -81,6 +81,8 @@ Trek::Application.routes.draw do
   resources :adventures, :controller => "challenges"
   
   
+  match 'display_users' => 'admin#display_users', :as => :display_users
+  
   match 'get_subscribed' => 'subscribed_plans#get_subscribed', :as => :get_subscribed
   
   match 'refresh_challenges' => 'challenges#refresh_challenges', :as => :refresh_challenges
