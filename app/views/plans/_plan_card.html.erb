@@ -74,7 +74,10 @@
 					<%end%>
 				</div>
 				
-				<div style="float:right; width:80px; color:#ccc; margin-top:10px; text-align:right; margin-right:-5px">
+				<div style="float:right; width:150px; color:#ccc; margin-top:10px; text-align:right; margin-right:-5px">
+					
+					[ <a href="/admin?plan_id=<%=plan.id%>" class="BlueLink">signups</a> ]
+					
 					[ <a class="BlueLink" href="/escapes/<%=plan.id%>" onclick="$.cookie('disable_edit', null, { path: '/escapes/'}); ">edit</a> ] [ <span class="BlueLink" onclick="deleteThisPlanID = <%=plan.id%>; OpenDeletePlan()">delete</span> ]
 				</div>
 				<div style="clear:both"></div>

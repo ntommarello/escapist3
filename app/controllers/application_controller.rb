@@ -22,9 +22,9 @@ class ApplicationController < ActionController::Base
 
     @domain = URI.parse(request.url).host
     
-    @domain = @domain.sub( "www.", "" )
+    #@domain = @domain.sub( "www.", "" )
     
-    #@domain = "trips.thesnowriders.com"
+    @domain = "trips.thesnowriders.com"
     
     if @domain != APP_URL and @domain != "localhost:3000"
       test = Group.find_by_url(@domain)

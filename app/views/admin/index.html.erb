@@ -1,8 +1,25 @@
 
 <div style="width:1000px; margin-left:auto; margin-right:auto; font-size:15px;">
 
+
+
+
 	<%grand_total = 0%>
+	<%donation_total = 0%>
+	
 	<div style="float:left; width:700px;">
+		
+	<select style="font-size:30px;" onchange="window.location.href='/admin?plan_id='+$(this).val()">
+		<option value="0">All Events</option>
+		<%for plan in @dropdown%>
+			<option value="<%=plan.id%>" <%if params[:plan_id].to_i == plan.id%>selected<%end%>><%if plan.start_time%> <%=plan.start_time.to_date.strftime('%m/%d').strip()%>: <%end%><%=raw plan.title%> (<%=plan.signups_nohost%>)</option>
+		<%end%>
+	</select>
+	
+	<%if @plans.length == 0%>
+		<div style="margin-top:10px;">No one has signed up for this event.</div>
+	<%end%>
+	
 
 	<%for subscribed in @plans%>
 	
@@ -38,8 +55,20 @@
 							<td style="vertical-align:top;"><%=@subscribed.discount_code.upcase%></td>
 							<td style="vertical-align:top; color:red">($<%= number_with_precision (@subscribed.discount / 100.0), :precision => 2 %>)</td>
 							<%subtotal = subtotal+(subscribed.discount*-1)%>
+							
 						</tr>
 					<%end%>
+								<%if subscribed.donation and subscribed.donation > 0%>
+
+									<tr>	
+										<td style="vertical-align:top;">Donation</td>
+										<td style="vertical-align:top; "> </td>
+										<td style="vertical-align:top; ">$<%= number_with_precision (subscribed.donation  / 100.0), :precision => 2 %></td>
+									</tr>
+									<%donation_total = donation_total + subscribed.donation%>
+								<%end%>
+
+
 
 
 				
@@ -75,10 +104,25 @@
 	
 	<div style="float:right; float:280px;">
 		
-		<div style="padding:30px; margin-top:15px; background:#ccc; color:black; font-weight:bold; font-size:24px; line-height:50px; width:50prx; height:50px;">
+		<div style="padding:30px;width:125px; margin-top:15px; background:#ccc; color:black; text-align:center; font-weight:bold; font-size:24px; line-height:50px; height:50px;">
+				<div style="position:absolute; width:125px;margin-top:-40px; text-align:center; font-size:12px; color:#666">Total Earned</div>
 		$<%= number_with_precision (grand_total / 100), :precision => 2 %>
+	
 		</div>
+		
+		<%if donation_total > 0%>
+
+
+			<div style="padding:30px; margin-top:15px; background:#ccc; text-align:center; color:black; font-weight:bold; font-size:24px; line-height:50px; width:125px; height:50px;">
+				<div style="position:absolute; width:125px; margin-top:-40px; text-align:center; font-size:12px; color:#666">Donations</div>
+				$<%= number_with_precision (donation_total / 100), :precision => 2 %>
+			</div>
+		
+		<%end%>
+		
 	</div>
+	
+
 	
 	
 	

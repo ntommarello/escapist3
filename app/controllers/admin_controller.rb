@@ -46,10 +46,22 @@ class AdminController < ApplicationController
     
     
     if @group
-      conditions="plans.group_id=#{@group.id}"
+      conditions = "plans.group_id=#{@group.id}"
     else
-      conditions=""
+      conditions = ""
     end
+    
+    t = Time.zone.now
+    rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
+     
+    @dropdown = Plan.find(:all, :conditions=>["#{conditions} and start_time >= ? ",rounded_t], :order=>"start_time ASC")
+    
+    if params[:plan_id] and params[:plan_id] != "0"
+      conditions = "plans.id = #{params[:plan_id]}"
+    end
+    
+    
+    
     
     @plans = SubscribedPlan.find(:all, :joins=>:plan, :conditions=>"#{conditions}", :order=>"created_at desc", :include=>[:user, :plan])
     
