@@ -219,12 +219,29 @@ class WebController < ApplicationController
   
   def test
     
-    @user = User.find(1420)
-    @plan = Plan.find(33)
-    @subscribed =  SubscribedPlan.find(657)
+    @plans = SubscribedPlan.find(:all, :conditions=>"plan_id=46")
+    
+    for plan in @plans
+      max = plan.num_guests.to_i + 1
+      num = 0
+      (1..max).each do |i|
+        num = num +1
+        @ticket = TicketPurchase.create(:subscribed_plan_id => plan.id, :plan_id => plan.plan_id, :payer_user_id=>plan.user_id, :ticket_id=>5, :amount=>1000, :qty=>1)
+        random = SecureRandom.hex(10)
+        if num==1
+          @ticket.user_id=plan.user_id
+        end
+        qr_code = "#{@ticket.id}-#{random}"
+        @ticket.qr_code = qr_code
+        @ticket.save
+      end
+    end
+
+    
     render :layout=>false
   
  end
+ 
  
  def upgrade_browser
    

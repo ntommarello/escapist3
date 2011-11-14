@@ -13,7 +13,7 @@
 		text-decoration:none;
 	}
 	body {
-		background:#EFEFEF;
+	
 		font-size:16px;
 	}
 
@@ -210,13 +210,35 @@
 		line-height:22px;
 		@include rounded_corners(10px);
 	}
+	
+	
+	.ticketBox {
+
+		background:url(http://escapist.me/images/graytile.png);  padding:15px; padding-top:0px; width:480px; border:1px solid #AAB0B5;
+		text-shadow: 0 1px 0 rgba(255,255,255,1);
+
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+			-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+			-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+	}
+	
+	
+	.HighlightedTitle {
+		font-family: 'MuseoSans500','Helvetica Neue', Helvetica, Arial, sans-serif;
+		color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8);
+		font-size:22px;
+		line-height:26px;
+	}
+	
+	
+	
 	</style>
+
 	
 	
 	
 
 <div style="max-width:650px; min-width:300px; margin-left:auto; margin-right:auto">
-	
 	
 	
 	<div class="template_topnav" style="width:100%;">
@@ -225,11 +247,11 @@
 				<a href="http://<%=@plan.group.url%>">
 					<div style="float:left; margin-left:10px;  margin-right:5px; height:30px; overflow:none">
 						
-									<%if @plan.group.logo_file_name and @plan.group.logo_file_name != ""%>
-										<%=image_tag @plan.group.logo.url(:header), :size => @plan.group.logo.image_size(:header), :style=>"margin-top:3px" %>
-									<%else%>
-										<div style="line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;"><%=@plan.group.name%></div>
-									<%end%>
+						<%if @plan.group.logo_file_name and @plan.group.logo_file_name != ""%>
+							<%=image_tag @plan.group.logo.url(:header), :size => @plan.group.logo.image_size(:header), :style=>"margin-top:3px" %>
+						<%else%>
+							<div style="line-height:44px; margin-top:3px; font-size:28px; color:#fff; float:left;"><%=@plan.group.name%></div>
+						<%end%>
 					
 					</div>
 				</a>
@@ -261,16 +283,17 @@
 		<div style="margin-top:15px">
 			<div class="SubTitle" style="font-weight:bold;"><a class="BlueLink" target="_blank" href="http://<%=@url%>/escapes/<%=@plan.id%>"><%=raw @plan.title%></a></div>
 			
-			<%if  @date%>
-				<div style="line-height:18px;"><%=raw @date%></div>
+			<%if  @plan.start_time%>
+				<div style="line-height:18px;"><%=raw @plan.start_time.strftime('%A, %B %e at %I:%M %p')%></div>
 			<%end%>
 			
 			<div class="SubTitle" style="margin-top:20px;"><%=raw @plan.location%></div>
 		</div>
 	
 		<div style="clear:both"></div>
-		
+		<%if ticket.ticket%>
 		<div style="width:100%;  margin-top:20px; border-top:1px dotted #ccc"> </div>
+
 
 		<div style="text-align:center; font-size:24px; margin-top:15px; margin-bottom:15px;  font-weight:bold">Receipt</div>
 
@@ -282,19 +305,57 @@
 		  <%qty = + 1%>
 		<%end%>
 		
-		<div style="float:left;  width:100px; text-align:right; font-size:25px; font-weight:bold">$<%= number_with_precision amount, :precision => 2 %></div>
 
-		<div style="float:left; margin-left:50px; margin-top:5px">
-			<a target="_blank" class="BlueLink" href="http://<%=@url%>/<%=@user.username%>"><%=@user.first_name%> <%=@user.last_name%></a><br>
+
+	
+			<table cellpadding="10" style="margin-left:10px">
+				<%i = 0%>
+				<%subtotal = 0%>
+				<%for ticket in @purchased%>
+				<%i = i+1%>
+				<%subtotal = subtotal+ticket.ticket.amount%>
+						<tr>
+							<td style="vertical-align:top; width:85px;">Ticket #<%=i%></td>
+							<td style="vertical-align:top; width:330px;"><%=ticket.ticket.title%><br><%=ticket.ticket.subtitle%></td>
+							<td style="vertical-align:top">$<%if ticket.ticket.amount > 0%><%= number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></td>
+						</tr>
+					
+				<%end%>
 			
-			<%donation = ((amount.to_f - (@plan.price.to_f * qty.to_i * 100))/100).to_f%>
+				<%if @subscribed.discount and @subscribed.discount > 0%>
+					<tr>	
+						<td style="vertical-align:top; ">Discount</td>
+						<td style="vertical-align:top;"><%=@subscribed.discount_code.upcase%></td>
+						<td style="vertical-align:top; color:red">($<%= number_with_precision (@subscribed.discount / 100.0), :precision => 2 %>)</td>
+						<%subtotal = subtotal+(@subscribed.discount*-1)%>
+					</tr>
+				<%end%>
+				
+				
+				<%if @subscribed.donation and @subscribed.donation > 0%>
+					
+					<tr>	
+						<td style="vertical-align:top;">Donation</td>
+						<td style="vertical-align:top; "><%=@plan.donation_text%></td>
+						<td style="vertical-align:top; ">$<%= number_with_precision (@subscribed.donation  / 100.0), :precision => 2 %></td>
+					</tr>
+				<%end%>
+				
+					<%if @subscribed.amount and @subscribed.amount > 0 %>
+				<tr style="font-weight:bold">
+					<td>Paid</td>
+					<td><%=@user.active_card%></td>
+					<td>$<%= number_with_precision amount, :precision => 2 %></td>
+				</tr>
+					<%end%>
 			
-			<%=qty%> ticket<%if qty > 1%>s<%end%>  <%if qty > 1%>($<%= number_with_precision @plan.price, :precision => 2 %> each<%if donation > 0%> + donation<%end%>)<%end%>
-			
-			<%if @subscribed.amount and @subscribed.amount > 0 %>
-				<p><%=@user.active_card%></p>
+
+			</table>
 			<%end%>
-		</div>
+	
+
+		
+
 		
 		<div style="clear:both"></div>
 		
