@@ -357,7 +357,7 @@ adjustMapLabel();
 				<%else%>
 				<div style="color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
 					<%unless @author%>
-						[ <a id="" class="BlueLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%else%>#<%end%>" target="_blank" >Print Tickets</a> ]
+						[ <a id="" class="TicketLink BlueLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%else%>#<%end%>" target="_blank" >Print Tickets</a> ]
 					<%end%>
 					
 					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="
