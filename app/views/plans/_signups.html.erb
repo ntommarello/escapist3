@@ -5,7 +5,9 @@
 	</div>
 <%end%>
 
+<%@host_ids = Array.new%>
 <%for host in @plan.organizers%>
+	<%@host_ids.push host.id%>
 	<%=render :partial=>"users/user_card", :locals=>{:user=>host, :label=>"Organizer"}%>
 <%end%>
 
@@ -19,6 +21,10 @@
 
 <%if @plan.enable_signups%>
 		<%for user in attendees%>
-			<%=render :partial=>"users/user_card", :locals=>{:user=>user}%>
+		
+		
+			<%unless @host_ids.include?(user.id) %>
+				<%=render :partial=>"users/user_card", :locals=>{:user=>user}%>
+			<%end%>
 		<%end%>
 <%end%>

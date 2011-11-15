@@ -94,21 +94,12 @@ class SubscribedPlansController < ApplicationController
               random = SecureRandom.hex(10)
               qr_code = "#{@ticket.id}-#{random}"
               @ticket.qr_code = qr_code
+              if num == 1
+                @ticket.user_id = current_user.id
+              end
               @ticket.save
             end  
-            
-            
-          #end
         end
-        
-        if num == 1
-          @ticket.user_id = current_user.id
-          @ticket.save
-        end
-        
-        
-        
-        
      end
 
      token = params[:token]

@@ -48,7 +48,7 @@ class AdminController < ApplicationController
     if @group
       conditions = "plans.group_id=#{@group.id}"
     else
-      conditions = ""
+      conditions = "1=1"
     end
     
     t = Time.zone.now
@@ -59,8 +59,6 @@ class AdminController < ApplicationController
     if params[:plan_id] and params[:plan_id] != "0"
       conditions = "plans.id = #{params[:plan_id]}"
     end
-    
-    
     
     
     @plans = SubscribedPlan.find(:all, :joins=>:plan, :conditions=>"#{conditions}", :order=>"created_at desc", :include=>[:user, :plan])
