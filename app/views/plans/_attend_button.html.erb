@@ -25,6 +25,10 @@
 <%end%>
 
 
+<%#tmp code to be dleted later%>
+<%if @plan.id == 46%>
+	<%@over = true%>
+<%end%>
 
 
 <%if @plan.application_required%>
@@ -86,7 +90,11 @@
 		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining == 0%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
 		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
 			<%if @over == true%>
-				<div style="color:red; font-size:12px;">This event is over</div>
+				<%if @plan.id !=46%>
+					<div style="color:red; font-size:12px;">This event is over</div>
+				<%else%>
+				<div style="color:red; font-size:12px; margin-top:-5px">$15 at door. <br>Online sales closed.</div>
+				<%end%>
 			<%else%>
 			<div style="font-size:12px;">	<%=raw @subtitle%></div>
 			<%end%>
