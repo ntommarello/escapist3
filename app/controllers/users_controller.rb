@@ -69,7 +69,7 @@ class UsersController < ApplicationController
         rounded_t = Time.local(t.year, t.month, t.day, 0, 0)
         @group_plans = Plan.published.find(:all, :conditions=>["start_time >= ? and plans.group_id = #{@group.id}", rounded_t],:order=>"start_time asc")
         if @group_plans.length == 1
-          if @group_plans[0].price < 1 and @group_plans[0].application_required == false
+          if @group_plans[0].price.to_i < 1 and !@group_plans[0].application_required
             params[:plan_id] = @group_plans[0].id
             sign_up_plan
           end
@@ -217,7 +217,7 @@ class UsersController < ApplicationController
   			  @tokens = "#{@tokens},#{var}"
   		  end
 
-        @my_challenges = Challenge.paginate(:all,  :page => params[:page], :select=>"challenges.*, 0 as bucketed, 0 as stomped", :conditions=>"challenges.id in (#{@tokens})")
+        @my_challenges = Challednge.paginate(:all,  :page => params[:page], :select=>"challenges.*, 0 as bucketed, 0 as stomped", :conditions=>"challenges.id in (#{@tokens})")
       end
     end
     

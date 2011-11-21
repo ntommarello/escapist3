@@ -33,10 +33,12 @@
 
 		<input type="hidden" class="item_id" value="<%=ticket.id%>">
 		
+		<input type="hidden" class="item_type" value="<%=ticket.ticket_type%>">
+		
 		<input type="hidden" class="item_price" value="<%=ticket.amount%>">
 
 		<div style="float:left; width:330px; margin-left:10px; ">
-			<B><%=ticket.title%></b>
+			<span class="ticket_title" style="font-weight:bold"><%=ticket.title%></span>
 			<% if ticket.subtitle and ticket.subtitle !=""%>
 				<div style="font-size:13px; margin-top:3px"><%=ticket.subtitle%></div>
 			<%end%>
@@ -49,6 +51,11 @@
 				<option>2</option>
 				<option>3</option>
 				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
 			</select>
 		
 		<div style="float:right; margin-left:10px;">
@@ -86,9 +93,11 @@
 
 <div id="ExtraInfo" style="display:none">
 	
-	<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Additional Information</div>
-	<div style="padding-left:10px">Who are you paying for with this booking? Please list their names.</div>
-	<textarea id="extra_info" style="margin-left:10px; margin-top:5px; width:450px; height:50px" class="ShadowedTextBox"></textarea>
+	<div style="padding-top:40px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Ticket Holders</div>
+	
+	<div id="NameList" style="padding-left:10px; font-size:13px; margin-top:15px;">
+		<textarea id="extra_info" style=" margin-top:5px; width:450px; height:50px" class="ShadowedTextBox"></textarea>
+	</div>
 	
 </div>
 
@@ -165,7 +174,8 @@ This should appear on your statement as:
 
 </div>
 
-
+<input id="user_name" type="hidden" value="<%=current_user.first_name%> <%=current_user.last_name%>">
+<input id="user_email" type="hidden" value="<%=current_user.email%>">
 
 
 <script>

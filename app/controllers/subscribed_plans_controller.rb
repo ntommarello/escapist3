@@ -14,13 +14,10 @@ class SubscribedPlansController < ApplicationController
           @ticket.user_id = current_user.id
           @ticket.qr_code = qr_code
           @ticket.save
-          
-
-          
-          
+        
             #Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
             
-            Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
+          Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
 
           render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
        
@@ -75,6 +72,7 @@ class SubscribedPlansController < ApplicationController
  
     if params[:tickets]
        parsed_json = ActiveSupport::JSON.decode(params[:tickets])
+      ticketHolders = ActiveSupport::JSON.decode(params[:ticketHolders])
       
       
        num = 0
@@ -85,19 +83,29 @@ class SubscribedPlansController < ApplicationController
           #  check.amount = check.amount + ticket["amount"].to_i
           #  check.save!
           #else
-          
-
             
             (1..ticket["qty"].to_i).each do |i|
-              num = num + 1
+              
               @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>ticket["id"], :amount=>ticket["amount"])
               random = SecureRandom.hex(10)
               qr_code = "#{@ticket.id}-#{random}"
               @ticket.qr_code = qr_code
-              if num == 1
+              
+              @ticket.user_email = ticketHolders[num]["user_email"]
+              @ticket.user_name =  ticketHolders[num]["user_name"]
+              
+              if @ticket.user_email == current_user.email
                 @ticket.user_id = current_user.id
               end
+              
+              if ticketHolders.length == 1 and ticketHolders[0]["user_email"] == ""
+                @ticket.user_id = current_user.id
+              end
+              
               @ticket.save
+              
+              num = num + 1
+              
             end  
         end
      end

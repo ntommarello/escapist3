@@ -2796,6 +2796,8 @@ function openPayment() {
 function validatePayment(button,type) {
 	
 
+
+
 	
 	$.cookie('showAttendPop', null, { path: '/escapes/'});
 	
@@ -2893,10 +2895,14 @@ function stripeResponseHandler(status, response) {
         form$.get(0).submit();*/
 
 		//var SuperEncodedTickets = $.toJSON(encodedTickets);
+	
 		
-		
+	
 
-		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), extra_info:$('#extra_info').val(),  donation:parseFloat($('#ticket_donation').val())*100, tickets:encodedTickets}, function(theResponse){
+ticketTitles = JSON.stringify(ticketTitles.tickets)
+
+
+		$.post("/payment", { token:response['id'], amount:response['amount'],  discount:$('#purchase_discount').val(),discount_code:$('#purchase_discount_code').val(), plan_id:$('#purchase_plan_id').val(), qty:$('#qty').val(), extra_info:$('#extra_info').val(),  donation:parseFloat($('#ticket_donation').val())*100, tickets:encodedTickets, ticketHolders:ticketTitles}, function(theResponse){
 			
 			
 			if ( $('#redirect').val() == "0" ) {
@@ -2942,23 +2948,34 @@ price = 0;
 
 function calcPrices() {
 	
+	
+	ticketTitles = []
+	ticketTitles.tickets = [];
 	encodedTickets = {}
 	encodedTickets.tickets = [];
 	
 	item_total = 0
 	cum_qty = 0;
+	ticket_cum_qty = 0;
 	num_tickets = 0;
+	
 	$(".ticketRow").each(function() {
 		var child = $(this);
 		
 		var item_price = parseInt($(".item_price",child).val())
+		var item_type = parseInt($(".item_type",child).val())
 		var item_qty = parseInt($(".item_qty",child).val())
 		var item_id = parseInt($(".item_id",child).val())
 		var item_amount = item_price * item_qty;
-		
+		var ticket_title = $(".ticket_title",child).html()
 		item_total = item_total + (item_price * item_qty);
 		
 		cum_qty = cum_qty + item_qty;
+		
+		if (item_type == 1) {
+			ticket_cum_qty = ticket_cum_qty + item_qty;
+		}
+		
 		num_tickets = num_tickets + 1;
 		if (item_qty > 0) {
 			var json = {}
@@ -2966,23 +2983,28 @@ function calcPrices() {
 			json.qty = item_qty;
 			json.amount = item_amount;
 			encodedTickets.tickets.push(json);
+			
+			for (i=0; i < item_qty; i++) {
+				var json2 = {}
+				json2.ticket_title = ticket_title;
+				json2.user_email = '';
+				json2.user_name = '';
+				ticketTitles.tickets.push(json2)
+			}
 		}
 	});
+	
+	
+
 	
 	encodedTickets = JSON.stringify(encodedTickets)
 
 	$('#qty').val(cum_qty);
 	
-	
 	discount_amount = DiscountAmount + (item_total-(item_total*DiscountPercent))
 
 	$("#purchase_discount").val(discount_amount)
 	item_total =(item_total - DiscountAmount)*DiscountPercent;
-
-	
-
-
-
 
 	donation = parseFloat($("#ticket_donation").val())
 	
@@ -3009,8 +3031,43 @@ function calcPrices() {
 	$("#grand_total").html("$"+price.toFixed(2))
 	$("#purchase_total_amount").val(price.toFixed(2))
 	
-	if (cum_qty > 1) {
+	if (ticket_cum_qty > 1) {
 		$('#ExtraInfo').show();
+		
+		html = '';
+		for (i=0; i < ticket_cum_qty; i++) {
+			num = i+1;
+			
+			if (i==0) {
+				color = "#666"	
+			} else {
+				color = "#ccc"	
+			}
+			
+			html = html + '<div style=" margin-bottom:5px;">Ticket #'+num +': '+ticketTitles.tickets[i].ticket_title+'</div><div style="float:left;"><input type="textfield" style="width:180px;  color:'+color+';" class="ShadowedTextBox" onfocus="if ($(this).val() == \'name\') { $(this).val(\'\');$(this).css(\'color\',\'#666\') }" onblur="if ($(this).val() == \'\') { $(this).val(\'name\'); saveTicketUser(\'\','+i+',1); $(this).css(\'color\',\'#ccc\') } else {$(this).css(\'color\',\'#666\'); saveTicketUser($(this).val(),'+i+',1);}"  '
+			if (i==0) {
+				html = html +'value="'+ $("#user_name").val() +'"'
+				ticketTitles.tickets[0].user_name = $("#user_name").val();
+			} else {
+				html = html +'value="name"'
+			}
+			
+			
+			
+			
+			html = html +'></div><div style="float:left; margin-left:15px;"><input type="textfield" style="width:180px;  color:'+color+';" class="ShadowedTextBox" onfocus="if ($(this).val() == \'email\') { $(this).val(\'\');$(this).css(\'color\',\'#666\') }" onblur="if ($(this).val() == \'\') { $(this).val(\'email\'); saveTicketUser(\'\','+i+',2); $(this).css(\'color\',\'#ccc\') } else {$(this).css(\'color\',\'#666\'); saveTicketUser($(this).val(),'+i+',2);}" '
+			
+			if (i==0) {
+				html = html +'value="'+ $("#user_email").val() +'"'
+				ticketTitles.tickets[0].user_email = $("#user_email").val();
+			} else {
+				html = html +'value="email"'
+			}
+			
+			html= html + '></div><div style="clear:both; height:15px;"></div>'
+		}
+		$("#NameList").html(html)
+		
 	} else {
 		$('#ExtraInfo').hide();
 	}
@@ -3034,6 +3091,14 @@ function calcPrices() {
 }
 
 
+function saveTicketUser(value,i,type) {
+	if (type == 1) {
+		ticketTitles.tickets[i].user_name = value;
+	} else {
+		ticketTitles.tickets[i].user_email = value;
+	}
+
+}
 
 
 

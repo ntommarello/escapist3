@@ -71,7 +71,9 @@
 					<%@subtitle = "per ticket"%>
 				<%end%>
 			<%end%>
+			
 		<%else%>
+		
 			<%if @signedup%>
 				<%@title = "I'm coming"%>
 			<%else%>
@@ -93,7 +95,7 @@
 				<%if @plan.id !=46%>
 					<div style="color:red; font-size:12px;">This event is over</div>
 				<%else%>
-				<div style="color:red; font-size:12px; margin-top:-5px">$15 at door. <br>Online sales closed.</div>
+					<div style="color:red; font-size:12px; margin-top:-5px">$15 at door. <br>Online sales closed.</div>
 				<%end%>
 			<%else%>
 			<div style="font-size:12px;">	<%=raw @subtitle%></div>
