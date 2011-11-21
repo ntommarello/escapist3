@@ -174,10 +174,11 @@ This should appear on your statement as:
 
 </div>
 
+<%if current_user%>
 <input id="user_name" type="hidden" value="<%=current_user.first_name%> <%=current_user.last_name%>">
 <input id="user_email" type="hidden" value="<%=current_user.email%>">
 
-
+<%end%>
 <script>
 
 
