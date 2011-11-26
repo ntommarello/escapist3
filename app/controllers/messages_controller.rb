@@ -1,6 +1,17 @@
 class MessagesController < ApplicationController
   
   
+  def sent
+    
+    if !current_user
+      redirect_to root_path
+      return
+    end
+    
+    @message_list =  Message.messages_from(current_user).find(:all, :limit=>100, :order => 'created_at DESC', :include=>:receiver)
+  end
+  
+  
   
   def inbox
     

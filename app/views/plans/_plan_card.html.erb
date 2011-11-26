@@ -148,11 +148,12 @@
 			</div>
 		<div class="ChallengeBottom UnSelected" style="cursor:pointer" onclick="window.location.href='/escapes/<%=plan.id%>'">
 	
+		<%if plan.enable_signups%>
 			<img src="/images/crowdIcon.png" style="margin-top:5px; float:left; margin-left:5px; height:16px; width:21px;">
 			<div style="float:left; margin-left:8px; margin-top:6px;"><%=plan.signups%></div>
 
 			<div style="float:left; margin-left:13px;  color:#ddd; font-size:15px; margin-top:5px;">|</div>
-
+		<%end%>
 
 			<div style="float:left; margin-left:13px;  margin-top:6px;">
 				<b><%if plan.price and plan.price > 0%>

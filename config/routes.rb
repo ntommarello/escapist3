@@ -103,6 +103,7 @@ Trek::Application.routes.draw do
  
   resources :messages
   match 'inbox' => 'messages#inbox', :as => :inbox
+  match 'sent' => 'messages#sent', :as => :sent
   match 'notifications' => 'messages#notifications', :as => :notifications
   match 'reply_message' => 'messages#reply_message', :as => :reply_message
   match 'no_cc' => 'messages#no_cc', :as => :no_cc

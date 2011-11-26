@@ -9,8 +9,6 @@
 		
 		<div class="TopCardShadow"></div>
 		
-		
-		
 			<%name = user.avatar_file_name%>
 		
 			<%if name%>
@@ -21,11 +19,9 @@
 				<%end%>
 				<img class="UserCardPhoto" src="http://assets.stomp.io/avatars/<%=user.id%>/thumb_150_<%=name%>"/>
 			<%else%>
-				<img alt="No_avatar" class="UserCardPhoto" src="/images/no_avatar.png" style="" />
+				<img alt="No_avatar" class="UserCardPhoto" src="http://escapist.me/images/no_avatar.png" style="" />
 			<%end%>
 			
-			
-		
 				<%# image_tag(user.avatar.url(:thumb_150), :class=>"UserCardPhoto", :style=>"") %>
 		
 	
