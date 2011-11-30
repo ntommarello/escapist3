@@ -49,7 +49,7 @@
 		<%if @plan%>
 			<%guest = SubscribedPlan.find(:first,:conditions=>"plan_id=#{@plan.id} and user_id=#{user.id}")%>
 			<%if guest and guest.num_guests.to_i > 0%>
-				<div class="NumGuests"><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px">+</div><div style="float:left"><%=guest.num_guests%></div></div>
+				<div class="NumGuests"><div style="float:left; margin-top:-2px; margin-left:3px; margin-right:1px; font-size:10px; <%if guest.num_guests.to_i > 9%>font-size:9px; margin-left:2px; margin-right:2px;<%end%>">+</div><div style="float:left; <%if guest.num_guests.to_i > 9%>font-size:10px; margin-left:-2px; margin-top:-1px;<%end%> width:10px;"><%=guest.num_guests%></div></div>
 			<%end%>
 		<%end%>
 

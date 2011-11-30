@@ -9,7 +9,7 @@ module ActiveRecord
         :path              => ":attachment/:id/:style_:basename.:extension",
         :bucket            => "trek.io",
         :image_magick_path => "/usr/bin/",
-        :s3_host_alias => "assets.stomp.io",
+        :s3_host_alias => "assets.escapist.me",
         :url => ":s3_alias_url",
         :whiny_thumbnails  => true,
         :default_style     => :thumb
