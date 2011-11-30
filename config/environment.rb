@@ -11,7 +11,7 @@ APP_NAME = "Escapist"
 APP_URL = "escapist.me"
 APP_PEOPLE = "Escapists"
 APP_CONTENT = "Challenges"
-ASSETS_URL = "assets.stomp.io"
+ASSETS_URL = "assets.escapist.me"
 TWITTER_NAME = "escapist_me"
 
 FACEBOOK_APP_ID = '176765569051964'

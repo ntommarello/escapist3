@@ -108,7 +108,7 @@
 				
 				<%if !@proofpic%>
 					<%if challenge.photo_file_name%>
-							<img id="Image" src="http://assets.stomp.io/photos/<%=challenge.id%>/thumb_180_<%=challenge.photo_file_name%><%unless challenge.photo_file_name.include?(".")%>.<%end%>" onclick="window.location.href='/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>'" class = "ChallengePic" >
+							<img id="Image" src="http://assets.escapist.me/photos/<%=challenge.id%>/thumb_180_<%=challenge.photo_file_name%><%unless challenge.photo_file_name.include?(".")%>.<%end%>" onclick="window.location.href='/<%=APP_CONTENT.downcase%>/<%=challenge.id%>-<%=challenge.title.parameterize%>'" class = "ChallengePic" >
 					<%else%>
 						<img id="Image" src="/images/no_pic_b.png" class = "ChallengePic" onmouseover="$(this).attr('src','/images/no_pic_b_hover.png')" onmouseout="$(this).attr('src','/images/no_pic_b.png')" onclick="uploadChallengePhoto(<%=challenge.id%>,'create')">
 					<%end%>
@@ -149,7 +149,7 @@
 					<%if challenge.achievement and challenge.achievement.photo_file_name%>
 					<%#I AM PURPOSELY NOT USING LINK_FOR AND IMAGE_TAG.  MAJOR PERFORMANCE HIT WHEN 100+ CARDS ARE CALLED%>
 					<a href="/achievements/<%=challenge.achievement.slug%>">
-						<img src="http://assets.stomp.io/photos/<%=challenge.achievement.id%>/thumb_50_<%=challenge.achievement.photo_file_name%><%unless challenge.achievement.photo_file_name.include?(".")%>.<%end%>" style = "border:0px; width:50px; height:50px;" class = "AchievementIcon" title = "<%=challenge.achievement.name%>">
+						<img src="http://assets.escapist.me/photos/<%=challenge.achievement.id%>/thumb_50_<%=challenge.achievement.photo_file_name%><%unless challenge.achievement.photo_file_name.include?(".")%>.<%end%>" style = "border:0px; width:50px; height:50px;" class = "AchievementIcon" title = "<%=challenge.achievement.name%>">
         
 	     			</a>
 	
