@@ -4064,7 +4064,7 @@ function loadInfo(index) {
 		$("#plan_title").html("Create amazing memories")
 		$("#plan_url_name").html("Life is short. Enjoy it while you can!")
 		$(".home_slogan").show();
-		image_url = 'http://assets.stomp.io/images/14/original_original_16.jpg'
+		image_url = 'http://assets.escapist.me/images/14/original_original_16.jpg'
 		switchPhoto(image_url);
 		
 		
@@ -4230,7 +4230,7 @@ function loadInfo(index) {
 		$("#plan_signup_words").html("sign-ups");
 	}
 	
-	//html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+	//html = '<a href="/'+current_plan.user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.escapist.me/avatars/'+current_plan.user.id+'/thumb_50_'+current_plan.user.avatar_file_name+'" title="'+current_plan.user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		
 
 	if (current_plan.published == false) {
@@ -4261,7 +4261,7 @@ function loadInfo(index) {
 				}
 				file_name = fixFBImages(the_user.avatar_file_name)
 				host_names = host_names + ''+transition+'<a class="LightLink" href="/'+the_user.username+'">'+the_user.first_name+'</a>'
-				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+				hosts = hosts+'<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.escapist.me/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			organizer_count = organizer_count + 1;
 		} 
@@ -4279,7 +4279,7 @@ function loadInfo(index) {
 				
 				file_name = fixFBImages(the_user.avatar_file_name)
 				
-				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+				html = html+'<a href="/'+the_user.username+'"><img  class="Transparent tl paddingA" src="http://assets.escapist.me/avatars/'+the_user.id+'/thumb_50_'+file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 			}
 			signup_count = signup_count + 1;
 			total_count = total_count + 1;
@@ -4298,7 +4298,7 @@ function loadInfo(index) {
 		$("#plan_signup_words").html("Hosted by "+host_names)
 		the_user = current_plan.user;
 		$("#plan_attendees").html(hosts)
-		//html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.stomp.io/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
+		//html = '<a href="/'+the_user.username+'"><img alt="" class="Transparent tl paddingA" src="http://assets.escapist.me/avatars/'+the_user.id+'/thumb_50_'+the_user.avatar_file_name+'" title="'+the_user.first_name+'" style="width:50px; height:50px; border:1px solid #E1E1E1; cursor:pointer; float:left; margin-left:-1px;" /></a>'
 		//html = html + '<div style="margin-left:5px; float:left; font-size:12px">'+the_user.first_name+' '+the_user.last_name +'</div>';
 	} else {
 		$("#plan_attendees").html(html)
@@ -4347,7 +4347,7 @@ if (current_plan.image_file_name) {
 }
 
 
-	image_url = "http://assets.stomp.io/images/"+current_plan.id+"/thumb_1250_"+escape(filea_name)
+	image_url = "http://assets.escapist.me/images/"+current_plan.id+"/thumb_1250_"+escape(filea_name)
 	switchPhoto(image_url);
 	
 	
@@ -4451,7 +4451,7 @@ function preloadImage() {
 	}
 	
 	
-	image_url = "http://assets.stomp.io/images/"+preload_plan.id+"/thumb_1250_"+escape(filea_name)
+	image_url = "http://assets.escapist.me/images/"+preload_plan.id+"/thumb_1250_"+escape(filea_name)
 	
 	var img = new Image();
 	$(img).load(function(){
