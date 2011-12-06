@@ -4223,7 +4223,7 @@ function loadInfo(index) {
 	num_hosts = current_plan.organizers.length
 
 	
-	$("#plan_signup_count").html(current_plan.users.length+num_hosts);
+	$("#plan_signup_count").html(current_plan.image_file_size);
 	if (current_plan.users.length+num_hosts == 1) {
 		$("#plan_signup_words").html("sign-up");
 	} else {

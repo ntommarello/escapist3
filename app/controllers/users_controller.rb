@@ -93,13 +93,12 @@ class UsersController < ApplicationController
   def update
     error = ""
     
-    params[:user].each  do |key, value| 
+     params[:user].each  do |key, value| 
        unless key == "avatar"
         params[:user][key] = CGI::unescape(value) 
         #params[:user][key] = remove_end_breaks(params[:user][key])
        end
      end
-     
      
     current_user.update_attributes(params[:user])
       
@@ -111,6 +110,7 @@ class UsersController < ApplicationController
         current_user.first_name = names.join(' ')
       end
     end  
+    
     
     if params[:verify_password]
       if params[:verify_password] == params[:new_password]
@@ -124,6 +124,7 @@ class UsersController < ApplicationController
       end
       
     end
+    
       
     if params[:email]
       check = User.find(:first, :conditions=>["id != ? and email= ? ",current_user.id,params[:email]])

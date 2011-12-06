@@ -114,8 +114,9 @@
 		
 		<%if allow_return%>
 			var s = new Sanitize({ 
-			    elements:   ['br','ul','li','b','div','a','iframe'],
+			    elements:   ['br','ul','li','b','div','a','iframe','img'],
 				attributes: { 
+						img: ['class', 'style','src'],
 				        a: ['href', 'target'], 
 				        div: ['class', 'style'],
 						iframe: ['class', 'style', 'width', 'height','type','src','frameborder'] 

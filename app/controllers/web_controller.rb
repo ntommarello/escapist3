@@ -106,7 +106,13 @@ class WebController < ApplicationController
        end
      end
 
-     @plan_json = @plan.to_json(:include=>[:users, :organizers], :only=>[:first_name, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :privacy, :enable_signups, :application_required])
+     for plan in @plan
+        plan.image_file_size = plan.signups
+       
+     end
+
+
+     @plan_json = @plan.to_json(:include=>[:users, :organizers, :subscribed_plans], :only=>[:first_name, :image_file_size, :last_name, :published, :id, :title, :note, :url_name, :short_desc, :short_location, :start_time, :price, :avatar_file_name, :username, :image_file_name, :privacy, :enable_signups, :application_required])
 
 
 
