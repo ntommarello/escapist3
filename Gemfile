@@ -22,7 +22,7 @@ gem "samsouder-titlecase"
 gem "ri_cal"
 gem "pdfkit"
 gem "delayed_job", "~> 2.1.4"
-
+gem 'fastercsv'
 
 gem 'haml'
 gem 'will_paginate', '~> 3.0.pre2'

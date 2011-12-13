@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   include GeoKit
-  
+   include ActionView::Helpers::NumberHelper
   
   
   def show
@@ -9,6 +9,82 @@ class AdminController < ApplicationController
 
   end
   
+  
+  
+  
+  def export_guest
+    
+    require 'iconv' 
+    require 'csv'
+  
+    conditions = "plan_id = #{params[:plan_id]}"
+
+    #quick hack to sort correctly. Eventually remove.
+     @tickets = TicketPurchase.find(:all)
+    
+     @tickets.each do |ticket|
+      if ticket.user
+        ticket.guest_last_name = ticket.user.last_name
+        ticket.guest_first_name = ticket.user.first_name
+      else
+        if ticket.user_name
+          ticket.user_name =  ticket.user_name.strip
+          names = ticket.user_name.split
+          if names.length > 1
+             ticket.guest_last_name = names.pop.titleize
+             ticket.guest_first_name = names.join(' ').titleize
+          else
+            ticket.guest_last_name = ticket.user_name.titleize
+            ticket.guest_first_name = ""
+          end
+        end
+      end
+      ticket.save!
+    end
+
+    @tickets = TicketPurchase.find(:all, :conditions=>"#{conditions}", :order=>"guest_last_name asc", :include=>[:ticket])
+    
+  
+    csv_string = CSV.generate do |csv|
+      csv << ["Guest","Paid By","Ticket","Ticket Price"]
+      
+      @tickets.each do |ticket|
+        
+        payer_name = ""
+        if ticket.payer_user_id
+          payer = User.find(ticket.payer_user_id)
+          payer_name = "#{payer.last_name}, #{payer.first_name}"
+          
+          ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
+          payer_name = ic.iconv(payer_name + ' ')[0..-2]
+        end
+        
+        
+        if (ticket.guest_first_name and ticket.guest_first_name.length > 0)
+          guest_name = "#{ticket.guest_last_name}, #{ticket.guest_first_name}"
+        else
+          if ticket.guest_last_name and ticket.guest_last_name.length > 0
+            guest_name = "#{ticket.guest_last_name}"
+          else
+            guest_name = "Unknown Guest"
+          end
+        end
+        ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
+        guest_name = ic.iconv(guest_name + ' ')[0..-2]
+        
+        
+        amount = number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2
+        amount = "$#{amount}"
+        
+        csv << [guest_name,payer_name,ticket.ticket.title, amount]
+      end
+    end
+    
+    
+    send_data csv_string, :type=>'text/csv; charset=iso-8859-1; header=present',
+                          :disposition=>"attachment; filename=GuestList.csv"
+                          
+  end
   
   
   

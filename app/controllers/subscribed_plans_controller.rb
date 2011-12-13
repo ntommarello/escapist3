@@ -101,6 +101,7 @@ class SubscribedPlansController < ApplicationController
               if ticketHolders.length == 1 and ticketHolders[0]["user_email"] == ""
                 @ticket.user_id = current_user.id
               end
+                          
               
               @ticket.save
               

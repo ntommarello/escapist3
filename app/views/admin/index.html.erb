@@ -16,6 +16,10 @@
 		<%end%>
 	</select>
 	
+	<%if params[:plan_id] and params[:plan_id]!="0"%><div style="margin-top:10px; margin-bottom:20px">
+		<a class="BlueLink" target="_blank" href="/export_guest?plan_id=<%=params[:plan_id]%>">Export Guest List</a></div>
+	<%end%>
+	
 	<%if @plans.length == 0%>
 		<div style="margin-top:10px;">No one has signed up for this event.</div>
 	<%end%>
@@ -43,7 +47,7 @@
 						<%subtotal = subtotal+ticket.ticket.amount%>
 							<tr>
 								<td style="vertical-align:top; width:85px;">Ticket #<%=i%></td>
-								<td style="vertical-align:top; width:330px;"><%=ticket.ticket.title%> - <%if ticket.user%><%=ticket.user.first_name%> <%=ticket.user.last_name%><%else%><%if ticket.user_name%><%=ticket.user_name%><%end%><%end%></td>
+								<td style="vertical-align:top; width:330px;"><%=ticket.ticket.title%> - <%if ticket.user%><%=raw ticket.user.first_name%> <%=raw ticket.user.last_name%><%else%><%if ticket.user_name%><%=raw ticket.user_name%><%end%><%end%></td>
 								<td style="vertical-align:top">$<%if ticket.ticket.amount > 0%><%= number_with_precision (ticket.ticket.amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></td>
 							</tr>
 							<%end%>

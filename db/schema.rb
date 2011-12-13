@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114035014) do
+ActiveRecord::Schema.define(:version => 20111213040508) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -379,6 +379,8 @@ ActiveRecord::Schema.define(:version => 20111114035014) do
     t.string   "user_name"
     t.string   "user_email"
     t.string   "qr_code"
+    t.string   "guest_last_name"
+    t.string   "guest_first_name"
   end
 
   create_table "tickets", :force => true do |t|

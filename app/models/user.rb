@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   
  
   has_many :hosts
+  has_many :tickets_purchased, :class_name => 'TicketPurchase', :foreign_key => :payer_user_id
+  
   has_many :plans_authored, :through => :hosts, :source => :plan
 
 
