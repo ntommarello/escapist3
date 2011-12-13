@@ -15,7 +15,7 @@
 	<%else%>
 			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
 	<%end%>
-	<%if @plan.seats_remaining == 0%>
+	<%if @plan.seats_remaining < 1%>
 			<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >Sold Out!</div>"%>
 			
 	<%end%>
@@ -34,7 +34,7 @@
 <%if @plan.application_required%>
 	<%@clickaction = "goToByScroll('ApplicationLayer');"%>
 <%else%>
-	<%if @plan.seats_remaining == 0%>
+	<%if @plan.seats_remaining < 1%>
 		<%@clickaction = ""%>
 	<%else%>
 		<%if current_user%>
@@ -65,7 +65,7 @@
 			<%if @signedup%>
 				<%@subtitle = "You are attending!"%>	
 			<%else%>
-				<%if @plan.attendance_cap and (@plan.seats_remaining < 10 and @plan.seats_remaining > 0) %>
+				<%if @plan.attendance_cap and (@plan.seats_remaining < 10 and @plan.seats_remaining != 0) %>
 					<%@subtitle = @tickets_remaining%>	
 				<%else%>
 					<%@subtitle = "per ticket"%>
@@ -89,7 +89,7 @@
 
 
 
-		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining == 0%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
+		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining < 1%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
 		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
 			<%if @over == true%>
 				<%if @plan.id !=46%>
