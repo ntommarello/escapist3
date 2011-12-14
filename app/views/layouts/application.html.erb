@@ -290,7 +290,7 @@ $(document).ready(function() {
  function fblogin() {
 FB.login(function(response) {
   if (response.session) {
-    if (response.scope) {
+    if (response.perms) {
       	window.location = '/auth/facebook';
     } else {
       $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
