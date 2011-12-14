@@ -272,7 +272,7 @@ $(document).ready(function() {
 	});
 });
 
-  FB.init({appId: '<%=@fb_id%>', status: true, cookie: true, xfbml: true});
+  FB.init({appId: '<%=@fb_id%>', status: true, cookie: true, xfbml: true, oauth:false});
 
   FB.Event.subscribe('auth.sessionChange', function(response) {
     if (response.session) {
@@ -289,8 +289,8 @@ $(document).ready(function() {
 
  function fblogin() {
 FB.login(function(response) {
-  if (response.authResponse) {
-    if (response.scope) {
+  if (response.session) {
+    if (response.perms) {
       	window.location = '/auth/facebook';
     } else {
       $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
@@ -298,7 +298,7 @@ FB.login(function(response) {
   } else {
     $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
   }
-}, {scope:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
+}, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website'});
 
 }
 
@@ -306,11 +306,11 @@ FB.login(function(response) {
 
 	function fblogin2() {
     FB.login(function(response) {
-		if(response.authResponse)
+		if(response.session)
 		          {
 		              window.location = '/auth/facebook';
 		          }
-     }, {scope:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website,publish_stream,offline_access'});
+     }, {perms:'user_about_me,user_birthday,user_location,user_hometown,user_likes,email,user_website,publish_stream,offline_access'});
    }
 
 
