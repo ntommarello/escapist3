@@ -289,8 +289,8 @@ $(document).ready(function() {
 
  function fblogin() {
 FB.login(function(response) {
-  if (response.session) {
-    if (response.perms) {
+  if (response.authResponse) {
+    if (response.scope) {
       	window.location = '/auth/facebook';
     } else {
       $('.BigFBIcon').html('<div class="FBIcon"><img src="/images/f.png" class="FBIconImage"></div><div class="FBfont"><b>Connect</b> with <b>Facebook</b></div>')
@@ -306,7 +306,7 @@ FB.login(function(response) {
 
 	function fblogin2() {
     FB.login(function(response) {
-		if(response.session)
+		if(response.authResponse)
 		          {
 		              window.location = '/auth/facebook';
 		          }
