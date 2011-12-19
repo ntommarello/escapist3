@@ -4846,7 +4846,7 @@ function slideSettings() {
 		$("#EditPlanMenu").hide();
 		$('#SettingsLayer').show();
 		$("#SettingsLayer").animate({ "height": 500, "padding-top":20,  "padding-bottom":20}, 300, function(){
-		  $(this).css('height','auto').css('max-height',1000);
+		  $(this).css('height','auto').css('max-height',2000);
 		});
 	}
 }

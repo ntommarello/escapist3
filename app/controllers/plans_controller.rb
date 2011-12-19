@@ -322,15 +322,16 @@ class PlansController < ApplicationController
   def update_tickets
     
     
-    for ticket in @plan.tickets.sort_by_type
-      ticket.soft_delete = true
-    end
+
     
     
-    Ticket.update_all("soft_delete = 1", "plan_id=#{@plan.id}")
+    
     
     
     if params[:tickets]
+        
+        Ticket.update_all("soft_delete = 1", "plan_id=#{@plan.id}")
+      
          parsed_json = ActiveSupport::JSON.decode(params[:tickets])
          num = 0
          max = 0
@@ -366,11 +367,14 @@ class PlansController < ApplicationController
                   num = num + 1
                 end
           end
+          
+               @plan.price = (min.to_f / 100).to_f
+
+               @plan.price_max = (max.to_f / 100).to_f
+               
        end
        
-       @plan.price = (min.to_f / 100).to_f
-       
-       @plan.price_max = (max.to_f / 100).to_f
+  
     end
   
   def update
