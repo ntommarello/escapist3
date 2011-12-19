@@ -36,4 +36,68 @@ class TicketsController < ApplicationController
     render :layout=>false
   end
 
+  
+    def update
+
+      params[:ticket].each  do |key, value| 
+          params[:ticket][key] = CGI::unescape(value)
+          params[:ticket][key] = remove_end_breaks(params[:ticket][key])
+      end
+      
+      if params[:ticket][:amount]
+         params[:ticket][:amount] = params[:ticket][:amount].to_f * 100
+      end
+
+
+      @ticket = Ticket.find(params[:id])
+      @ticket.update_attributes(params[:ticket])
+      @ticket.save
+      
+       @plan = Plan.find(@ticket.plan_id)
+       
+      
+      @all_tickets = @plan.tickets.filter_by_ticket
+      
+      num = 0
+      max = 0
+      min = 0
+      
+      for ticket in @all_tickets
+        if num == 0
+          min = ticket.amount
+          max = ticket.amount
+        end
+        
+        if ticket.amount < min
+          min = ticket.amount
+        end
+        if ticket.amount > max
+          max = ticket.amount
+        end
+        
+        num = num + 1
+      end
+      
+     
+      @plan.price = (min.to_f / 100).to_f
+      @plan.price_max = (max.to_f / 100).to_f
+      @plan.save
+
+      render :nothing => true
+
+
+
+
+    end
+  
+
+
+
+
+
 end
+
+
+
+
+

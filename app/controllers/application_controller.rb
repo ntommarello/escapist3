@@ -12,6 +12,39 @@ class ApplicationController < ActionController::Base
 #before_filter :find_active_cities
   
 
+  def plan_access_control
+    if current_user && @plan
+      for host in @plan.hosts
+       if host.user_id == current_user.id
+          @author=true
+          @real_edit_for_toggle = true
+          @editable = true
+          @extra_visibility = true
+        end
+      end
+      
+      #all group admins have access
+      if @plan.group
+        @admin = @plan.group.check_admin(current_user)
+          if @admin
+            @author=true
+            @real_edit_for_toggle = true
+            @editable = true
+            @extra_visibility = true
+          end
+      end
+      
+      #all escapist admins have access
+      if current_user.mod_level == 5
+        @admin = true
+        @editable = true
+        @real_edit_for_toggle = true
+        #@extra_visibility = false
+      end
+    end
+  end
+
+
   def check_group  
     
     @snowriders = "(46,53,54,55)"
@@ -25,7 +58,7 @@ class ApplicationController < ActionController::Base
     @domain = @domain.sub( "www.", "" )
     
      if Rails.env == "development"
-       @domain = "techcoparty.com"
+       #@domain = "techcoparty.com"
     end
     
     if @domain != APP_URL and @domain != "localhost:3000"

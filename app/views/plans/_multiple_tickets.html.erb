@@ -1,0 +1,83 @@
+<%@tickets = @plan.tickets.filter_by_ticket%>
+<%@addons = @plan.tickets.filter_by_addon%>
+
+<div class="ticketBox" style="width:<%if source == "new"%>530<%else%>470<%end%>px; border:0px; padding-top:15px; ">
+			
+			
+	<%if source == "edit"%> <div class="HighlightedTitle" style="font-size:15px; line-height:18px; margin-bottom:10px; margin-top:-5px;">Tickets</div> <%end%>
+			
+	<div style="font-size:12px; font-weight:bold">
+		<div style="width:240px; float:left; margin-left:3px">Name</div>
+		<div style="width:75px; float:left; margin-left:3px;">Price</div>
+		<div style="width:75px; float:left; margin-left:3px;">Quantity</div>
+	</div>
+	<div style="clear:both"></div>
+	
+	
+
+
+	
+	<div id="TicketRows">
+		<%if @tickets.length == 0%>
+			<%=render :partial=>"plans/ticket_row", :locals=>{:ticket=>0, :type=>"ticket"}%>
+		<%else%>
+			<%for ticket in @tickets%>
+				<%=render :partial=>"plans/ticket_row", :locals=>{:ticket=>ticket, :type=>"ticket"}%>
+			<%end%>
+		<%end%>
+
+		
+	</div>
+	
+	
+	<div id="AddOn" style="<%if @addons.length == 0%>display:none<%end%>">
+		
+			<div style="padding-top:20px; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:3px;font-size:15px;padding-bottom:10px">Add-ons</div>
+			
+		<div id="AddOnRows">
+			<%for ticket in @addons%>
+				<%=render :partial=>"plans/ticket_row", :locals=>{:ticket=>ticket, :type=>"addon"}%>
+			<%end%>
+		</div>
+	</div>
+	
+	<div style="clear:both; height:5px"></div>
+	<div id="new2Button"  class="WhiteActiveBorder" onclick="NewTicket('ticket')" style="float:left; width:102px margin-top:15px;">
+		<div unselectable="on" class="LightGrayGreenButton" style="width:100px" >
+			<div id="newticket" class="InnerLightGrayGreenBorder">
+				New Ticket
+			</div>
+		</div>
+	</div>
+	
+	<div id="new1Button"  class="WhiteActiveBorder" onclick="NewTicket('add');" style="float:left; margin-left:10px;width:102px margin-top:15px;">
+		<div unselectable="on" class="LightGrayGreenButton" style="width:100px" >
+			<div id="newaddon" class="InnerLightGrayGreenBorder">
+				New Add-On
+			</div>
+		</div>
+	</div>
+	
+	<input type="hidden" id="tickets" name="tickets" value="">
+	
+	<div id="MaxCapacity" style="float:left; margin-left:105px; margin-top:1px; <%if @tickets.length == 0%>display:none<%end%>">
+		<input id="plan_attendance_cap" name="plan[attendance_cap]" class="ShadowedTextBox" value="50" onchange="attendanceCapChanged = 1;" style="width:55px; float:left;" type="textfield"> <div style="font-size:13px; float:left; margin-left:5px">attendance<br>capacity</div>
+	</div>
+	
+	
+	
+		<div style="clear:both; "></div>
+	
+</div>
+
+<script>
+$(document).ready(function() {
+	$(".numbersOnly").numeric({allow:"."});
+	$(".wholeNumbersOnly").numeric();
+	
+
+	$( "#TicketRows" ).sortable();
+	$( "#AddOnRows" ).sortable();
+		
+});
+</script>

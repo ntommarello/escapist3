@@ -158,6 +158,10 @@
 			<div style="float:left; margin-left:13px;  margin-top:6px;">
 				<b><%if plan.price and plan.price > 0%>
 					$<%=plan.price.to_s.sub( ".0", "") %>
+					
+					<%if plan.price_max and plan.price_max > plan.price%>
+					 - $<%=plan.price_max.to_s.sub( ".0", "") %>
+					<%end%>
 				<%else%>
 					FREE
 				<%end%></b>

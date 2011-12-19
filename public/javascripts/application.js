@@ -1341,7 +1341,7 @@ function GeoCode_Challenge(location, challenge_id) {
 }
 
 function adjustMapLabel() {
-	offset = 300-$('#directions').height();
+	offset = 297-$('#directions').height();
 	$('#directions').css('margin-top',offset);
 }
 
@@ -4714,6 +4714,8 @@ function openLinkEditor() {
 
 function saveSettings(plan_id) {
 	
+	packEditTickets()
+	
 	if ($("#plan_attendance_cap").val() < 1) {
 		showWarningMessage("Error:  Set Quantity.  How many tickets are there?")
 		$("#plan_attendance_cap").focus();
@@ -4788,15 +4790,12 @@ function saveSettings(plan_id) {
 	$.ajax({
         type: "POST",
         url: "/escapes/"+plan_id,
-        data: "_method=PUT&plan[price]=" + price + "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing+"&plan[enable_donations]="+enable_donations+"&plan[donation_suggested_amount]="+donation_suggested_amount+"&plan[donation_text]="+donation_text,
+        data: "_method=PUT&tickets=" + escape(encodedTickets) +   "&plan[attendance_cap]="+$("#plan_attendance_cap").val() +"&plan[enable_discount]="+enable_discount+"&plan[application_required]="+application_required+"&plan[application_wufoo]="+escape($("#plan_application_wufoo").val())+"&plan[application_deadline]="+$("#plan_application_deadline").val()+"&plan[privacy]="+$('input[name=privacy]:checked').val()+"&plan[password]="+$("#plan_password").val()+"&plan[enable_comments]="+enable_comments+"&plan[enable_signups]="+enable_signups+"&plan[enable_sharing]="+enable_sharing+"&plan[enable_donations]="+enable_donations+"&plan[donation_suggested_amount]="+donation_suggested_amount+"&plan[donation_text]="+donation_text,
         success: function(msg){
 			displaySaved();
 			window.location.reload();
         }
      });
-	
-	
-	
 	
 }
 
@@ -4912,8 +4911,9 @@ function destroyGroup(id) {
 
 
 function submitDrafttoCreate(button) {
+	packEditTickets();
 	$(button).html('<img style="margin-top:3px;" src="/images/ajax-loader_f.gif">');
-		$('#EscapeForm').submit();
+	$('#EscapeForm').submit();
 	
 }
 
@@ -5111,7 +5111,8 @@ function validatePublish(source,button,plan_id) {
 	
 	
 	
-	
+	packEditTickets();
+
 	
 	if (error == 0) {
 		
@@ -5136,7 +5137,44 @@ function validatePublish(source,button,plan_id) {
 	
 }
 
+function packEditTickets() {
+	encodedTickets = {}
+	encodedTickets.tickets = [];
+	
+	count = 0;
+	$("#TicketRows").children().map(function() {
+	    var child = $(this);
+		count = count + 1;
+		var json = {}
+		json.title = $(".ticket_title",child).val();;
+		json.subtitle = $(".ticket_subtitle",child).val();
+		json.amount = parseInt(parseFloat($(".ticket_amount",child).val()) * 100);
+		json.qty = parseInt($(".ticket_qty",child).val());
+		json.ticket_id = parseInt($(".tickets_id",child).val());
+		
+		json.ticket_type = 1;
+		json.sort_order = count;
+		encodedTickets.tickets.push(json);
+	});
+	count = 0;
+	$("#AddOnRows").children().map(function() {
+	    var child = $(this);
+		count = count + 1;
+		var json = {}
+		json.title = $(".ticket_title",child).val();;
+		json.subtitle = $(".ticket_subtitle",child).val();
+		json.amount = parseFloat($(".ticket_amount",child).val() * 100);
+		json.qty = parseInt($(".ticket_qty",child).val());
+		json.ticket_id = parseInt($(".tickets_id",child).val());
+		
+		json.ticket_type = 2;
+		json.sort_order = count;
+		encodedTickets.tickets.push(json);
+	});
 
+	encodedTickets = JSON.stringify(encodedTickets)
+	$("#tickets").val(encodedTickets)
+}
 
 
 function unpublishPlan(plan_id) {
@@ -5293,4 +5331,103 @@ function checkUsername(button,form,username,id) {
 	
 	
 }
+
+function removeTicketRow(row) {
+	$(row).parent().parent().remove()
+	
+	length =  $("#TicketRows").children().length;
+	
+	if (length < 2) {
+			firstRow = $('.NewTicketRow').first()
+			$(".moreOptions",firstRow).hide();
+			$("#MaxCapacity").hide();
+		}
+		
+	AddLength = $("#AddOnRows").children().length;	
+	if (AddLength < 1) {
+		$("#AddOn").hide();
+	}
+}
+
+
+function NewTicket(type) {
+	newRow = $('.NewTicketRow').first()
+	
+
+	
+	if (type == 'add') {
+		$("#AddOn").show();
+		
+		newDiv = $("<div></div>");
+		newDiv.addClass('AddOnRow')
+		newDiv.html($(newRow).html())
+		$('#AddOnRows').append(newDiv)
+		lastRow = $('.AddOnRow').last()
+		$(".moreOptions",lastRow).show();
+	} else {
+		newDiv = $("<div></div>");
+		newDiv.addClass('NewTicketRow')
+		newDiv.html($(newRow).html())
+		$('#TicketRows').append(newDiv)
+		lastRow = $('.NewTicketRow').last()
+		firstRow = $('.NewTicketRow').first()
+		
+		length =  $("#TicketRows").children().length;
+
+		$(".moreOptions",lastRow).show();
+
+		if (length > 1) {
+			$(".moreOptions",firstRow).show();
+				$("#MaxCapacity").show();
+		} else {
+			$(".moreOptions",firstRow).hide();
+				$("#MaxCapacity").hide();
+		}
+
+		calcMaxCap();
+		
+	}
+	
+	$("#tickets_name",lastRow).val('');
+	$(".ticket_amount",lastRow).val('0.00');
+	$(".ticket_qty",lastRow).val('50');
+	$(".tickets_id",lastRow).val('0');
+	
+	
+	$(".ticket_subtitle",lastRow).val('');
+	$(".moreTicketOptions",lastRow).show();
+	$(".ticket_subtitle",lastRow).hide();
+	$("#tickets_name",lastRow).focus();
+	
+	$(".numbersOnly").numeric({allow:"."});
+	$(".wholeNumbersOnly").numeric();
+	
+}
+
+
+attendanceCapChanged = 0;
+
+function calcMaxCap() {
+	
+	if (attendanceCapChanged == 0) {
+		capacity = 0;
+	
+		$("#TicketRows").children().map(function() {
+		        var child = $(this);
+	       
+				thisCap = $('#tickets_qty',child).val();
+			
+				value = parseInt(thisCap)
+				if (value > 0) {
+					capacity = capacity + value
+				}
+
+		    });
+	
+		if (capacity > 0) {
+			$("#plan_attendance_cap").val(capacity)
+		}
+	}
+}
+
 

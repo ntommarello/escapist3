@@ -3253,7 +3253,7 @@ span.continued {
   text-align: center;
   font-size: 32px; }
 
-#subtitle {
+#subtitlexx {
   margin-top: 16px;
   text-align: center;
   font-size: 26px;
@@ -4018,6 +4018,40 @@ span.continued {
 
 .dragIcon:hover {
   opacity: 1; }
+
+.dragIconTicket {
+  float: left;
+  cursor: move;
+  opacity: .5;
+  height: 15px;
+  width: 15px;
+  margin-top: -5px;
+  background: url(/images/home_tile.png) no-repeat;
+  background-position: -150px -100px; }
+
+.dragIconTicket:hover {
+  opacity: 1; }
+
+.trashTicket {
+  opacity: .8;
+  float: left;
+  margin-left: 7px;
+  margin-top: 10px;
+  cursor: pointer; }
+
+.trashTicket:hover {
+  opacity: 1; }
+
+.moreTicketOptions {
+  float: left;
+  margin-left: 7px;
+  font-size: 11px;
+  color: #999;
+  margin-top: 8px;
+  cursor: pointer; }
+
+.moreTicketOptions:hover {
+  color: #333; }
 
 .closeRegister {
   position: absolute;
@@ -5257,6 +5291,18 @@ a.Lionright {
   border-top: 1px solid #fff;
   padding-bottom: 15px;
   border-bottom: 1px solid #E9E9EB; }
+
+.NewTicketRow {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #E9E9EB;
+  padding-bottom: 7px; }
+
+.AddOnRow {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #E9E9EB;
+  padding-bottom: 7px; }
 
 .ticketBox {
   background: url(/images/graytile.png);

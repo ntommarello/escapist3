@@ -20,9 +20,43 @@
 </script>
 	
 	<div style="width:1000px; margin-top:20px; margin-left:auto; margin-right:auto; font-size:15px">
-
+		<%if @editable%>
+			<%=render :partial=>"plans/edit_settings"%>
+		<%end%>
 
 	<div style="float:right; margin-top:8px;">
+		
+		<%if @editable%>
+
+			<div id="EditPlanMenu" style="float:right; margin-right:6px; margin-top:-40px">
+
+				<div class="Lionbuttons" style="width:117px;">
+
+
+	
+					<a href="#" class="Lionbutton " style="width:95px" onclick="slideSettings()" title="Settings">
+						<div class="EditSettingsIcon" style="float:left"></div>
+						<div style="float:left; margin-left:10px">Edit Tickets</div>
+					</a>
+
+		
+
+					<script>
+					editable=<%=@editable%>;
+					</script>
+
+				</div>
+			</div>
+			<script>
+			$(document).ready(function() {
+
+
+				$(".tl").tooltip();
+
+			});
+			</script>
+		<%end%>
+		
 		<input type="hidden" id="redirect" value="/escapes/<%=@plan.id%>">
 		<%=render :partial=>"purchase/ticketbox"%>
 	</div>
@@ -33,7 +67,7 @@
 
 <div style="float:left; width:450px">
 
-	
+
 
 	<div class="HighlightedTitle" style="margin-top:5px"><%=raw @plan.title%></div>
 
@@ -44,9 +78,9 @@
 		</a>
 	</div>
 	
-	
+	<%if @plan.start_time%>
 	<div style="font-size:16px; margin-top:7px; color:#808598;"><%=raw @plan.start_time.strftime('%A, %B %e at %I:%M %p')%></div>
-
+	<%end%>
 	<div style="font-size:16px; margin-top:12px; color:#808598; padding-bottom:30px"><%=raw @plan.short_location%></div>
 
 	<%for host in @plan.organizers%>

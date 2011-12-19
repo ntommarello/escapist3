@@ -97,7 +97,7 @@ class PlansController < ApplicationController
     
     if current_user
       
-      if params[:plan][:application_deadline] != ""
+      if params[:plan][:application_deadline] and params[:plan][:application_deadline] != ""
        date_and_time = '%m/%d/%Y'
        params[:plan][:application_deadline] = DateTime.strptime("#{params[:plan][:application_deadline]}", date_and_time)
       end 
@@ -163,7 +163,13 @@ class PlansController < ApplicationController
     
     
     
-      @plan.save!
+  
+       @plan.save!
+      
+       update_tickets
+         
+          @plan.save!
+      
       
       Host.create(:user_id => current_user.id, :plan_id => @plan.id, :admin=>true)
       
@@ -183,14 +189,20 @@ class PlansController < ApplicationController
       @plan = Plan.find(params[:id])
       
       if current_user
-        for host in @plan.organizers
-          if host.id == current_user.id
-            @plan.destroy
+        
+        if current_user.mod_level == 5
+          @plan.destroy
+        else
+        
+          for host in @plan.organizers
+            if host.id == current_user.id
+              @plan.destroy
+            end
           end
         end
       end
       
-      redirect_to "/"
+      render :nothing => true
       
       
   end
@@ -230,35 +242,7 @@ class PlansController < ApplicationController
     
     
     #all hosts have access
-    if current_user && @plan
-      for host in @plan.hosts
-       if host.user_id == current_user.id
-          @author=true
-          @real_edit_for_toggle = true
-          @editable = true
-          @extra_visibility = true
-        end
-      end
-      
-      #all group admins have access
-      if @plan.group
-        @admin = @plan.group.check_admin(current_user)
-          if @admin
-            @author=true
-            @real_edit_for_toggle = true
-            @editable = true
-            @extra_visibility = true
-          end
-      end
-      
-      #all escapist admins have access
-      if current_user.mod_level == 5
-        @admin = true
-        @editable = true
-        @real_edit_for_toggle = true
-        #@extra_visibility = false
-      end
-    end
+    plan_access_control
     
     
     if cookies[:disable_edit]
@@ -335,7 +319,59 @@ class PlansController < ApplicationController
   end
   
  
-  
+  def update_tickets
+    
+    
+    for ticket in @plan.tickets.sort_by_type
+      ticket.soft_delete = true
+    end
+    
+    
+    Ticket.update_all("soft_delete = 1", "plan_id=#{@plan.id}")
+    
+    
+    if params[:tickets]
+         parsed_json = ActiveSupport::JSON.decode(params[:tickets])
+         num = 0
+         max = 0
+         min = 0
+          for ticket in parsed_json["tickets"]
+                if ticket["title"]  and ticket["title"] != ""
+                  
+                  if num == 0
+                    min = ticket["amount"].to_i
+                  end
+                  
+                  if ticket["amount"].to_i < min
+                    min = ticket["amount"].to_i 
+                  end
+                  if ticket["amount"].to_i > max
+                    max = ticket["amount"].to_i 
+                  end
+                  
+                  if ticket["ticket_id"].to_i == 0
+                    @ticket = Ticket.create(:plan_id => @plan.id, :title=>ticket["title"], :subtitle=>ticket["subtitle"], :amount=>ticket["amount"], :qty=>ticket["qty"], :sort_order=>ticket["sort_order"], :ticket_type=>ticket["ticket_type"], :soft_delete=>false)
+                  else
+                    @ticket = Ticket.find(ticket["ticket_id"].to_i)
+                    @ticket.title = ticket["title"]
+                    @ticket.subtitle = ticket["subtitle"]
+                    @ticket.amount = ticket["amount"]
+                    @ticket.qty = ticket["qty"]
+                    @ticket.sort_order = ticket["sort_order"]
+                    @ticket.ticket_type = ticket["ticket_type"]
+                    @ticket.soft_delete = false
+                  end
+
+                  @ticket.save
+                  num = num + 1
+                end
+          end
+       end
+       
+       @plan.price = (min.to_f / 100).to_f
+       
+       @plan.price_max = (max.to_f / 100).to_f
+    end
   
   def update
     
@@ -352,7 +388,9 @@ class PlansController < ApplicationController
         if key == "application_deadline"
           if params[:plan][key] != ""
            date_and_time = '%m/%d/%Y'
-           params[:plan][key] = DateTime.strptime("#{params[:plan][key]}", date_and_time)
+           if  params[:plan][key] and  params[:plan][key] != "undefined"
+             params[:plan][key] = DateTime.strptime("#{params[:plan][key]}", date_and_time)
+            end
           end
         end
 
@@ -364,6 +402,9 @@ class PlansController < ApplicationController
     
     
     @plan.update_attributes(params[:plan])
+    
+    update_tickets
+    
     
     if @plan.transportation == ""
       @plan.transportation = nil

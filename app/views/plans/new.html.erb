@@ -92,7 +92,10 @@
 	</div>
 
 	<div style="clear:both; height:20px"></div>
+	
+	<div style="display:none">
 	<input type="checkbox" id="plan_enable_date_requests" name="plan[enable_date_requests]" onclick="RequestLayer(this)"> <b>Allow Date Requesting</b>.  I can be asked to schedule this event on new dates.
+	</div>
 	
 	<div style="clear:both; height:20px"></div>
 	<div id="RequestLayer" style="float:left; display:none">
@@ -107,12 +110,16 @@
 
 <div style="clear:both; height:15px"></div>
 <div class="CreateDivider">&nbsp;</div>
-<div class="HighlightedTitle" style="margin-bottom:10px;font-size:20px">How much?</div>
+<div class="HighlightedTitle" style="margin-bottom:10px;font-size:20px">Tickets</div>
 
 <input type="hidden" id="plan_published" name="plan[published]" value="0">
 
 <div style="font-size:16px">
-<%=render :partial=>"ticket_settings", :locals=>{:source=>"new"}%>
+
+
+<%=render :partial=>"plans/multiple_tickets", :locals=>{:source=>"new"}%>
+	
+
 </div>
 	<div style="clear:both; height:15px"></div>
 	<div class="CreateDivider">&nbsp;</div>
@@ -148,6 +155,10 @@ $(document).ready(function() {
 	   onClose: function(dateText, inst) { 
 	 	}
 	});
+	
+	
+
+	
 	
 	
 });

@@ -18,7 +18,7 @@
 <%i=0%>
 <%addon_shown=false%>
 
-<%for ticket in @tickets%>
+<%for ticket in @plan.tickets.sort_by_type%>
 	<%i=i+1%>
 	
 	<%if ticket.ticket_type == 2%>
@@ -38,9 +38,19 @@
 		<input type="hidden" class="item_price" value="<%=ticket.amount%>">
 
 		<div style="float:left; width:330px; margin-left:10px; ">
-			<span class="ticket_title" style="font-weight:bold"><%=ticket.title%></span>
+			<span class="ticket_title" style="font-weight:bold">
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>ticket.title, :id=>ticket.id, :model=>"ticket", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>false, :onblur_hook=>"", :append=>ticket.id, :extra_visibility=>false}%>
+				</span>
+				
+						
 			<% if ticket.subtitle and ticket.subtitle !=""%>
-				<div style="font-size:13px; margin-top:3px"><%=ticket.subtitle%></div>
+				<div style="font-size:13px; margin-top:3px">
+					
+				
+							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"subtitle", :content=>ticket.subtitle, :id=>ticket.id, :model=>"ticket", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>false, :onblur_hook=>"", :append=>ticket.id, :extra_visibility=>false}%>
+					
+					
+				</div>
 			<%end%>
 		</div>
 	
@@ -59,7 +69,11 @@
 			</select>
 		
 		<div style="float:right; margin-left:10px;">
-			$<%= number_with_precision (ticket.amount.to_f / 100.0), :precision => 2 %>
+			<%dollar = number_with_precision (ticket.amount.to_f / 100.0), :precision => 2 %>
+			$
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"amount", :content=>dollar, :id=>ticket.id, :model=>"ticket", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>false, :onblur_hook=>"", :append=>ticket.id, :extra_visibility=>false, :numeric=>true}%>
+			
+			
 		</div>
 				
 		<div style="clear:both"></div>

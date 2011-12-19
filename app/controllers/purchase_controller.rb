@@ -12,8 +12,8 @@ class PurchaseController < ApplicationController
     
     
     @plan = Plan.find(params[:id])
-    
-    @tickets = @plan.tickets.sort_by_type
+    plan_access_control
+   
     
     
   end

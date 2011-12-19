@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213040508) do
+ActiveRecord::Schema.define(:version => 20111218223233) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(:version => 20111213040508) do
     t.boolean  "enable_donations"
     t.text     "donation_text"
     t.decimal  "donation_suggested_amount", :precision => 10, :scale => 0
+    t.decimal  "price_max",                 :precision => 10, :scale => 2
   end
 
   create_table "subscribed_achievements", :force => true do |t|
@@ -393,6 +394,7 @@ ActiveRecord::Schema.define(:version => 20111213040508) do
     t.integer  "sort_order"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "soft_delete"
   end
 
   create_table "users", :force => true do |t|

@@ -321,7 +321,7 @@ adjustMapLabel();
 		<div class="SignUpBox">
 			
 			<div style="position:absolute; margin-top:130px; width:343px">
-			<div id="SignUpButtons" style="<%if @signedup or @author%>display:none<%end%>">
+			<div id="SignUpButtons" style="<%if @signedup%>display:none<%end%>">
 				<div style="float:left;  margin-top:11px; margin-left:2px;  text-align:center">
 					<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
 					<div style="margin-top:5px; font-size:12px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
@@ -337,28 +337,29 @@ adjustMapLabel();
 			</div>
 			
 
-			<div id="SignedUp" style="<%if !@signedup and !@author%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:308px; padding:5px; background:#FFFFCC; height:43px;">
+			<div id="SignedUp" style="<%if !@signedup%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:308px; padding:5px; background:#FFFFCC; height:43px;">
 				<div style="width:34px; height:34px; float:left'"><img src="/images/greencheck.png"></div>
-				<div class="HighlightedTitle"  style=" font-size:20px; margin-top:0px;">You are <%if @author%>hosting<%else%>attending<%end%>!</div>
+				<div class="HighlightedTitle"  style=" font-size:20px; margin-top:0px;">You are attending!</div>
+				
 				<%if @plan.price.to_i < 1%>
 				
 				<div id="CancelPlan" style=" color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
 					
-					<%unless @author%>
+				
 						
 						[ <a class="BlueLink TicketLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%end%>" target="_blank" >Print Tickets</a> ]
 						
-					<%end%>
+				
 					&nbsp;
-					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="<%if @author%><%else%>unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);<%end%>" >Cancel</span> ]  
+					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);" >Cancel</span> ]  
 				
 				</div>
 				
 				<%else%>
 				<div style="color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
-					<%unless @author%>
+				
 						[ <a id="" class="TicketLink BlueLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%else%>#<%end%>" target="_blank" >Print Tickets</a> ]
-					<%end%>
+				
 					
 					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="
 					
@@ -384,7 +385,7 @@ adjustMapLabel();
 			
 			<div style="height:70px;"></div>
 			
-			<div style=" padding-left:3px; padding-bottom:10px; width:310px;  color:#555; font-size:15px; line-height:20px; font-style:italic; display: table; font-family:'georgia'">
+			<div style=" padding-left:3px; padding-bottom:10px; width:306px;  color:#555; font-size:15px; line-height:20px; font-style:italic; display: table; font-family:'georgia'">
 				<div style="display: table-cell; vertical-align: middle; height:75px; ">
 				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
 				</div>

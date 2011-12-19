@@ -6,6 +6,8 @@
 		<%@over = true%>
 	<%end%>
 <%end%>
+
+
 <%if @plan.attendance_cap%>
 	<%plural = ""%>
 	<%if @plan.seats_remaining !=1%><%plural = "s"%><%end%>
@@ -15,7 +17,7 @@
 	<%else%>
 			<%@tickets_remaining = "<span id=\"seat_remain\" style=\"font-weight:bold\" >#{@plan.seats_remaining}</span> ticket#{plural} left!"%>
 	<%end%>
-	<%if @plan.seats_remaining < 1%>
+	<%if @plan.seats_remaining.to_i  < 1%>
 			<%@tickets_remaining = "<div style=\"color:red\"><span id=\"seat_remain\" style=\"font-weight:bold\" >Sold Out!</div>"%>
 			
 	<%end%>
@@ -25,10 +27,6 @@
 <%end%>
 
 
-<%#tmp code to be dleted later%>
-<%if @plan.id == 46%>
-	<%@over = true%>
-<%end%>
 
 
 <%if @plan.application_required%>
@@ -38,14 +36,19 @@
 		<%@clickaction = ""%>
 	<%else%>
 		<%if current_user%>
-			<%if @plan.price and @plan.price > 0%>
+			<%if @plan.price and @plan.price > 0 or (@plan.price_max and @plan.price_max.to_i > 0)%>
 				<%if @tickets.length > 1%>
 					<%@clickaction = "$(this).html('<img style=\"margin-top:3px;\" src=\"/images/ajax-loader_f.gif\">'); window.location.href='/escapes/#{@plan.id}/purchase/'"%>
 				<%else%>
 					<%@clickaction = "openPayment();"%>
 				<%end%>
 			<%else%>
-				<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
+				<%if @tickets.length > 1%>
+					<%@clickaction = "$(this).html('<img style=\"margin-top:3px;\" src=\"/images/ajax-loader_f.gif\">'); window.location.href='/escapes/#{@plan.id}/purchase/'"%>
+				<%else%>
+			
+					<%@clickaction = "signupPlan(this,$('RenderPlan<#{@plan.id}'),#{@plan.id});"%>
+				<%end%>
 			<%end%>
 		<%else%>
 				<%@clickaction = "openRegister('Sign up for #{APP_NAME} to attend'); $.cookie('showAttendPop', 'true', { expires: 7, path: '/escapes/'});"%>
@@ -59,16 +62,39 @@
 		<%@subtitle = "Deadline: #{@plan.application_deadline.to_date.strftime('%b').titlecase()} #{@plan.application_deadline.to_date.strftime('%e').strip()}"%>
 	<%else%>
 		<%if @plan.price and @plan.price > 0%>
-			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@plan.price.to_s.sub( ".0", ".00")}</div>"%>
+		
+			<%@price = @plan.price%>
+			<%if @price > 999%>
+				<%@price = @plan.price.to_s.sub( ".0", "") %>
+			<%else%>
+				<%@price = @plan.price.to_s.sub( ".0", ".00") %>
+			<%end%>
+		
+		
+			<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">$#{@price}</div>"%>
 
 
 			<%if @signedup%>
 				<%@subtitle = "You are attending!"%>	
 			<%else%>
-				<%if @plan.attendance_cap and (@plan.seats_remaining < 10 and @plan.seats_remaining != 0) %>
+				<%if @plan.attendance_cap and (@plan.seats_remaining < 10) %>
 					<%@subtitle = @tickets_remaining%>	
 				<%else%>
+				<%if @plan.price and @plan.price > 0%>
+					
 					<%@subtitle = "per ticket"%>
+				
+			
+					
+					<%if @plan.price_max and @plan.price_max > @plan.price%>
+					
+							<%@title = "<div style=\"position:absolute; margin-left:7px; margin-top:3px;\"><img src=\"/images/buy-icon.png\" style=\"width:24px; height:21px\"></div><div style=\"margin-left:21px;\">Buy Now</div>"%>
+					
+					 	<%@subtitle = "$#{@plan.price.to_s.sub( ".0", "")} to $#{@plan.price_max.to_s.sub( ".0", "")} per ticket"%>
+				
+					<%end%>
+					
+					<%end%>
 				<%end%>
 			<%end%>
 			
@@ -89,16 +115,12 @@
 
 
 
-		<button id="attend" class="newGrayButton <%=@signup_color%>B" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining < 1%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
+		<button id="attend" class="newGrayButton GreenB" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px; <%if @over || @plan.seats_remaining < 1%>opacity:.3<%end%>" <%if !@over%>onclick="<%=@clickaction%>"<%else%><%end%>><%=raw @title%></button>	
 		<div style="margin-top:5px; width:140px; text-align:Center; color:#4C5A74">
 			<%if @over == true%>
-				<%if @plan.id !=46%>
-					<div style="color:red; font-size:12px;">This event is over</div>
-				<%else%>
-					<div style="color:red; font-size:12px; margin-top:-5px">$15 at door. <br>Online sales closed.</div>
-				<%end%>
+				<div style="color:red; font-size:12px;">This event is over</div>
 			<%else%>
-			<div style="font-size:12px;">	<%=raw @subtitle%></div>
+				<div style="font-size:12px;">	<%=raw @subtitle%></div>
 			<%end%>
 		</div>
 		
