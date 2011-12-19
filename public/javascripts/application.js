@@ -4076,6 +4076,11 @@ function loadInfo(index) {
 		
 		if (redisplayDefault == 0) {
 			$("#prevarrow").hide();
+			
+			$("#next_arrow").css("width","120px");
+			
+			$("#next_arrow").html('<div style="float:left; margin-left:5px">Next Event</div><img class="home_next_arr" src="/images/next_arrow.png">')
+			
 		}
 			
 		if (displayDefaultPanel != 0) {
@@ -4083,6 +4088,8 @@ function loadInfo(index) {
 		}
 	} else {
 		$("#prevarrow").show();
+		$("#next_arrow").css("width","55px");
+		$("#next_arrow").html('<img class="home_next_arr" src="/images/next_arrow.png">')
 		$(".home_slogan").hide();
 	}
 	
@@ -4865,6 +4872,7 @@ function planEditToggle() {
 								$(this).hide();
 							} );
 
+		$('#EditButtons').hide();
 
 		window.location.reload();
 	} else {
@@ -4872,6 +4880,9 @@ function planEditToggle() {
 		$("#LockLinkIcon").removeClass("LionHighlight")
 		$("#EditLinkIcon").addClass("LionHighlight")
 		$.cookie('disable_edit', null, { path: '/escapes/'});
+		
+		$('#EditButtons').show();
+		
 		window.location.reload();
 	}
 }

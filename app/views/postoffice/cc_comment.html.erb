@@ -146,7 +146,20 @@
 	<div class="commentBox">
 		<div style="float:left;">
 			<a href="http://<%=@url%>/<%=@comment.user.username%>">
-				<%= image_tag(@comment.user.avatar.url(:rounded_90), :class=>"Transparent rounded50", :style=>"width:90px; float:left; margin-right:10px; height:90px;  cursor:pointer") %>
+				
+				<%name = @comment.user.avatar_file_name%>
+
+				<%if name%>
+					<%test = name.index(".")%>
+
+					<%if test.to_i < 1%>
+						<%name = "#{name}."%>
+					<%end%>
+					<img class="UserCardPhoto" class="Transparent rounded50" style="width:90px; float:left; margin-right:10px; height:90px;  cursor:pointer" src="http://assets.escapist.me/avatars/<%=@comment.user.id%>/thumb_150_<%=name%>"/>
+				<%else%>
+					<img alt="No_avatar" class="Transparent rounded50" style="width:90px; float:left; margin-right:10px; height:90px;  cursor:pointer" src="http://escapist.me/images/no_avatar.png" style="" />
+				<%end%>
+				
 			</a>
 			 <%=@comment.comment%><div class="SubtleFont" style="margin-top:2px; width:300px;" ><%=time_ago_in_words(@comment.created_at)%> ago</div>
 		</div>

@@ -64,13 +64,18 @@
 
 			<div class="Lionbuttons" >
 
-
+				
 				<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="validatePublish('edit',this,<%=@plan.id%>)">Publish</a>
-				<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
+				
+				<div id="EditButtons" style="float:left;<%unless @editable%>display:none<%end%>">
+				
+					<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
 
-					<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
+						<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
 
-				<a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
+					<a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
+					
+				</div>
 
 				<a href="#" id="LockLinkIcon" class="Lionbutton Lionleft <%unless @editable%>LionHighlight<%end%>" onclick="planEditToggle()"><div class="LockIcon"></div>Lock</a><a href="#" id="EditLinkIcon" class="Lionbutton Lionright  <%if @editable%>LionHighlight<%end%>"style="margin-right:0px;" onclick="planEditToggle()" ><div class="EditPlanIcon"></div>Edit</a>
 
@@ -379,7 +384,7 @@ adjustMapLabel();
 			
 			<div style="position:absolute; width:265px; margin-left:63px; margin-top:69px; border-top:1px dashed #ccc"></div>
 			
-			<div id="RenderDate" style="position:absolute; width:343px;">
+			<div id="RenderDate" style="position:absolute; width:343px;" onmouseover="$('#calIcon').css('opacity',1)" onmouseout="$('#calIcon').css('opacity',.7)">
 				<%= render :partial=>"plans/circle_date_small"%>
 			</div>		
 			
@@ -513,6 +518,13 @@ $(document).ready(function() {
 	<%if @plan.end_time%>
 	  end_date = Date.parse("<%=@plan.end_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
 	<%end%>
+	
+	
+	var gmt_offset = start_date.getTimezoneOffset( ) / 60;
+	start_date.setHours(start_date.getHours()+gmt_offset);
+	end_date.setHours(end_date.getHours()+gmt_offset);
+	
+	
   $('.addtocal').AddToCal({
     icalEnabled:true,
     vcalEnabled:false,

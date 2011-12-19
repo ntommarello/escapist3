@@ -305,10 +305,10 @@ class PlansController < ApplicationController
           cal.event do |event|
             event.description = "#{@plan.strip_short_desc}\n#{@plan.grab_url}"
             if @plan.start_time
-              event.dtstart =  @plan.start_time.to_datetime
+              event.dtstart =  @plan.start_time.utc + 5.hours
             end
             if @plan.end_time
-              event.dtend = @plan.end_time.to_datetime
+              event.dtend = @plan.end_time.utc + 5.hours
             end
             event.location = @plan.strip_location
             event.summary = @plan.strip_title

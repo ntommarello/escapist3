@@ -3207,6 +3207,11 @@ position:absolute;
 z-index:2;	
 display:none;
 }
+.home_next_arr {
+	margin-top:9px;   width:26px; height:23px;
+
+
+}
 
 .home_info_button {
 	border:1px solid #fff;
@@ -3674,9 +3679,7 @@ background-position:-100px -50px;
 	margin:5px;
 	border:1px solid #eee;
 }
-.BrowseExpandImage:hover {
-	opacity:.95;
-}
+
 .BrowseExpandImagecx:active {
 	border:1px solid #fff;
 box-shadow: inset 3px 3px 1px 1px #fff, inset -3px -3px 1px 1px #fff, inset -3px 3px 1px 1px #fff, inset 3px -3px 1px 1px #fff;
