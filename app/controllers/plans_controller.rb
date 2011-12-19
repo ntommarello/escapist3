@@ -343,11 +343,13 @@ class PlansController < ApplicationController
                     min = ticket["amount"].to_i
                   end
                   
-                  if ticket["amount"].to_i < min
-                    min = ticket["amount"].to_i 
-                  end
-                  if ticket["amount"].to_i > max
-                    max = ticket["amount"].to_i 
+                  if ticket["ticket_type"].to_i == 1
+                    if ticket["amount"].to_i < min
+                      min = ticket["amount"].to_i 
+                    end
+                    if ticket["amount"].to_i > max
+                      max = ticket["amount"].to_i 
+                    end
                   end
                   
                   if ticket["ticket_id"].to_i == 0
