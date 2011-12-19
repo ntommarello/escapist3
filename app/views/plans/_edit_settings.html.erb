@@ -1,4 +1,4 @@
-
+ <script src="http://wufoo.com/scripts/iframe/formEmbedKit.js"></script>
 
 
 	<div id="SettingsLayer" style=" <%if @user_agent.mobile?%>width:940px; padding:0px; border:0; background:transparent<%else%>width:960px;<%end%>">
@@ -162,3 +162,40 @@
 		$('#plan_donation_suggested_amount').numeric({allow:"."});
 	 });
 	</script>
+	
+	<script>
+	$(document).ready(function() {
+
+	
+	  //FIG. 7: init the form embed kit  (Warning: Global)
+var framework = WufooFormEmbedKit({'userDefinedCallback':userDefinedCallback, 'displayElement':'iframe-goes-here', 'host':'wufoo.com'});
+
+        //Fig 8: Event listeners, intended to build up and tear down the library.
+        $('#insert-wufoo-form').bind('click', function() {
+            $('#popup').show()
+            framework.display();
+ 
+        });
+        // Clicking anywhere outside closes it
+        $('#popup').bind('click', function() {    
+            $('#popup').hide()
+            framework.destroy();
+        });
+
+
+	
+			//FIG. 9: define a callback, with the required parameters
+			function userDefinedCallback(message, transport) {
+				$("#popup").fadeOut();
+				var objMessage = jQuery.parseJSON(message);
+				$("#plan_application_wufoo").val(objMessage.display)
+				$("#plan_application_wufoo").show();
+				// FIG. 12
+				framework.destroy();
+
+			}
+			
+				 });
+	
+	</script>
+	
