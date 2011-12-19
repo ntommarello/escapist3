@@ -3,7 +3,7 @@
 
 		
 
-<%if @tickets.length > 0%>
+<%if @plan.tickets.length > 0%>
 	
 	<div style="border-bottom:1px solid #E9E9EB;  line-height:50px; height:50px; ">
 	 			<div style="float:left; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px; margin-top:8px; font-size:15px;">Tickets</div>
@@ -57,7 +57,7 @@
 	
 			<select class="item_qty" onchange="calcPrices()" style="float:right;  margin-left:10px;  margin-top:-3px">
 				<option>0</option>
-				<option <%if i==1 and @tickets.length == 1%>selected<%end%>>1</option>
+				<option <%if i==1 and @plan.tickets.length == 1%>selected<%end%>>1</option>
 				<option>2</option>
 				<option>3</option>
 				<option>4</option>
@@ -70,8 +70,9 @@
 		
 		<div style="float:right; margin-left:10px;">
 			<%dollar = number_with_precision (ticket.amount.to_f / 100.0), :precision => 2 %>
-			$
-					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"amount", :content=>dollar, :id=>ticket.id, :model=>"ticket", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>false, :onblur_hook=>"", :append=>ticket.id, :extra_visibility=>false, :numeric=>true}%>
+			<div style="float:left">$</div>
+			<div style="float:left">
+					<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"amount", :content=>dollar, :id=>ticket.id, :model=>"ticket", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>false, :onblur_hook=>"", :append=>ticket.id, :extra_visibility=>false, :numeric=>true}%></div>
 			
 			
 		</div>
@@ -86,7 +87,7 @@
 
 
 <%if @plan.enable_donations%>
-<div style="padding-top:<%if @tickets.length > 0%>40<%else%>20<%end%>px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Donation</div>
+<div style="padding-top:<%if @plan.tickets.length > 0%>40<%else%>20<%end%>px; border-top:1px solid #fff; color:#21547E; text-shadow:0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.8); padding-left:10px;font-size:15px;padding-bottom:10px">Donation</div>
  
 <div style="margin-left:10px; float:left; font-size:13px; width:330px;">
 <%=@plan.donation_text%>
@@ -129,8 +130,8 @@
 			<div style="background:rgba(33,33,33,.04); padding:5px">
 				<div style="font-size:10px; font-weight:normal">Grand Total</div>
 			
-				<input type="hidden" id="purchase_total_amount" value="<%if @tickets.length > 0%><%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %><%else%>0<%end%>">
-				<div id="grand_total" style="line-height:34px">$<%if @tickets.length > 0%><%= number_with_precision (@tickets[0].amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></div>
+				<input type="hidden" id="purchase_total_amount" value="<%if @plan.tickets.length > 0%><%= number_with_precision (@plan.tickets[0].amount.to_f / 100.0), :precision => 2 %><%else%>0<%end%>">
+				<div id="grand_total" style="line-height:34px">$<%if @plan.tickets.length > 0%><%= number_with_precision (@plan.tickets[0].amount.to_f / 100.0), :precision => 2 %><%else%>0.00<%end%></div>
 	
 			</div>
 			
@@ -152,7 +153,7 @@
 <img src="/images/credit.png" style="margin-top:10px">
 </div>
 
-<%if @tickets.length > 0%>
+<%if @plan.tickets.length > 0%>
 <div class="rewardlink" style="font-weight:normal; font-size:12px; margin-top:8px; float:right; margin-right:5px; margin-bottom:15px;" onclick="$('.rewardlink').hide(); $('.RewardDiv').show(); $('.RewardCode').focus();"><span  class="BlueLink">Discount Code</span></div>
 <div class="RewardDiv" style="display:none; float:right; margin-top:10px">
 	<div style="font-size:11px; color:#666; display:none; font-weight:normal">Mech E Capstone</div>

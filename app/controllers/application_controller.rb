@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
     @domain = @domain.sub( "www.", "" )
     
      if Rails.env == "development"
-       @domain = "trips.thesnowriders.com"
+       #@domain = "trips.thesnowriders.com"
     end
     
     if @domain != APP_URL and @domain != "localhost:3000"
