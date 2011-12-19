@@ -21,6 +21,20 @@
 			
 		
 			<%=render :partial=>"plans/multiple_tickets", :locals=>{:source=>"edit"}%>
+			
+			<div style="margin-top:10px">
+				<input  id="application" name="application" value="1" type="radio" onclick="$('#WufooLayer').hide();" <%unless @plan.application_required%>checked<%end%>>Anyone may purchase tickets&nbsp;
+				<input id="application" name="application" value="2" type="radio" onclick="$('#WufooLayer').show();" <%if @plan.application_required%>checked<%end%>>Application Required
+
+				<div id="WufooLayer" style="<%unless @plan.application_required%>display:none;<%end%> margin-left:20px; width:300px; margin-top:10px; font-size:13px">
+					<span style="text-decoration:underline">Step 1: Insert Application Form</span><br>
+					Applications are powered by <a href="http://wufoo.com/" target="_blank" class="BlueLink">Wufoo</a>.  Create your form on Wufoo, then <a href="#" id="insert-wufoo-form">insert the javascript embed code by clicking this link</a>
+					<textarea id="plan_application_wufoo" name="plan[application_wufoo]" style="width:300px; height:100px; <%if  @plan.application_wufoo.nil? or @plan.application_wufoo == ""%>display:none;<%end%>" class="ShadowedTextBox" disabled="disabled"><%=@plan.application_wufoo%></textarea><br>
+					<div style="margin-top:10px; text-decoration:underline">Step 2: Set Application Deadline</div>
+					<input id="plan_application_deadline" name="plan[application_deadline]" class="ShadowedTextBox" style="width:100px" value="<%if @plan.application_deadline%><%=@plan.application_deadline.strftime('%m/%d/%Y')%><%end%>">
+				</div>
+			</div>
+				
 		</div>
 		
 		<div style="float:right; width:45%">
@@ -59,6 +73,11 @@
 			<input id="plan_donation_text" name="plan[donation_text]" class="ShadowedTextBox" onfocus="if ($(this).val()=='optional text') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('optional text');  $(this).css('color','#ccc')}" style="width:350px; margin-top:5px; height:12px; <%unless @plan.donation_text or @plan.donation_text == ""%>color:#ccc<%end%>" type="textfield" value="<%if @plan.donation_text and @plan.donation_text != ""%><%=@plan.donation_text%><%else%>optional text<%end%>">
 		
 		</div>
+		
+	
+		
+		
+		
 		
 			</div>
 			
