@@ -260,8 +260,8 @@
 			
 				<div style="float:left; width:250px">
 					<div><b><%if ticket.user_id%><%=ticket.user.first_name%> <%=ticket.user.last_name%><%else%><%if ticket.user_name%><%=ticket.user_name%><%else%>Admits Bearer<%end%><%end%></b></div>
-					<div style="margin-top:5px"><%if ticket.ticket%><%=ticket.ticket.title%><%end%></div>
-					<div style="color:#333; font-size:12px; margin-top:2px"><%if ticket.ticket%><%=ticket.ticket.subtitle%><%end%></div>
+					<div style="margin-top:5px"><%if ticket.ticket%><%=raw ticket.ticket.title%><%end%></div>
+					<div style="color:#333; font-size:12px; margin-top:2px"><%if ticket.ticket%><%=raw ticket.ticket.subtitle%><%end%></div>
 				</div>
 			
 				<div style="background:rgba(33,33,33,.04); font-size:24px; padding:5px; float:right;">			

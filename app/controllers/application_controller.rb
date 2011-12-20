@@ -74,8 +74,12 @@ class ApplicationController < ActionController::Base
           test2 = Group.find_by_username(request.subdomains.first)
           if test2
             @group = test2
-            @fb_id = test2.fb_id
-            @fb_secret = test2.fb_secret
+            if test2.fb_id and test2.fb_id !=""
+              @fb_id = test2.fb_id
+            end
+            if test2.fb_secret and test2.fb_secret !=""
+              @fb_secret = test2.fb_secret
+            end
             @source = test2.url
           else
             redirect_to "http://#{APP_URL}"
