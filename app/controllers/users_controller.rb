@@ -72,6 +72,12 @@ class UsersController < ApplicationController
           if @group_plans[0].price.to_i < 1 and !@group_plans[0].application_required
             params[:plan_id] = @group_plans[0].id
             sign_up_plan
+            @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>0, :amount=>0)
+            random = SecureRandom.hex(10)
+            qr_code = "#{@ticket.id}-#{random}"
+            @ticket.user_id = current_user.id
+            @ticket.qr_code = qr_code
+            @ticket.save
           end
         end
       end
