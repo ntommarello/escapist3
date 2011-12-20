@@ -3422,6 +3422,10 @@ span.continued {
   width: 26px;
   height: 23px; }
 
+.BorderDottedLine {
+  border-top: 1px dotted #ccc;
+  margin-top: 15px; }
+
 .home_info_button {
   border: 1px solid #fff;
   background: #ffffff;

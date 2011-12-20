@@ -33,7 +33,7 @@ module ApplicationHelper
     
     if (day_two != day_one) 
         
-        if (year_two != year_one) 
+        if start_time > Time.now + 1.year
           if (month_two == month_one) 
             @time_string = "#{start_time.to_datetime.strftime('%B %e')}-#{end_time.to_datetime.strftime('%e')}"
           else

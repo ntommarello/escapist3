@@ -18,13 +18,10 @@ class WebController < ApplicationController
            session[:dropdown_city] = "New York City"
          end
          if @city_id == 99
-           session[:dropdown_city] = "World Travel"
+           session[:dropdown_city] = "World"
          end
        end
      end
-
-
-
      
      if !@city_id
        @city_id = session[:dropdown_city_value];
@@ -34,6 +31,9 @@ class WebController < ApplicationController
      if @group
        @slogan = @group.subtitle
        conditions = "and plans.group_id = #{@group.id}"
+       if @group.id == 21 and @city_id.to_i != 99
+         conditions = "#{conditions} and city_id = #{@city_id}"
+       end
      else
        @slogan = "Kickass adventures with awesome people"
        conditions = "and city_id = #{@city_id}"
@@ -49,6 +49,11 @@ class WebController < ApplicationController
        if @group.id == 9  #temp hack for snowriders
          conditions = "#{conditions} or id in #{@snowriders}"
         end
+        
+        
+
+        
+        
        
        @plan = Plan.published.find(:all, :conditions=>["plans.featured=1 and start_time >= ? #{conditions}", rounded_t],:order=>"start_time asc")
      else

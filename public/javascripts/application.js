@@ -4079,7 +4079,7 @@ function loadInfo(index) {
 			
 			$("#next_arrow").css("width","120px");
 			
-			$("#next_arrow").html('<div style="float:left; margin-left:5px">Next Event</div><img class="home_next_arr" src="/images/next_arrow.png">')
+			$("#next_arrow").html('<div style="float:left; margin-left:25px">Next</div><img class="home_next_arr" src="/images/next_arrow.png">')
 			
 		}
 			
@@ -4168,7 +4168,12 @@ function loadInfo(index) {
 		 thisYear = currentTime.getFullYear();
 		$('#plan_startdate_month').html(month);
 	
-		if (year > thisYear ) {
+	
+		var currentDate = new Date();
+		currentDate.setDate(currentDate.getDate() + 365);
+		
+		
+		if (start_time > currentDate ) {
 			$('#plan_startdate_day').html(year);
 		} else {
 			$('#plan_startdate_day').html(day);

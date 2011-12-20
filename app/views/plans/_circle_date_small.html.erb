@@ -1,7 +1,7 @@
 <div class="DateCircle_Small <%if @editable%>EditBoxHide<%else%>addtocal<%end%>" <%if @editable%>onclick="displayEditDate()<%end%>" style=" float:left; margin-left:5px; margin-top:3px;" >
 
 <%if @plan.start_time%>
-	<%if Date.today.strftime('%Y') == @plan.start_time.to_date.strftime('%Y')%>
+	<%if @plan.start_time < Time.now + 1.year%>
 		<%= @plan.start_time.to_date.strftime('%b').upcase()%><br>
 		<%= @plan.start_time.to_date.strftime('%e').strip()%>
 	<%else%>
