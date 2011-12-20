@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
     @domain = @domain.sub( "www.", "" )
     
      if Rails.env == "development"
-       @domain = "angelhack.escapist.me"
+       #@domain = "angelhack.escapist.me"
     end
     
     if @domain != APP_URL and @domain != "localhost:3000"
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
         @fb_secret = test.fb_secret
         @source = test.url
       else
-        @group = Group.find(21)
+        #@group = Group.find(21)
         if request.subdomains.first
           test2 = Group.find_by_username(request.subdomains.first)
           if test2
