@@ -56,8 +56,8 @@
 					<%if subscribed.discount and subscribed.discount > 0%>
 						<tr>	
 							<td style="vertical-align:top; ">Discount</td>
-							<td style="vertical-align:top;"><%=@subscribed.discount_code.upcase%></td>
-							<td style="vertical-align:top; color:red">($<%= number_with_precision (@subscribed.discount / 100.0), :precision => 2 %>)</td>
+							<td style="vertical-align:top;"><%=subscribed.discount_code.upcase%></td>
+							<td style="vertical-align:top; color:red">($<%= number_with_precision (subscribed.discount / 100.0), :precision => 2 %>)</td>
 							<%subtotal = subtotal+(subscribed.discount*-1)%>
 							
 						</tr>

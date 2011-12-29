@@ -7,19 +7,19 @@ class SubscribedPlansController < ApplicationController
   
   def create
     
-          sign_up_plan
-          @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>0, :amount=>0)
-          random = SecureRandom.hex(10)
-          qr_code = "#{@ticket.id}-#{random}"
-          @ticket.user_id = current_user.id
-          @ticket.qr_code = qr_code
-          @ticket.save
+        sign_up_plan
+        @ticket = TicketPurchase.create(:subscribed_plan_id => @subscribed.id, :plan_id => @plan.id, :payer_user_id=>current_user.id, :ticket_id=>0, :amount=>0)
+        random = SecureRandom.hex(10)
+        qr_code = "#{@ticket.id}-#{random}"
+        @ticket.user_id = current_user.id
+        @ticket.qr_code = qr_code
+        @ticket.save
         
-            #Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
+        #Postoffice.deliver_confirmation(current_user,@plan,@subscribed)
             
-          Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
+        Postoffice.send_later(:deliver_confirmation, current_user,@plan,@subscribed)
 
-          render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
+        render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}
        
    end
    
