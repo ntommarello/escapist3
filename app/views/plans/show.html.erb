@@ -8,417 +8,409 @@
 
 <%if params[:page]%>
 
-	<%=render :partial=>"plans/vampire_hacks"%>
-	
+    <%=render :partial=>"plans/vampire_hacks"%>
+
 <%else%>
 
 
 
 <% content_for :head do %>
-	<%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
-	<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
-	<%if @plan.privacy > 1%>
-		<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-	<%end%>
+    <%=render :partial=>"plans/metatag", :locals=>{:plan=>@plan}%>
+    <script type="text/javascript" src="https://js.stripe.com/v1/"></script>
+    <%if @plan.privacy > 1%>
+        <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <%end%>
 <%end%>
 
 
 <Script>
 
 <%if @plan.group and @plan.group.stripe_public%>
-	Stripe.setPublishableKey('<%=@plan.group.stripe_public%>');
+    Stripe.setPublishableKey('<%=@plan.group.stripe_public%>');
 <%else%>
-	<%if Rails.env == "production"%>
-  		Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
-	<%else%>
-		Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
-	<%end%>
+    <%if Rails.env == "production"%>
+        Stripe.setPublishableKey('pk_dB6f0N4JX9S8tPhvAWEi5awfQdCOd');
+    <%else%>
+        Stripe.setPublishableKey('pk_NbPHhppsDWlEw1NsATAghNQZEo1WM');
+    <%end%>
 <%end%>
 
 
 
 
-	var share = {
+    var share = {
    method: 'stream.share',
    u: '<%= plan_url(@plan) %>'
    };
 </script>
 
 <%if current_user %>
-	<%=render :partial=>"plans/post_signup_modal"%>
+    <%=render :partial=>"plans/post_signup_modal"%>
 <%end%>
 <%=render :partial=>"plans/payment_modal"%>
 
 <%if @editable%>
-	<%=render :partial=>"plans/edit_date"%>
-	<%=render :partial=>"plans/edit_settings"%>
-	<%=render :partial=>"plans/edit_photos"%>
+    <%=render :partial=>"plans/edit_date"%>
+    <%=render :partial=>"plans/edit_settings"%>
+    <%=render :partial=>"plans/edit_photos"%>
 <%end%>
 
 
 
 <div style="<%if @user_agent.mobile?%>width:950px;<%else%>min-width:1000px;max-width:1030px; <%end%> margin-left:auto; margin-right:auto; font-size:16px;">
 
-	<%if @real_edit_for_toggle%>
-		<div id="EditPlanMenu" style="float:right; margin-right:6px;">
+    <%if @real_edit_for_toggle%>
+        <div id="EditPlanMenu" style="float:right; margin-right:6px;">
 
-			<div class="Lionbuttons" >
-
-				
-				<a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="validatePublish('edit',this,<%=@plan.id%>)">Publish</a>
-				
-				<div id="EditButtons" style="float:left;<%unless @editable%>display:none<%end%>">
-				
-					<a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
-
-						<a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public" 	<%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
-
-					<a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
-					
-				</div>
-
-				<a href="#" id="LockLinkIcon" class="Lionbutton Lionleft <%unless @editable%>LionHighlight<%end%>" onclick="planEditToggle()"><div class="LockIcon"></div>Lock</a><a href="#" id="EditLinkIcon" class="Lionbutton Lionright  <%if @editable%>LionHighlight<%end%>"style="margin-right:0px;" onclick="planEditToggle()" ><div class="EditPlanIcon"></div>Edit</a>
-
-				<script>
-				editable=<%=@editable%>;
-				</script>
-
-			</div>
-		</div>
-		<script>
-		$(document).ready(function() {
+            <div class="Lionbuttons" >
 
 
-			$(".tl").tooltip();
+                <a href="#" id="PublishLink" class="Lionbutton  LionGreen" <%if @plan.published%>style="display:none"<%end%>onclick="validatePublish('edit',this,<%=@plan.id%>)">Publish</a>
 
-		});
-		</script>
-	<%end%>
-	
+                <div id="EditButtons" style="float:left;<%unless @editable%>display:none<%end%>">
+
+                    <a href="#" class="Lionbutton Lionleft tl" onclick="slideSettings()" title="Settings"><div class="EditSettingsIcon"></div></a>
+
+                        <a href="#" id="UnpublishLink" class="Lionbutton Lionmiddle tl" title="Make Inactive & Hide from Public"    <%unless @plan.published%>style="display:none"<%end%> onclick="unpublishPlan(<%=@plan.id%>)"><div class="UnpublishIcon"></div></a>
+
+                    <a href="#" class="Lionbutton Lionright tl" title="Destroy" onclick="OpenDeletePlan()"><div class="TrashPlanIcon"></div></a>
+
+                </div>
+
+                <a href="#" id="LockLinkIcon" class="Lionbutton Lionleft <%unless @editable%>LionHighlight<%end%>" onclick="planEditToggle()"><div class="LockIcon"></div>Lock</a><a href="#" id="EditLinkIcon" class="Lionbutton Lionright  <%if @editable%>LionHighlight<%end%>"style="margin-right:0px;" onclick="planEditToggle()" ><div class="EditPlanIcon"></div>Edit</a>
+
+                <script>
+                editable=<%=@editable%>;
+                </script>
+
+            </div>
+        </div>
+        <script>
+        $(document).ready(function() {
 
 
+            $(".tl").tooltip();
 
-		<div class="HighlightedTitle" style="padding-bottom:4px; font-size:24px; width:600px; line-height:28px; ">
-			<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>		
-		</div>
-		
-		<div style="float:left; font-size:16px;color:#808598; width:370px;">			
-		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :sideIcon=>"Left", :full_editor=>true, :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
-		</div>
-	
-		<div style="position:absolute; margin-left:375px; margin-top:-4px;">
-			<%= render :partial=>"plans/new_sharing", :locals=>{:showlabel=>false}%>
-		</div>
-		
-		<div style="clear:both"></div>
-	
-	
-	<%if @user_agent.mobile?%><%@picwidth=550%><%@picheight=366%><%else%><%@picwidth=600%><%@picheight=400%><%end%>
-	
-	<div style="float:left; <%if @user_agent.mobile?%>width:545px;<%else%>width:595px<%end%>">
-		
-		
-			<%if @photos.length > 0%><%extra_height = 70+4%><%else%><%extra_height = 4%><%end%>
-		
-			<div class="PlanBigPhotoBorder" style="width:<%=@picwidth+4%>px; height:<%=@picheight+extra_height%>px">
-					
-			<div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
-								
-			
-			<input type="hidden" id="plan_image2" value="<%=@plan.image_file_name%>">
-			
-		<%if @photos.length > 0%>
-
-			<%= render :partial=>"plans/gallery", :locals=>{:photos=>@photos}%>
-
-		<%else%>
-		
-	
-	
-		
-				<%if @editable%>
-					<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px;", :class=>" Transparent", :onclick=>"displayEditPhoto()" %>
-			
-					<%unless @plan.image_file_name%>
-						<div style="position:absolute; text-align:Center; margin-top:-60px; width:600px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="displayEditPhoto()">Upload Photo</div>
-					<%end%>
-				
-				<%else%>
-					<%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px; cursor:default", :class=>""%>
-				<%end%>
-			
-		<%end%>
-		</div>
-		
-		<%if @editable%>
-			<div onclick="displayEditPhoto()" style="float:right; margin-top:10px; font-size:13px" class="BlueLink">Manage Photos</div>
-			<div style="clear:both"></div>
-		<%end%>
-		
-		
-			<div style="font-size:16px; line-height:20px; margin-top:15px; ">
-				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); }"}%>	
-				
-				
-				<%if @plan.id==15%>
-			<div style="border-top:1px dotted #ccc; margin-top:25px;">&nbsp;</div>
-					<h2 class="HighlightedTitle" style="margin-top:0px">FAQ</h2>
+        });
+        </script>
+    <%end%>
 
 
 
-						<h2 class="FaqTitle" style="margin-top:0px;">Why are you doing this?</h2>
-						<p class="FaqAnswer">Because we all thought it was a kick-ass idea!  We believe magic happens when smart people are stranded in an exotic getaway. We hope life-long friendships (and a few companies) will form.</p>
 
-						<h2 class="FaqTitle">How luxurious is this? What's included?</h2>
-						<p class="FaqAnswer">You can count on some sort of bed (or sofa), food prepared by our private chef, daily maid service, and wifi.  Otherwise, this ain't the Ritz. If there's a problem, we hope you can fix it yourself.</p>
+        <div class="HighlightedTitle" style="padding-bottom:4px; font-size:24px; width:600px; line-height:28px; ">
+            <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"title", :content=>@plan.title, :id=>@plan.id, :model=>"plan", :required=>true, :sideIcon=>"Left", :allow_return=>false, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+        </div>
 
-						<h2 class="FaqTitle">Who gets the Master Bedroom? Who gets the couch?</h2>
-						<p class="FaqAnswer">Air mattresses, couches, and futons are available for $595.  <br>King and queen size beds for $895.</p>
+        <div style="float:left; font-size:16px;color:#808598; width:370px;">
+        <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_location", :content=>@plan.short_location, :id=>@plan.id, :model=>"plan", :sideIcon=>"Left", :full_editor=>true, :required=>true, :allow_return=>false, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+        </div>
 
-						<h2 class="FaqTitle">What kind of people will attend?</h2>
-						<p class="FaqAnswer">Those with the startup spirit who "get stuff done" and JFDI.  Developers, designers, engineers, & biz guys are all welcome.</p>
+        <div style="position:absolute; margin-left:375px; margin-top:-4px;">
+            <%= render :partial=>"plans/new_sharing", :locals=>{:showlabel=>false}%>
+        </div>
 
-						<h2 class="FaqTitle">Am I welcome if I don't have a start-up idea?</h2>
-						<p class="FaqAnswer">Yes!  As long as you spend your time helping other start-ups.</p>
-
-
-				
+        <div style="clear:both"></div>
 
 
+    <%if @user_agent.mobile?%><%@picwidth=550%><%@picheight=366%><%else%><%@picwidth=600%><%@picheight=400%><%end%>
 
-						<h2 class="FaqTitle" style="">How much 'official programming' is there?</h2>
-						<p class="FaqAnswer">We're keeping it light. Every day, we have a group dinner, followed by a round table discussion on a challenge one of us is facing. We also have a few adventures & expeditions planned.</p>
+    <div style="float:left; <%if @user_agent.mobile?%>width:545px;<%else%>width:595px<%end%>">
 
 
-						<h2 class="FaqTitle">How does mentorship work?</h2>
-						<p class="FaqAnswer">We're a strong believer in peer mentorship - everyone who attends is working on a project, and we all help each other.  Also, off-site mentors are available via Skype.<p>
+            <%if @photos.length > 0%><%extra_height = 70+4%><%else%><%extra_height = 4%><%end%>
 
-						<h2 class="FaqTitle">What is the balance between work and play?</h2>
-						<p class="FaqAnswer">We're all adults - it's up to you.  But we're targeting 8 hours of solid work per day.  Along with 3 hours of mandatory fun.</p>
+            <div class="PlanBigPhotoBorder" style="width:<%=@picwidth+4%>px; height:<%=@picheight+extra_height%>px">
+
+            <div id="DraftLayer" style="<%unless @plan.published%>display:block<%end%>" class="" title="This event is not published."><img src="/images/draft.png"></div>
+
+
+            <input type="hidden" id="plan_image2" value="<%=@plan.image_file_name%>">
+
+        <%if @photos.length > 0%>
+
+            <%= render :partial=>"plans/gallery", :locals=>{:photos=>@photos}%>
+
+        <%else%>
+
+
+
+
+                <%if @editable%>
+                    <%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px;", :class=>" Transparent", :onclick=>"displayEditPhoto()" %>
+
+                    <%unless @plan.image_file_name%>
+                        <div style="position:absolute; text-align:Center; margin-top:-60px; width:600px; font-size:22px; color:#DBDBDB; cursor:pointer" onclick="displayEditPhoto()">Upload Photo</div>
+                    <%end%>
+
+                <%else%>
+                    <%= image_tag @plan.image.url(:thumb_600), :style=>"width:#{@picwidth}px; height:#{@picheight}px; cursor:default", :class=>""%>
+                <%end%>
+
+        <%end%>
+        </div>
+
+        <%if @editable%>
+            <div onclick="displayEditPhoto()" style="float:right; margin-top:10px; font-size:13px" class="BlueLink">Manage Photos</div>
+            <div style="clear:both"></div>
+        <%end%>
+
+
+            <div style="font-size:16px; line-height:20px; margin-top:15px; ">
+                <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"note", :content=>@plan.note, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert some details.  Why is this fun?  How can you do it?  Write a short paragraph.') {draftDetails= 0;$('#draftDetails').hide(); }"}%>
+
+
+                <%if @plan.id==15%>
+            <div style="border-top:1px dotted #ccc; margin-top:25px;">&nbsp;</div>
+                    <h2 class="HighlightedTitle" style="margin-top:0px">FAQ</h2>
+
+
+
+                        <h2 class="FaqTitle" style="margin-top:0px;">Why are you doing this?</h2>
+                        <p class="FaqAnswer">Because we all thought it was a kick-ass idea!  We believe magic happens when smart people are stranded in an exotic getaway. We hope life-long friendships (and a few companies) will form.</p>
+
+                        <h2 class="FaqTitle">How luxurious is this? What's included?</h2>
+                        <p class="FaqAnswer">You can count on some sort of bed, food, daily maid service, and wifi.  Otherwise, this ain't the Ritz. If there's a problem, we hope you can fix it yourself.</p>
+
+
+                        <h2 class="FaqTitle">What kind of people will attend?</h2>
+                        <p class="FaqAnswer">Those with the startup spirit who "get stuff done" and JFDI.  Developers, designers, engineers, & biz guys are all welcome.</p>
+
+                        <h2 class="FaqTitle">Am I welcome if I don't have a start-up idea?</h2>
+                        <p class="FaqAnswer">Yes!  As long as you spend your time helping other start-ups.</p>
+
+                        <h2 class="FaqTitle" style="">How much 'official programming' is there?</h2>
+                        <p class="FaqAnswer">We're keeping it light. Every day, we have a group dinner, followed by a round table discussion on a challenge one of us is facing. We also have a few adventures & expeditions planned.</p>
+
+                        <h2 class="FaqTitle">How does mentorship work?</h2>
+                        <p class="FaqAnswer">We're a strong believer in peer mentorship - everyone who attends is working on a project, and we all help each other.  Also, off-site mentors are available via Skype.<p>
+
+                        <h2 class="FaqTitle">What is the balance between work and play?</h2>
+                        <p class="FaqAnswer">We're all adults - it's up to you.  But we're targeting 8 hours of solid work per day.  Along with 3 hours of mandatory fun.</p>
 
 
 
 
 
-						<h2 class="FaqTitle">Are you guys making money? Do you want our equity?</h2>
-						<p class="FaqAnswer">No on both counts!  We're probably losing money.  <br>Free to <a href="mailto:nick@tommarello.net?subject=Startup Workaway Sponsorship">sponsor us</a>!</p>
+                        <h2 class="FaqTitle">Sponsors: Coming Soon</h2>
+                        <p class="FaqAnswer">Until then, free to <a href="mailto:nick@tommarello.net?subject=Startup Workaway Sponsorship">sponsor us</a>!</p>
 
 
 
 
-				
-
-				
-
-
-
-		
 
 
 
 
-				<%end%>
-				
-				
-			</div>
-		
-		
-		<div class="BorderDottedLine">&nbsp;</div>
-		
-		<div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;">Meeting Place</div>
-		
-		<div id="MeetingPlace" style="line-height:18px; <%if !@plan.transportation or @plan.transportation == ""%>display:none; <%end%>">
-		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>false, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%>
-		</div>
 
-		<%if @editable%>
 
-		<div id="AddMeeting" style="padding-top:10px; <%if @plan.transportation%> display:none<%end%>">[<span class="BlueLink" onclick="$('#MeetingPlace').show(); $('#AddMeeting').hide(); $('#transportation').html('input directions'); $('#transportation').focus();">add meeting instructions</span>]</div>
 
-		<%end%>
-		
-		
-		<div style="margin-top:15px;" >
-			<a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
-						<img  id="GoogleMap" width="<%=@picwidth-10%>" height="300" alt="map error" style=" cursor:pointer; float:left" class="Transparent subtleShadow" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=<%=@plan.map_zoom%>&size=<%=@picwidth-10%>x300&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
-		
-		</div>
-		
-		<input type="hidden" id="plan_lat" value="<%=@plan.lat%>">
-		<input type="hidden" id="plan_lng" value="<%=@plan.lng%>">
-		<script>map_zoom = <%=@plan.map_zoom%>;</script>
-		
-	
-		
-		
-		<div id="directions" class="subtleShadow2" style="position:absolute;  color:#eee; margin-top:240px; background:rgba(33, 33,33, .8);  padding:10px; width:<%=@picwidth-28%>px">
-				<div style="float:left; font-size:14px; line-height:18px;">
 
-					<%if @plan.url_name and @plan.url_link %>
-						<a id="MapLink" style="color:white; font-size:15px;" class="BlueLink <%if @editable%> EditBoxDark<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
 
-					<%else%>
-							<%if @editable%>
-								<a class="BlueLink" style="color:white;" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
-							<%end%>
-						<%end%>
-						<div  style="font-size:13px; line-height:16px; ">
-							<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :darkHover=>true, :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"adjustMapLabel(); GeoCode_Plan(newValue,#{@plan.id});"}%>	
+
+
+                <%end%>
+
+
+            </div>
+
+
+        <div class="BorderDottedLine">&nbsp;</div>
+
+        <div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;">Meeting Place</div>
+
+        <div id="MeetingPlace" style="line-height:18px; <%if !@plan.transportation or @plan.transportation == ""%>display:none; <%end%>">
+        <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"transportation", :content=>@plan.transportation, :id=>@plan.id, :model=>"plan", :required=>false, :allow_return=>false, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required' && $(this).html() != 'Insert meeting place') {}"}%>
+        </div>
+
+        <%if @editable%>
+
+        <div id="AddMeeting" style="padding-top:10px; <%if @plan.transportation%> display:none<%end%>">[<span class="BlueLink" onclick="$('#MeetingPlace').show(); $('#AddMeeting').hide(); $('#transportation').html('input directions'); $('#transportation').focus();">add meeting instructions</span>]</div>
+
+        <%end%>
+
+
+        <div style="margin-top:15px;" >
+            <a id="GoogleLink" target="_blank" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%=@cleaned_location%>">
+                        <img  id="GoogleMap" width="<%=@picwidth-10%>" height="300" alt="map error" style=" cursor:pointer; float:left" class="Transparent subtleShadow" src="http://maps.google.com/maps/api/staticmap?center=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&zoom=<%=@plan.map_zoom%>&size=<%=@picwidth-10%>x300&maptype=roadmap&markers=<%=@plan.lat.round(4)%>,<%=@plan.lng.round(4)%>&sensor=false"></a>
+
+        </div>
+
+        <input type="hidden" id="plan_lat" value="<%=@plan.lat%>">
+        <input type="hidden" id="plan_lng" value="<%=@plan.lng%>">
+        <script>map_zoom = <%=@plan.map_zoom%>;</script>
+
+
+
+
+        <div id="directions" class="subtleShadow2" style="position:absolute;  color:#eee; margin-top:240px; background:rgba(33, 33,33, .8);  padding:10px; width:<%=@picwidth-28%>px">
+                <div style="float:left; font-size:14px; line-height:18px;">
+
+                    <%if @plan.url_name and @plan.url_link %>
+                        <a id="MapLink" style="color:white; font-size:15px;" class="BlueLink <%if @editable%> EditBoxDark<%end%>" <%if @editable%>onclick="openLinkEditor()"<%else%>target="_blank" <%end%> <%if !@editable%> href="<%=@plan.url_link%>"<%end%>><%=@plan.url_name%></a><br>
+
+                    <%else%>
+                            <%if @editable%>
+                                <a class="BlueLink" style="color:white;" id="MapLink"  onclick="openLinkEditor()" href="#">Add Link</a><br>
+                            <%end%>
+                        <%end%>
+                        <div  style="font-size:13px; line-height:16px; ">
+                            <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"location", :content=>@plan.location, :id=>@plan.id, :model=>"plan", :darkHover=>true, :allow_return=>true, :required=>true, :extra_visibility=>@extra_visibility, :full_editor=>true, :onblur_hook=>"adjustMapLabel(); GeoCode_Plan(newValue,#{@plan.id});"}%>
 </div>
 
-							
-					</div>
-					
-					<%if @editable%>
-						<div style="float:right; margin-top:10px; font-size:12px">
-							<select onchange="map_zoom = $(this).val(); GeoCode_Plan($('#location').html(),<%=@plan.id%>);">
-								<option value="16" <%if @plan.map_zoom == 16%>selected<%end%>>Street</option>
-								<option value="14" <%if @plan.map_zoom == 14%>selected<%end%>>Neighborhood</option>
-								<option value="12" <%if @plan.map_zoom == 12%>selected<%end%>>City</option>
-								<option value="9" <%if @plan.map_zoom == 9%>selected<%end%>>State</option>
-								<option value="4" <%if @plan.map_zoom == 4%>selected<%end%>>Country</option>
-							</select>
-						</div>
-					<%end%>
-					<div style="clear:both; "></div>
-					</div>
+
+                    </div>
+
+                    <%if @editable%>
+                        <div style="float:right; margin-top:10px; font-size:12px">
+                            <select onchange="map_zoom = $(this).val(); GeoCode_Plan($('#location').html(),<%=@plan.id%>);">
+                                <option value="16" <%if @plan.map_zoom == 16%>selected<%end%>>Street</option>
+                                <option value="14" <%if @plan.map_zoom == 14%>selected<%end%>>Neighborhood</option>
+                                <option value="12" <%if @plan.map_zoom == 12%>selected<%end%>>City</option>
+                                <option value="9" <%if @plan.map_zoom == 9%>selected<%end%>>State</option>
+                                <option value="4" <%if @plan.map_zoom == 4%>selected<%end%>>Country</option>
+                            </select>
+                        </div>
+                    <%end%>
+                    <div style="clear:both; "></div>
+                    </div>
 
 <script>
 adjustMapLabel();
 </script>
 
 
-							
-							<div style="border-top:1px dotted #DEDFE5; margin-top:30px;">&nbsp;</div>
-		
-							<%if @plan.enable_comments%>
+
+                            <div style="border-top:1px dotted #DEDFE5; margin-top:30px;">&nbsp;</div>
+
+                            <%if @plan.enable_comments%>
 
 <div class="DarkBlueLabel" style="padding-top:15px; font-size:20px; padding-bottom:10px;line-height:28px;">
-		<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"custom_comment", :content=>@plan.custom_comment, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>""}%>	
-	
-	
+        <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"custom_comment", :content=>@plan.custom_comment, :id=>@plan.id, :model=>"plan", :required=>true, :full_editor=>true, :allow_return=>true, :extra_visibility=>@extra_visibility,:onblur_hook=>""}%>
+
+
 </div>
 
 
 
-								<textarea id="commentTextBox" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:510px; " onfocus="if ($(this).val()=='What\'s up?') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('What\'s up?');  $(this).css('color','#ccc')}">What's up?</textarea>
+                                <textarea id="commentTextBox" type="textfield"    <%if current_user%>onKeyPress="return submitPostOnEnter(this,<%=@plan.id%>)"<%end%> class="resize ShadowedTextBox" style="float:left; height:20px; line-height:20px;  color:#ccc;margin-top:10px; width:510px; " onfocus="if ($(this).val()=='What\'s up?') { $(this).val(''); $(this).css('color','#666')}" onblur="if ($(this).val()=='') {$(this).val('What\'s up?');  $(this).css('color','#ccc')}">What's up?</textarea>
 
-								<div  class="WhiteActiveBorder"  >
-									<div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for <%=APP_NAME%> to comment')<%end%>">
-										<div class="InnerLightGrayBorder"style="height:32px;" >Post</div>
-									</div>
-								</div>
+                                <div  class="WhiteActiveBorder"  >
+                                    <div unselectable="on" class="LightGrayButton" style="width:60px; margin-left:3px; float:left;height:34px; margin-top:9px; line-height:34px; font-size:12px " onclick="<%if current_user%>postComment(this,<%=@plan.id%>)<%else%>openRegister('Sign up for <%=APP_NAME%> to comment')<%end%>">
+                                        <div class="InnerLightGrayBorder"style="height:32px;" >Post</div>
+                                    </div>
+                                </div>
 
-								<div style="clear:both; height:10px;"></div>
+                                <div style="clear:both; height:10px;"></div>
 
-								<div id="CommentsArea" style="padding-top:6px">
-									<%=render :partial=>"comments/comment_display", :locals=>{:plan=>@plan}%>
-								</div>
+                                <div id="CommentsArea" style="padding-top:6px">
+                                    <%=render :partial=>"comments/comment_display", :locals=>{:plan=>@plan}%>
+                                </div>
 
-							<%end%>
-		
-		
-	</div>
-	
-	
-	<div style="float:right; width:400px; margin-top:15px;">
-	
-		<div class="SignUpBox">
-			
-			<div style="position:absolute; margin-top:130px; width:343px">
-			<div id="SignUpButtons" style="<%if @signedup%>display:none<%end%>">
-				<div style="float:left;  margin-top:11px; margin-left:2px;  text-align:center">
-					<button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
-					<div style="margin-top:5px; font-size:12px; text-align:Center; color:#4C5A74">for updates & new dates</div>		
-				</div>
+                            <%end%>
 
-				<div style="float:left; margin-top:10px; margin-left:15px;">
-					<img src="/images/or.png" style="width:12px; height:56px;">
-				</div>
 
-				<div style="float:left;  margin-top:11px; margin-left:15px; ">
-					<%= render :partial=>"plans/attend_button"%>
-				</div>
-			</div>
-			
+    </div>
 
-			<div id="SignedUp" style="<%if !@signedup%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:308px; padding:5px; background:#FFFFCC; height:43px;">
-				<div style="width:34px; height:34px; float:left'"><img src="/images/greencheck.png"></div>
-				<div class="HighlightedTitle"  style=" font-size:20px; margin-top:0px;">You are attending!</div>
-				
-				<%if @plan.price.to_i < 1%>
-				
-				<div id="CancelPlan" style=" color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
-					
-				
-						
-						[ <a class="BlueLink TicketLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%end%>" target="_blank" >Print Tickets</a> ]
-						
-				
-					&nbsp;
-					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);" >Cancel</span> ]  
-				
-				</div>
-				
-				<%else%>
-				<div style="color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
-				
-						[ <a id="" class="TicketLink BlueLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%else%>#<%end%>" target="_blank" >Print Tickets</a> ]
-				
-					
-					[ <span id="RemoveSignUpLink" class="BlueLink" onclick="
-					
-					<%if @tickets.length > 1%>
-					 	window.location.href='/escapes/<%=@plan.id%>/purchase/';
-					<%else%>
-				
-					openPayment();
-					<%end%>
-					
-					" ><%if @author%>Buy Tickets<%else%>Buy More<%end%></span> ]</div>
-				
-				<%end%>
-				<div style="clear:both"></div>
-			</div>
-			</div>
-			
-			<div style="position:absolute; width:265px; margin-left:63px; margin-top:69px; border-top:1px dashed #ccc"></div>
-			
-			<div id="RenderDate" style="position:absolute; width:343px;" onmouseover="$('#calIcon').css('opacity',1)" onmouseout="$('#calIcon').css('opacity',.7)">
-				<%= render :partial=>"plans/circle_date_small"%>
-			</div>		
-			
-			<div style="height:70px;"></div>
-			
-			<div style=" padding-left:3px; padding-bottom:10px; width:306px;  color:#555; font-size:15px; line-height:20px; font-style:italic; display: table; font-family:'georgia'">
-				<div style="display: table-cell; vertical-align: middle; height:75px; ">
-				<%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
-				</div>
-			</div>
-			
 
-		
-			
-		</div>
-				<%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label, subscribed_plans.num_guests", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc", :include=>:subscribed_plans)%>
-		
-			<div style="clear:both;  "></div>
-			<div style="margin-top:30px;"></div>
-			
+    <div style="float:right; width:400px; margin-top:15px;">
 
-			
-			<div style="float:right; width:330px; margin-top:20px; margin-right:13px">
-				
+        <div class="SignUpBox">
 
-				
-			
+            <div style="position:absolute; margin-top:130px; width:343px">
+            <div id="SignUpButtons" style="<%if @signedup%>display:none<%end%>">
+                <div style="float:left;  margin-top:11px; margin-left:2px;  text-align:center">
+                    <button id="WatchButton" class="newGrayButton<%if @watched%>Pushed<%end%>" onmousedown="watchMouseDown(this)" onmouseout="watchMouseUp(this)" style="margin-top:5px; height:40px; line-height:35px; width:140px; font-size:16px "  onclick="<%if current_user%>watchPlan(this,<%=@plan.id%>)<%else%>$.cookie('watchPlan', 'true', { expires: 7, path: '/escapes/'}); openRegister('Sign up for <%=APP_NAME%> to Watch'); watchMouseUp(this)<%end%>"><%if @watched%>Following<%else%>Follow<%end%></button>
+                    <div style="margin-top:5px; font-size:12px; text-align:Center; color:#4C5A74">for updates & new dates</div>
+                </div>
 
-				<div id="RenderPlan2">
-					<%=render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}%>
-				</div>
-			</div>
+                <div style="float:left; margin-top:10px; margin-left:15px;">
+                    <img src="/images/or.png" style="width:12px; height:56px;">
+                </div>
 
-	
+                <div style="float:left;  margin-top:11px; margin-left:15px; ">
+                    <%= render :partial=>"plans/attend_button"%>
+                </div>
+            </div>
+
+
+            <div id="SignedUp" style="<%if !@signedup%>display:none;<%end%> margin-top:20px; margin-left:3px; border:1px solid #ccc; width:308px; padding:5px; background:#FFFFCC; height:43px;">
+                <div style="width:34px; height:34px; float:left'"><img src="/images/greencheck.png"></div>
+                <div class="HighlightedTitle"  style=" font-size:20px; margin-top:0px;">You are attending!</div>
+
+                <%if @plan.price.to_i < 1%>
+
+                <div id="CancelPlan" style=" color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
+
+
+
+                        [ <a class="BlueLink TicketLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%end%>" target="_blank" >Print Tickets</a> ]
+
+
+                    &nbsp;
+                    [ <span id="RemoveSignUpLink" class="BlueLink" onclick="unsubscribePlan(this,'RenderPlan<%=@plan.id%>',<%=@plan.id%>);" >Cancel</span> ]
+
+                </div>
+
+                <%else%>
+                <div style="color:#999; margin-left:30px; font-size:12px; margin-top:2px;">
+
+                        [ <a id="" class="TicketLink BlueLink" href="<%if @subscribed%>/tickets/<%=@subscribed.id%><%else%>#<%end%>" target="_blank" >Print Tickets</a> ]
+
+
+                    [ <span id="RemoveSignUpLink" class="BlueLink" onclick="
+
+                    <%if @tickets.length > 1%>
+                        window.location.href='/escapes/<%=@plan.id%>/purchase/';
+                    <%else%>
+
+                    openPayment();
+                    <%end%>
+
+                    " ><%if @author%>Buy Tickets<%else%>Buy More<%end%></span> ]</div>
+
+                <%end%>
+                <div style="clear:both"></div>
+            </div>
+            </div>
+
+            <div style="position:absolute; width:265px; margin-left:63px; margin-top:69px; border-top:1px dashed #ccc"></div>
+
+            <div id="RenderDate" style="position:absolute; width:343px;" onmouseover="$('#calIcon').css('opacity',1)" onmouseout="$('#calIcon').css('opacity',.7)">
+                <%= render :partial=>"plans/circle_date_small"%>
+            </div>
+
+            <div style="height:70px;"></div>
+
+            <div style=" padding-left:3px; padding-bottom:10px; width:306px;  color:#555; font-size:15px; line-height:20px; font-style:italic; display: table; font-family:'georgia'">
+                <div style="display: table-cell; vertical-align: middle; height:75px; ">
+                <%=render :partial=>"layouts/editbox", :locals=>{:field_name=>"short_desc", :content=>@plan.short_desc, :id=>@plan.id, :model=>"plan", :required=>true, :allow_return=>false,:full_editor=>true,  :onblur_hook=>"if ($(this).html() != '' && $(this).html() != 'Required') {draftTitle = 0;$('#draftTitle').hide(); }", :extra_visibility=>@extra_visibility}%>
+                </div>
+            </div>
+
+
+
+
+        </div>
+                <%@attendees = User.sort_photos_first.find(:all, :select=>"users.*, subscribed_plans.label, subscribed_plans.num_guests", :joins=>:subscribed_plans, :conditions=>["subscribed_plans.plan_id =?",@plan.id], :order=>"subscribed_plans.label desc", :include=>:subscribed_plans)%>
+
+            <div style="clear:both;  "></div>
+            <div style="margin-top:30px;"></div>
+
+
+
+            <div style="float:right; width:330px; margin-top:20px; margin-right:13px">
+
+
+
+
+
+                <div id="RenderPlan2">
+                    <%=render :partial=>"plans/signups", :locals=>{:attendees=>@attendees}%>
+                </div>
+            </div>
+
+
 </div>
 
 
@@ -429,62 +421,20 @@ adjustMapLabel();
 
 <div style="clear:both"></div>
 
-	
-
-
-	<%if @plan.id==27%>
-		<div align="center" style="margin-top:50px;">
-
-			<div class="HighlightedTitle" style="font-size:30px; line-height:40px; ">Special Thanks to our Sponsors!</div>
-
-		<img src="/images/sponsors2.png">
-		<div style="margin-top:10px">
-		Would you like to sponsor?  <a href="mailto:nick@tommarello.com" class="BlueLink">Email us</a>!
-		</div>
-		</div>
-	<%end%>
 
 
 
-	
+    <%if @plan.id==27%>
+        <div align="center" style="margin-top:50px;">
 
+            <div class="HighlightedTitle" style="font-size:30px; line-height:40px; ">Special Thanks to our Sponsors!</div>
 
-
-
-
-	<%if @plan.application_required%>
-	<div id="ApplicationLayer" style="margin-top:30px; margin-left:auto; margin-right:auto; font-size:13px; <%if @user_agent.mobile?%>width:940px;<%else%>width:990px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
-
-		<div style="float:left">
-			<h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>
-		</div>
-		<div class="HighlightedTitle" style="float:right; font-size:15px">
-			Deadline: <%=@plan.application_deadline.to_date.strftime('%B').titlecase()%> <%=@plan.application_deadline.to_date.strftime('%e').strip()%>, <%=@plan.application_deadline.to_date.strftime('%Y')%>
-		</div>
-		<div style="clear:both"></div>
-		<div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
-
-			<script>defaultVals = '';</script>
-		
-				<%if current_user%>
-				<%if @plan.id == 22%>
-							<script>defaultVals = 'field1=<%=current_user.first_name%>&field2= <%=current_user.last_name%>&field3=<%=current_user.email%>&field11=<%=current_user.username%>'</script>
-				<%else%>
-							<script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
-				<%end%>
-				<%end%>
-
-				<script type="text/javascript">
-				var host = (("https:" == document.location.protocol) ? "https://secure." : "http://");
-				document.write(unescape("%3Cscript src='" + host + "wufoo.com/scripts/embed/form.js' type='text/javascript'%3E%3C/script%3E"));</script>
-				<%=raw @plan.application_wufoo%>
-		
-				<div STYLE="width:700px; margin-left:auto; margin-right:auto; margin-top:15px; display:none">
-					<%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME} to Apply!", :font_size=>"20", :num=>"2"}%>
-				</div>
-	
-		</div>
-	<%end%>
+        <img src="/images/sponsors2.png">
+        <div style="margin-top:10px">
+        Would you like to sponsor?  <a href="mailto:nick@tommarello.com" class="BlueLink">Email us</a>!
+        </div>
+        </div>
+    <%end%>
 
 
 
@@ -493,18 +443,60 @@ adjustMapLabel();
 
 
 
-	<%if params[:confirm]%>
-		<script>
-			showConfirmMessage();
-		</script>
-	<%end%>
 
-	<%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
+    <%if @plan.application_required%>
+    <div id="ApplicationLayer" style="margin-top:30px; margin-left:auto; margin-right:auto; font-size:13px; <%if @user_agent.mobile?%>width:940px;<%else%>width:990px; background:rgba(0,51,255,.03); padding:20px; border:1px dotted #E8E8E8<%end%>">
+
+        <div style="float:left">
+            <h2 class="HighlightedTitle" style="margin-top:0px"><%=@plan.title%> Application</h2>
+        </div>
+        <div class="HighlightedTitle" style="float:right; font-size:15px">
+            Deadline: <%=@plan.application_deadline.to_date.strftime('%B').titlecase()%> <%=@plan.application_deadline.to_date.strftime('%e').strip()%>, <%=@plan.application_deadline.to_date.strftime('%Y')%>
+        </div>
+        <div style="clear:both"></div>
+        <div style="border-top:1px dotted #DEDFE5; margin-top:0px;">&nbsp;</div>
+
+            <script>defaultVals = '';</script>
+
+                <%if current_user%>
+                <%if @plan.id == 22%>
+                            <script>defaultVals = 'field1=<%=current_user.first_name%>&field2= <%=current_user.last_name%>&field3=<%=current_user.email%>&field11=<%=current_user.username%>'</script>
+                <%else%>
+                            <script>defaultVals = 'field8=<%=current_user.first_name%> <%=current_user.last_name%>&field30=<%=current_user.email%>&field24=<%=current_user.username%>'</script>
+                <%end%>
+                <%end%>
+
+                <script type="text/javascript">
+                var host = (("https:" == document.location.protocol) ? "https://secure." : "http://");
+                document.write(unescape("%3Cscript src='" + host + "wufoo.com/scripts/embed/form.js' type='text/javascript'%3E%3C/script%3E"));</script>
+                <%=raw @plan.application_wufoo%>
+
+                <div STYLE="width:700px; margin-left:auto; margin-right:auto; margin-top:15px; display:none">
+                    <%= render :partial=>"layouts/register_form", :locals=>{:title=>"Sign up for #{APP_NAME} to Apply!", :font_size=>"20", :num=>"2"}%>
+                </div>
+
+        </div>
+    <%end%>
 
 
 
-	
-	
+
+
+
+
+
+    <%if params[:confirm]%>
+        <script>
+            showConfirmMessage();
+        </script>
+    <%end%>
+
+    <%= render :partial=>"plans/wepayjs", :locals=>{:plan=>@plan}%>
+
+
+
+
+
 </div>
 
 
@@ -512,34 +504,34 @@ adjustMapLabel();
 
 
 $(document).ready(function() {
-	  <%if @plan.start_time%>
-	  	start_date = Date.parse("<%=@plan.start_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
-	  <%end%>
-	<%if @plan.end_time%>
-	  end_date = Date.parse("<%=@plan.end_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
-	<%end%>
-	
-	
-	var gmt_offset = start_date.getTimezoneOffset( ) / 60;
-	start_date.setHours(start_date.getHours()+gmt_offset);
-	end_date.setHours(end_date.getHours()+gmt_offset);
-	
-	
+      <%if @plan.start_time%>
+        start_date = Date.parse("<%=@plan.start_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
+      <%end%>
+    <%if @plan.end_time%>
+      end_date = Date.parse("<%=@plan.end_time.to_datetime.strftime('%m/%d/%Y %H:%M')%>")
+    <%end%>
+
+
+    var gmt_offset = start_date.getTimezoneOffset( ) / 60;
+    start_date.setHours(start_date.getHours()+gmt_offset);
+    end_date.setHours(end_date.getHours()+gmt_offset);
+
+
   $('.addtocal').AddToCal({
     icalEnabled:true,
     vcalEnabled:false,
 
     getEventDetails: function( element ) {
 
-      return { 
+      return {
         webcalurl: null,
         icalurl: "http://<%=APP_URL%>/download_ics?id=<%=@plan.id%>",
-        vcalurl: null, 
-        start: start_date, 
-        end: end_date, 
-        title: "<%= strip_html(@plan.title)%>", 
-        details: "<%= strip_html(@plan.short_desc)%> - <%= @plan.grab_url %>", 
-        location: "<%= strip_html(@plan.location)%>", 
+        vcalurl: null,
+        start: start_date,
+        end: end_date,
+        title: "<%= strip_html(@plan.title)%>",
+        details: "<%= strip_html(@plan.short_desc)%> - <%= @plan.grab_url %>",
+        location: "<%= strip_html(@plan.location)%>",
         url: "<%= @plan.grab_url %>"
         };
     },
