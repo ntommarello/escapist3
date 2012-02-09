@@ -161,6 +161,20 @@
 
 
                 <%if @plan.id==15%>
+
+                    <%@chris = User.find_by_username('chris-hulls')%>
+
+              <div style="margin-top:20px; width:530px; padding:30px; padding-right:10px; background:#F7F7F7;  color:#777; ">
+                 <div style="float:left; margin-right:10px;"><%= image_tag @chris.avatar.url(:thumb_90), :style=>"width:90px; height:90px;"%></div>
+                <div style="float:left; width: 400px">
+                    Going down to Costa Rica with the whole crew was awesome, and renting an ultralight was probably my highlight for the trip...but on second thought sitting around the house and not doing much of anything was almost as good.
+                    <div style="margin-top:5px; font-weight:bold">- Chris Hulls, Life360</div>
+                </div>
+                <div style="clear:both"></div>
+
+            </div>
+
+
             <div style="border-top:1px dotted #ccc; margin-top:25px;">&nbsp;</div>
                     <h2 class="HighlightedTitle" style="margin-top:0px">FAQ</h2>
 
@@ -192,8 +206,8 @@
 
 
 
-                        <h2 class="FaqTitle">Sponsors: Coming Soon</h2>
-                        <p class="FaqAnswer">Until then, free to <a href="mailto:nick@tommarello.net?subject=Startup Workaway Sponsorship">sponsor us</a>!</p>
+                        <h2 class="FaqTitle">How does sponsorship work?</h2>
+                        <p class="FaqAnswer">We're sponsoring 3 startup founders to go for free.... because we all remember what it was like to be poor, overworked, and in need of new surroundings.  If you'd like to sponsor another poor, scrappy startup founder, please <a href="mailto:nick@tommarello.net?subject=Startup Workaway Sponsorship">contact us</a>! </p>
 
 
 
