@@ -1,53 +1,52 @@
 <%if @plan.enable_sharing%>
 
-		<%if showlabel%>
-			<div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
-				<div class="HighlightedTitle" style="margin-top:-2px;  font-size:16px; ">Share with your friends!</div>
-			
-				<%if @plan.price and @plan.price > 0 and !@plan.application_required and @plan.enable_discount%>
-				Send them discount code: JOINME42. They'll save $5.
-				<%end%>
-			</div>
-		<%end%>
-		
-		
-			<div style="float:left; margin-left:5px; margin-top:5px">
-			
-			
-				<%@twitter_user = TWITTER_NAME%>
-				<%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
-				<%if  (@plan.price and @plan.price < 1) or @plan.application_required or !@plan.enable_discount%>
-					<%@twitter_text = "#{@twitter_text}!"%>
-				<%else%>
-					<%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
-				<%end%>
-			
-			
-			
-				<%if @plan.group%>
-					<%if @plan.group.custom_twitter_text%>
-						<%@twitter_text = @plan.group.custom_twitter_text%>
-					<%end%>
-					<%if @plan.group.twitter_name%>
-						<%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
-					<%end%>
-			
-				<%end%>
-			
-			
-		   			<a href="http://twitter.com/share"  class="twitter-share-button" data-count="horizontal" data-related="<%=@twitter_user%>" data-url="<%=@plan.grab_url%>" data-text="<%=@twitter_text%>">Tweet</a> 
-		   	        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> 
-		     </div>
-		
-		
-		
-		<div style="float:left; margin-left:-10px; margin-top:5px"><fb:like href="<%=@plan.grab_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like></div>
+        <%if showlabel%>
+            <div style="color:#1F527E; margin-top:25px; margin-left:3px; margin-bottom:5px;">
+                <div class="HighlightedTitle" style="margin-top:-2px;  font-size:16px; ">Share with your friends!</div>
+
+                <%if @plan.price and @plan.price > 0 and !@plan.application_required and @plan.enable_discount%>
+                Send them discount code: JOINME42. They'll save $5.
+                <%end%>
+            </div>
+        <%end%>
 
 
-		
-		
-		<div style="clear:both"></div>
-	<%end%>
-	
-	
-	
+            <div style="float:left; margin-left:5px; margin-top:5px">
+
+
+                <%@twitter_user = TWITTER_NAME%>
+                <%@twitter_text = "I'm attending #{@plan.title} via @#{TWITTER_NAME}.  Join me"%>
+                <%if  (@plan.price and @plan.price < 1) or @plan.application_required or !@plan.enable_discount%>
+                    <%@twitter_text = "#{@twitter_text}!"%>
+                <%else%>
+                    <%@twitter_text = "#{@twitter_text} and get 10% off by using discount code JOINME42"%>
+                <%end%>
+
+
+
+                <%if @plan.group%>
+                    <%if @plan.group.custom_twitter_text%>
+                        <%@twitter_text = @plan.group.custom_twitter_text%>
+                    <%end%>
+                    <%if @plan.group.twitter_name%>
+                        <%@twitter_user = "#{@twitter_user}, #{@plan.group.twitter_name}"%>
+                    <%end%>
+
+                <%end%>
+
+
+                    <a href="http://twitter.com/share"  class="twitter-share-button" data-count="horizontal" data-related="nicktommarello" data-url="<%=@plan.grab_url%>" data-text="<%=@twitter_text%>">Tweet</a>
+                    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+             </div>
+
+
+
+        <div style="float:left; margin-left:-10px; margin-top:5px"><fb:like href="<%=@plan.grab_url%>" send="true" layout="button_count" width="100" action="like"  show_faces="false" font=""></fb:like></div>
+
+
+
+
+        <div style="clear:both"></div>
+    <%end%>
+
+
