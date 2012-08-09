@@ -107,6 +107,7 @@ GEM
     mumboe-soap4r (1.5.8.4)
       httpclient (>= 2.1.1)
     mysql (2.8.1)
+    mysql2 (0.3.11)
     net-ldap (0.2.2)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -272,6 +273,7 @@ DEPENDENCIES
   koala
   mocha
   mysql (~> 2.8)
+  mysql2
   oauth
   omniauth (= 0.2.6)
   panda

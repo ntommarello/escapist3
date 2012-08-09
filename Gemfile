@@ -61,4 +61,8 @@ group :test do
   gem 'mocha'
 end
 
+group :production do
+  gem 'mysql2'
+end
+
 gem "rubber", "1.15.0"

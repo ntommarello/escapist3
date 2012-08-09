@@ -169,44 +169,6 @@ ActiveRecord::Schema.define(:version => 20111218223233) do
   add_index "dislikes", ["id"], :name => "index_dislikes_on_id"
   add_index "dislikes", ["user_id"], :name => "index_dislikes_on_user_id"
 
-  create_table "groups", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "name"
-    t.text     "subtitle"
-    t.boolean  "domain"
-    t.string   "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "twitter_name"
-    t.text     "custom_twitter_text"
-    t.string   "twitter"
-    t.string   "tumblr"
-    t.text     "statcounter"
-    t.string   "fb_id"
-    t.string   "fb_key"
-    t.string   "fb_secret"
-    t.string   "favicon"
-    t.string   "logo"
-    t.string   "mailchimp_key"
-    t.string   "mailchimp_list"
-    t.string   "wepay_token"
-    t.string   "wepay_group_id"
-    t.string   "paypal_email"
-    t.string   "fb_link"
-    t.string   "stripe_public"
-    t.string   "stripe_private"
-    t.string   "favicon_file_name"
-    t.string   "favicon_content_type"
-    t.integer  "favicon_file_size"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.text     "logo_meta"
-    t.string   "username"
-    t.text     "about"
-    t.text     "refund_policy"
-  end
-
   create_table "hosts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "plan_id"
@@ -234,18 +196,6 @@ ActiveRecord::Schema.define(:version => 20111218223233) do
   add_index "likes", ["id"], :name => "index_likes_on_id"
   add_index "likes", ["subscribed_challenge_id"], :name => "index_likes_on_subscribed_challenge_id"
   add_index "likes", ["user_id"], :name => "index_likes_on_user_id"
-
-  create_table "medias", :force => true do |t|
-    t.integer  "plan_id"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.integer  "sort_order"
-    t.text     "caption"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "media_type"
-  end
 
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
